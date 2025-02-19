@@ -12,6 +12,7 @@
 		288EEEE22D647134001FACBC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288EEEE12D647134001FACBC /* ContentView.swift */; };
 		288EEEE42D647137001FACBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 288EEEE32D647137001FACBC /* Assets.xcassets */; };
 		288EEEE72D647137001FACBC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 288EEEE62D647137001FACBC /* Preview Assets.xcassets */; };
+		28CD81A92D65BD8000894BF8 /* AfterCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		288EEEE12D647134001FACBC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		288EEEE32D647137001FACBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		288EEEE62D647137001FACBC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterCheckView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,12 +36,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		285A37102D659FA800190B84 /*  View */ = {
+		285A37102D659FA800190B84 /*  Views */ = {
 			isa = PBXGroup;
 			children = (
 				285A37112D65A01B00190B84 /* BeforeCheckView.swift */,
+				28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */,
 			);
-			path = " View";
+			path = " Views";
 			sourceTree = "<group>";
 		};
 		288EEED32D647134001FACBC = {
@@ -61,7 +64,7 @@
 		288EEEDE2D647134001FACBC /* StudyRecord */ = {
 			isa = PBXGroup;
 			children = (
-				285A37102D659FA800190B84 /*  View */,
+				285A37102D659FA800190B84 /*  Views */,
 				288EEEDF2D647134001FACBC /* StudyRecordApp.swift */,
 				288EEEE12D647134001FACBC /* ContentView.swift */,
 				288EEEE32D647137001FACBC /* Assets.xcassets */,
@@ -151,6 +154,7 @@
 				288EEEE22D647134001FACBC /* ContentView.swift in Sources */,
 				288EEEE02D647134001FACBC /* StudyRecordApp.swift in Sources */,
 				285A37122D65A01B00190B84 /* BeforeCheckView.swift in Sources */,
+				28CD81A92D65BD8000894BF8 /* AfterCheckView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +288,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"StudyRecord/Preview Content\"";
+				DEVELOPMENT_TEAM = TABUJ6J9T9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -312,6 +317,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"StudyRecord/Preview Content\"";
+				DEVELOPMENT_TEAM = TABUJ6J9T9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

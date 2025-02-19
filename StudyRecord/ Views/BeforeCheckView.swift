@@ -66,13 +66,13 @@ extension BeforeCheckView {
             HStack(alignment: .top){
                 VStack(spacing: 8){
                     Rectangle()
-                        .frame(width: 48, height: 24)
+                        .frame(width: 48, height: 32)
                     Text("〜")
                         .font(.system(size: 32))
                         .bold()
                         .rotationEffect(.degrees(90))
                     Rectangle()
-                        .frame(width: 48, height: 24)
+                        .frame(width: 48, height: 32)
                 }
                 
                 Spacer()
@@ -80,7 +80,7 @@ extension BeforeCheckView {
                 VStack {
 
                     Rectangle()
-                        .frame(width: 112 , height: 40)
+                        .frame(width: 104 , height: 32)
                     
                 }
             }
