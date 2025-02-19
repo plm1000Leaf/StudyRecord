@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct AfterCheckView: View {
+    @Binding var isDoneStudy: Bool
+    
     var body: some View {
         VStack(spacing: 80){
             CheckViewTitle
@@ -18,12 +20,11 @@ struct AfterCheckView: View {
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .navigationBarBackButtonHidden(true) 
     }
 }
 
-#Preview {
-    AfterCheckView()
-}
+
 
 extension AfterCheckView {
     private var CheckViewTitle: some View {
@@ -36,7 +37,7 @@ extension AfterCheckView {
     private var StudyDoneText: some View {
         Text("学習完了")
             .font(.system(size: 72))
-
+        
     }
     
     private var ContinuationDays: some View {
@@ -44,9 +45,9 @@ extension AfterCheckView {
             Text("継続日数")
             Text("n日")
         }
-            .font(.system(size: 48))
-            .padding(.bottom, -64)
-
+        .font(.system(size: 48))
+        .padding(.bottom, -64)
+        
     }
     
     private var ShareButton: some View {
@@ -54,7 +55,7 @@ extension AfterCheckView {
             .font(.system(size: 40))
             .frame(maxWidth: .infinity, alignment:
                     .trailing)
-
+        
     }
     
     private var CheckButton: some View {
@@ -67,8 +68,7 @@ extension AfterCheckView {
                 .padding(.top, 16)
             
         }
-            
+        
     }
+
 }
-
-

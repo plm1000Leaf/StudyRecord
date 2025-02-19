@@ -8,15 +8,37 @@
 import SwiftUI
 
 struct BeforeCheckView: View {
+    @State private var isDoneStudy = false
+
     var body: some View {
+        ZStack {
+            if isDoneStudy {
+                AfterCheckView(isDoneStudy: $isDoneStudy)
+            } else {
+                mainView
+            }
+        }
+    }
+}
+    
+
+#Preview {
+    BeforeCheckView()
+}
+
+extension BeforeCheckView {
+    
+    private var mainView :some View {
+        
         VStack(spacing: 24){
             CheckViewTitle
             
             StudyMaterial
-
+            
             TodayStudyPlanTitle
-
+            
             TodayStudyPlanSetting
+            
             
             CheckButton
             
@@ -24,18 +46,11 @@ struct BeforeCheckView: View {
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
-}
-
-#Preview {
-    BeforeCheckView()
-}
-
-extension BeforeCheckView {
     private var CheckViewTitle: some View {
-            Text("今日の学習")
-                .font(.system(size: 32))
-                .padding(.top, 48)
-                .frame(maxWidth: .infinity, alignment: .leading)
+        Text("今日の学習")
+            .font(.system(size: 32))
+            .padding(.top, 48)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var StudyMaterial: some View {
@@ -63,33 +78,36 @@ extension BeforeCheckView {
     }
     
     private var TodayStudyPlanSetting: some View {
-            HStack(alignment: .top){
-                VStack(spacing: 8){
-                    Rectangle()
-                        .frame(width: 48, height: 32)
-                    Text("〜")
-                        .font(.system(size: 32))
-                        .bold()
-                        .rotationEffect(.degrees(90))
-                    Rectangle()
-                        .frame(width: 48, height: 32)
-                }
-                
-                Spacer()
-                    .frame(width: 128)
-                VStack {
-
-                    Rectangle()
-                        .frame(width: 104 , height: 32)
-                    
-                }
+        HStack(alignment: .top){
+            VStack(spacing: 8){
+                Rectangle()
+                    .frame(width: 48, height: 32)
+                Text("〜")
+                    .font(.system(size: 32))
+                    .bold()
+                    .rotationEffect(.degrees(90))
+                Rectangle()
+                    .frame(width: 48, height: 32)
             }
+            
+            Spacer()
+                .frame(width: 128)
+            VStack {
+                
+                Rectangle()
+                    .frame(width: 104 , height: 32)
+                
+            }
+        }
     }
     
     private var CheckButton: some View {
-
+        Button(action: {
+            isDoneStudy = true
+        }){
             Rectangle()
                 .frame(width: 288, height: 80)
                 .padding(.top, 16)
+        }
     }
 }
