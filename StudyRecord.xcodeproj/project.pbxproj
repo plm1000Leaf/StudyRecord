@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		285A37122D65A01B00190B84 /* BeforeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A37112D65A01B00190B84 /* BeforeCheckView.swift */; };
 		288EEEE02D647134001FACBC /* StudyRecordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288EEEDF2D647134001FACBC /* StudyRecordApp.swift */; };
 		288EEEE22D647134001FACBC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288EEEE12D647134001FACBC /* ContentView.swift */; };
 		288EEEE42D647137001FACBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 288EEEE32D647137001FACBC /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		285A37112D65A01B00190B84 /* BeforeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeCheckView.swift; sourceTree = "<group>"; };
 		288EEEDC2D647134001FACBC /* StudyRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		288EEEDF2D647134001FACBC /* StudyRecordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordApp.swift; sourceTree = "<group>"; };
 		288EEEE12D647134001FACBC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -32,6 +34,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		285A37102D659FA800190B84 /*  View */ = {
+			isa = PBXGroup;
+			children = (
+				285A37112D65A01B00190B84 /* BeforeCheckView.swift */,
+			);
+			path = " View";
+			sourceTree = "<group>";
+		};
 		288EEED32D647134001FACBC = {
 			isa = PBXGroup;
 			children = (
@@ -51,6 +61,7 @@
 		288EEEDE2D647134001FACBC /* StudyRecord */ = {
 			isa = PBXGroup;
 			children = (
+				285A37102D659FA800190B84 /*  View */,
 				288EEEDF2D647134001FACBC /* StudyRecordApp.swift */,
 				288EEEE12D647134001FACBC /* ContentView.swift */,
 				288EEEE32D647137001FACBC /* Assets.xcassets */,
@@ -139,6 +150,7 @@
 			files = (
 				288EEEE22D647134001FACBC /* ContentView.swift in Sources */,
 				288EEEE02D647134001FACBC /* StudyRecordApp.swift in Sources */,
+				285A37122D65A01B00190B84 /* BeforeCheckView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
