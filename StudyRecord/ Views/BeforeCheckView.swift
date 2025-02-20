@@ -105,7 +105,9 @@ extension BeforeCheckView {
         Button(action: {
             isDoneStudy = true
         }){
-            Rectangle()
+            BasicButton(label: "Done", icon: "checkmark"){
+                print("Doneボタンが押されました")
+            }
                 .frame(width: 288, height: 80)
                 .padding(.top, 16)
         }
