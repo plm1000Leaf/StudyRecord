@@ -31,29 +31,29 @@ extension BeforeCheckView {
     private var mainView :some View {
         
         VStack(spacing: 24){
-            CheckViewTitle
+            checkViewTitle
             
-            StudyMaterial
+            studyMaterial
             
-            TodayStudyPlanTitle
+            todayStudyPlanTitle
             
-            TodayStudyPlanSetting
+            todayStudyPlanSetting
             
             
-            CheckButton
+            checkButton
             
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
-    private var CheckViewTitle: some View {
+    private var checkViewTitle: some View {
         Text("今日の学習")
             .font(.system(size: 32))
             .padding(.top, 48)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    private var StudyMaterial: some View {
+    private var studyMaterial: some View {
         VStack(spacing: 16){
             Rectangle()
                 .frame(width: 136, height: 168)
@@ -64,7 +64,7 @@ extension BeforeCheckView {
         .padding(.bottom, 16)
     }
     
-    private var TodayStudyPlanTitle: some View {
+    private var todayStudyPlanTitle: some View {
         HStack{
             Text("箇所")
                 .font(.system(size: 16))
@@ -77,7 +77,7 @@ extension BeforeCheckView {
         .padding(.bottom, -8)
     }
     
-    private var TodayStudyPlanSetting: some View {
+    private var todayStudyPlanSetting: some View {
         HStack(alignment: .top){
             VStack(spacing: 8){
                 Rectangle()
@@ -101,7 +101,7 @@ extension BeforeCheckView {
         }
     }
     
-    private var CheckButton: some View {
+    private var checkButton: some View {
         Button(action: {
             isDoneStudy = true
         }){

@@ -12,11 +12,11 @@ struct AfterCheckView: View {
     
     var body: some View {
         VStack(spacing: 80){
-            CheckViewTitle
-            StudyDoneText
-            ContinuationDays
-            ShareButton
-            CheckButton
+            checkViewTitle
+            studyDoneText
+            continuationDays
+            shareButton
+            checkButton
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -27,20 +27,20 @@ struct AfterCheckView: View {
 
 
 extension AfterCheckView {
-    private var CheckViewTitle: some View {
+    private var checkViewTitle: some View {
         Text("今日の学習")
             .font(.system(size: 32))
             .padding(.top, 48)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    private var StudyDoneText: some View {
+    private var studyDoneText: some View {
         Text("学習完了")
             .font(.system(size: 72))
         
     }
     
-    private var ContinuationDays: some View {
+    private var continuationDays: some View {
         VStack{
             Text("継続日数")
             Text("n日")
@@ -50,7 +50,7 @@ extension AfterCheckView {
         
     }
     
-    private var ShareButton: some View {
+    private var shareButton: some View {
         Image(systemName: "square.and.arrow.up")
             .font(.system(size: 40))
             .frame(maxWidth: .infinity, alignment:
@@ -58,7 +58,7 @@ extension AfterCheckView {
         
     }
     
-    private var CheckButton: some View {
+    private var checkButton: some View {
         HStack(spacing: 56){
             Rectangle()
                 .frame(width: 144, height: 72)

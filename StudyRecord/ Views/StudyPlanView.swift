@@ -11,11 +11,11 @@ struct StudyPlanView: View {
     var body: some View {
         VStack(spacing: 56){
 
-            YearAndMonth
+            yearAndMonth
             
-            PlanningCalendar
+            planningCalendar
             
-            ForwardAndBackButton
+            forwardAndBackButton
             
 
         }
@@ -31,7 +31,7 @@ struct StudyPlanView: View {
 extension StudyPlanView {
     
     
-    private var YearAndMonth: some View {
+    private var yearAndMonth: some View {
         HStack(alignment: .bottom){
             Text("2025")
                 .font(.system(size: 16))
@@ -47,12 +47,12 @@ extension StudyPlanView {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    private var PlanningCalendar: some View {
+    private var planningCalendar: some View {
         Rectangle()
             .frame(width: 336, height: 384)
     }
     
-    private var ForwardAndBackButton : some View{
+    private var forwardAndBackButton : some View{
         HStack(spacing: 176){
             Circle()
             .frame(width: 48, height: 48)
