@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PlanSettingWindowView: View {
     
+    @State private var isTapBookSelect = false
     var onClose: () -> Void
     
     var body: some View {
@@ -28,6 +29,9 @@ struct PlanSettingWindowView: View {
                 }
                     .frame(width: 128, height: 48)
 
+            }
+            .sheet(isPresented: $isTapBookSelect) {
+                BookSelectView()
             }
             .frame(width: 336, height: 520)
             .overlay(
@@ -80,9 +84,12 @@ extension PlanSettingWindowView {
             
             HStack(spacing:24){
                 
-                
-                Rectangle()
-                    .frame(width: 104, height: 120)
+                Button(action: {
+                    isTapBookSelect.toggle()
+                }){
+                    Rectangle()
+                        .frame(width: 104, height: 120)
+                }
                 
                 Spacer()
                     .frame(width: 64)

@@ -8,34 +8,49 @@
 import SwiftUI
 
 struct BookSelectView: View {
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
-        VStack(spacing: 40){
-            studyMaterialLabel
-            HStack(spacing: 32){
+        ScrollView{
+            VStack(spacing: 40){
                 
-                studyMaterial
-                studyMaterial
-                studyMaterial
-            }
-            .padding(.bottom, 16)
-            
-            studyMaterialLabel
-            HStack(spacing: 32){
+                studyMaterialLabel
+                HStack(spacing: 32){
+                    
+                    studyMaterial
+                    studyMaterial
+                    studyMaterial
+                }
+                .padding(.bottom, 16)
                 
-                studyMaterial
-                studyMaterial
-                studyMaterial
+                studyMaterialLabel
+                HStack(spacing: 32){
+                    
+                    studyMaterial
+                    studyMaterial
+                    studyMaterial
+                }
+                .padding(.bottom, 24)
+                
+                bookAddButton
+                
+                
             }
-            .padding(.bottom, 16)
+            .overlay(
+                Button(action: {
+                    dismiss() // 親ビューの状態を変更する
+                }) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 16))
+                        .padding(8)
+                },
+                alignment: .topLeading // 左上に配置
+            )
             
-        bookAddButton
-        
-
+            .padding(.horizontal, 20)
         }
-        .padding(.horizontal, 20)
     }
 }
-
 #Preview {
     BookSelectView()
 }
@@ -43,6 +58,7 @@ struct BookSelectView: View {
 extension BookSelectView {
     private var studyMaterialLabel: some View {
         Text("資格")
+            .padding(.top, 40)
             .font(.system(size: 32))
             .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -56,6 +72,7 @@ extension BookSelectView {
                 .font(.system(size: 16))
                 .frame(width: 72)
         }
+        .padding(.bottom, 16)
     }
     
     private var bookAddButton: some View {
