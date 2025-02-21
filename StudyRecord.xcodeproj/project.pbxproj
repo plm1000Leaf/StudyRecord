@@ -10,6 +10,7 @@
 		282A22792D66E390005C789C /* StudyPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A22782D66E390005C789C /* StudyPlanView.swift */; };
 		282A227C2D66F46F005C789C /* BasicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A227B2D66F46F005C789C /* BasicButton.swift */; };
 		282A227E2D66F9B6005C789C /* PlanSettingWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A227D2D66F9B6005C789C /* PlanSettingWindowView.swift */; };
+		282A22802D682411005C789C /* planningCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A227F2D682411005C789C /* planningCalendarView.swift */; };
 		285A37122D65A01B00190B84 /* BeforeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A37112D65A01B00190B84 /* BeforeCheckView.swift */; };
 		288EEEE02D647134001FACBC /* StudyRecordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288EEEDF2D647134001FACBC /* StudyRecordApp.swift */; };
 		288EEEE22D647134001FACBC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288EEEE12D647134001FACBC /* ContentView.swift */; };
@@ -22,6 +23,7 @@
 		282A22782D66E390005C789C /* StudyPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyPlanView.swift; sourceTree = "<group>"; };
 		282A227B2D66F46F005C789C /* BasicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicButton.swift; sourceTree = "<group>"; };
 		282A227D2D66F9B6005C789C /* PlanSettingWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSettingWindowView.swift; sourceTree = "<group>"; };
+		282A227F2D682411005C789C /* planningCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = planningCalendarView.swift; sourceTree = "<group>"; };
 		285A37112D65A01B00190B84 /* BeforeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeCheckView.swift; sourceTree = "<group>"; };
 		288EEEDC2D647134001FACBC /* StudyRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		288EEEDF2D647134001FACBC /* StudyRecordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordApp.swift; sourceTree = "<group>"; };
@@ -46,6 +48,7 @@
 			isa = PBXGroup;
 			children = (
 				282A227B2D66F46F005C789C /* BasicButton.swift */,
+				282A227F2D682411005C789C /* planningCalendarView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				282A227C2D66F46F005C789C /* BasicButton.swift in Sources */,
+				282A22802D682411005C789C /* planningCalendarView.swift in Sources */,
 				288EEEE22D647134001FACBC /* ContentView.swift in Sources */,
 				282A227E2D66F9B6005C789C /* PlanSettingWindowView.swift in Sources */,
 				288EEEE02D647134001FACBC /* StudyRecordApp.swift in Sources */,

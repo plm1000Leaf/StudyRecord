@@ -8,19 +8,32 @@
 import SwiftUI
 
 struct StudyPlanView: View {
+    
+    @State private var isTapDate = false
+    
     var body: some View {
-        VStack(spacing: 56){
-
-            yearAndMonth
+        
+        ZStack{
+            VStack(spacing: 56){
+                
+                yearAndMonth
+                
+                planningCalendar
+                
+                forwardAndBackButton
+                
+                
+            }
+            .padding(.horizontal, 20)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             
-            planningCalendar
-            
-            forwardAndBackButton
-            
-
+            if isTapDate {
+                PlanSettingWindowView {
+                    isTapDate = false // ×ボタンが押されたら閉じる
+                }
+                .zIndex(1) // 他のビューより前面に表示
+            }
         }
-        .padding(.horizontal, 20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 
@@ -48,8 +61,12 @@ extension StudyPlanView {
     }
     
     private var planningCalendar: some View {
-        Rectangle()
-            .frame(width: 336, height: 384)
+        Button(action: {
+            isTapDate = true
+        }){
+            Rectangle()
+                .frame(width: 336, height: 384)
+        }
     }
     
     private var forwardAndBackButton : some View{

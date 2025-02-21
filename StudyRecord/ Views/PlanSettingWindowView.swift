@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct PlanSettingWindowView: View {
+    
+    var onClose: () -> Void
+    
     var body: some View {
-        ZStack(alignment: .top){
+        ZStack{
+            
+            Color.black.opacity(0.5)
+                .edgesIgnoringSafeArea(.all)
+            
             windowBase
             VStack(spacing: 24){
 
@@ -24,19 +31,25 @@ struct PlanSettingWindowView: View {
             }
             .frame(width: 336, height: 520)
             .overlay(
-                Image(systemName: "xmark")
-                    .font(.system(size: 16))
-                    .padding(8),
+                Button(action: {
+                    onClose() // 親ビューの状態を変更する
+                }) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 16))
+                        .padding(8)
+                },
                 alignment: .topLeading // 左上に配置
             )
             
         }
         
+        
     }
 }
 
+
 #Preview {
-    PlanSettingWindowView()
+    PlanSettingWindowView(onClose: {})
 }
 
 
@@ -84,7 +97,8 @@ extension PlanSettingWindowView {
                         .frame(width: 48, height: 32)
                 }
             }
-            .padding(.bottom, 32)
+            .padding(.bottom, 32
+            )
             
         }
     }
@@ -120,7 +134,7 @@ extension PlanSettingWindowView {
     
     private var windowBase: some View {
         Rectangle()
-            .strokeBorder(Color.blue, lineWidth: 1)
+            .fill(Color.white)
             .frame(width: 336, height: 520)
     }
     
