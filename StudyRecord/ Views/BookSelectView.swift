@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BookSelectView: View {
     @Environment(\.dismiss) private var dismiss
+    @State private var isTapAddBook = false
     
     var body: some View {
         ScrollView{
@@ -32,9 +33,15 @@ struct BookSelectView: View {
                 }
                 .padding(.bottom, 24)
                 
-                bookAddButton
-                
-                
+                if isTapAddBook == true {
+                    inputBookInformation
+                } else {
+                    Button(action: {
+                        isTapAddBook = true
+                    }){
+                        bookAddButton
+                    }
+                }
             }
             .overlay(
                 Button(action: {
@@ -51,9 +58,7 @@ struct BookSelectView: View {
         }
     }
 }
-#Preview {
-    BookSelectView()
-}
+
 
 extension BookSelectView {
     private var studyMaterialLabel: some View {
@@ -80,4 +85,28 @@ extension BookSelectView {
             .frame(width: 96, height: 120)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
+    
+    private var inputBookInformation: some View {
+        HStack(spacing:48){
+            Rectangle()
+                .frame(width: 144, height: 180)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack{
+                Rectangle()
+                    .frame(width: 156, height: 32)
+                    .padding(.bottom, 16)
+                Rectangle()
+                    .frame(width: 156, height: 56)
+                    .padding(.bottom, 8)
+                BasicButton(label: "登録") {
+                    isTapAddBook = false
+                }
+
+            }
+            
+
+        }
+    }
+    
 }
+

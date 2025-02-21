@@ -10,6 +10,8 @@ import SwiftUI
 struct PlanSettingWindowView: View {
     
     @State private var isTapBookSelect = false
+
+    
     var onClose: () -> Void
     
     var body: some View {
