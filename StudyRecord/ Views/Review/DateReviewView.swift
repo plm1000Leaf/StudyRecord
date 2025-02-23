@@ -8,20 +8,28 @@
 import SwiftUI
 
 struct DateReviewView: View {
+    
+    @State private var selectedRowIndex: Int? = nil
+    @State private var isTapEditButton = false
+    
     var body: some View {
         VStack{
 
             DateReviewHeader
             
             ScrollView {
-                ForEach(0..<30){ _ in
-                    VStack{
-                        DateReviewRow
-
+                ForEach(0..<30, id: \.self){ index in
+                    Group {
+                        if selectedRowIndex == index {
+                            TodayReview
+                        } else {
+                            DateReviewRow
+                                .onTapGesture {
+                                    selectedRowIndex = index
+                                }
+                        }
                     }
                 }
-                TodayReview
-                FillTodayReview
             }
         }
 
@@ -104,9 +112,13 @@ extension DateReviewView {
                         Circle()
                             .frame(width: 32, height: 32)
                             .foregroundColor(.blue)
-                        Circle()
-                            .frame(width: 32, height: 32)
-                            .foregroundColor(.blue)
+                        Button(action: {
+                            isTapEditButton = true
+                        }){
+                            Circle()
+                                .frame(width: 32, height: 32)
+                                .foregroundColor(.blue)
+                        }
                     }
                     .padding(.top, 8)
                     
