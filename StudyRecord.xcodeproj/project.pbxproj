@@ -13,6 +13,7 @@
 		282A22802D682411005C789C /* planningCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A227F2D682411005C789C /* planningCalendarView.swift */; };
 		282A22822D684B89005C789C /* BookSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A22812D684B89005C789C /* BookSelectView.swift */; };
 		282A22842D6973B8005C789C /* DateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A22832D6973B7005C789C /* DateReviewView.swift */; };
+		282A22892D6D8777005C789C /* MonthReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A22882D6D8776005C789C /* MonthReviewView.swift */; };
 		285A37122D65A01B00190B84 /* BeforeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A37112D65A01B00190B84 /* BeforeCheckView.swift */; };
 		288EEEE02D647134001FACBC /* StudyRecordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288EEEDF2D647134001FACBC /* StudyRecordApp.swift */; };
 		288EEEE22D647134001FACBC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288EEEE12D647134001FACBC /* ContentView.swift */; };
@@ -28,6 +29,7 @@
 		282A227F2D682411005C789C /* planningCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = planningCalendarView.swift; sourceTree = "<group>"; };
 		282A22812D684B89005C789C /* BookSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSelectView.swift; sourceTree = "<group>"; };
 		282A22832D6973B7005C789C /* DateReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateReviewView.swift; sourceTree = "<group>"; };
+		282A22882D6D8776005C789C /* MonthReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthReviewView.swift; sourceTree = "<group>"; };
 		285A37112D65A01B00190B84 /* BeforeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeCheckView.swift; sourceTree = "<group>"; };
 		288EEEDC2D647134001FACBC /* StudyRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		288EEEDF2D647134001FACBC /* StudyRecordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordApp.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				282A22832D6973B7005C789C /* DateReviewView.swift */,
+				282A22882D6D8776005C789C /* MonthReviewView.swift */,
 			);
 			path = Review;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				285A37122D65A01B00190B84 /* BeforeCheckView.swift in Sources */,
 				28CD81A92D65BD8000894BF8 /* AfterCheckView.swift in Sources */,
 				282A22822D684B89005C789C /* BookSelectView.swift in Sources */,
+				282A22892D6D8777005C789C /* MonthReviewView.swift in Sources */,
 				282A22792D66E390005C789C /* StudyPlanView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
