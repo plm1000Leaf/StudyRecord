@@ -19,11 +19,13 @@ struct MonthReviewView: View {
                     .font(.system(size: 48))
                     .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
             }
+            .padding(.top, 40)
             
             Rectangle()
                 .frame(width: 336, height: 352)
             
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 
