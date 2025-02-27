@@ -20,6 +20,7 @@
 		288EEEE22D647134001FACBC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288EEEE12D647134001FACBC /* ContentView.swift */; };
 		288EEEE42D647137001FACBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 288EEEE32D647137001FACBC /* Assets.xcassets */; };
 		288EEEE72D647137001FACBC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 288EEEE62D647137001FACBC /* Preview Assets.xcassets */; };
+		28BDAC222D70302A0033FA2F /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BDAC212D70302A0033FA2F /* MainTabView.swift */; };
 		28CD81A92D65BD8000894BF8 /* AfterCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		288EEEE12D647134001FACBC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		288EEEE32D647137001FACBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		288EEEE62D647137001FACBC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		28BDAC212D70302A0033FA2F /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterCheckView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +59,7 @@
 			children = (
 				282A227B2D66F46F005C789C /* BasicButton.swift */,
 				282A227F2D682411005C789C /* planningCalendarView.swift */,
+				28BDAC212D70302A0033FA2F /* MainTabView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			files = (
 				282A227C2D66F46F005C789C /* BasicButton.swift in Sources */,
 				282A22802D682411005C789C /* planningCalendarView.swift in Sources */,
+				28BDAC222D70302A0033FA2F /* MainTabView.swift in Sources */,
 				282A22842D6973B8005C789C /* DateReviewView.swift in Sources */,
 				288EEEE22D647134001FACBC /* ContentView.swift in Sources */,
 				282A227E2D66F9B6005C789C /* PlanSettingWindowView.swift in Sources */,
