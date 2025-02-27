@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct YearReviewView: View {
+    
     var body: some View {
-        VStack(spacing: 16){
-            header
-            monthButton
-            segmentedControl
-
+        
+            VStack(spacing: 16){
+                header
+                monthButton
+                segmentedControl
+                
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
-}
 
-#Preview {
-    YearReviewView()
-}
 
 extension YearReviewView {
     private var header: some View {
@@ -38,8 +37,10 @@ extension YearReviewView {
         ForEach(0..<4) { _ in
             HStack(spacing: 16){
                 ForEach(0..<3) {_ in
-                    Rectangle()
-                        .frame(width: 104, height: 104)
+
+                        Rectangle()
+                            .frame(width: 104, height: 104)
+                
                 }
             }
         }
@@ -53,4 +54,7 @@ extension YearReviewView {
     }
     
     
+}
+#Preview {
+    YearReviewView()
 }

@@ -11,27 +11,30 @@ struct DateReviewView: View {
     
     @State private var selectedRowIndex: Int? = nil
     @State private var isTapEditButton = false
+
     
     var body: some View {
-        VStack{
+            VStack{
 
-            DateReviewHeader
-            
-            ScrollView {
-                ForEach(0..<30, id: \.self){ index in
-                    Group {
-                        if selectedRowIndex == index {
-                            TodayReview
-                        } else {
-                            DateReviewRow
-                                .onTapGesture {
-                                    selectedRowIndex = index
-                                }
+                DateReviewHeader
+                
+                ScrollView {
+                    ForEach(0..<30, id: \.self){ index in
+                        Group {
+                            if selectedRowIndex == index {
+                                TodayReview
+                            } else {
+                                DateReviewRow
+                                    .onTapGesture {
+                                        selectedRowIndex = index
+                                    }
+                            }
                         }
                     }
                 }
             }
-        }
+            
+        
 
     }
     
@@ -57,8 +60,34 @@ extension DateReviewView {
     }
     
     private var DateReviewHeader: some View {
-        Rectangle()
-            .frame(width: 392, height: 88)
+        ZStack{
+            
+            Rectangle()
+                .frame(width: 392, height: 88)
+            HStack{
+                VStack(alignment: .leading){
+                     HStack{
+                            Image(systemName: "chevron.left")
+                            Text("月")
+                        }
+        
+                    
+                    HStack(alignment: .bottom){
+                        Text("2025")
+                            .font(.system(size: 16))
+                            .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
+                        
+                        Text("1")
+                            .font(.system(size: 48))
+                            .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
+                    }
+                }
+                Spacer()
+            
+            }
+            .padding(.leading, 28)
+            .foregroundColor(.white)
+        }
     }
     
     private var TodayReview: some View {
@@ -193,4 +222,8 @@ extension DateReviewView {
         .padding(.bottom, 32)
     }
     
+}
+
+#Preview {
+   DateReviewView()
 }
