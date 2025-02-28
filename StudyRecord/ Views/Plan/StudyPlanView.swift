@@ -16,12 +16,7 @@ struct StudyPlanView: View {
         ZStack{
             VStack(spacing: 56){
                 
-                yearAndMonth
-                
-                planningCalendar
-                
-                forwardAndBackButton
-                
+                planningCalendarView()
                 
             }
             .padding(.horizontal, 20)
@@ -77,4 +72,5 @@ extension StudyPlanView {
             .frame(width: 48, height: 48)
         }
     }
+    
 }

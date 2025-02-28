@@ -7,28 +7,13 @@
 
 import SwiftUI
 
-struct CustomCalendarView: View {
+struct planningCalendarView: View {
     @State private var currentMonth: Date = Date()
-    
     var body: some View {
         VStack {
-            HStack {
-                Button(action: {
-                    changeMonth(by: -1)
-                }) {
-                    Image(systemName: "chevron.left")
-                }
+
                 
-                Text(monthYearString(from: currentMonth))
-                    .font(.title)
-                
-                Button(action: {
-                    changeMonth(by: 1)
-                }) {
-                    Image(systemName: "chevron.right")
-                }
-            }
-            .padding()
+            header
             
             let days = generateCalendarDays(for: currentMonth)
             
@@ -40,10 +25,30 @@ struct CustomCalendarView: View {
                 }
                 
                 ForEach(days, id: \.self) { date in
-                    Text(date > 0 ? "\(date)" : "")
-                        .frame(maxWidth: .infinity, minHeight: 40)
-                        .background(date > 0 ? Color.blue.opacity(0.2) : Color.clear)
-                        .cornerRadius(5)
+                    VStack{
+                        Text(date > 0 ? "\(date)" : "")
+                            .font(.system(size: 16))
+                            .padding(.leading, 16)
+                            .cornerRadius(5)
+                        todayStudyPlan
+                    }
+                }
+            }
+            .padding()
+            
+            HStack {
+                Button(action: {
+                    changeMonth(by: -1)
+                }) {
+                    Image(systemName: "chevron.left")
+                }
+            
+                Spacer()
+                
+                Button(action: {
+                    changeMonth(by: 1)
+                }) {
+                    Image(systemName: "chevron.right")
                 }
             }
             .padding()
@@ -58,7 +63,7 @@ struct CustomCalendarView: View {
     
     private func monthYearString(from date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年 MM月"
+        formatter.dateFormat = "yyyy MM"
         formatter.locale = Locale(identifier: "ja_JP")
         return formatter.string(from: date)
     }
@@ -79,6 +84,35 @@ extension Date {
 
 struct CustomCalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CustomCalendarView()
+        planningCalendarView()
     }
+}
+
+extension planningCalendarView {
+    private var todayStudyPlan: some View  {
+        VStack{
+            ZStack{
+                
+                Rectangle()
+                    .frame(width: 40,height: 32)
+                
+            }
+            HStack(spacing: 1){
+                Image(systemName: "clock")
+                    .font(.system(size: 8))
+                Text("13:00")
+                    .font(.system(size: 8))
+            }
+            
+            .padding(.bottom, 8)
+        }
+    }
+    private var header: some View  {
+        Text(monthYearString(from: currentMonth))
+            .font(.title)
+    }
+}
+
+#Preview {
+    planningCalendarView()
 }
