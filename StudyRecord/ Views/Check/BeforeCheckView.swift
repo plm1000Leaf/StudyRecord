@@ -9,7 +9,8 @@ import SwiftUI
 
 struct BeforeCheckView: View {
     @State private var isDoneStudy = false
-
+    @State private var userInput: String = ""
+    
     var body: some View {
         ZStack {
             if isDoneStudy {
@@ -80,7 +81,7 @@ extension BeforeCheckView {
     private var todayStudyPlanSetting: some View {
         HStack(alignment: .top){
             VStack(spacing: 8){
-                Rectangle()
+                InputTextField(placeholder: "名前を入力", text: $userInput)
                     .frame(width: 48, height: 32)
                 Text("〜")
                     .font(.system(size: 32))

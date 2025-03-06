@@ -16,7 +16,7 @@ struct StudyPlanView: View {
         ZStack{
             VStack(spacing: 56){
                 
-                planningCalendarView()
+                PlanningCalendar()
                 
             }
             .padding(.horizontal, 20)
