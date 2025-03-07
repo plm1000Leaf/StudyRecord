@@ -10,8 +10,8 @@ import SwiftUI
 struct PlanSettingWindowView: View {
     
     @State private var isTapBookSelect = false
-
-    
+    @State private var startPage: String = ""
+    @State private var endPage: String = ""
     var onClose: () -> Void
     
     var body: some View {
@@ -24,8 +24,11 @@ struct PlanSettingWindowView: View {
             VStack(spacing: 24){
 
                 windowTitle
-                inputLearningContent
-                inputScheduledTime
+                VStack(alignment: .leading){
+                    inputLearningContent
+                    inputScheduledTime
+                }
+                
                 BasicButton(label: "決定"){
                     print("Doneボタンが押されました")
                 }
@@ -93,21 +96,20 @@ extension PlanSettingWindowView {
                         .frame(width: 104, height: 120)
                 }
                 
-                Spacer()
-                    .frame(width: 64)
+
                 VStack(spacing: 8){
-                    Rectangle()
-                        .frame(width: 48, height: 32)
+                    InputTextField(placeholder: "ページ数", text: $startPage)
+                        .frame(width: 88, height: 32)
                     Text("〜")
                         .font(.system(size: 32))
                         .bold()
                         .rotationEffect(.degrees(90))
-                    Rectangle()
-                        .frame(width: 48, height: 32)
+                    InputTextField(placeholder: "ページ数", text: $endPage)
+                        .frame(width: 88, height: 32)
                 }
+                
             }
-            .padding(.bottom, 32
-            )
+            .padding(.bottom, 32)
             
         }
     }

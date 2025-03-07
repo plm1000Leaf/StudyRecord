@@ -81,14 +81,14 @@ extension BeforeCheckView {
     private var todayStudyPlanSetting: some View {
         HStack(alignment: .top){
             VStack(spacing: 8){
-                InputTextField(placeholder: "名前を入力", text: $userInput)
-                    .frame(width: 48, height: 32)
+                InputTextField(placeholder: "ページ数", text: $userInput)
+                    .frame(width: 88, height: 32)
                 Text("〜")
                     .font(.system(size: 32))
                     .bold()
                     .rotationEffect(.degrees(90))
-                Rectangle()
-                    .frame(width: 48, height: 32)
+                InputTextField(placeholder: "ページ数", text: $userInput)
+                    .frame(width: 88, height: 32)
             }
             
             Spacer()

@@ -65,7 +65,6 @@
 			children = (
 				282A227B2D66F46F005C789C /* BasicButton.swift */,
 				282A227F2D682411005C789C /* PlanningCalendar.swift */,
-				28BDAC212D70302A0033FA2F /* MainTabView.swift */,
 				2841A8402D71BFA300275EFF /* InputTextField.swift */,
 				2841A8422D79A6BB00275EFF /* MonthReviewCalendar.swift */,
 			);
@@ -112,6 +111,7 @@
 		285A37102D659FA800190B84 /*  Views */ = {
 			isa = PBXGroup;
 			children = (
+				28BDAC212D70302A0033FA2F /* MainTabView.swift */,
 				282A22872D6973FD005C789C /* Review */,
 				282A22862D6973DD005C789C /* Plan */,
 				282A22852D6973C8005C789C /* Check */,
