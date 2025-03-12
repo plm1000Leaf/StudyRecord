@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct YearReviewView: View {
+    @State private var showMonthReviewView = false
     
     var body: some View {
-        
-            VStack(spacing: 16){
-                header
-                monthButton
-                segmentedControl
-                
+        ZStack {
+            if !showMonthReviewView {
+                yearView
+                    .transition(.move(edge: .leading))
+            } else {
+                MonthReviewView(showMonthReviewView: $showMonthReviewView)
+                    .transition(.move(edge: .trailing))
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
+        .animation(.easeInOut, value: showMonthReviewView)
+    }
     }
 
 
@@ -37,10 +40,14 @@ extension YearReviewView {
         ForEach(0..<4) { _ in
             HStack(spacing: 16){
                 ForEach(0..<3) {_ in
-
+                    Button(action: {
+                        withAnimation {
+                            showMonthReviewView = true
+                        }
+                    }) {
                         Rectangle()
                             .frame(width: 104, height: 104)
-                
+                    }
                 }
             }
         }
@@ -51,6 +58,15 @@ extension YearReviewView {
         Rectangle()
             .frame(width: 264, height: 48)
             .padding(.top, 24)
+    }
+    
+    private var yearView: some View {
+        VStack(spacing: 16) {
+            header
+            monthButton
+            segmentedControl
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
     
     

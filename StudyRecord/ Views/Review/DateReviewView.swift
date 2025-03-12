@@ -11,7 +11,8 @@ struct DateReviewView: View {
     
     @State private var selectedRowIndex: Int? = nil
     @State private var isTapEditButton = false
-
+    @State private var userInput: String = ""
+  
     
     var body: some View {
             VStack{
@@ -204,7 +205,7 @@ extension DateReviewView {
                         .foregroundColor(.blue)
                     }
                     .padding(.bottom, 8)
-                    Rectangle()
+                    InputTextField(placeholder: "振り返りを入力", text: $userInput)
                         .frame(width: 208, height: 64)
                         .foregroundColor(.blue)
                     HStack{

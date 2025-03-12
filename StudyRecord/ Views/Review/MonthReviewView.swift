@@ -8,32 +8,39 @@
 import SwiftUI
 
 struct MonthReviewView: View {
-
+    @State private var showDateReviewView = false
+    @Binding var showMonthReviewView: Bool
     var body: some View {
-            VStack{
-
-                DateReviewHeader
-                MonthReviewCalendar()
-                Spacer()
-                
-            }
+        monthView
 
         }
     }
 
-#Preview {
-    MonthReviewView()
-}
+
 
 extension MonthReviewView {
+    private var monthView: some View {
+        VStack{
+
+            DateReviewHeader
+            MonthReviewCalendar()
+            Spacer()
+            
+        }
+    }
     private var DateReviewHeader: some View {
 
             HStack{
-  
-                        HStack{
-                            Image(systemName: "chevron.left")
-                            Text("年")
-                        }
+                Button(action: {
+                    withAnimation {
+                        showMonthReviewView = false  // YearReviewView に戻る
+                    }
+                }) {
+                    HStack{
+                        Image(systemName: "chevron.left")
+                        Text("年")
+                    }
+                }
 
                 Spacer()
                 
@@ -45,5 +52,5 @@ extension MonthReviewView {
 }
 
 #Preview {
-   MonthReviewView()
+    MonthReviewView(showMonthReviewView: .constant(true))
 }
