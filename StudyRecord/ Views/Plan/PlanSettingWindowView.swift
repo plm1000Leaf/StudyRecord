@@ -87,14 +87,15 @@ extension PlanSettingWindowView {
             Text("学習予定")
                 .font(.system(size: 24))
             
-            HStack(spacing:24){
-                
+            HStack(spacing:40){
+
                 Button(action: {
                     isTapBookSelect.toggle()
                 }){
                     Rectangle()
                         .frame(width: 104, height: 120)
                 }
+                .padding(.leading, 16)
                 
 
                 VStack(spacing: 8){
@@ -120,9 +121,9 @@ extension PlanSettingWindowView {
             Text("予定時間")
                 .font(.system(size: 24))
             
-            HStack(spacing: 40){
-                Rectangle()
-                    .frame(width: 104, height: 40)
+            HStack{
+                TimeSelectButton()
+                    .frame(width: 180 , height: 40)
                 
                 VStack(spacing: 24){
                     HStack {

@@ -75,7 +75,7 @@ extension BeforeCheckView {
                 .font(.system(size: 16))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.bottom, -8)
+        .padding(.bottom, 16)
     }
     
     private var todayStudyPlanSetting: some View {
@@ -92,13 +92,14 @@ extension BeforeCheckView {
             }
             
             Spacer()
-                .frame(width: 128)
-            VStack {
+                .frame(width: 56)
+
                 
-                Rectangle()
-                    .frame(width: 104 , height: 32)
+                TimeSelectButton()
+                    .frame(width: 200 , height: 40)
+
                 
-            }
+
         }
     }
     
