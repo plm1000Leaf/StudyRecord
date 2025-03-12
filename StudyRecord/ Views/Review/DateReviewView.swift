@@ -22,7 +22,11 @@ struct DateReviewView: View {
                     ForEach(0..<30, id: \.self){ index in
                         Group {
                             if selectedRowIndex == index {
-                                TodayReview
+                                if isTapEditButton {
+                                    FillTodayReview
+                                } else {
+                                    SelectReview
+                                }
                             } else {
                                 DateReviewRow
                                     .onTapGesture {
@@ -90,7 +94,7 @@ extension DateReviewView {
         }
     }
     
-    private var TodayReview: some View {
+    private var SelectReview: some View {
         HStack(alignment: .top, spacing: 32){
             VStack(alignment: .trailing){
                 Text("30")
@@ -206,7 +210,7 @@ extension DateReviewView {
                     HStack{
                         
                         BasicButton(label: "確定", action: {
-                            print("確定ボタンが押されました")
+                            isTapEditButton = false
                         })
 
                             .frame(width: 56, height: 32)
