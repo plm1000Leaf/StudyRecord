@@ -2,7 +2,7 @@ import SwiftUI
 
 struct MonthReviewCalendar: View {
     @State private var currentMonth: Date = Date()
-
+    @Binding var showDateReviewView: Bool
     var body: some View {
         VStack {
             header
@@ -35,9 +35,15 @@ struct MonthReviewCalendar: View {
 
 extension MonthReviewCalendar {
     private var checkMark: some View {
-        Circle()
-            .frame(width: 30)
-            .padding(.bottom, 8)
+        Button(action: {
+            withAnimation {
+                showDateReviewView = true
+            }
+        }){
+            Circle()
+                .frame(width: 30)
+                .padding(.bottom, 8)
+        }
     }
     
     private var header: some View {
@@ -47,6 +53,6 @@ extension MonthReviewCalendar {
 }
 
 #Preview {
-    MonthReviewCalendar()
+    MonthReviewCalendar(showDateReviewView: .constant(true))
 }
 

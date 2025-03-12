@@ -11,7 +11,16 @@ struct MonthReviewView: View {
     @State private var showDateReviewView = false
     @Binding var showMonthReviewView: Bool
     var body: some View {
-        monthView
+        ZStack {
+            if !showDateReviewView {
+                monthView
+                    .transition(.move(edge: .leading))
+            } else {
+                DateReviewView(showDateReviewView: $showDateReviewView)
+                    .transition(.move(edge: .trailing))
+            }
+        }
+        .animation(.easeInOut, value: showDateReviewView)
 
         }
     }
@@ -23,7 +32,7 @@ extension MonthReviewView {
         VStack{
 
             DateReviewHeader
-            MonthReviewCalendar()
+            MonthReviewCalendar(showDateReviewView: $showDateReviewView)
             Spacer()
             
         }

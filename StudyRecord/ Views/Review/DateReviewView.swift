@@ -12,7 +12,7 @@ struct DateReviewView: View {
     @State private var selectedRowIndex: Int? = nil
     @State private var isTapEditButton = false
     @State private var userInput: String = ""
-  
+    @Binding var showDateReviewView: Bool
     
     var body: some View {
             VStack{
@@ -45,9 +45,6 @@ struct DateReviewView: View {
     
 }
 
-#Preview {
-    DateReviewView()
-}
 
 extension DateReviewView {
     private var DateReviewRow: some View {
@@ -71,11 +68,17 @@ extension DateReviewView {
                 .frame(width: 392, height: 88)
             HStack{
                 VStack(alignment: .leading){
-                     HStack{
+                    
+                    Button(action: {
+                        withAnimation {
+                            showDateReviewView = false  // MonthReviewView に戻る
+                        }
+                    }){
+                        HStack{
                             Image(systemName: "chevron.left")
                             Text("月")
                         }
-        
+                    }
                     
                     HStack(alignment: .bottom){
                         Text("2025")
@@ -230,5 +233,5 @@ extension DateReviewView {
 }
 
 #Preview {
-   DateReviewView()
+   DateReviewView(showDateReviewView: .constant(true))
 }
