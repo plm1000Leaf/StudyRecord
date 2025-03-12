@@ -16,7 +16,7 @@ struct StudyPlanView: View {
         ZStack{
             VStack(spacing: 56){
                 
-                PlanningCalendar()
+                PlanningCalendar(isTapDate: $isTapDate)
                 
             }
             .padding(.horizontal, 20)

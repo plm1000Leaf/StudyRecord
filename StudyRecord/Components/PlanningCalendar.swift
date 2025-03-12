@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PlanningCalendar: View {
     @State private var currentMonth: Date = Date()
-
+    @Binding var isTapDate: Bool
     var body: some View {
         VStack {
             header
@@ -52,9 +52,16 @@ extension PlanningCalendar {
     private var todayStudyPlan: some View {
         VStack {
             ZStack {
-                Rectangle()
-                    .frame(width: 40, height: 32)
+                Button(action: {
+                    withAnimation {
+                        isTapDate = true
+                    }
+                }){
+                    Rectangle()
+                        .frame(width: 40, height: 32)
+                }
             }
+                
             HStack(spacing: 1) {
                 Image(systemName: "clock")
                     .font(.system(size: 8))
@@ -72,5 +79,5 @@ extension PlanningCalendar {
 }
 
 #Preview {
-    PlanningCalendar()
+    PlanningCalendar(isTapDate: .constant(true))
 }
