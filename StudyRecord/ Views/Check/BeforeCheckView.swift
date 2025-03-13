@@ -12,8 +12,8 @@ struct BeforeCheckView: View {
     @State private var userInput: String = ""
     
     var body: some View {
-        ZStack {
-            if isDoneStudy {
+        Group {
+            if isDoneStudy == true {
                 AfterCheckView(isDoneStudy: $isDoneStudy)
             } else {
                 mainView

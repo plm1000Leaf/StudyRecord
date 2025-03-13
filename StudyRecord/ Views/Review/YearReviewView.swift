@@ -37,16 +37,24 @@ extension YearReviewView {
     }
     
     private var monthButton: some View {
-        ForEach(0..<4) { _ in
+        ForEach(0..<4, id: \.self) { rowIndex in
             HStack(spacing: 16){
-                ForEach(0..<3) {_ in
+                ForEach(0..<3, id: \.self) { columnIndex in
+                    let monthNumber = rowIndex * 3 + columnIndex + 1
                     Button(action: {
                         withAnimation {
                             showMonthReviewView = true
                         }
                     }) {
-                        Rectangle()
-                            .frame(width: 104, height: 104)
+                        ZStack{
+                            Rectangle()
+                                .frame(width: 104, height: 104)
+                                .foregroundColor(.black)
+                            Text("\(monthNumber)")
+                                .foregroundColor(.white)
+                                .font(.system(size: 32))
+                                 .bold()
+                        }
                     }
                 }
             }
