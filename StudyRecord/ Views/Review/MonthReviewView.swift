@@ -55,7 +55,7 @@ extension MonthReviewView {
                 
             }
             .padding(.leading, 28)
-            .padding(.bottom, 40)
+            .padding(.bottom, -40)
         }
 
 }

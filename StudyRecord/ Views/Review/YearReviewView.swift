@@ -31,6 +31,10 @@ extension YearReviewView {
             Text("2025")
                 .font(.system(size: 48))
             Spacer()
+            Image(systemName: "square.and.arrow.up")
+                .font(.system(size: 24))
+                .frame(maxWidth: .infinity, alignment:
+                        .trailing)
         }
         .padding([.top, .bottom], 48)
         .frame(maxWidth: 312, alignment: .leading)

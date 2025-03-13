@@ -73,8 +73,20 @@ extension PlanningCalendar {
     }
     
     private var header: some View {
-        Text(CalendarUtils.monthYearString(from: currentMonth))
-            .font(.title)
+        HStack(alignment: .bottom){
+            Text(CalendarUtils.yearString(from: currentMonth))
+                .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
+                .font(.system(size: 16))
+                .padding(.leading, 28)
+
+            Text(CalendarUtils.monthString(from: currentMonth))
+                .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
+                .font(.system(size: 48))
+                .padding(.leading, 8)
+        }
+        .frame(maxWidth: .infinity, alignment:
+                .leading)
+
     }
 }
 

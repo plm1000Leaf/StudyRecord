@@ -5,6 +5,7 @@ struct MonthReviewCalendar: View {
     @Binding var showDateReviewView: Bool
     var body: some View {
         VStack {
+
             header
             
             let days = CalendarUtils.generateCalendarDays(for: currentMonth)
@@ -47,8 +48,25 @@ extension MonthReviewCalendar {
     }
     
     private var header: some View {
-        Text(CalendarUtils.monthYearString(from: currentMonth))
-            .font(.title)
+        HStack(alignment: .bottom){
+            Text(CalendarUtils.yearString(from: currentMonth))
+                .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
+                .font(.system(size: 16))
+                .padding(.leading, 28)
+
+            Text(CalendarUtils.monthString(from: currentMonth))
+                .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
+                .font(.system(size: 48))
+                .padding(.leading, 8)
+
+            Image(systemName: "square.and.arrow.up")
+                .font(.system(size: 24))
+                .frame(maxWidth: .infinity, alignment:
+                        .trailing)
+                .padding(.trailing, 28)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .padding(.top, 40)
     }
 }
 

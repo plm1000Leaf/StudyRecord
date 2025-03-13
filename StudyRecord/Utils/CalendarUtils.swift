@@ -18,9 +18,17 @@ struct CalendarUtils {
         Calendar.current.date(byAdding: .month, value: offset, to: currentMonth) ?? currentMonth
     }
     
-    static func monthYearString(from date: Date) -> String {
+
+    static func monthString(from date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy MM"
+        formatter.dateFormat = "M"
+        formatter.locale = Locale(identifier: "ja_JP")
+        return formatter.string(from: date)
+    }
+    
+    static func yearString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
         formatter.locale = Locale(identifier: "ja_JP")
         return formatter.string(from: date)
     }
