@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct InputTextField: View {
+struct InputStudyRange: View {
     var placeholder: String
     @Binding var text: String
     @State private var userInput: String = ""
@@ -24,3 +24,6 @@ struct InputTextField: View {
     }
 }
 
+#Preview {
+    InputStudyRange(placeholder: "入力して", text: .constant(""))
+}
