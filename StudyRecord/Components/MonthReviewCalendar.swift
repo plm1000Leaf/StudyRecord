@@ -4,10 +4,10 @@ struct MonthReviewCalendar: View {
     @State private var currentMonth: Date = Date()
     @Binding var showDateReviewView: Bool
     var body: some View {
-        VStack {
+        VStack{
 
             header
-            
+
             let days = CalendarUtils.generateCalendarDays(for: currentMonth)
             
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
@@ -31,6 +31,7 @@ struct MonthReviewCalendar: View {
             
 
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 
@@ -65,8 +66,9 @@ extension MonthReviewCalendar {
                         .trailing)
                 .padding(.trailing, 28)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+
         .padding(.top, 40)
+
     }
 }
 

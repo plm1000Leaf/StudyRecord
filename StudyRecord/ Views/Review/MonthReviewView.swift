@@ -33,7 +33,7 @@ extension MonthReviewView {
 
             DateReviewHeader
             MonthReviewCalendar(showDateReviewView: $showDateReviewView)
-            Spacer()
+
             
         }
     }
