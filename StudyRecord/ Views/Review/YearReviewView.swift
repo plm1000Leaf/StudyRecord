@@ -27,6 +27,8 @@ struct YearReviewView: View {
 
 extension YearReviewView {
     private var header: some View {
+        
+        
         HStack{
             Text("2025")
                 .font(.system(size: 48))
@@ -36,7 +38,8 @@ extension YearReviewView {
                 .frame(maxWidth: .infinity, alignment:
                         .trailing)
         }
-        .padding([.top, .bottom], 48)
+        .padding(.top, 48)
+        .padding(.bottom, 40)
         .frame(maxWidth: 312, alignment: .leading)
     }
     
@@ -76,7 +79,8 @@ extension YearReviewView {
         VStack(spacing: 16) {
             header
             monthButton
-            segmentedControl
+            SegmentedControlButton()
+                .frame(width: 264, height: 56)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }

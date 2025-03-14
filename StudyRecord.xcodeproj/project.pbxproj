@@ -25,6 +25,7 @@
 		288EEEE72D647137001FACBC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 288EEEE62D647137001FACBC /* Preview Assets.xcassets */; };
 		28BDAC222D70302A0033FA2F /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BDAC212D70302A0033FA2F /* MainTabView.swift */; };
 		28CD81A92D65BD8000894BF8 /* AfterCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */; };
+		28EE76AA2D83D5960072747C /* SegmentedControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76A92D83D5960072747C /* SegmentedControlButton.swift */; };
 		28FAA01D2D812AC900411760 /* TimeSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FAA01C2D812AC900411760 /* TimeSelectButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		288EEEE62D647137001FACBC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		28BDAC212D70302A0033FA2F /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterCheckView.swift; sourceTree = "<group>"; };
+		28EE76A92D83D5960072747C /* SegmentedControlButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlButton.swift; sourceTree = "<group>"; };
 		28FAA01C2D812AC900411760 /* TimeSelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSelectButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,6 +72,7 @@
 				2841A8402D71BFA300275EFF /* InputTextField.swift */,
 				2841A8422D79A6BB00275EFF /* MonthReviewCalendar.swift */,
 				28FAA01C2D812AC900411760 /* TimeSelectButton.swift */,
+				28EE76A92D83D5960072747C /* SegmentedControlButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 			files = (
 				2841A8462D79AC4900275EFF /* CalendarUtils.swift in Sources */,
 				282A227C2D66F46F005C789C /* BasicButton.swift in Sources */,
+				28EE76AA2D83D5960072747C /* SegmentedControlButton.swift in Sources */,
 				282A22802D682411005C789C /* PlanningCalendar.swift in Sources */,
 				28BDAC222D70302A0033FA2F /* MainTabView.swift in Sources */,
 				282A22842D6973B8005C789C /* DateReviewView.swift in Sources */,
