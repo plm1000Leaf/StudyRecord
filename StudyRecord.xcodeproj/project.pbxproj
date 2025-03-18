@@ -15,7 +15,7 @@
 		282A22842D6973B8005C789C /* DateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A22832D6973B7005C789C /* DateReviewView.swift */; };
 		282A22892D6D8777005C789C /* MonthReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A22882D6D8776005C789C /* MonthReviewView.swift */; };
 		282A228B2D6ED09C005C789C /* YearReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A228A2D6ED09C005C789C /* YearReviewView.swift */; };
-		2841A8412D71BFA300275EFF /* InputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2841A8402D71BFA300275EFF /* InputTextField.swift */; };
+		2841A8412D71BFA300275EFF /* InputStudyRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2841A8402D71BFA300275EFF /* InputStudyRange.swift */; };
 		2841A8432D79A6BB00275EFF /* MonthReviewCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2841A8422D79A6BB00275EFF /* MonthReviewCalendar.swift */; };
 		2841A8462D79AC4900275EFF /* CalendarUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2841A8452D79AC4900275EFF /* CalendarUtils.swift */; };
 		285A37122D65A01B00190B84 /* BeforeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A37112D65A01B00190B84 /* BeforeCheckView.swift */; };
@@ -27,6 +27,8 @@
 		28CD81A92D65BD8000894BF8 /* AfterCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */; };
 		28EE76AA2D83D5960072747C /* SegmentedControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76A92D83D5960072747C /* SegmentedControlButton.swift */; };
 		28EE76AC2D83D8C30072747C /* YearReviewGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76AB2D83D8C30072747C /* YearReviewGraphView.swift */; };
+		28EE76AE2D83E3EB0072747C /* InputReviewField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76AD2D83E3EB0072747C /* InputReviewField.swift */; };
+		28EE76B02D8937360072747C /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76AF2D8937360072747C /* CustomTextEditor.swift */; };
 		28FAA01D2D812AC900411760 /* TimeSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FAA01C2D812AC900411760 /* TimeSelectButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,7 +41,7 @@
 		282A22832D6973B7005C789C /* DateReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateReviewView.swift; sourceTree = "<group>"; };
 		282A22882D6D8776005C789C /* MonthReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthReviewView.swift; sourceTree = "<group>"; };
 		282A228A2D6ED09C005C789C /* YearReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearReviewView.swift; sourceTree = "<group>"; };
-		2841A8402D71BFA300275EFF /* InputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextField.swift; sourceTree = "<group>"; };
+		2841A8402D71BFA300275EFF /* InputStudyRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputStudyRange.swift; sourceTree = "<group>"; };
 		2841A8422D79A6BB00275EFF /* MonthReviewCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthReviewCalendar.swift; sourceTree = "<group>"; };
 		2841A8452D79AC4900275EFF /* CalendarUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarUtils.swift; sourceTree = "<group>"; };
 		285A37112D65A01B00190B84 /* BeforeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeCheckView.swift; sourceTree = "<group>"; };
@@ -52,6 +54,8 @@
 		28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterCheckView.swift; sourceTree = "<group>"; };
 		28EE76A92D83D5960072747C /* SegmentedControlButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlButton.swift; sourceTree = "<group>"; };
 		28EE76AB2D83D8C30072747C /* YearReviewGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearReviewGraphView.swift; sourceTree = "<group>"; };
+		28EE76AD2D83E3EB0072747C /* InputReviewField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputReviewField.swift; sourceTree = "<group>"; };
+		28EE76AF2D8937360072747C /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
 		28FAA01C2D812AC900411760 /* TimeSelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSelectButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,10 +75,11 @@
 			children = (
 				282A227B2D66F46F005C789C /* BasicButton.swift */,
 				282A227F2D682411005C789C /* PlanningCalendar.swift */,
-				2841A8402D71BFA300275EFF /* InputTextField.swift */,
+				2841A8402D71BFA300275EFF /* InputStudyRange.swift */,
 				2841A8422D79A6BB00275EFF /* MonthReviewCalendar.swift */,
 				28FAA01C2D812AC900411760 /* TimeSelectButton.swift */,
 				28EE76A92D83D5960072747C /* SegmentedControlButton.swift */,
+				28EE76AD2D83E3EB0072747C /* InputReviewField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -113,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				2841A8452D79AC4900275EFF /* CalendarUtils.swift */,
+				28EE76AF2D8937360072747C /* CustomTextEditor.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -241,9 +247,11 @@
 				28EE76AA2D83D5960072747C /* SegmentedControlButton.swift in Sources */,
 				282A22802D682411005C789C /* PlanningCalendar.swift in Sources */,
 				28BDAC222D70302A0033FA2F /* MainTabView.swift in Sources */,
+				28EE76AE2D83E3EB0072747C /* InputReviewField.swift in Sources */,
 				282A22842D6973B8005C789C /* DateReviewView.swift in Sources */,
 				288EEEE22D647134001FACBC /* ContentView.swift in Sources */,
 				282A227E2D66F9B6005C789C /* PlanSettingWindowView.swift in Sources */,
+				28EE76B02D8937360072747C /* CustomTextEditor.swift in Sources */,
 				288EEEE02D647134001FACBC /* StudyRecordApp.swift in Sources */,
 				28EE76AC2D83D8C30072747C /* YearReviewGraphView.swift in Sources */,
 				28FAA01D2D812AC900411760 /* TimeSelectButton.swift in Sources */,
@@ -252,7 +260,7 @@
 				282A22822D684B89005C789C /* BookSelectView.swift in Sources */,
 				282A228B2D6ED09C005C789C /* YearReviewView.swift in Sources */,
 				282A22892D6D8777005C789C /* MonthReviewView.swift in Sources */,
-				2841A8412D71BFA300275EFF /* InputTextField.swift in Sources */,
+				2841A8412D71BFA300275EFF /* InputStudyRange.swift in Sources */,
 				2841A8432D79A6BB00275EFF /* MonthReviewCalendar.swift in Sources */,
 				282A22792D66E390005C789C /* StudyPlanView.swift in Sources */,
 			);

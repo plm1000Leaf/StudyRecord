@@ -12,6 +12,8 @@ struct YearReviewView: View {
     
     var body: some View {
         ZStack {
+
+
             if !showMonthReviewView {
                 yearView
                     .transition(.move(edge: .leading))

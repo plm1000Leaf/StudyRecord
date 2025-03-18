@@ -4,34 +4,37 @@ struct MonthReviewCalendar: View {
     @State private var currentMonth: Date = Date()
     @Binding var showDateReviewView: Bool
     var body: some View {
-        VStack{
+        ZStack {
 
-            header
+            VStack{
 
-            let days = CalendarUtils.generateCalendarDays(for: currentMonth)
-            
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
-                ForEach(["日", "月", "火", "水", "木", "金", "土"], id: \.self) { day in
-                    Text(day)
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                }
+                header
+
+                let days = CalendarUtils.generateCalendarDays(for: currentMonth)
                 
-                ForEach(days, id: \.self) { date in
-                    VStack {
-                        Text(date > 0 ? "\(date)" : "")
-                            .font(.system(size: 16))
-                            .padding(.leading, 16)
-                            .cornerRadius(5)
-                        checkMark
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
+                    ForEach(["日", "月", "火", "水", "木", "金", "土"], id: \.self) { day in
+                        Text(day)
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                    }
+                    
+                    ForEach(days, id: \.self) { date in
+                        VStack {
+                            Text(date > 0 ? "\(date)" : "")
+                                .font(.system(size: 16))
+                                .padding(.leading, 16)
+                                .cornerRadius(5)
+                            checkMark
+                        }
                     }
                 }
-            }
-            .padding()
-            
+                .padding()
+                
 
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 

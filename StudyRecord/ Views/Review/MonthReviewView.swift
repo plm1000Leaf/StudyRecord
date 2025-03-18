@@ -12,6 +12,8 @@ struct MonthReviewView: View {
     @Binding var showMonthReviewView: Bool
     var body: some View {
         ZStack {
+
+            
             if !showDateReviewView {
                 monthView
                     .transition(.move(edge: .leading))
@@ -37,6 +39,8 @@ extension MonthReviewView {
             
         }
     }
+    
+    
     private var DateReviewHeader: some View {
 
             HStack{

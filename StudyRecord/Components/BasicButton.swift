@@ -25,7 +25,7 @@ struct BasicButton: View {
                 
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
+            .padding(.vertical, 8)
             .fontWeight(.bold)
             .foregroundStyle(.white)
             .background(Color.red)
