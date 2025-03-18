@@ -12,6 +12,7 @@ struct PlanSettingWindowView: View {
     @State private var isTapBookSelect = false
     @State private var startPage: String = ""
     @State private var endPage: String = ""
+    @State private var isOn = false
     var onClose: () -> Void
     
     var body: some View {
@@ -129,8 +130,7 @@ extension PlanSettingWindowView {
                     HStack {
                         Text("アラーム")
                             .font(.system(size: 16))
-                        Rectangle()
-                            .frame(width: 48, height: 24)
+                        SwitchButton()
                     }
                     
                     

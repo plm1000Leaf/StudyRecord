@@ -29,6 +29,7 @@
 		28EE76AC2D83D8C30072747C /* YearReviewGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76AB2D83D8C30072747C /* YearReviewGraphView.swift */; };
 		28EE76AE2D83E3EB0072747C /* InputReviewField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76AD2D83E3EB0072747C /* InputReviewField.swift */; };
 		28EE76B02D8937360072747C /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76AF2D8937360072747C /* CustomTextEditor.swift */; };
+		28EE76B22D8948D70072747C /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76B12D8948D70072747C /* SwitchButton.swift */; };
 		28FAA01D2D812AC900411760 /* TimeSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FAA01C2D812AC900411760 /* TimeSelectButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		28EE76AB2D83D8C30072747C /* YearReviewGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearReviewGraphView.swift; sourceTree = "<group>"; };
 		28EE76AD2D83E3EB0072747C /* InputReviewField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputReviewField.swift; sourceTree = "<group>"; };
 		28EE76AF2D8937360072747C /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
+		28EE76B12D8948D70072747C /* SwitchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
 		28FAA01C2D812AC900411760 /* TimeSelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSelectButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,6 +82,7 @@
 				28FAA01C2D812AC900411760 /* TimeSelectButton.swift */,
 				28EE76A92D83D5960072747C /* SegmentedControlButton.swift */,
 				28EE76AD2D83E3EB0072747C /* InputReviewField.swift */,
+				28EE76B12D8948D70072747C /* SwitchButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				28EE76AA2D83D5960072747C /* SegmentedControlButton.swift in Sources */,
 				282A22802D682411005C789C /* PlanningCalendar.swift in Sources */,
 				28BDAC222D70302A0033FA2F /* MainTabView.swift in Sources */,
+				28EE76B22D8948D70072747C /* SwitchButton.swift in Sources */,
 				28EE76AE2D83E3EB0072747C /* InputReviewField.swift in Sources */,
 				282A22842D6973B8005C789C /* DateReviewView.swift in Sources */,
 				288EEEE22D647134001FACBC /* ContentView.swift in Sources */,
