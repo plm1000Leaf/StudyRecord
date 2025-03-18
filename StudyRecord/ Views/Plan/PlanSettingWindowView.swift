@@ -100,13 +100,13 @@ extension PlanSettingWindowView {
                 
 
                 VStack(spacing: 8){
-                    InputStudyRange(placeholder: "ページ数", text: $startPage)
+                    InputStudyRange(placeholder: "ページ数")
                         .frame(width: 88, height: 32)
                     Text("〜")
                         .font(.system(size: 32))
                         .bold()
                         .rotationEffect(.degrees(90))
-                    InputStudyRange(placeholder: "ページ数", text: $endPage)
+                    InputStudyRange(placeholder: "ページ数")
                         .frame(width: 88, height: 32)
                 }
                 
