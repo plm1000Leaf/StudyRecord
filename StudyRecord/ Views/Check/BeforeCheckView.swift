@@ -51,6 +51,7 @@ extension BeforeCheckView {
         Text("今日の学習")
             .font(.system(size: 32))
             .padding(.top, 48)
+            .padding(.leading, 56)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     
@@ -67,6 +68,7 @@ extension BeforeCheckView {
     
     private var todayStudyPlanTitle: some View {
         HStack{
+
             Text("箇所")
                 .font(.system(size: 16))
             Spacer()
@@ -75,28 +77,39 @@ extension BeforeCheckView {
                 .font(.system(size: 16))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.bottom, 16)
+        .padding(.leading, 64)
+        .padding(.bottom, 8)
     }
     
     private var todayStudyPlanSetting: some View {
         HStack(alignment: .top){
             VStack(spacing: 8){
-                InputStudyRange(placeholder: "ページ数")
-                    .frame(width: 88, height: 32)
+                HStack(spacing: -8){
+                    InputStudyRange(placeholder: "ページ数")
+
+                    PullDown()
+
+                }
                 Text("〜")
                     .font(.system(size: 32))
                     .bold()
                     .rotationEffect(.degrees(90))
-                InputStudyRange(placeholder: "ページ数")
-                    .frame(width: 88, height: 32)
+                HStack(spacing: -8){
+                    InputStudyRange(placeholder: "ページ数")
+
+                    PullDown()
+
+                }
             }
+            .padding(.leading, 72)
             
             Spacer()
-                .frame(width: 56)
+                .frame(width: 16)
 
                 
                 TimeSelectButton()
-                    .frame(width: 200 , height: 40)
+                    .frame(width: 168 , height: 40)
+                    .padding(.trailing, 48)
 
                 
 

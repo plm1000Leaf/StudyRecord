@@ -100,14 +100,21 @@ extension PlanSettingWindowView {
                 
 
                 VStack(spacing: 8){
-                    InputStudyRange(placeholder: "ページ数")
-                        .frame(width: 88, height: 32)
+                    HStack(spacing: -8){
+                        InputStudyRange(placeholder: "ページ数")
+
+                        PullDown()
+
+                    }
+
                     Text("〜")
                         .font(.system(size: 32))
                         .bold()
                         .rotationEffect(.degrees(90))
-                    InputStudyRange(placeholder: "ページ数")
-                        .frame(width: 88, height: 32)
+                    HStack(spacing: -8){
+                        InputStudyRange(placeholder: "ページ数")
+                        PullDown()
+                    }
                 }
                 
             }
