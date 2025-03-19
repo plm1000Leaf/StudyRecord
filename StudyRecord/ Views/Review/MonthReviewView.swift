@@ -38,6 +38,7 @@ extension MonthReviewView {
 
             
         }
+        .background(Color.baseColor0)
     }
     
     

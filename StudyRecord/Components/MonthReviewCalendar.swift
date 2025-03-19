@@ -48,6 +48,7 @@ extension MonthReviewCalendar {
             Circle()
                 .frame(width: 30)
                 .padding(.bottom, 8)
+                .foregroundColor(.mainColor0)
         }
     }
     

@@ -21,6 +21,7 @@ struct StudyPlanView: View {
             }
             .padding(.horizontal, 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(Color.baseColor0)
             
             if isTapDate {
                 PlanSettingWindowView {

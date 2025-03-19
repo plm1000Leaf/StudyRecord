@@ -59,6 +59,7 @@ extension PlanningCalendar {
                 }){
                     Rectangle()
                         .frame(width: 40, height: 32)
+                        .foregroundColor(.mainColor0)
                 }
             }
                 

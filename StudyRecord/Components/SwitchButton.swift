@@ -14,6 +14,7 @@ struct SwitchButton: View {
             .toggleStyle(SwitchToggleStyle()) // デフォルトのスイッチスタイル
             .padding()
             .frame(width: 48, height: 24)
+            
     }
 }
 

@@ -46,6 +46,7 @@ extension BeforeCheckView {
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background(Color.baseColor0)
     }
     private var checkViewTitle: some View {
         Text("今日の学習")
@@ -58,6 +59,7 @@ extension BeforeCheckView {
     private var studyMaterial: some View {
         VStack(spacing: 16){
             Rectangle()
+                .foregroundColor(.mainColor0)
                 .frame(width: 136, height: 168)
             Text("応用情報技術者合格教本")
                 .font(.system(size: 24))

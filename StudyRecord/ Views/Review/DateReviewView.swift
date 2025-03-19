@@ -35,6 +35,7 @@ struct DateReviewView: View {
                     }
                 }
             }
+            .background(Color.baseColor0)
             
         
 
@@ -53,6 +54,7 @@ extension DateReviewView {
                     .font(.system(size: 16))
             }
             Rectangle()
+                .foregroundColor(.mainColor0)
                 .frame(width: 248, height: 88)
         }
         .padding(.bottom, 32)
@@ -106,11 +108,12 @@ extension DateReviewView {
             ZStack{
                 Rectangle()
                     .frame(width: 248, height: 288)
+                    .foregroundColor(.mainColor20)
                 VStack{
                     HStack{
                         Rectangle()
                             .frame(width: 88, height:  104)
-                            .foregroundColor(.blue)
+                            .foregroundColor(.mainColor0)
                         VStack(spacing: 8){
                         Text("応用情報技術者合格教本")
                             .font(.system(size: 16))

@@ -43,6 +43,7 @@ extension YearReviewView {
         .padding(.top, 48)
         .padding(.bottom, 40)
         .frame(maxWidth: 312, alignment: .leading)
+        .foregroundColor(.gray10)
     }
     
     private var monthButton: some View {
@@ -58,7 +59,7 @@ extension YearReviewView {
                         ZStack{
                             Rectangle()
                                 .frame(width: 104, height: 104)
-                                .foregroundColor(.black)
+                                .foregroundColor(.mainColor0)
                             Text("\(monthNumber)")
                                 .foregroundColor(.white)
                                 .font(.system(size: 32))
@@ -85,6 +86,7 @@ extension YearReviewView {
                 .frame(width: 264, height: 56)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background(Color.baseColor0)
     }
     
     

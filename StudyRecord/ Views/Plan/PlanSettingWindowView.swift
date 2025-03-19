@@ -36,6 +36,7 @@ struct PlanSettingWindowView: View {
                     .frame(width: 128, height: 48)
 
             }
+
             .sheet(isPresented: $isTapBookSelect) {
                 BookSelectView()
             }
@@ -95,6 +96,7 @@ extension PlanSettingWindowView {
                 }){
                     Rectangle()
                         .frame(width: 104, height: 120)
+                        .foregroundColor(.mainColor0)
                 }
                 .padding(.leading, 16)
                 
@@ -153,7 +155,7 @@ extension PlanSettingWindowView {
     
     private var windowBase: some View {
         Rectangle()
-            .fill(Color.white)
+            .fill(Color.baseColor0)
             .frame(width: 336, height: 520)
     }
     
