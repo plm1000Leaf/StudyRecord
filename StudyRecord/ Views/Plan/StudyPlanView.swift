@@ -10,6 +10,7 @@ import SwiftUI
 struct StudyPlanView: View {
     
     @State private var isTapDate = false
+    @State private var text: String = ""
     
     var body: some View {
         

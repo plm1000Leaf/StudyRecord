@@ -10,6 +10,8 @@ import SwiftUI
 struct BookSelectView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isTapAddBook = false
+    @State private var text: String = ""
+    private let maxCharacters = 20
     
     var body: some View {
         ScrollView{
@@ -53,10 +55,13 @@ struct BookSelectView: View {
                 },
                 alignment: .topLeading // 左上に配置
             )
+
             
             .padding(.horizontal, 20)
         }
+        .background(Color.baseColor10)
     }
+
 }
 
 
@@ -92,12 +97,18 @@ extension BookSelectView {
                 .frame(width: 144, height: 180)
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack{
-                Rectangle()
-                    .frame(width: 156, height: 32)
-                    .padding(.bottom, 16)
-                Rectangle()
-                    .frame(width: 156, height: 56)
-                    .padding(.bottom, 8)
+
+                    AddPullDown()
+                        .padding(.bottom, 8)
+                    ZStack{
+                        Rectangle()
+                            .frame(width: 156, height: 64)
+                            .foregroundColor(.white)
+                        CustomTextEditor(text: $text, maxCharacters: maxCharacters)
+                            .frame(width: 156, height: 56)
+                            .padding(.bottom, 8)
+
+                }
                 BasicButton(label: "登録") {
                     isTapAddBook = false
                 }
@@ -108,5 +119,9 @@ extension BookSelectView {
         }
     }
     
+}
+
+#Preview {
+    BookSelectView()
 }
 

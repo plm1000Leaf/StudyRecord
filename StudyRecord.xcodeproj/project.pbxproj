@@ -31,6 +31,7 @@
 		28EE76B02D8937360072747C /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76AF2D8937360072747C /* CustomTextEditor.swift */; };
 		28EE76B22D8948D70072747C /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76B12D8948D70072747C /* SwitchButton.swift */; };
 		28EE76B42D895E8E0072747C /* PullDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76B32D895E8E0072747C /* PullDown.swift */; };
+		28EE76B62D8EBCDA0072747C /* AddPullDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76B52D8EBCDA0072747C /* AddPullDown.swift */; };
 		28FAA01D2D812AC900411760 /* TimeSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FAA01C2D812AC900411760 /* TimeSelectButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		28EE76AF2D8937360072747C /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
 		28EE76B12D8948D70072747C /* SwitchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
 		28EE76B32D895E8E0072747C /* PullDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullDown.swift; sourceTree = "<group>"; };
+		28EE76B52D8EBCDA0072747C /* AddPullDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPullDown.swift; sourceTree = "<group>"; };
 		28FAA01C2D812AC900411760 /* TimeSelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSelectButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +88,7 @@
 				28EE76AD2D83E3EB0072747C /* InputReviewField.swift */,
 				28EE76B12D8948D70072747C /* SwitchButton.swift */,
 				28EE76B32D895E8E0072747C /* PullDown.swift */,
+				28EE76B52D8EBCDA0072747C /* AddPullDown.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 			files = (
 				2841A8462D79AC4900275EFF /* CalendarUtils.swift in Sources */,
 				282A227C2D66F46F005C789C /* BasicButton.swift in Sources */,
+				28EE76B62D8EBCDA0072747C /* AddPullDown.swift in Sources */,
 				28EE76AA2D83D5960072747C /* SegmentedControlButton.swift in Sources */,
 				282A22802D682411005C789C /* PlanningCalendar.swift in Sources */,
 				28BDAC222D70302A0033FA2F /* MainTabView.swift in Sources */,
