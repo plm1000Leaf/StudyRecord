@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MovePeriodPopup: View {
     @Binding var showPopup: Bool
+    let items: [String]
 
     var body: some View {
         ZStack {
@@ -32,7 +33,7 @@ struct MovePeriodPopup: View {
 
 
 #Preview {
-    MovePeriodPopup(showPopup: .constant(true))
+    MovePeriodPopup(showPopup: .constant(true), items: (2020...2031).map { "\($0)" })
 }
 
 extension MovePeriodPopup {
@@ -43,12 +44,23 @@ extension MovePeriodPopup {
                     .frame(width: 360, height: 360)
                     .foregroundColor(.white)
                 VStack {
-                    ForEach(0..<4) { _ in
+                    ForEach(0..<4) { rowIndex in
                         HStack{
-                            ForEach(0..<3) { _ in
-                                Rectangle()
-                                    .frame(width:104, height: 72)
-                                    .padding(.bottom, 8)
+                            ForEach(0..<3) { columnIndex in
+                                let index = rowIndex * 3 + columnIndex
+                                if index < items.count {
+                                    ZStack{
+                                        Rectangle()
+                                            .frame(width:104, height: 72)
+                                            .padding(.bottom, 8)
+                                        Text(items[index])
+                                            .foregroundColor(.blue)
+                                    }
+                                } else {
+                                    Rectangle()
+                                        .frame(width: 104, height: 72)
+                                        .opacity(0)
+                                }
                             }
                         }
                     }

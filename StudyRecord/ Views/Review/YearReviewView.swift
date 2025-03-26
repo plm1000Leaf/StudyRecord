@@ -20,7 +20,7 @@ struct YearReviewView: View {
 
                         yearView
                             .transition(.move(edge: .leading))
-                        MovePeriodPopup(showPopup: $showPopup)
+                        MovePeriodPopup(showPopup: .constant(true), items: (2025...2036).map { "\($0)" })
                     }
                 } else {
                     yearView

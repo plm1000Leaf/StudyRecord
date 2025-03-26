@@ -18,7 +18,7 @@ struct StudyPlanView: View {
         ZStack{
             VStack(spacing: 56){
                 
-                PlanningCalendar(isTapDate: $isTapDate,  showPopup: $showPopup)
+                PlanningCalendar(isTapDate: $isTapDate, showPopup: $showPopup)
                 
             }
             .padding(.horizontal, 20)
@@ -26,7 +26,7 @@ struct StudyPlanView: View {
             .background(Color.baseColor0)
             
             if showPopup {
-                MovePeriodPopup(showPopup: $showPopup)
+                MovePeriodPopup(showPopup: $showPopup,items: (1...12).map { "\($0)" })
             }
             
             if isTapDate {
