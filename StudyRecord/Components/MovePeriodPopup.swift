@@ -22,9 +22,8 @@ struct MovePeriodPopup: View {
                     }
 
                 selectPeriodField
-//                .background(Color.white)
-//                .cornerRadius(12)
-//                .shadow(radius: 10)
+
+
             }
         }
         .animation(.easeInOut, value: showPopup)
@@ -42,7 +41,8 @@ extension MovePeriodPopup {
             ZStack{
                 Rectangle()
                     .frame(width: 360, height: 360)
-                    .foregroundColor(.white)
+                    .foregroundColor(.baseColor0)
+                    .cornerRadius(12)
                 VStack {
                     ForEach(0..<4) { rowIndex in
                         HStack{
@@ -51,10 +51,15 @@ extension MovePeriodPopup {
                                 if index < items.count {
                                     ZStack{
                                         Rectangle()
+                                            .cornerRadius(8)
                                             .frame(width:104, height: 72)
-                                            .padding(.bottom, 8)
+                                            .foregroundColor(.mainColor10)
+
+
                                         Text(items[index])
-                                            .foregroundColor(.blue)
+                                            .font(.system(size: 24))
+                                            .foregroundColor(.white)
+                                        
                                     }
                                 } else {
                                     Rectangle()
