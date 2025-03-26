@@ -10,6 +10,7 @@ import SwiftUI
 struct StudyPlanView: View {
     
     @State private var isTapDate = false
+    @State private var showPopup = false
     @State private var text: String = ""
     
     var body: some View {
@@ -17,12 +18,16 @@ struct StudyPlanView: View {
         ZStack{
             VStack(spacing: 56){
                 
-                PlanningCalendar(isTapDate: $isTapDate)
+                PlanningCalendar(isTapDate: $isTapDate,  showPopup: $showPopup)
                 
             }
             .padding(.horizontal, 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .background(Color.baseColor0)
+            
+            if showPopup {
+                MovePeriodPopup(showPopup: $showPopup)
+            }
             
             if isTapDate {
                 PlanSettingWindowView {
@@ -40,39 +45,8 @@ struct StudyPlanView: View {
 
 extension StudyPlanView {
     
-    
-    private var yearAndMonth: some View {
-        HStack(alignment: .bottom){
-            Text("2025")
-                .font(.system(size: 16))
-                .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
-            
-            Text("1")
-                .font(.system(size: 48))
-                .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
-            
-            Image(systemName: "chevron.down")
-        }
-        .padding(.top, 56)
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-    
-    private var planningCalendar: some View {
-        Button(action: {
-            isTapDate = true
-        }){
-            Rectangle()
-                .frame(width: 336, height: 384)
-        }
-    }
-    
-    private var forwardAndBackButton : some View{
-        HStack(spacing: 176){
-            Circle()
-            .frame(width: 48, height: 48)
-            Circle()
-            .frame(width: 48, height: 48)
-        }
-    }
+
+
+
     
 }

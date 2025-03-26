@@ -3,6 +3,7 @@ import SwiftUI
 struct PlanningCalendar: View {
     @State private var currentMonth: Date = Date()
     @Binding var isTapDate: Bool
+    @Binding var showPopup: Bool
     var body: some View {
         VStack {
             header
@@ -74,23 +75,30 @@ extension PlanningCalendar {
     }
     
     private var header: some View {
-        HStack(alignment: .bottom){
-            Text(CalendarUtils.yearString(from: currentMonth))
-                .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
-                .font(.system(size: 16))
-                .padding(.leading, 28)
-
-            Text(CalendarUtils.monthString(from: currentMonth))
-                .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
-                .font(.system(size: 48))
-                .padding(.leading, 8)
+        Button(action: {showPopup = true}){
+            HStack(alignment: .bottom){
+                Text(CalendarUtils.yearString(from: currentMonth))
+                    .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
+                    .font(.system(size: 16))
+                    .padding(.leading, 28)
+                
+                Text(CalendarUtils.monthString(from: currentMonth))
+                    .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
+                    .font(.system(size: 48))
+                    .padding(.leading, 8)
+                Spacer()
+                    .frame(width: 8)
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 16))
+                    .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
+            }
+            .frame(maxWidth: .infinity, alignment:
+                    .leading)
+            .foregroundColor(.black)
         }
-        .frame(maxWidth: .infinity, alignment:
-                .leading)
-
     }
 }
 
 #Preview {
-    PlanningCalendar(isTapDate: .constant(true))
+    PlanningCalendar(isTapDate: .constant(true), showPopup: .constant(true))
 }

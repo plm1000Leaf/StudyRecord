@@ -9,14 +9,23 @@ import SwiftUI
 
 struct YearReviewView: View {
     @State private var showMonthReviewView = false
-    
+    @State private var showPopup = false
     var body: some View {
         ZStack {
 
 
             if !showMonthReviewView {
-                yearView
-                    .transition(.move(edge: .leading))
+                if showPopup {
+                    ZStack {
+
+                        yearView
+                            .transition(.move(edge: .leading))
+                        MovePeriodPopup(showPopup: $showPopup)
+                    }
+                } else {
+                    yearView
+                        .transition(.move(edge: .leading))
+                }
             } else {
                 MonthReviewView(showMonthReviewView: $showMonthReviewView)
                     .transition(.move(edge: .trailing))
@@ -32,8 +41,18 @@ extension YearReviewView {
         
         
         HStack{
-            Text("2025")
-                .font(.system(size: 48))
+            Button(action: {showPopup = true }){
+                HStack(alignment: .bottom){
+                    Text("2025")
+                        .font(.system(size: 48))
+                        .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
+                    Spacer()
+                        .frame(width: 8)
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 16))
+                        .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
+                }
+            }
             Spacer()
             Image(systemName: "square.and.arrow.up")
                 .font(.system(size: 24))

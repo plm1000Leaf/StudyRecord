@@ -32,6 +32,7 @@
 		28EE76B22D8948D70072747C /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76B12D8948D70072747C /* SwitchButton.swift */; };
 		28EE76B42D895E8E0072747C /* PullDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76B32D895E8E0072747C /* PullDown.swift */; };
 		28EE76B62D8EBCDA0072747C /* AddPullDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76B52D8EBCDA0072747C /* AddPullDown.swift */; };
+		28EE76B82D93B52D0072747C /* MovePeriodPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76B72D93B52D0072747C /* MovePeriodPopup.swift */; };
 		28FAA01D2D812AC900411760 /* TimeSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FAA01C2D812AC900411760 /* TimeSelectButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		28EE76B12D8948D70072747C /* SwitchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
 		28EE76B32D895E8E0072747C /* PullDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullDown.swift; sourceTree = "<group>"; };
 		28EE76B52D8EBCDA0072747C /* AddPullDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPullDown.swift; sourceTree = "<group>"; };
+		28EE76B72D93B52D0072747C /* MovePeriodPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovePeriodPopup.swift; sourceTree = "<group>"; };
 		28FAA01C2D812AC900411760 /* TimeSelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSelectButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +91,7 @@
 				28EE76B12D8948D70072747C /* SwitchButton.swift */,
 				28EE76B32D895E8E0072747C /* PullDown.swift */,
 				28EE76B52D8EBCDA0072747C /* AddPullDown.swift */,
+				28EE76B72D93B52D0072747C /* MovePeriodPopup.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				2841A8412D71BFA300275EFF /* InputStudyRange.swift in Sources */,
 				2841A8432D79A6BB00275EFF /* MonthReviewCalendar.swift in Sources */,
 				282A22792D66E390005C789C /* StudyPlanView.swift in Sources */,
+				28EE76B82D93B52D0072747C /* MovePeriodPopup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
