@@ -1,50 +1,40 @@
 import SwiftUI
 
 struct PlanningCalendar: View {
-    @State private var currentMonth: Date = Date()
+    @Binding var currentMonth: Date
     @Binding var isTapDate: Bool
     @Binding var showPopup: Bool
+
     var body: some View {
-        VStack {
-            header
-            
-            let days = CalendarUtils.generateCalendarDays(for: currentMonth)
-            
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
-                ForEach(["日", "月", "火", "水", "木", "金", "土"], id: \.self) { day in
-                    Text(day)
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                }
+        ZStack(alignment: .bottom) {
+            VStack(spacing: 0) {
+                header
                 
-                ForEach(days, id: \.self) { date in
-                    VStack {
-                        Text(date > 0 ? "\(date)" : "")
-                            .font(.system(size: 16))
-                            .padding(.leading, 16)
-                            .cornerRadius(5)
-                        todayStudyPlan
+                let days = CalendarUtils.generateCalendarDays(for: currentMonth)
+                
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
+                    ForEach(["日", "月", "火", "水", "木", "金", "土"], id: \.self) { day in
+                        Text(day)
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                    }
+                    
+                    ForEach(days, id: \.self) { date in
+                        VStack {
+                            Text(date > 0 ? "\(date)" : "")
+                                .font(.system(size: 16))
+                                .padding(.leading, 16)
+                                .cornerRadius(5)
+                            todayStudyPlan
+                        }
                     }
                 }
+                .padding()
             }
-            .padding()
             
-            HStack {
-                Button(action: {
-                    currentMonth = CalendarUtils.changeMonth(currentMonth: currentMonth, by: -1)
-                }) {
-                    Image(systemName: "chevron.left")
-                }
-            
-                Spacer()
-                
-                Button(action: {
-                    currentMonth = CalendarUtils.changeMonth(currentMonth: currentMonth, by: 1)
-                }) {
-                    Image(systemName: "chevron.right")
-                }
-            }
-            .padding()
+            moveButton
+                .padding(.horizontal)
+
         }
     }
 }
@@ -97,8 +87,28 @@ extension PlanningCalendar {
             .foregroundColor(.black)
         }
     }
-}
+        private var moveButton: some View {
+            HStack {
+                Button(action: {
+                    currentMonth = CalendarUtils.changeMonth(currentMonth: currentMonth, by: -1)
+                }) {
+                    Image(systemName: "chevron.left")
+                }
+            
+                Spacer()
+                
+                Button(action: {
+                    currentMonth = CalendarUtils.changeMonth(currentMonth: currentMonth, by: 1)
+                }) {
+                    Image(systemName: "chevron.right")
+                }
+            }
+            .padding(.bottom, 56)
+            .padding()
+        }
+    }
 
-#Preview {
-    PlanningCalendar(isTapDate: .constant(true), showPopup: .constant(true))
-}
+
+//#Preview {
+//    PlanningCalendar(isTapDate: .constant(true), showPopup: .constant(true))
+//}

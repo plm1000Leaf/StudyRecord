@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct MovePeriodPopup: View {
+
     @Binding var showPopup: Bool
     let items: [String]
+    let onSelect: (Int) -> Void
 
     var body: some View {
         ZStack {
 
             if showPopup {
-                Color.black.opacity(0.4)
+                Color.black.opacity(0.7)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         showPopup = false
@@ -31,9 +33,9 @@ struct MovePeriodPopup: View {
 }
 
 
-#Preview {
-    MovePeriodPopup(showPopup: .constant(true), items: (2020...2031).map { "\($0)" })
-}
+//#Preview {
+//    MovePeriodPopup(showPopup: .constant(true), items: (2020...2031).map { "\($0)" })
+//}
 
 extension MovePeriodPopup {
     private var selectPeriodField: some View {
@@ -57,8 +59,15 @@ extension MovePeriodPopup {
 
 
                                         Text(items[index])
+                                            .onTapGesture {
+                                                if let month = Int(items[index]) {
+                                                    onSelect(month)
+                                                    showPopup = false
+                                                }
+                                            }
                                             .font(.system(size: 24))
                                             .foregroundColor(.white)
+                                        
                                         
                                     }
                                 } else {

@@ -81,17 +81,9 @@
 		282A227A2D66F3AA005C789C /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				282A227B2D66F46F005C789C /* BasicButton.swift */,
-				282A227F2D682411005C789C /* PlanningCalendar.swift */,
-				2841A8402D71BFA300275EFF /* InputStudyRange.swift */,
-				2841A8422D79A6BB00275EFF /* MonthReviewCalendar.swift */,
-				28FAA01C2D812AC900411760 /* TimeSelectButton.swift */,
-				28EE76A92D83D5960072747C /* SegmentedControlButton.swift */,
-				28EE76AD2D83E3EB0072747C /* InputReviewField.swift */,
-				28EE76B12D8948D70072747C /* SwitchButton.swift */,
-				28EE76B32D895E8E0072747C /* PullDown.swift */,
-				28EE76B52D8EBCDA0072747C /* AddPullDown.swift */,
-				28EE76B72D93B52D0072747C /* MovePeriodPopup.swift */,
+				28EE76BB2D93DFBA0072747C /*  CommonComponents */,
+				28EE76BA2D93DEF60072747C /* PlanComponents */,
+				28EE76B92D93DE790072747C /* ReviewComponents */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -182,6 +174,38 @@
 				288EEEE62D647137001FACBC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		28EE76B92D93DE790072747C /* ReviewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				28EE76B12D8948D70072747C /* SwitchButton.swift */,
+				28EE76A92D83D5960072747C /* SegmentedControlButton.swift */,
+				2841A8422D79A6BB00275EFF /* MonthReviewCalendar.swift */,
+				28EE76AD2D83E3EB0072747C /* InputReviewField.swift */,
+			);
+			path = ReviewComponents;
+			sourceTree = "<group>";
+		};
+		28EE76BA2D93DEF60072747C /* PlanComponents */ = {
+			isa = PBXGroup;
+			children = (
+				282A227F2D682411005C789C /* PlanningCalendar.swift */,
+				28EE76B52D8EBCDA0072747C /* AddPullDown.swift */,
+			);
+			path = PlanComponents;
+			sourceTree = "<group>";
+		};
+		28EE76BB2D93DFBA0072747C /*  CommonComponents */ = {
+			isa = PBXGroup;
+			children = (
+				282A227B2D66F46F005C789C /* BasicButton.swift */,
+				28EE76B32D895E8E0072747C /* PullDown.swift */,
+				28FAA01C2D812AC900411760 /* TimeSelectButton.swift */,
+				28EE76B72D93B52D0072747C /* MovePeriodPopup.swift */,
+				2841A8402D71BFA300275EFF /* InputStudyRange.swift */,
+			);
+			path = " CommonComponents";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

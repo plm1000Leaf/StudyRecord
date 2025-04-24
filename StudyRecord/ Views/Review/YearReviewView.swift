@@ -10,6 +10,7 @@ import SwiftUI
 struct YearReviewView: View {
     @State private var showMonthReviewView = false
     @State private var showPopup = false
+    @Binding var selectedSegment: Int
     var body: some View {
         ZStack {
 
@@ -20,11 +21,16 @@ struct YearReviewView: View {
 
                         yearView
                             .transition(.move(edge: .leading))
-                        MovePeriodPopup(showPopup: .constant(true), items: (2025...2036).map { "\($0)" })
+//                        MovePeriodPopup(showPopup: .constant(true), items: (2025...2036).map { "\($0)" })
                     }
                 } else {
-                    yearView
-                        .transition(.move(edge: .leading))
+                    
+                    if selectedSegment == 0 {
+                        yearView
+                            .transition(.move(edge: .leading))
+                    } else {
+                        YearReviewGraphView(selectedSegment: .constant(1))
+                    }
                 }
             } else {
                 MonthReviewView(showMonthReviewView: $showMonthReviewView)
@@ -101,7 +107,7 @@ extension YearReviewView {
         VStack(spacing: 16) {
             header
             monthButton
-            SegmentedControlButton()
+            SegmentedControlButton(selectedSegment: $selectedSegment)
                 .frame(width: 264, height: 56)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -111,5 +117,5 @@ extension YearReviewView {
     
 }
 #Preview {
-    YearReviewView()
+    YearReviewView(selectedSegment: .constant(0))
 }

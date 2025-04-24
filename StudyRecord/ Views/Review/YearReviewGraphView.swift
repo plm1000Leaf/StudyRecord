@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct YearReviewGraphView: View {
+    @Binding var selectedSegment: Int
     var body: some View {
         Text("グラフが表示される")
+        
+        SegmentedControlButton(selectedSegment: $selectedSegment)
+            .frame(width: 264, height: 56)
     }
 }
 
 #Preview {
-    YearReviewGraphView()
+    YearReviewGraphView(selectedSegment: .constant(0))
 }

@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct SegmentedControlButton: View {
-    // 選択されたセグメントを保存する状態変数
-    @State private var selectedSegment = 0
+    @Binding var selectedSegment: Int
 
     var body: some View {
         VStack {
@@ -31,6 +30,6 @@ struct SegmentedControlButton: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        SegmentedControlButton()
+        SegmentedControlButton(selectedSegment: .constant(0))
     }
 }

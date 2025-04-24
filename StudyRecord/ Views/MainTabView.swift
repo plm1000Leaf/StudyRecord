@@ -10,11 +10,11 @@ import SwiftUI
 struct MainTabView: View {
 //    var selectedTab: Int
     @State private var selectedTab = 1
-
+    @State private var selectedSegment = 0
     
     var body: some View {
         TabView(selection: $selectedTab){
-            YearReviewView()
+            YearReviewView(selectedSegment: $selectedSegment)
                 .tabItem {
                     Image(systemName: "house.fill")
                     Text("Review")
@@ -35,6 +35,7 @@ struct MainTabView: View {
                 }
                 .tag(2)
         }
+
     }
 }
 
