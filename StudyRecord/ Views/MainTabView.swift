@@ -14,7 +14,7 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $selectedTab){
-            YearReviewView(selectedSegment: $selectedSegment)
+            YearReviewView()
                 .tabItem {
                     Image(systemName: "house.fill")
                     Text("Review")
