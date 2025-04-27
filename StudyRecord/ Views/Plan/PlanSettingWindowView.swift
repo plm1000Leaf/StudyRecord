@@ -12,6 +12,7 @@ struct PlanSettingWindowView: View {
     @State private var isTapBookSelect = false
     @State private var startPage: String = ""
     @State private var endPage: String = ""
+    @State private var isDialogShown = false
     @State private var isOn = false
     var onClose: () -> Void
     
@@ -142,12 +143,25 @@ extension PlanSettingWindowView {
                         SwitchButton()
                     }
                     
-                    
-                    HStack {
-                        Text("繰り返し")
-                        Text("なし")
+                    Button(action: {
+                        isDialogShown = true
+                    }){
+                        HStack {
+                            Text("繰り返し")
+                            Text("なし")
+                        }
+                        .font(.system(size: 16))
                     }
-                    .font(.system(size: 16))
+                    .alert(isPresented: $isDialogShown) {
+                        Alert(
+                            title: Text("毎週木曜日の14時30分\nにアラームを鳴らします"),
+                            message: Text("本当に設定してもよろしいですか？"),
+                            primaryButton: .destructive(Text("はい")) {
+                                print("はいが選択されました")
+                            },
+                            secondaryButton: .cancel(Text("いいえ"))
+                        )
+                    }
                 }
             }
         }
