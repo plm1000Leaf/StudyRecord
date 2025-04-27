@@ -13,6 +13,7 @@ struct PlanSettingWindowView: View {
     @State private var startPage: String = ""
     @State private var endPage: String = ""
     @State private var isDialogShown = false
+    @State private var isRepetition = false
     @Binding var isOn: Bool
     var onClose: () -> Void
     
@@ -150,19 +151,36 @@ extension PlanSettingWindowView {
                         }){
                             HStack {
                                 Text("繰り返し")
-                                Text("なし")
+                                if isRepetition {
+                                    Text("あり")
+                                } else {
+                                    Text("なし")
+                                }
                             }
                             .font(.system(size: 16))
                         }
                         .alert(isPresented: $isDialogShown) {
-                            Alert(
-                                title: Text("毎週木曜日の14時30分\nにアラームを鳴らします"),
-                                message: Text("本当に設定してもよろしいですか？"),
-                                primaryButton: .destructive(Text("はい")) {
-                                    print("はいが選択されました")
-                                },
-                                secondaryButton: .cancel(Text("いいえ"))
-                            )
+                            if isRepetition {
+                                Alert(
+                                    title: Text("毎週木曜日の14時30分\nのアラーム設定を解除します"),
+                                    message: Text("本当に解除してもよろしいですか？"),
+                                    primaryButton: .destructive(Text("はい")) {
+                                        isRepetition = false
+                                        print("はいが選択されました")
+                                    },
+                                    secondaryButton: .cancel(Text("いいえ"))
+                                )
+                            } else {
+                                Alert(
+                                    title: Text("毎週木曜日の14時30分\nにアラームを鳴らします"),
+                                    message: Text("本当に設定してもよろしいですか？"),
+                                    primaryButton: .destructive(Text("はい")) {
+                                        isRepetition = true
+                                        print("はいが選択されました")
+                                    },
+                                    secondaryButton: .cancel(Text("いいえ"))
+                                )
+                            }
                         }
                     }
                 }
