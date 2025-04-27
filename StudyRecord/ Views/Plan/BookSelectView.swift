@@ -98,15 +98,17 @@ extension BookSelectView {
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack{
 
-                    AddPullDown()
-                        .padding(.bottom, 8)
                     ZStack{
+
                         Rectangle()
                             .frame(width: 156, height: 64)
                             .foregroundColor(.white)
+                            .padding(.top, 32)
                         CustomTextEditor(text: $text, maxCharacters: maxCharacters)
                             .frame(width: 156, height: 56)
-                            .padding(.bottom, 8)
+                            .padding(.top, 32)
+                        AddPullDown()
+
 
                 }
                 BasicButton(label: "登録") {

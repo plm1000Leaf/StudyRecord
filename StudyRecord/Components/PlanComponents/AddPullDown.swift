@@ -44,6 +44,7 @@ extension AddPullDown {
                 .foregroundColor(.black)
                 .padding(.bottom, 8)
             }
+            .padding(.bottom, 88)
         }
     }
     
