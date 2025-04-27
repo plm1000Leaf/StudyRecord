@@ -13,6 +13,7 @@ struct StudyPlanView: View {
     @State private var showPopup = false
     @State private var text: String = ""
     @State private var currentMonth = Date()
+    @State private var isOn = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -42,7 +43,7 @@ struct StudyPlanView: View {
                 }
                 
                 if isTapDate {
-                    PlanSettingWindowView {
+                    PlanSettingWindowView(isOn: $isOn) {
                         isTapDate = false // ×ボタンが押されたら閉じる
                     }
                     .zIndex(1) // 他のビューより前面に表示

@@ -13,7 +13,7 @@ struct PlanSettingWindowView: View {
     @State private var startPage: String = ""
     @State private var endPage: String = ""
     @State private var isDialogShown = false
-    @State private var isOn = false
+    @Binding var isOn: Bool
     var onClose: () -> Void
     
     var body: some View {
@@ -60,28 +60,24 @@ struct PlanSettingWindowView: View {
 }
 
 
-#Preview {
-    PlanSettingWindowView(onClose: {})
-}
-
 
 extension PlanSettingWindowView {
     private var windowTitle: some View {
         HStack(alignment: .firstTextBaseline) {
-
+            
             Text("30")
                 .font(.system(size: 48))
-
+            
             Text("(木)")
                 .font(.system(size: 24))
                 .alignmentGuide(.firstTextBaseline) { d in d[.bottom] }
-
+            
         }
         .padding(.top, -8)
-
-
-
-
+        
+        
+        
+        
     }
     
     
@@ -91,7 +87,7 @@ extension PlanSettingWindowView {
                 .font(.system(size: 24))
             
             HStack(spacing:40){
-
+                
                 Button(action: {
                     isTapBookSelect.toggle()
                 }){
@@ -101,15 +97,15 @@ extension PlanSettingWindowView {
                 }
                 .padding(.leading, 16)
                 
-
+                
                 VStack(spacing: 8){
                     HStack(spacing: -8){
                         InputStudyRange(placeholder: "ページ数")
-
+                        
                         PullDown()
-
+                        
                     }
-
+                    
                     Text("〜")
                         .font(.system(size: 32))
                         .bold()
@@ -125,7 +121,7 @@ extension PlanSettingWindowView {
             
         }
     }
-
+    
     
     private var inputScheduledTime: some View {
         VStack(alignment: .leading){
@@ -140,32 +136,40 @@ extension PlanSettingWindowView {
                     HStack {
                         Text("アラーム")
                             .font(.system(size: 16))
-                        SwitchButton()
-                    }
-                    
-                    Button(action: {
-                        isDialogShown = true
-                    }){
-                        HStack {
-                            Text("繰り返し")
-                            Text("なし")
+                        Toggle(isOn: $isOn) {
+                            EmptyView() // ラベルを外に出す場合は空
                         }
-                        .font(.system(size: 16))
+                        .labelsHidden()
+                        .toggleStyle(SwitchToggleStyle(tint: .blue))
                     }
-                    .alert(isPresented: $isDialogShown) {
-                        Alert(
-                            title: Text("毎週木曜日の14時30分\nにアラームを鳴らします"),
-                            message: Text("本当に設定してもよろしいですか？"),
-                            primaryButton: .destructive(Text("はい")) {
-                                print("はいが選択されました")
-                            },
-                            secondaryButton: .cancel(Text("いいえ"))
-                        )
+                
+                
+                    if isOn {
+                        Button(action: {
+                            isDialogShown = true
+                        }){
+                            HStack {
+                                Text("繰り返し")
+                                Text("なし")
+                            }
+                            .font(.system(size: 16))
+                        }
+                        .alert(isPresented: $isDialogShown) {
+                            Alert(
+                                title: Text("毎週木曜日の14時30分\nにアラームを鳴らします"),
+                                message: Text("本当に設定してもよろしいですか？"),
+                                primaryButton: .destructive(Text("はい")) {
+                                    print("はいが選択されました")
+                                },
+                                secondaryButton: .cancel(Text("いいえ"))
+                            )
+                        }
                     }
                 }
             }
         }
     }
+    
     
     private var windowBase: some View {
         Rectangle()
