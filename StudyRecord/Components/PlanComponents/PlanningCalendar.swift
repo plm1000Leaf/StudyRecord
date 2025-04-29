@@ -107,6 +107,7 @@ extension PlanningCalendar {
                     Image(systemName: "chevron.right")
                 }
             }
+            
             .padding()
         }
     }
