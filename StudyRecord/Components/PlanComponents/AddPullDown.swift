@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddPullDown: View {
     @State private var isInputting: Bool = false
+    let tags = ["資格", "技術", "TOEIC","タグを追加"]
     var body: some View {
         if isInputting == true {
             VStack(spacing:0){
@@ -68,8 +69,16 @@ extension AddPullDown {
     }
     
     private var tagSelectField: some View {
-        Rectangle()
-            .frame(width: 156, height: 96)
-            .foregroundColor(.blue)
+        VStack{
+
+            let numberOfTags = tags.count
+            
+            List(tags, id: \.self) { tag in
+                Text(tag)
+            }
+            .scrollContentBackground(.hidden)
+            .listStyle(.plain)
+        }
+        .frame(width: 160, height: CGFloat(tags.count) * 44)
     }
 }

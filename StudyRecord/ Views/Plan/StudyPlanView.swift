@@ -20,7 +20,7 @@ struct StudyPlanView: View {
             ZStack{
                 VStack{
                     PlanningCalendar(currentMonth: $currentMonth, isTapDate: $isTapDate, showPopup: $showPopup)
-                        .frame(height: geometry.size.height)
+
                     
                 }
                 .padding(.horizontal, 20)
