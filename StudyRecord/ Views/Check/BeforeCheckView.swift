@@ -13,10 +13,10 @@ struct BeforeCheckView: View {
     
     var body: some View {
         Group {
-            if isDoneStudy == true {
-                AfterCheckView(isDoneStudy: $isDoneStudy)
-            } else {
+            if !isDoneStudy {
                 mainView
+            } else {
+                AfterCheckView(isDoneStudy: $isDoneStudy)
             }
         }
     }
@@ -119,14 +119,13 @@ extension BeforeCheckView {
     }
     
     private var checkButton: some View {
-        Button(action: {
-            isDoneStudy = true
-        }){
+
             BasicButton(label: "Done", icon: "checkmark"){
+                isDoneStudy = true
                 print("Doneボタンが押されました")
             }
                 .frame(width: 288, height: 80)
                 .padding(.top, 16)
         }
     }
-}
+
