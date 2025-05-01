@@ -19,9 +19,6 @@ struct SegmentedControlButton: View {
             }
             .pickerStyle(SegmentedPickerStyle()) // セグメンテッドスタイルを指定
 
-            // 選択されたオプションを表示
-//            Text("選択されたオプション: \(selectedSegment + 1)")
-//                .padding()
       
         }
         .padding()

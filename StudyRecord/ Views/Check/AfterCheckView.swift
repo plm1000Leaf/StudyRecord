@@ -17,7 +17,6 @@ struct AfterCheckView: View {
             continuationDays
             shareButton
             checkButton
-            returnButton
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -71,18 +70,6 @@ extension AfterCheckView {
             
         }
         
-    }
-    
-    private var returnButton: some View {
-        Button(action: {
-            isDoneStudy = false
-        }) {
-            Text("戻る")
-                .font(.system(size: 24))
-                .frame(width: 144, height: 72)
-                .background(Color.gray.opacity(0.3))
-                .cornerRadius(8)
-        }
     }
 
 }

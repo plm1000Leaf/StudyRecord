@@ -21,11 +21,13 @@ struct MonthReviewCalendar: View {
                     
                     ForEach(days, id: \.self) { date in
                         VStack {
-                            Text(date > 0 ? "\(date)" : "")
-                                .font(.system(size: 16))
-                                .padding(.leading, 16)
-                                .cornerRadius(5)
-                            checkMark
+                            if date > 0 {
+                                Text("\(date)")
+                                    .font(.system(size: 16))
+                                    .padding(.leading, 16)
+                                    .cornerRadius(5)
+                                checkMark
+                            }
                         }
                     }
                 }
