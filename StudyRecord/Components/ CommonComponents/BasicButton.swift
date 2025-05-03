@@ -11,6 +11,8 @@ struct BasicButton: View {
     
     let label: String
     var icon: String? = nil
+    var width: CGFloat? = nil
+    var height: CGFloat? = nil
     let action: () -> Void
     
     var body: some View {
@@ -24,8 +26,8 @@ struct BasicButton: View {
                 Text(label)
                 
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 8)
+            .frame(width: width, height: height)
+            .padding(.vertical, height == nil ? 8 : 0)
             .fontWeight(.bold)
             .foregroundStyle(.white)
             .background(Color.mainColor0)

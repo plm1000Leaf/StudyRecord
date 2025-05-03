@@ -9,8 +9,38 @@ import SwiftUI
 
 struct AfterCheckView: View {
     @Binding var isDoneStudy: Bool
+    @Binding var selectedTabIndex: Int
+//    @State private var goToMainTab = false
+    @Binding var navigateToReview: Bool
+    @Binding var navigateToPlan: Bool
+    var dismiss: () -> Void
     
     var body: some View {
+        afterCheckView
+            .padding(.horizontal, 20)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(Color.baseColor0)
+//        NavigationStack {
+//            afterCheckView
+//                .background(
+//                    NavigationLink("", isActive: $goToMainTab) {
+//                        MainTabView(
+//                            selectedTab: $selectedTabIndex,
+//                            openDateReview: $navigateToReview,
+//                            openPlanSetting: $navigateToPlan
+//                        )
+//                    }
+//                    .hidden()
+//                )
+//        }
+    }
+}
+
+
+
+extension AfterCheckView {
+    
+    private var afterCheckView: some View {
         VStack(spacing: 80){
             checkViewTitle
             studyDoneText
@@ -20,14 +50,9 @@ struct AfterCheckView: View {
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .navigationBarBackButtonHidden(true) 
+        .navigationBarBackButtonHidden(true)
         .background(Color.baseColor0)
     }
-}
-
-
-
-extension AfterCheckView {
     private var checkViewTitle: some View {
         Text("今日の学習")
             .font(.system(size: 32))
@@ -61,12 +86,21 @@ extension AfterCheckView {
     
     private var checkButton: some View {
         HStack(spacing: 56){
-            Rectangle()
-                .frame(width: 144, height: 72)
-                .padding(.top, 16)
-            Rectangle()
-                .frame(width: 144, height: 72)
-                .padding(.top, 16)
+            BasicButton(label: "振り返る", width: 144, height: 72){
+                selectedTabIndex = 0
+                navigateToReview = true
+                dismiss()
+                print("振り返るボタンが押されました")
+            }
+            .padding(.top, 16)
+            
+            BasicButton(label: "明日の予定", width: 144, height: 72){
+                selectedTabIndex = 2
+                navigateToPlan = true
+                dismiss()
+                print("明日の予定ボタンが押されました")
+            }
+            .padding(.top, 16)
             
         }
         

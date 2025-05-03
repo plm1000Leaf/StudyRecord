@@ -8,11 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedTabIndex = 1
+    @State private var navigateToReview = false
+    @State private var navigateToPlan = false
+    @State private var showAfterCheckView = true
     var body: some View {
-        MainTabView()
+        ZStack {
+            MainTabView(
+                selectedTabIndex: $selectedTabIndex,
+                navigateToReview: $navigateToReview,
+                navigateToPlan: $navigateToReview
+            )
+
+        }
     }
-}
+    }
+
 
 #Preview {
-    MainTabView()
+    MainTabView(selectedTabIndex: .constant(1), navigateToReview: .constant(true), navigateToPlan: .constant(true))
 }

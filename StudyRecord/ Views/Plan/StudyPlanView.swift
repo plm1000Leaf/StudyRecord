@@ -15,6 +15,8 @@ struct StudyPlanView: View {
     @State private var currentMonth = Date()
     @State private var isOn = false
     
+    var openPlanSettingOnAppear: Bool = false
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack{
@@ -26,6 +28,11 @@ struct StudyPlanView: View {
                 .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .background(Color.baseColor0)
+                .onAppear {
+                    if openPlanSettingOnAppear {
+                        isTapDate = true
+                    }
+                }
                 
                 if showPopup {
                     MovePeriodPopup(

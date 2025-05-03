@@ -11,19 +11,18 @@ struct YearReviewView: View {
     @State private var showMonthReviewView = false
     @State private var showPopup = false
     @State private var selectedSegment: Int = 0
+    @Binding var showDateReviewView: Bool
     var body: some View {
         ZStack {
 
-
-            if !showMonthReviewView {
+            if showDateReviewView {
+                DateReviewView(showDateReviewView: $showDateReviewView)
+                    .transition(.move(edge: .trailing))
+            } else if !showMonthReviewView {
                 if showPopup {
-                    ZStack {
-
-                        yearView
-                            .transition(.move(edge: .leading))
-                    }
+                    yearView
+                        .transition(.move(edge: .leading))
                 } else {
-                    
                     if selectedSegment == 0 {
                         yearView
                             .transition(.move(edge: .leading))
@@ -36,6 +35,27 @@ struct YearReviewView: View {
                 MonthReviewView(showMonthReviewView: $showMonthReviewView)
                     .transition(.move(edge: .trailing))
             }
+//            if !showMonthReviewView {
+//                if showPopup {
+//                    ZStack {
+//
+//                        yearView
+//                            .transition(.move(edge: .leading))
+//                    }
+//                } else {
+//                    
+//                    if selectedSegment == 0 {
+//                        yearView
+//                            .transition(.move(edge: .leading))
+//                    } else {
+//                        YearReviewGraphView(selectedSegment: $selectedSegment)
+//                            .transition(.move(edge: .leading))
+//                    }
+//                }
+//            } else {
+//                MonthReviewView(showMonthReviewView: $showMonthReviewView)
+//                    .transition(.move(edge: .trailing))
+//            }
         }
         .animation(.easeInOut, value: showMonthReviewView)
     }
@@ -116,6 +136,6 @@ extension YearReviewView {
     
     
 }
-#Preview {
-    YearReviewView()
-}
+//#Preview {
+//    YearReviewView(showDateReviewView: <#Binding<Bool>#>)
+//}

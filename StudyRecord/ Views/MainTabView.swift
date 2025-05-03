@@ -8,27 +8,32 @@
 import SwiftUI
 
 struct MainTabView: View {
-//    var selectedTab: Int
-    @State private var selectedTab = 1
-    @State private var selectedSegment = 0
+    @Binding var selectedTabIndex: Int
+
+    @Binding var navigateToReview: Bool
+    @Binding var navigateToPlan: Bool
     
     var body: some View {
-        TabView(selection: $selectedTab){
-            YearReviewView()
+        TabView(selection: $selectedTabIndex){
+            YearReviewView(showDateReviewView: $navigateToReview)
                 .tabItem {
                     Image(systemName: "house.fill")
                     Text("Review")
                 }
                 .tag(0)
             
-            BeforeCheckView()
+            BeforeCheckView(
+                selectedTabIndex: $selectedTabIndex,
+                navigateToReview: $navigateToReview,
+                navigateToPlan: $navigateToPlan
+            )
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("Check")
                 }
                 .tag(1)
             
-            StudyPlanView()
+            StudyPlanView(openPlanSettingOnAppear: navigateToPlan)
                 .tabItem {
                     Image(systemName: "gearshape.fill")
                     Text("Study Plan")
@@ -58,8 +63,8 @@ struct SettingsView: View {
 }
 
 
-#Preview {
-    MainTabView()
-}
+//#Preview {
+//    MainTabView(selectedTab: <#Int#>, openDateReview: <#Binding<Bool>#>, openPlanSetting: <#Binding<Bool>#>)
+//}
 
 

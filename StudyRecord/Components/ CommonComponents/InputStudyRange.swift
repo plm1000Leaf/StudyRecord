@@ -10,15 +10,15 @@ struct InputStudyRange: View {
     var placeholder: String
     @State private var text: String = ""
     @State private var isInputting: Bool = false
-    private let maxCharacters = 10
+    private let maxCharacters = 15
 
     var body: some View {
-        if isInputting {
-            inputStudyRange
-        } else {
-            displayStudyRange
-        }
-
+            if isInputting {
+                inputStudyRange
+            } else {
+                displayStudyRange
+            }
+            
     }
 }
 
@@ -48,10 +48,11 @@ extension InputStudyRange {
 
         }){
             ZStack{
-                var buttonWidth = text.isEmpty ? 60 : CGFloat(text.count)*10
-                Rectangle()
-                    .frame(width: buttonWidth, height: 24)
+//                var buttonWidth = text.isEmpty ? 60 : CGFloat(text.count)*10
+//                Rectangle()
+//                    .frame(width: buttonWidth, height: 24)
                 Text(text.isEmpty ? "入力" : text)
+                    .frame(width:80,height: 80)
                     .foregroundColor(.black)
 
             }

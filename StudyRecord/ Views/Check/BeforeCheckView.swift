@@ -10,43 +10,55 @@ import SwiftUI
 struct BeforeCheckView: View {
     @State private var isDoneStudy = false
     @State private var userInput: String = ""
+    @Binding var selectedTabIndex: Int
+    @Binding var navigateToReview: Bool
+    @Binding var navigateToPlan: Bool
     
     var body: some View {
         Group {
             if !isDoneStudy {
                 mainView
             } else {
-                AfterCheckView(isDoneStudy: $isDoneStudy)
+                AfterCheckView(
+                    isDoneStudy: $isDoneStudy,
+                    selectedTabIndex: $selectedTabIndex,
+                    navigateToReview: $navigateToReview,
+                    navigateToPlan: $navigateToPlan,
+                    dismiss: {}
+                )
             }
         }
     }
 }
     
 
-#Preview {
-    BeforeCheckView()
-}
+//#Preview {
+//    BeforeCheckView()
+//}
 
 extension BeforeCheckView {
     
     private var mainView :some View {
-        
-        VStack(spacing: 24){
-            checkViewTitle
-            
-            studyMaterial
-            
-            todayStudyPlanTitle
-            
-            todayStudyPlanSetting
-            
-            
-            checkButton
-            
+        ZStack{
+            VStack(spacing: 24){
+                VStack{
+                    checkViewTitle
+                    
+                    studyMaterial
+                }
+                VStack{
+                    todayStudyPlanTitle
+                    
+                    todayStudyPlanSetting
+                }
+                
+                checkButton
+                
+            }
+            .padding(.horizontal, 20)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(Color.baseColor0)
         }
-        .padding(.horizontal, 20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(Color.baseColor0)
     }
     private var checkViewTitle: some View {
         Text("今日の学習")
@@ -57,15 +69,15 @@ extension BeforeCheckView {
     }
     
     private var studyMaterial: some View {
-        VStack(spacing: 16){
+        VStack(spacing: 8){
             Rectangle()
                 .foregroundColor(.mainColor0)
                 .frame(width: 136, height: 168)
             Text("応用情報技術者合格教本")
                 .font(.system(size: 24))
-                .frame(width: 104, alignment: .leading)
+                .frame(width: 104, height: 96, alignment: .leading)
         }
-        .padding(.bottom, 16)
+        .padding(.bottom, 8)
     }
     
     private var todayStudyPlanTitle: some View {
@@ -74,21 +86,22 @@ extension BeforeCheckView {
             Text("箇所")
                 .font(.system(size: 16))
             Spacer()
-                .frame(width: 144)
+                .frame(width: 120)
             Text("予定時間")
                 .font(.system(size: 16))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.leading, 64)
+        .padding(.leading, 104)
         .padding(.bottom, 8)
     }
     
     private var todayStudyPlanSetting: some View {
         HStack(alignment: .top){
             VStack(spacing: 8){
-                HStack(spacing: -8){
+                
+                HStack(spacing: -32){
                     InputStudyRange(placeholder: "ページ数")
-
+                        .frame(width: 120)
                     PullDown()
 
                 }
@@ -96,9 +109,9 @@ extension BeforeCheckView {
                     .font(.system(size: 32))
                     .bold()
                     .rotationEffect(.degrees(90))
-                HStack(spacing: -8){
+                HStack(spacing: -32){
                     InputStudyRange(placeholder: "ページ数")
-
+                        .frame(width: 120)
                     PullDown()
 
                 }
@@ -116,11 +129,12 @@ extension BeforeCheckView {
                 
 
         }
+        .padding(.leading, -56)
     }
     
     private var checkButton: some View {
 
-            BasicButton(label: "Done", icon: "checkmark"){
+        BasicButton(label: "Done", icon: "checkmark", width: 288, height: 80){
                 isDoneStudy = true
                 print("Doneボタンが押されました")
             }
