@@ -24,37 +24,36 @@ struct PlanSettingWindowView: View {
                 .edgesIgnoringSafeArea(.all)
             
             windowBase
-            VStack(spacing: 24){
-
-                windowTitle
-                VStack(alignment: .leading){
-                    inputLearningContent
-                    inputScheduledTime
+                VStack(spacing: 24){
+                    
+                    windowTitle
+                    VStack(alignment: .leading){
+                        inputLearningContent
+                        inputScheduledTime
+                    }
+                    
+                    BasicButton(label: "決定",width: 128, height: 48){
+                        print("Doneボタンが押されました")
+                    }
+                    .padding(.bottom, 8)
+                    
                 }
+                .sheet(isPresented: $isTapBookSelect) {
+                    BookSelectView()
+                }
+                .frame(width: 336, height: 520)
+                .overlay(
+                    Button(action: {
+                        onClose() // 親ビューの状態を変更する
+                    }) {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 16))
+                            .padding(8)
+                    },
+                    alignment: .topLeading // 左上に配置
+                )
                 
-                BasicButton(label: "決定",width: 128, height: 48){
-                    print("Doneボタンが押されました")
-                }
-
             }
-
-            .sheet(isPresented: $isTapBookSelect) {
-                BookSelectView()
-            }
-            .frame(width: 336, height: 520)
-            .overlay(
-                Button(action: {
-                    onClose() // 親ビューの状態を変更する
-                }) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 16))
-                        .padding(8)
-                },
-                alignment: .topLeading // 左上に配置
-            )
-            
-        }
-        
         
     }
 }
@@ -85,8 +84,8 @@ extension PlanSettingWindowView {
         VStack(alignment: .leading){
             Text("学習予定")
                 .font(.system(size: 24))
-            
-            HStack(spacing:40){
+                .padding(.leading, 16)
+            HStack(spacing:32){
                 
                 Button(action: {
                     isTapBookSelect.toggle()
@@ -95,17 +94,14 @@ extension PlanSettingWindowView {
                         .frame(width: 104, height: 120)
                         .foregroundColor(.mainColor0)
                 }
-                .padding(.leading, 16)
+                .padding(.leading, 24)
                 
                 
-                VStack(spacing: 8){
+                VStack(spacing: 16){
                     HStack(spacing: -8){
                         InputStudyRange(placeholder: "ページ数", width: 80, height: 40)
-                        
                         PullDown()
-                        
                     }
-                    
                     Text("〜")
                         .font(.system(size: 32))
                         .bold()
@@ -117,7 +113,7 @@ extension PlanSettingWindowView {
                 }
                 
             }
-            .padding(.bottom, 32)
+            .padding(.bottom, 24)
             
         }
     }
@@ -127,64 +123,72 @@ extension PlanSettingWindowView {
         VStack(alignment: .leading){
             Text("予定時間")
                 .font(.system(size: 24))
+                .padding(.leading, 16)
             
             HStack{
                 TimeSelectButton()
-                    .frame(width: 180 , height: 40)
+                    .frame(width: 160 , height: 40)
+                    .padding(.bottom, 8)
                 
-                VStack(spacing: 24){
-                    HStack {
-                        Text("アラーム")
-                            .font(.system(size: 16))
-                        Toggle(isOn: $isOn) {
-                            EmptyView() // ラベルを外に出す場合は空
-                        }
-                        .labelsHidden()
-                        .toggleStyle(SwitchToggleStyle(tint: .blue))
-                    }
-                
-                
-                    if isOn {
-                        Button(action: {
-                            isDialogShown = true
-                        }){
-                            HStack {
-                                Text("繰り返し")
-                                if isRepetition {
-                                    Text("あり")
-                                } else {
-                                    Text("なし")
+
+                VStack{                                         ZStack {
+                            HStack(spacing: 24){
+                                Text("アラーム")
+                                    .font(.system(size: 16))
+                                Toggle(isOn: $isOn) {
+                                    EmptyView() // ラベルを外に出す場合は空
                                 }
+                                .labelsHidden()
+                                .toggleStyle(SwitchToggleStyle(tint: .blue))
                             }
-                            .font(.system(size: 16))
-                        }
-                        .alert(isPresented: $isDialogShown) {
-                            if isRepetition {
-                                Alert(
-                                    title: Text("毎週木曜日の14時30分\nのアラーム設定を解除します"),
-                                    message: Text("本当に解除してもよろしいですか？"),
-                                    primaryButton: .destructive(Text("はい")) {
-                                        isRepetition = false
-                                        print("はいが選択されました")
-                                    },
-                                    secondaryButton: .cancel(Text("いいえ"))
-                                )
-                            } else {
-                                Alert(
-                                    title: Text("毎週木曜日の14時30分\nにアラームを鳴らします"),
-                                    message: Text("本当に設定してもよろしいですか？"),
-                                    primaryButton: .destructive(Text("はい")) {
-                                        isRepetition = true
-                                        print("はいが選択されました")
-                                    },
-                                    secondaryButton: .cancel(Text("いいえ"))
-                                )
+                            .padding(.bottom, 56)
+                            
+                            if isOn {
+                                Button(action: {
+                                    isDialogShown = true
+                                }){
+                                    HStack(spacing: 24){
+                                        Text("繰り返し")
+                                        if isRepetition {
+                                            Text("あり")
+                                        } else {
+                                            Text("なし")
+                                        }
+                                    }
+                                    .font(.system(size: 16))
+                                }
+                                .padding(.top, 40)
+                                .alert(isPresented: $isDialogShown) {
+                                    if isRepetition {
+                                        Alert(
+                                            title: Text("毎週木曜日の14時30分\nのアラーム設定を解除します"),
+                                            message: Text("本当に解除してもよろしいですか？"),
+                                            primaryButton: .destructive(Text("はい")) {
+                                                isRepetition = false
+                                                print("はいが選択されました")
+                                            },
+                                            secondaryButton: .cancel(Text("いいえ"))
+                                        )
+                                    } else {
+                                        Alert(
+                                            title: Text("毎週木曜日の14時30分\nにアラームを鳴らします"),
+                                            message: Text("本当に設定してもよろしいですか？"),
+                                            primaryButton: .destructive(Text("はい")) {
+                                                isRepetition = true
+                                                print("はいが選択されました")
+                                            },
+                                            secondaryButton: .cancel(Text("いいえ"))
+                                        )
+                                    }
+                                }
+                                .padding(.leading, -16)
                             }
+
                         }
-                    }
+                    .padding(.leading, 8)
+                }
                 }
             }
-        }
     }
     
     
@@ -194,4 +198,8 @@ extension PlanSettingWindowView {
             .frame(width: 336, height: 520)
     }
     
+}
+
+#Preview {
+    PlanSettingWindowView(isOn: .constant(true), onClose: {})
 }
