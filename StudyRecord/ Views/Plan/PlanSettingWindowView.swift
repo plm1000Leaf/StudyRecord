@@ -32,10 +32,9 @@ struct PlanSettingWindowView: View {
                     inputScheduledTime
                 }
                 
-                BasicButton(label: "決定"){
+                BasicButton(label: "決定",width: 128, height: 48){
                     print("Doneボタンが押されました")
                 }
-                    .frame(width: 128, height: 48)
 
             }
 

@@ -86,21 +86,21 @@ extension BeforeCheckView {
             Text("箇所")
                 .font(.system(size: 16))
             Spacer()
-                .frame(width: 120)
+                .frame(width: 144)
             Text("予定時間")
                 .font(.system(size: 16))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.leading, 104)
+        .padding(.leading, 48)
         .padding(.bottom, 8)
     }
     
     private var todayStudyPlanSetting: some View {
         HStack(alignment: .top){
-            VStack(spacing: 8){
+            VStack(spacing: 16){
                 
-                HStack(spacing: -32){
-                    InputStudyRange(placeholder: "ページ数", width: 120, height: 40)
+                HStack(spacing: -24){
+                    InputStudyRange(placeholder: "ページ数", width: 104, height: 40)
                     PullDown()
 
                 }
@@ -108,8 +108,8 @@ extension BeforeCheckView {
                     .font(.system(size: 32))
                     .bold()
                     .rotationEffect(.degrees(90))
-                HStack(spacing: -32){
-                    InputStudyRange(placeholder: "ページ数", width: 120, height: 40)
+                HStack(spacing: -24){
+                    InputStudyRange(placeholder: "ページ数", width: 104, height: 40)
                     PullDown()
 
                 }
@@ -117,12 +117,12 @@ extension BeforeCheckView {
             .padding(.leading, 72)
             
             Spacer()
-                .frame(width: 16)
+                .frame(width: 8)
 
                 
-                TimeSelectButton()
+                    TimeSelectButton()
                     .frame(width: 168 , height: 40)
-                    .padding(.trailing, 48)
+                    .padding(.trailing, 16)
 
                 
 
@@ -136,8 +136,7 @@ extension BeforeCheckView {
                 isDoneStudy = true
                 print("Doneボタンが押されました")
             }
-                .frame(width: 288, height: 80)
-                .padding(.top, 16)
+
         }
     }
 
