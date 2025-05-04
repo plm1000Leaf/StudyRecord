@@ -64,6 +64,10 @@ extension MovePeriodPopup {
                                                     onSelect(month)
                                                     showPopup = false
                                                 }
+                                                if let year = Int(items[index]) {
+                                                    onSelect(year)
+                                                    showPopup = false
+                                                }
                                             }
                                             .font(.system(size: 24))
                                             .foregroundColor(.white)

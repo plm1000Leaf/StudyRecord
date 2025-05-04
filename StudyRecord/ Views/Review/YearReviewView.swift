@@ -11,6 +11,7 @@ struct YearReviewView: View {
     @State private var showMonthReviewView = false
     @State private var showPopup = false
     @State private var selectedSegment: Int = 0
+    @State private var selectedYear = 2025
     @Binding var showDateReviewView: Bool
     var body: some View {
         ZStack {
@@ -35,27 +36,16 @@ struct YearReviewView: View {
                 MonthReviewView(showMonthReviewView: $showMonthReviewView)
                     .transition(.move(edge: .trailing))
             }
-//            if !showMonthReviewView {
-//                if showPopup {
-//                    ZStack {
-//
-//                        yearView
-//                            .transition(.move(edge: .leading))
-//                    }
-//                } else {
-//                    
-//                    if selectedSegment == 0 {
-//                        yearView
-//                            .transition(.move(edge: .leading))
-//                    } else {
-//                        YearReviewGraphView(selectedSegment: $selectedSegment)
-//                            .transition(.move(edge: .leading))
-//                    }
-//                }
-//            } else {
-//                MonthReviewView(showMonthReviewView: $showMonthReviewView)
-//                    .transition(.move(edge: .trailing))
-//            }
+            if showPopup {
+                MovePeriodPopup(
+                    showPopup: $showPopup,
+                    items: (2025...2036).map { "\($0)" },
+                    onSelect: { year in
+                        selectedYear = year
+                        showPopup = false
+                    }
+                )
+            }
         }
         .animation(.easeInOut, value: showMonthReviewView)
     }
@@ -69,7 +59,7 @@ extension YearReviewView {
         HStack{
             Button(action: {showPopup = true }){
                 HStack(alignment: .bottom){
-                    Text("2025")
+                    Text(String(selectedYear))
                         .font(.system(size: 48))
                         .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
                     Spacer()

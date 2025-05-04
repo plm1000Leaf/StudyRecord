@@ -74,9 +74,6 @@ extension PlanSettingWindowView {
         }
         .padding(.top, -8)
         
-        
-        
-        
     }
     
     
@@ -85,8 +82,8 @@ extension PlanSettingWindowView {
             Text("学習予定")
                 .font(.system(size: 24))
                 .padding(.leading, 16)
+            
             HStack(spacing:32){
-                
                 Button(action: {
                     isTapBookSelect.toggle()
                 }){
@@ -130,7 +127,6 @@ extension PlanSettingWindowView {
                     .frame(width: 160 , height: 40)
                     .padding(.bottom, 8)
                 
-
                 VStack{                                         ZStack {
                             HStack(spacing: 24){
                                 Text("アラーム")
