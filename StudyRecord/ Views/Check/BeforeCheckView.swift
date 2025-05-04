@@ -100,8 +100,7 @@ extension BeforeCheckView {
             VStack(spacing: 8){
                 
                 HStack(spacing: -32){
-                    InputStudyRange(placeholder: "ページ数")
-                        .frame(width: 120)
+                    InputStudyRange(placeholder: "ページ数", width: 120, height: 40)
                     PullDown()
 
                 }
@@ -110,8 +109,7 @@ extension BeforeCheckView {
                     .bold()
                     .rotationEffect(.degrees(90))
                 HStack(spacing: -32){
-                    InputStudyRange(placeholder: "ページ数")
-                        .frame(width: 120)
+                    InputStudyRange(placeholder: "ページ数", width: 120, height: 40)
                     PullDown()
 
                 }
