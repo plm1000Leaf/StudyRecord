@@ -14,8 +14,8 @@ struct SegmentedControlButton: View {
         VStack {
             // セグメンテッドコントロールの作成
             Picker("選択肢", selection: $selectedSegment) {
-                Text("オプション1").tag(0)
-                Text("オプション2").tag(1)
+                Image(systemName: "square").tag(0)
+                Image(systemName: "chart.bar.xaxis").tag(1)
             }
             .pickerStyle(SegmentedPickerStyle()) // セグメンテッドスタイルを指定
 
