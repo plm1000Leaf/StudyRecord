@@ -54,6 +54,7 @@ extension MonthReviewView {
                         Image(systemName: "chevron.left")
                         Text("年")
                     }
+                    .foregroundColor(.gray30)
                 }
 
                 Spacer()

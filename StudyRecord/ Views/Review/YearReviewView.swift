@@ -76,7 +76,7 @@ extension YearReviewView {
                         .trailing)
         }
         .padding(.top, 48)
-        .padding(.bottom, 40)
+        .padding(.bottom, 32)
         .frame(maxWidth: 312, alignment: .leading)
         .foregroundColor(.gray10)
     }
@@ -92,7 +92,7 @@ extension YearReviewView {
                         }
                     }) {
                         ZStack{
-                            Rectangle()
+                            RoundedRectangle(cornerRadius: 8)
                                 .frame(width: 104, height: 104)
                                 .foregroundColor(.mainColor0)
                             Text("\(monthNumber)")
@@ -107,18 +107,15 @@ extension YearReviewView {
 
     }
     
-    private var segmentedControl: some View {
-        Rectangle()
-            .frame(width: 264, height: 48)
-            .padding(.top, 24)
-    }
     
     private var yearView: some View {
         VStack(spacing: 16) {
             header
             monthButton
+            
             SegmentedControlButton(selectedSegment: $selectedSegment)
                 .frame(width: 264, height: 56)
+                .padding(.top, 8)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Color.baseColor0)
@@ -126,6 +123,6 @@ extension YearReviewView {
     
     
 }
-//#Preview {
-//    YearReviewView(showDateReviewView: <#Binding<Bool>#>)
-//}
+#Preview {
+    YearReviewView(showDateReviewView: .constant(false))
+}
