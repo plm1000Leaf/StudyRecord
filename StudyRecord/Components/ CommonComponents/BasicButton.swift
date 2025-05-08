@@ -13,6 +13,7 @@ struct BasicButton: View {
     var icon: String? = nil
     var width: CGFloat? = nil
     var height: CGFloat? = nil
+    var cornerRadius: CGFloat = 8
     let action: () -> Void
     
     var body: some View {
@@ -31,7 +32,7 @@ struct BasicButton: View {
             .fontWeight(.bold)
             .foregroundStyle(.white)
             .background(Color.mainColor0)
-            .clipShape(Capsule())
+            .cornerRadius(8)
         }
     }
 }

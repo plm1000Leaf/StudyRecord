@@ -13,6 +13,7 @@ struct DateReviewView: View {
     @State private var isTapEditButton = false
     @State private var userInput: String = ""
     @Binding var showDateReviewView: Bool
+
     
     var body: some View {
             VStack{
@@ -53,10 +54,18 @@ extension DateReviewView {
                 Text("金")
                     .font(.system(size: 16))
             }
-            Rectangle()
-                .foregroundColor(.mainColor0)
-                .frame(width: 248, height: 88)
+            .foregroundColor(.gray0)
+            ZStack{
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.mainColor10)
+                    .frame(width: 248, height: 88)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.mainColor0, lineWidth: 4) // 枠線
+                    )
+            }
         }
+
         .padding(.bottom, 32)
     }
     
@@ -65,6 +74,7 @@ extension DateReviewView {
             
             Rectangle()
                 .frame(width: 392, height: 88)
+                .foregroundColor(.gray10)
             HStack{
                 VStack(alignment: .leading){
                     
@@ -105,26 +115,39 @@ extension DateReviewView {
                 Text("金")
                     .font(.system(size: 16))
             }
+            .foregroundColor(.gray0)
             ZStack{
-                Rectangle()
-                    .frame(width: 248, height: 288)
-                    .foregroundColor(.mainColor20)
+//                Rectangle()
+//                    .frame(width: 248, height: 288)
+//                    .foregroundColor(.mainColor20)
+                
+                ZStack{
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.mainColor20)
+                        .frame(width: 248, height: 288)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.mainColor0, lineWidth: 4) // 枠線
+                        )
+                }
                 VStack{
                     HStack{
+
                         Rectangle()
-                            .frame(width: 88, height:  104)
+                            .frame(width: 88, height:  120)
                             .foregroundColor(.mainColor0)
+
                         VStack(spacing: 8){
                         Text("応用情報技術者合格教本")
                             .font(.system(size: 16))
                             .frame(width: 104)
-                            .foregroundColor(.blue)
+                            .foregroundColor(.gray0)
                         
                             HStack{
                                 Text("30")
-                                    .font(.system(size: 16))
+                                    .font(.system(size: 12))
                                 Text("ページ")
-                                    .font(.system(size: 8))
+                                    .font(.system(size: 12))
                             }
                             Text("〜")
                                 .font(.system(size: 16))
@@ -132,15 +155,16 @@ extension DateReviewView {
                                 .rotationEffect(.degrees(90))
                             HStack{
                                 Text("30")
-                                    .font(.system(size: 16))
+                                    .font(.system(size: 12))
                                 Text("ページ")
-                                    .font(.system(size: 8))
+                                    .font(.system(size: 12))
                             }
 
                         }
-                        .foregroundColor(.blue)
+                        .foregroundColor(.gray0)
                     }
-                    .padding(.bottom, 8)
+                    .padding(.top, 24)
+
 
                     InputReviewField()
                 }
@@ -152,5 +176,5 @@ extension DateReviewView {
 }
 
 #Preview {
-   DateReviewView(showDateReviewView: .constant(true))
+    DateReviewView(showDateReviewView: .constant(true))
 }
