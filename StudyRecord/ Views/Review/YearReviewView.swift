@@ -75,7 +75,7 @@ extension YearReviewView {
                 .frame(maxWidth: .infinity, alignment:
                         .trailing)
         }
-        .padding(.top, 48)
+        .padding(.top, 16)
         .padding(.bottom, 32)
         .frame(maxWidth: 312, alignment: .leading)
         .foregroundColor(.gray10)
@@ -115,7 +115,7 @@ extension YearReviewView {
             
             SegmentedControlButton(selectedSegment: $selectedSegment)
                 .frame(width: 264, height: 56)
-                .padding(.top, 8)
+                .padding(.top, 24)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Color.baseColor0)

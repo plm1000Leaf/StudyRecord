@@ -41,8 +41,8 @@ extension YearReviewGraphView {
                 .frame(maxWidth: .infinity, alignment:
                         .trailing)
         }
-        .padding(.top, 48)
-        .padding(.bottom, 40)
+        .padding(.top, 16)
+        .padding(.bottom, 48)
         .frame(maxWidth: 312, alignment: .leading)
         .foregroundColor(.gray10)
     }
@@ -55,7 +55,7 @@ extension YearReviewGraphView {
             
             SegmentedControlButton(selectedSegment: $selectedSegment)
                 .frame(width: 264, height: 56)
-                .padding(.bottom, 13)
+                .padding(.bottom, 30)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         }
         .background(Color.baseColor0)
