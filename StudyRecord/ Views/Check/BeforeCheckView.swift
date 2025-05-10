@@ -133,7 +133,7 @@ extension BeforeCheckView {
     
     private var checkButton: some View {
 
-        BasicButton(label: "Done", icon: "checkmark", width: 288, height: 80){
+        BasicButton(label: "Done", icon: "checkmark", width: 288, height: 80,fontSize: 48,imageSize: 32){
                 isDoneStudy = true
                 print("Doneボタンが押されました")
             }

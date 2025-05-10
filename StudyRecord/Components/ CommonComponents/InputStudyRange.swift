@@ -31,7 +31,7 @@ extension InputStudyRange {
             isInputting = false
         })
             .padding(10)
-            .background(Color.gray.opacity(0.2))
+            .background(Color.baseColor10)
             .cornerRadius(8)
             .onChange(of: text) { newValue in
                 if newValue.count > maxCharacters {
@@ -40,7 +40,7 @@ extension InputStudyRange {
             }
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.gray, lineWidth: 1)
+                    .stroke(Color.mainColor0, lineWidth: 1)
             )
             .padding(.horizontal)
             .frame(width: width, height: height)

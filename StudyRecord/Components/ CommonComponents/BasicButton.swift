@@ -13,6 +13,8 @@ struct BasicButton: View {
     var icon: String? = nil
     var width: CGFloat? = nil
     var height: CGFloat? = nil
+    var fontSize: CGFloat? = nil
+    var imageSize: CGFloat? = nil
     var cornerRadius: CGFloat = 8
     let action: () -> Void
     
@@ -23,9 +25,10 @@ struct BasicButton: View {
             HStack{
                 if let name = icon {
                     Image(systemName: name)
+                        .font(.system(size:imageSize ?? 16))
                 }
                 Text(label)
-                
+                    .font(.system(size:fontSize ?? 16))
             }
             .frame(width: width, height: height)
             .padding(.vertical, height == nil ? 8 : 0)

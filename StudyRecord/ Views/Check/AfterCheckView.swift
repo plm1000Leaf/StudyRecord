@@ -86,24 +86,27 @@ extension AfterCheckView {
     
     private var checkButton: some View {
         HStack(spacing: 56){
-            BasicButton(label: "振り返る", width: 144, height: 72){
+            BasicButton(label: "振り返る", width: 144, height: 72, fontSize: 24){
                 selectedTabIndex = 0
                 navigateToReview = true
                 dismiss()
                 print("振り返るボタンが押されました")
             }
-            .padding(.top, 16)
             
-            BasicButton(label: "明日の予定", width: 144, height: 72){
+            BasicButton(label: "明日の予定", width: 144, height: 72, fontSize: 24){
                 selectedTabIndex = 2
                 navigateToPlan = true
                 dismiss()
                 print("明日の予定ボタンが押されました")
             }
-            .padding(.top, 16)
+
             
         }
         
     }
 
+}
+
+#Preview {
+    AfterCheckView(isDoneStudy: .constant(true), selectedTabIndex: .constant(1), navigateToReview: .constant(false), navigateToPlan: .constant(false), dismiss: {} )
 }
