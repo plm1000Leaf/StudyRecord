@@ -5,6 +5,7 @@
 //  Created by 千葉陽乃 on 2025/03/18.
 //
 
+
 import SwiftUI
 
 struct PullDown: View {
@@ -16,13 +17,16 @@ struct PullDown: View {
         Picker("選択してください", selection: $selectedItem) {
             ForEach(options, id: \.self) { option in
                 Text(option)
+                    .foregroundColor(.accentColor1)
                     .tag(option)
                     .fixedSize(horizontal: true, vertical: false) // 折り返しを防ぐ
+
             }
         }
         .pickerStyle(MenuPickerStyle()) // プルダウンメニュー風
         .frame(width: 100) // 必要に応じて幅を調整
         .padding(4)
+
     }
 }
 

@@ -63,7 +63,7 @@ extension BeforeCheckView {
     private var checkViewTitle: some View {
         Text("今日の学習")
             .font(.system(size: 32))
-            .padding(.top, 48)
+            .padding(.top, 16)
             .padding(.leading, 56)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -111,6 +111,7 @@ extension BeforeCheckView {
                 HStack(spacing: -24){
                     InputStudyRange(placeholder: "ページ数", width: 104, height: 40)
                     PullDown()
+                        .foregroundColor(.accentColor1)
 
                 }
             }
@@ -140,3 +141,6 @@ extension BeforeCheckView {
         }
     }
 
+#Preview {
+    BeforeCheckView(selectedTabIndex: .constant(1), navigateToReview: .constant(true), navigateToPlan: .constant(true))
+}

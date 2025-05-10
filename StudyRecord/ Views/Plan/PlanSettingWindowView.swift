@@ -48,7 +48,8 @@ struct PlanSettingWindowView: View {
                     }) {
                         Image(systemName: "xmark")
                             .font(.system(size: 16))
-                            .padding(8)
+                            .padding(16)
+                            .padding(.top, -8)
                     },
                     alignment: .topLeading // 左上に配置
                 )
@@ -72,7 +73,8 @@ extension PlanSettingWindowView {
                 .alignmentGuide(.firstTextBaseline) { d in d[.bottom] }
             
         }
-        .padding(.top, -8)
+        .foregroundColor(.baseColor10)
+
         
     }
     
@@ -110,6 +112,7 @@ extension PlanSettingWindowView {
                 }
                 
             }
+            .padding(.top, -8)
             .padding(.bottom, 24)
             
         }
@@ -137,7 +140,7 @@ extension PlanSettingWindowView {
                                 .labelsHidden()
                                 .toggleStyle(SwitchToggleStyle(tint: .blue))
                             }
-                            .padding(.bottom, 56)
+                            .padding(.bottom, 64)
                             
                             if isOn {
                                 Button(action: {
@@ -145,11 +148,17 @@ extension PlanSettingWindowView {
                                 }){
                                     HStack(spacing: 24){
                                         Text("繰り返し")
+                                            .frame(width:72, height:8)
+                                            .padding(.leading, 14)
+                                            .foregroundColor(.black)
                                         if isRepetition {
                                             Text("あり")
+                                                .padding(.leading, 8)
                                         } else {
                                             Text("なし")
+                                                .padding(.leading, 8)
                                         }
+                                            
                                     }
                                     .font(.system(size: 16))
                                 }
@@ -191,7 +200,14 @@ extension PlanSettingWindowView {
     private var windowBase: some View {
         Rectangle()
             .fill(Color.baseColor0)
-            .frame(width: 336, height: 520)
+            .frame(width: 336, height: 544)
+            .cornerRadius(24)
+            .overlay(
+                CustomRoundedCorner(radius: 24, corners: [.topLeft, .topRight])
+                    .foregroundColor(.mainColor0)
+                    .frame(width: 336, height: 80)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            )
     }
     
 }

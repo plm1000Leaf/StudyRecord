@@ -18,6 +18,7 @@ struct PlanningCalendar: View {
                             Text(day)
                                 .font(.headline)
                                 .frame(maxWidth: .infinity)
+                                .padding(.bottom, 8)
                         }
                         
                         ForEach(days, id: \.self) { date in
@@ -40,7 +41,6 @@ struct PlanningCalendar: View {
                 Spacer()
                 moveButton
                     .padding(.horizontal)
-                    .padding(.bottom, 16)
             }
         }
     }
@@ -55,6 +55,7 @@ extension PlanningCalendar {
                     }
                 }){
                     Rectangle()
+                        .cornerRadius(2.5)
                         .frame(width: 40, height: 32)
                         .foregroundColor(.mainColor0)
                 }
@@ -88,6 +89,8 @@ extension PlanningCalendar {
                     .font(.system(size: 16))
                     .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
             }
+
+            .padding(.bottom, 8)
             .frame(maxWidth: .infinity, alignment:
                     .leading)
             .foregroundColor(.black)
@@ -98,7 +101,17 @@ extension PlanningCalendar {
                 Button(action: {
                     currentMonth = CalendarUtils.changeMonth(currentMonth: currentMonth, by: -1)
                 }) {
-                    Image(systemName: "chevron.left")
+                    ZStack{
+                        Circle()
+                            .fill(Color.lightblue1)
+                            .frame(width: 40, height: 40)
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.blue, lineWidth: 2) // 枠線
+                            )
+                        Image(systemName: "chevron.left")
+                            .bold()
+                    }
                 }
             
                 Spacer()
@@ -106,12 +119,27 @@ extension PlanningCalendar {
                 Button(action: {
                     currentMonth = CalendarUtils.changeMonth(currentMonth: currentMonth, by: 1)
                 }) {
-                    Image(systemName: "chevron.right")
+                    ZStack{
+                        Circle()
+                            .fill(Color.lightblue1)
+                            .frame(width: 40, height: 40)
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.blue, lineWidth: 2) // 枠線
+                            )
+                        Image(systemName: "chevron.right")
+                            .bold()
+                    }
+
                 }
             }
-            
+            .padding(.horizontal)
+
+            .padding(.bottom, 14)
             .padding()
         }
     }
 
-
+#Preview {
+    PlanningCalendar(currentMonth: .constant(Date()), isTapDate: .constant(false), showPopup: .constant(false))
+}

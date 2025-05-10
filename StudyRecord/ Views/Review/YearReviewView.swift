@@ -75,8 +75,8 @@ extension YearReviewView {
                 .frame(maxWidth: .infinity, alignment:
                         .trailing)
         }
-        .padding(.top, 16)
-        .padding(.bottom, 32)
+        .padding(.top, 8)
+        .padding(.bottom, 24)
         .frame(maxWidth: 312, alignment: .leading)
         .foregroundColor(.gray10)
     }
