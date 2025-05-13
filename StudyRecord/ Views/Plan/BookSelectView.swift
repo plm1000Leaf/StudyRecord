@@ -14,52 +14,94 @@ struct BookSelectView: View {
     private let maxCharacters = 20
     
     var body: some View {
-        ScrollView{
-            VStack(spacing: 40){
-                
-                studyMaterialLabel
-                HStack(spacing: 32){
+        ZStack {
+            ScrollView{
+                VStack(spacing: 40){
                     
-                    studyMaterial
-                    studyMaterial
-                    studyMaterial
-                }
-                .padding(.bottom, 16)
-                
-                studyMaterialLabel
-                HStack(spacing: 32){
+                    studyMaterialLabel
+                    HStack(spacing: 32){
+                        
+                        studyMaterial
+                        studyMaterial
+                        studyMaterial
+                    }
+                    .padding(.bottom, 16)
                     
-                    studyMaterial
-                    studyMaterial
-                    studyMaterial
-                }
-                .padding(.bottom, 24)
-                
-                if isTapAddBook == true {
-                    inputBookInformation
-                } else {
-                    Button(action: {
-                        isTapAddBook = true
-                    }){
-                        bookAddButton
+                    studyMaterialLabel
+                    HStack(spacing: 32){
+                        
+                        studyMaterial
+                        studyMaterial
+                        studyMaterial
+                    }
+                    .padding(.bottom, 24)
+                    
+                    if isTapAddBook == true {
+                        //inputBookInformation
+                        HStack(spacing:48){
+                                
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.baseColor20)
+                                    .frame(width: 144, height: 180)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.mainColor0, lineWidth: 4) // 枠線
+                                    )
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                Image(systemName: "photo.badge.plus.fill")
+                                    .foregroundColor(.green)
+                                    .font(.system(size: 40))
+                            }
+                            VStack{
+
+                                    LabelSelector()
+                                ZStack{
+                                    Rectangle()
+                                        .frame(width: 156, height: 64)
+                                        .foregroundColor(.white)
+                                        .padding(.top, 8)
+                                    CustomTextEditor(text: $text, maxCharacters: maxCharacters)
+                                        .frame(width: 156, height: 56)
+                                        .padding(.top, 8)
+                                }
+                                BasicButton(label: "登録", width: 56, height: 40) {
+                                    isTapAddBook = false
+                                }
+                                .padding(.top, 8)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+
+                            }
+                            
+
+                        }
+                    } else {
+                        Button(action: {
+                            isTapAddBook = true
+                        }){
+                            bookAddButton
+                        }
                     }
                 }
-            }
-            .overlay(
-                Button(action: {
-                    dismiss() // 親ビューの状態を変更する
-                }) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 16))
-                        .padding(8)
-                },
-                alignment: .topLeading // 左上に配置
-            )
+                .overlay(
+                    Button(action: {
+                        dismiss() // 親ビューの状態を変更する
+                    }) {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 16))
+                            .padding(8)
+                    },
+                    alignment: .topLeading // 左上に配置
+                )
 
+                
+                .padding(.horizontal, 20)
+            }
+            .background(Color.baseColor10)
             
-            .padding(.horizontal, 20)
+
         }
-        .background(Color.baseColor10)
     }
 
 }
@@ -86,40 +128,30 @@ extension BookSelectView {
     }
     
     private var bookAddButton: some View {
-        Rectangle()
-            .frame(width: 96, height: 120)
-            .frame(maxWidth: .infinity, alignment: .leading)
+        ZStack {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.white)
+                .frame(width: 96, height: 120)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(
+                            style: StrokeStyle(
+                                lineWidth: 4,
+                                dash: [5, 4] // 6pt の線、4pt の隙間
+                            )
+                        )
+                        .foregroundColor(Color.mainColor0) // 色の指定はこちら
+                )
+            
+            Image(systemName: "plus")
+                .foregroundColor(Color.mainColor0)
+                .bold()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+
     }
     
-    private var inputBookInformation: some View {
-        HStack(spacing:48){
-            Rectangle()
-                .frame(width: 144, height: 180)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            VStack{
 
-                    ZStack{
-
-                        Rectangle()
-                            .frame(width: 156, height: 64)
-                            .foregroundColor(.white)
-                            .padding(.top, 32)
-                        CustomTextEditor(text: $text, maxCharacters: maxCharacters)
-                            .frame(width: 156, height: 56)
-                            .padding(.top, 32)
-                        AddPullDown()
-
-
-                }
-                BasicButton(label: "登録") {
-                    isTapAddBook = false
-                }
-
-            }
-            
-
-        }
-    }
     
 }
 
