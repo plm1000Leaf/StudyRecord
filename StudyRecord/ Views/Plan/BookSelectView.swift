@@ -18,64 +18,13 @@ struct BookSelectView: View {
             ScrollView{
                 VStack(spacing: 40){
                     
-                    studyMaterialLabel
-                    HStack(spacing: 32){
-                        
-                        studyMaterial
-                        studyMaterial
-                        studyMaterial
+                    ForEach(0..<2) { _ in
+                        studyMaterialSection
                     }
-                    .padding(.bottom, 16)
-                    
-                    studyMaterialLabel
-                    HStack(spacing: 32){
-                        
-                        studyMaterial
-                        studyMaterial
-                        studyMaterial
-                    }
-                    .padding(.bottom, 24)
                     
                     if isTapAddBook == true {
-                        //inputBookInformation
-                        HStack(spacing:48){
-                                
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.baseColor20)
-                                    .frame(width: 144, height: 180)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .stroke(Color.mainColor0, lineWidth: 4) // 枠線
-                                    )
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                
-                                Image(systemName: "photo.badge.plus.fill")
-                                    .foregroundColor(.green)
-                                    .font(.system(size: 40))
-                            }
-                            VStack{
-
-                                    LabelSelector()
-                                ZStack{
-                                    Rectangle()
-                                        .frame(width: 156, height: 64)
-                                        .foregroundColor(.white)
-                                        .padding(.top, 8)
-                                    CustomTextEditor(text: $text, maxCharacters: maxCharacters)
-                                        .frame(width: 156, height: 56)
-                                        .padding(.top, 8)
-                                }
-                                BasicButton(label: "登録", width: 56, height: 40) {
-                                    isTapAddBook = false
-                                }
-                                .padding(.top, 8)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-
-                            }
-                            
-
-                        }
+                        inputBookInformation
+ 
                     } else {
                         Button(action: {
                             isTapAddBook = true
@@ -108,15 +57,9 @@ struct BookSelectView: View {
 
 
 extension BookSelectView {
-    private var studyMaterialLabel: some View {
-        Text("資格")
-            .padding(.top, 40)
-            .font(.system(size: 32))
-            .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
     
-    private var studyMaterial: some View {
+    private var bookCard: some View {
+        
         VStack {
             Rectangle()
                 .frame(width: 96, height: 120)
@@ -124,7 +67,7 @@ extension BookSelectView {
                 .font(.system(size: 16))
                 .frame(width: 72)
         }
-        .padding(.bottom, 16)
+        .padding(.bottom, 32)
     }
     
     private var bookAddButton: some View {
@@ -150,9 +93,63 @@ extension BookSelectView {
         .frame(maxWidth: .infinity, alignment: .leading)
 
     }
-    
 
-    
+    private var studyMaterialSection: some View {
+        VStack(spacing: 40) {
+            Text("資格")
+                .padding(.top, 40)
+                .font(.system(size: 32))
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            HStack(spacing: 32) {
+                ForEach(0..<3) { _ in
+                    bookCard
+                }
+            }
+        }
+    }
+
+    private var inputBookInformation: some View {
+        
+        HStack(spacing:48){
+                
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.baseColor20)
+                    .frame(width: 144, height: 180)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.mainColor0, lineWidth: 4) // 枠線
+                    )
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Image(systemName: "photo.badge.plus.fill")
+                    .foregroundColor(.green)
+                    .font(.system(size: 40))
+            }
+            VStack{
+
+                    LabelSelector()
+                ZStack{
+                    Rectangle()
+                        .frame(width: 156, height: 64)
+                        .foregroundColor(.white)
+                        .padding(.top, 8)
+                    CustomTextEditor(text: $text, maxCharacters: maxCharacters)
+                        .frame(width: 156, height: 56)
+                        .padding(.top, 8)
+                }
+                BasicButton(label: "登録", width: 56, height: 40) {
+                    isTapAddBook = false
+                }
+                .padding(.top, 8)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+
+            }
+            
+
+        }
+    }
 }
 
 #Preview {
