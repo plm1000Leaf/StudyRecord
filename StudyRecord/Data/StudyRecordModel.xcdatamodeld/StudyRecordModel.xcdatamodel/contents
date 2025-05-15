@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="22G830" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="DailyRecord" representedClassName="DailyRecord" syncable="YES">
+        <attribute name="alarmOn" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endPage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="endUnit" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isRepeating" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="scheduledHour" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="scheduledMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startPage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startUnit" optional="YES" attributeType="String"/>
+        <relationship name="material" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Material" inverseName="dailyRecord" inverseEntity="Material"/>
+        <relationship name="monthlySummary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MonthlyRecord" inverseName="dailyRecords" inverseEntity="MonthlyRecord"/>
+    </entity>
+    <entity name="Material" representedClassName="Material" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="label" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="dailyRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailyRecord" inverseName="material" inverseEntity="DailyRecord"/>
+    </entity>
+    <entity name="MonthlyRecord" representedClassName="MonthlyRecord" syncable="YES">
+        <attribute name="checkCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="month" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="year" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="dailyRecords" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DailyRecord" inverseName="monthlySummary" inverseEntity="DailyRecord"/>
+    </entity>
+</model>
