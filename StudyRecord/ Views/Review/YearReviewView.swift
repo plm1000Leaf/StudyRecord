@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct YearReviewView: View {
-    @State private var showMonthReviewView = false
     @State private var showPopup = false
     @State private var selectedSegment: Int = 0
     @State private var selectedYear = 2025
+    @State private var selectedMonth: Int? = nil
+    @State private var currentMonth: Date = Date()
+    @State private var showMonthReviewView = false
     @Binding var showDateReviewView: Bool
     var body: some View {
         ZStack {
@@ -33,7 +35,8 @@ struct YearReviewView: View {
                     }
                 }
             } else {
-                MonthReviewView(showMonthReviewView: $showMonthReviewView)
+                MonthReviewView(showMonthReviewView:$showMonthReviewView, currentMonth: currentMonth
+                )
                     .transition(.move(edge: .trailing))
             }
             if showPopup {
@@ -88,6 +91,10 @@ extension YearReviewView {
                     let monthNumber = rowIndex * 3 + columnIndex + 1
                     Button(action: {
                         withAnimation {
+                            selectedMonth = monthNumber
+                            currentMonth = Calendar.current.date(
+                                from: DateComponents(year: selectedYear, month: monthNumber)
+                            ) ?? Date()
                             showMonthReviewView = true
                         }
                     }) {

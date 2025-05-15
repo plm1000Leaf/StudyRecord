@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MonthReviewCalendar: View {
-    @State private var currentMonth: Date = Date()
+    @Binding var currentMonth: Date 
     @Binding var showDateReviewView: Bool
     var body: some View {
         ZStack {
@@ -78,7 +78,7 @@ extension MonthReviewCalendar {
     }
 }
 
-#Preview {
-    MonthReviewCalendar(showDateReviewView: .constant(true))
-}
+//#Preview {
+//    MonthReviewCalendar(showDateReviewView: .constant(true))
+//}
 
