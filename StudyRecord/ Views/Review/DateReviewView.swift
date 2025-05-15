@@ -13,7 +13,9 @@ struct DateReviewView: View {
     @State private var isTapEditButton = false
     @State private var userInput: String = ""
     @Binding var showDateReviewView: Bool
+    @Binding var currentMonth: Date 
 
+  
     
     var body: some View {
             VStack{
@@ -21,13 +23,14 @@ struct DateReviewView: View {
                 DateReviewHeader
                 
                 ScrollView {
-                    ForEach(0..<30, id: \.self){ index in
+                    let numberOfDaysInMonth = Calendar.current.range(of: .day, in: .month, for: currentMonth)?.count ?? 0
+                    ForEach(0..<numberOfDaysInMonth, id: \.self){ index in
                         Group {
                             if selectedRowIndex == index {
-                                    SelectReview
+                                    SelectReview(index: index)
 
                             } else {
-                                DateReviewRow
+                                DateReviewRow(index: index)
                                     .onTapGesture {
                                         selectedRowIndex = index
                                     }
@@ -46,10 +49,10 @@ struct DateReviewView: View {
 
 
 extension DateReviewView {
-    private var DateReviewRow: some View {
+    private func DateReviewRow(index: Int) -> some View {
         HStack(alignment: .top, spacing: 32){
             VStack(alignment: .trailing){
-                Text("30")
+                Text("\(index + 1)")
                     .font(.system(size: 32))
                 Text("金")
                     .font(.system(size: 16))
@@ -107,10 +110,10 @@ extension DateReviewView {
         }
     }
     
-    private var SelectReview: some View {
+    private func SelectReview(index: Int) -> some View {
         HStack(alignment: .top, spacing: 32){
             VStack(alignment: .trailing){
-                Text("30")
+                Text("\(index + 1)")
                     .font(.system(size: 32))
                 Text("金")
                     .font(.system(size: 16))
@@ -175,6 +178,6 @@ extension DateReviewView {
     
 }
 
-#Preview {
-    DateReviewView(showDateReviewView: .constant(true))
-}
+//#Preview {
+//    DateReviewView(showDateReviewView: .constant(true))
+//}

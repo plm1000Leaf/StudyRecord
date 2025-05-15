@@ -10,7 +10,7 @@ import SwiftUI
 struct MonthReviewView: View {
     @State private var showDateReviewView = false
     @Binding var showMonthReviewView: Bool
-    var currentMonth: Date
+    @Binding var currentMonth: Date
     var body: some View {
         ZStack {
 
@@ -19,7 +19,7 @@ struct MonthReviewView: View {
                 monthView
                     .transition(.move(edge: .leading))
             } else {
-                DateReviewView(showDateReviewView: $showDateReviewView)
+                DateReviewView(showDateReviewView: $showDateReviewView, currentMonth: $currentMonth)
                     .transition(.move(edge: .trailing))
             }
         }
