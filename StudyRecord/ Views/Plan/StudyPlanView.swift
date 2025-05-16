@@ -14,14 +14,20 @@ struct StudyPlanView: View {
     @State private var text: String = ""
     @State private var currentMonth = Date()
     @State private var isOn = false
-    
+    @State private var selectedDate: Date? = nil
+
     var openPlanSettingOnAppear: Bool = false
     
     var body: some View {
         GeometryReader { geometry in
             ZStack{
                 VStack{
-                    PlanningCalendar(currentMonth: $currentMonth, isTapDate: $isTapDate, showPopup: $showPopup)
+                    PlanningCalendar(
+                        currentMonth: $currentMonth,
+                        isTapDate: $isTapDate,
+                        showPopup: $showPopup,
+                        selectedDate: $selectedDate
+                    )
 
                     
                 }
@@ -48,12 +54,16 @@ struct StudyPlanView: View {
                         }
                     )
                 }
-                
-                if isTapDate {
-                    PlanSettingWindowView(isOn: $isOn) {
-                        isTapDate = false // ×ボタンが押されたら閉じる
-                    }
-                    .zIndex(1) // 他のビューより前面に表示
+ 
+                if isTapDate, let selectedDate = selectedDate {
+                    PlanSettingWindowView(
+                        currentMonth: $currentMonth,
+                        isOn: $isOn,
+                        onClose: {
+                            isTapDate = false
+                        }, selectedDate: selectedDate
+                    )
+                    .zIndex(1)
                 }
             }
         }

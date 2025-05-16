@@ -14,9 +14,11 @@ struct PlanSettingWindowView: View {
     @State private var endPage: String = ""
     @State private var isDialogShown = false
     @State private var isRepetition = false
+    @Binding var currentMonth: Date
     @Binding var isOn: Bool
     var onClose: () -> Void
-    
+    var selectedDate: Date
+
     var body: some View {
         ZStack{
             
@@ -63,19 +65,20 @@ struct PlanSettingWindowView: View {
 
 extension PlanSettingWindowView {
     private var windowTitle: some View {
-        HStack(alignment: .firstTextBaseline) {
-            
-            Text("30")
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "ja_JP")
+        let day = calendar.component(.day, from: selectedDate)
+        let weekdayIndex = calendar.component(.weekday, from: selectedDate)
+        let weekday = calendar.shortWeekdaySymbols[weekdayIndex - 1] // 例: "日", "月", ...
+
+        return HStack(alignment: .firstTextBaseline) {
+            Text("\(day)")
                 .font(.system(size: 48))
-            
-            Text("(木)")
+            Text("(\(weekday))")
                 .font(.system(size: 24))
                 .alignmentGuide(.firstTextBaseline) { d in d[.bottom] }
-            
         }
         .foregroundColor(.baseColor10)
-
-        
     }
     
     
@@ -212,6 +215,6 @@ extension PlanSettingWindowView {
     
 }
 
-#Preview {
-    PlanSettingWindowView(isOn: .constant(true), onClose: {})
-}
+//#Preview {
+//    PlanSettingWindowView(currentMonth:$currentMonth, isOn: .constant(true), onClose: {})
+//}

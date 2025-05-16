@@ -4,7 +4,8 @@ struct PlanningCalendar: View {
     @Binding var currentMonth: Date
     @Binding var isTapDate: Bool
     @Binding var showPopup: Bool
-    
+    @Binding var selectedDate: Date?
+
     var body: some View {
         ZStack{
             ScrollView {
@@ -28,10 +29,11 @@ struct PlanningCalendar: View {
                                         .font(.system(size: 16))
                                         .padding(.leading, 16)
                                         .cornerRadius(5)
-                                    todayStudyPlan
+                                    todayStudyPlan(for: date)
                                 }
                             }
                         }
+
                     }
                     .padding()
                 }
@@ -46,21 +48,26 @@ struct PlanningCalendar: View {
     }
 }
 extension PlanningCalendar {
-    private var todayStudyPlan: some View {
+    private func todayStudyPlan(for date: Int) -> some View {
         VStack {
             ZStack {
                 Button(action: {
                     withAnimation {
+                        selectedDate = Calendar.current.date(from: DateComponents(
+                            year: Calendar.current.component(.year, from: currentMonth),
+                            month: Calendar.current.component(.month, from: currentMonth),
+                            day: date
+                        ))
                         isTapDate = true
                     }
-                }){
+                }) {
                     Rectangle()
                         .cornerRadius(2.5)
                         .frame(width: 40, height: 32)
                         .foregroundColor(.mainColor0)
                 }
             }
-                
+            
             HStack(spacing: 1) {
                 Image(systemName: "clock")
                     .font(.system(size: 8))
@@ -140,6 +147,6 @@ extension PlanningCalendar {
         }
     }
 
-#Preview {
-    PlanningCalendar(currentMonth: .constant(Date()), isTapDate: .constant(false), showPopup: .constant(false))
-}
+//#Preview {
+//    PlanningCalendar(currentMonth: .constant(Date()), isTapDate: .constant(false), showPopup: .constant(false))
+//}
