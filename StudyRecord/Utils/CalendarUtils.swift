@@ -39,6 +39,23 @@ struct CalendarUtils {
         let firstWeekday = calendar.component(.weekday, from: date.startOfMonth()) - 1
         return Array(repeating: 0, count: firstWeekday) + Array(1...range.count)
     }
+    
+    static func dayAndWeekday(at index: Int, from month: Date) -> (day: Int, weekday: String)? {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "ja_JP")
+
+        guard let dayDate = calendar.date(byAdding: .day, value: index, to: month) else {
+            return nil
+        }
+
+        let day = calendar.component(.day, from: dayDate)
+        let weekdayIndex = calendar.component(.weekday, from: dayDate)
+        let weekdaySymbol = calendar.shortWeekdaySymbols[weekdayIndex - 1] // "日", "月", ...
+
+        return (day, weekdaySymbol)
+    }
+
+
 }
 
 extension Date {

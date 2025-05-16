@@ -50,26 +50,32 @@ struct DateReviewView: View {
 
 extension DateReviewView {
     private func DateReviewRow(index: Int) -> some View {
-        HStack(alignment: .top, spacing: 32){
-            VStack(alignment: .trailing){
-                Text("\(index + 1)")
-                    .font(.system(size: 32))
-                Text("金")
-                    .font(.system(size: 16))
-            }
-            .foregroundColor(.gray0)
-            ZStack{
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.mainColor10)
-                    .frame(width: 248, height: 88)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.mainColor0, lineWidth: 4) // 枠線
-                    )
-            }
+        guard let (day, weekday) = CalendarUtils.dayAndWeekday(at: index, from: currentMonth) else {
+            return AnyView(EmptyView())
         }
-
-        .padding(.bottom, 32)
+        
+        return AnyView(
+            HStack(alignment: .top, spacing: 32) {
+                VStack(alignment: .trailing) {
+                    Text("\(day)")
+                        .font(.system(size: 32))
+                    Text("(\(weekday))")
+                        .font(.system(size: 16))
+                }
+                .foregroundColor(.gray0)
+                
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.mainColor10)
+                        .frame(width: 248, height: 88)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.mainColor0, lineWidth: 4)
+                        )
+                }
+            }
+                .padding(.bottom, 32)
+        )
     }
     
     private var DateReviewHeader: some View {
@@ -93,17 +99,17 @@ extension DateReviewView {
                     }
                     
                     HStack(alignment: .bottom){
-                        Text("2025")
+                        Text(CalendarUtils.yearString(from: currentMonth))
                             .font(.system(size: 16))
                             .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
                         
-                        Text("1")
+                        Text(CalendarUtils.monthString(from: currentMonth))
                             .font(.system(size: 48))
                             .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
                     }
                 }
                 Spacer()
-            
+                
             }
             .padding(.leading, 28)
             .foregroundColor(.white)
@@ -111,73 +117,75 @@ extension DateReviewView {
     }
     
     private func SelectReview(index: Int) -> some View {
-        HStack(alignment: .top, spacing: 32){
-            VStack(alignment: .trailing){
-                Text("\(index + 1)")
-                    .font(.system(size: 32))
-                Text("金")
-                    .font(.system(size: 16))
-            }
-            .foregroundColor(.gray0)
-            ZStack{
-//                Rectangle()
-//                    .frame(width: 248, height: 288)
-//                    .foregroundColor(.mainColor20)
+        guard let (day, weekday) = CalendarUtils.dayAndWeekday(at: index, from: currentMonth) else {
+            return AnyView(EmptyView())
+        }
+        
+        return AnyView(
+            HStack(alignment: .top, spacing: 32) {
+                VStack(alignment: .trailing) {
+                    Text("\(day)")
+                        .font(.system(size: 32))
+                    Text("(\(weekday))")
+                        .font(.system(size: 16))
+                }
+                .foregroundColor(.gray0)
                 
                 ZStack{
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.mainColor20)
-                        .frame(width: 248, height: 288)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.mainColor0, lineWidth: 4) // 枠線
-                        )
-                }
-                VStack{
-                    HStack{
-
-                        Rectangle()
-                            .frame(width: 88, height:  120)
-                            .foregroundColor(.mainColor0)
-
-                        VStack(spacing: 8){
-                        Text("応用情報技術者合格教本")
-                            .font(.system(size: 16))
-                            .frame(width: 104)
-                            .foregroundColor(.gray0)
-                        
-                            HStack{
-                                Text("30")
-                                    .font(.system(size: 12))
-                                Text("ページ")
-                                    .font(.system(size: 12))
-                            }
-                            Text("〜")
-                                .font(.system(size: 16))
-                                .bold()
-                                .rotationEffect(.degrees(90))
-                            HStack{
-                                Text("30")
-                                    .font(.system(size: 12))
-                                Text("ページ")
-                                    .font(.system(size: 12))
-                            }
-
-                        }
-                        .foregroundColor(.gray0)
+                    
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.mainColor20)
+                            .frame(width: 248, height: 288)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.mainColor0, lineWidth: 4) // 枠線
+                            )
                     }
-                    .padding(.top, 24)
-
-
-                    InputReviewField()
+                    VStack{
+                        HStack{
+                            
+                            Rectangle()
+                                .frame(width: 88, height:  120)
+                                .foregroundColor(.mainColor0)
+                            
+                            VStack(spacing: 8){
+                                Text("応用情報技術者合格教本")
+                                    .font(.system(size: 16))
+                                    .frame(width: 104)
+                                    .foregroundColor(.gray0)
+                                
+                                HStack{
+                                    Text("30")
+                                        .font(.system(size: 12))
+                                    Text("ページ")
+                                        .font(.system(size: 12))
+                                }
+                                Text("〜")
+                                    .font(.system(size: 16))
+                                    .bold()
+                                    .rotationEffect(.degrees(90))
+                                HStack{
+                                    Text("30")
+                                        .font(.system(size: 12))
+                                    Text("ページ")
+                                        .font(.system(size: 12))
+                                }
+                                
+                            }
+                            .foregroundColor(.gray0)
+                        }
+                        .padding(.top, 24)
+                        
+                        
+                        InputReviewField()
+                    }
                 }
             }
-        }
-        .padding(.bottom, 32)
+                .padding(.bottom, 32)
+        )
     }
-    
 }
-
 //#Preview {
 //    DateReviewView(showDateReviewView: .constant(true))
 //}
