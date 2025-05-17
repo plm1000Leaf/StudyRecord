@@ -1,6 +1,11 @@
+
 import SwiftUI
+import CoreData
 
 struct InputReviewField: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @ObservedObject var dailyRecord: DailyRecord
+    
     @State var text: String = ""
     @State private var isEditing: Bool = false
     private let maxCharacters = 35
@@ -19,6 +24,9 @@ struct InputReviewField: View {
 
         }
         .padding()
+        .onAppear {
+            text = dailyRecord.review ?? ""
+        }
     }
 }
 
@@ -70,18 +78,19 @@ extension InputReviewField {
     
     private var editReviewButton: some View {
         HStack {
-            
-            BasicButton(label: "確定",width: 56, height: 32){
-                isEditing.toggle()
+            BasicButton(label: "確定", width: 56, height: 32) {
+                dailyRecord.review = text
+                do {
+                    try viewContext.save()
+                } catch {
+                    print("保存に失敗しました: \(error)")
+                }
+                isEditing = false
             }
 
+            
 
         }
         .padding(.leading, 144)
-    }
-}
-struct InputReviewField_Previews: PreviewProvider {
-    static var previews: some View {
-        InputReviewField()
     }
 }

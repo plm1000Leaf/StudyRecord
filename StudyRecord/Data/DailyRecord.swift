@@ -23,6 +23,7 @@ extension DailyRecord {
     @NSManaged public var endPage: Int16
     @NSManaged public var startUnit: String?
     @NSManaged public var endUnit: String?
+    @NSManaged public var review: String?
     @NSManaged public var alarmOn: Bool
     @NSManaged public var isRepeating: Bool
     @NSManaged public var scheduledHour: Int16

@@ -8,6 +8,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isRepeating" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="review" optional="YES" attributeType="String"/>
         <attribute name="scheduledHour" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="scheduledMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="startPage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
