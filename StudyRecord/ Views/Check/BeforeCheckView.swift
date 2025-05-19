@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct BeforeCheckView: View {
+//    @Environment(\.managedObjectContext) private var viewContext
     @State private var isDoneStudy = false
     @State private var userInput: String = ""
     @Binding var selectedTabIndex: Int
     @Binding var navigateToReview: Bool
     @Binding var navigateToPlan: Bool
+//    var selectedDate: Date
     
     var body: some View {
         Group {
@@ -100,7 +103,13 @@ extension BeforeCheckView {
             VStack(spacing: 16){
                 
                 HStack(spacing: -24){
-                    InputStudyRange(placeholder: "ページ数", width: 104, height: 40)
+//                    InputStudyRange(
+//                        dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext),
+//                        type: .start,
+//                        placeholder: "ページ数",
+//                        width: 80,
+//                        height: 40
+//                    )
                     PullDown()
 
                 }
@@ -109,7 +118,13 @@ extension BeforeCheckView {
                     .bold()
                     .rotationEffect(.degrees(90))
                 HStack(spacing: -24){
-                    InputStudyRange(placeholder: "ページ数", width: 104, height: 40)
+//                    InputStudyRange(
+//                        dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext),
+//                        type: .end,
+//                        placeholder: "ページ数",
+//                        width: 80,
+//                        height: 40
+//                    )
                     PullDown()
                         .foregroundColor(.accentColor1)
 

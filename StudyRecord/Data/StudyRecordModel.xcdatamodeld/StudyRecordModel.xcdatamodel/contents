@@ -3,7 +3,7 @@
     <entity name="DailyRecord" representedClassName="DailyRecord" syncable="YES">
         <attribute name="alarmOn" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="endPage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="endPage" optional="YES" attributeType="String"/>
         <attribute name="endUnit" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -11,7 +11,7 @@
         <attribute name="review" optional="YES" attributeType="String"/>
         <attribute name="scheduledHour" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="scheduledMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="startPage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startPage" optional="YES" attributeType="String"/>
         <attribute name="startUnit" optional="YES" attributeType="String"/>
         <relationship name="material" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Material" inverseName="dailyRecord" inverseEntity="Material"/>
         <relationship name="monthlySummary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MonthlyRecord" inverseName="dailyRecords" inverseEntity="MonthlyRecord"/>

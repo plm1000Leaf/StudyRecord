@@ -19,8 +19,8 @@ extension DailyRecord {
     @NSManaged public var id: UUID?
     @NSManaged public var date: Date?
     @NSManaged public var isChecked: Bool
-    @NSManaged public var startPage: Int16
-    @NSManaged public var endPage: Int16
+    @NSManaged public var startPage: String?
+    @NSManaged public var endPage: String?
     @NSManaged public var startUnit: String?
     @NSManaged public var endUnit: String?
     @NSManaged public var review: String?

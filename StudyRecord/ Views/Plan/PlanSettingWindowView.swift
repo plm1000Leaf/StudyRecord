@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PlanSettingWindowView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     
     @State private var isTapBookSelect = false
     @State private var startPage: String = ""
@@ -101,7 +102,14 @@ extension PlanSettingWindowView {
                 
                 VStack(spacing: 16){
                     HStack(spacing: -8){
-                        InputStudyRange(placeholder: "ページ数", width: 80, height: 40)
+                        //startPage
+                        InputStudyRange(
+                            dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext),
+                            type: .start,
+                            placeholder: "ページ数",
+                            width: 80,
+                            height: 40
+                        )
                         PullDown()
                     }
                     Text("〜")
@@ -109,7 +117,15 @@ extension PlanSettingWindowView {
                         .bold()
                         .rotationEffect(.degrees(90))
                     HStack(spacing: -8){
-                        InputStudyRange(placeholder: "ページ数", width: 80, height: 40)
+                        //endPage
+                        InputStudyRange(
+                            dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext),
+                            type: .end,
+                            placeholder: "ページ数",
+                            width: 80,
+                            height: 40
+                        )
+
                         PullDown()
                     }
                 }
@@ -215,6 +231,3 @@ extension PlanSettingWindowView {
     
 }
 
-//#Preview {
-//    PlanSettingWindowView(currentMonth:$currentMonth, isOn: .constant(true), onClose: {})
-//}

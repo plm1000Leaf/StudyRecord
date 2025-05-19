@@ -79,16 +79,9 @@ extension InputReviewField {
     private var editReviewButton: some View {
         HStack {
             BasicButton(label: "確定", width: 56, height: 32) {
-                dailyRecord.review = text
-                do {
-                    try viewContext.save()
-                } catch {
-                    print("保存に失敗しました: \(error)")
-                }
+                DailyRecordManager.shared.updateReview(text, for: dailyRecord, context: viewContext)
                 isEditing = false
             }
-
-            
 
         }
         .padding(.leading, 144)
