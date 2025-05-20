@@ -117,12 +117,41 @@ extension BookSelectView {
         
         HStack(spacing:48){
             if let image = selectedImage {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 100)
-                    .cornerRadius(12)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                ZStack{
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.baseColor20)
+                            .frame(width: 144, height: 180)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.mainColor0, lineWidth: 4) // 枠線
+                            )
+                    ZStack(alignment: .bottomTrailing) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 128, height: 96)
+                            .cornerRadius(12)
+
+                        PhotosPicker(
+                            selection: $selectedItem,
+                            matching: .images,
+                            photoLibrary: .shared()
+                        ) {
+                            Image(systemName: "pencil.circle.fill")
+                                .font(.system(size: 32))
+                                .foregroundColor(.blue)
+                                .background(
+                                    Circle()
+                                        .fill(Color.white)
+                                        .frame(width: 37, height: 37)
+                                    
+                                )
+                                .offset(y: -8)
+                        }
+                    }
+                    .frame(width: 128, height: 96)
+//                    .offset(y: 8)
+                }
             } else {
                 
                 PhotosPicker(
@@ -143,14 +172,6 @@ extension BookSelectView {
                         Image(systemName: "photo.badge.plus.fill")
                             .foregroundColor(.green)
                             .font(.system(size: 40))
-                    }
-                }
-                .onChange(of: selectedItem) { newItem in
-                    Task {
-                        if let data = try? await newItem?.loadTransferable(type: Data.self),
-                           let uiImage = UIImage(data: data) {
-                            selectedImage = uiImage
-                        }
                     }
                 }
             }
@@ -176,6 +197,14 @@ extension BookSelectView {
                 
                 
             }
+        .onChange(of: selectedItem) { newItem in
+            Task {
+                if let data = try? await newItem?.loadTransferable(type: Data.self),
+                   let uiImage = UIImage(data: data) {
+                    selectedImage = uiImage
+                }
+            }
+        }
         }
     }
 
