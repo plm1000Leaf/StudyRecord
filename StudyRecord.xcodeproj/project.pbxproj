@@ -71,6 +71,7 @@
 		28A576162DD714310085BCA5 /* CustomRoundedCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRoundedCorner.swift; sourceTree = "<group>"; };
 		28A576182DD714530085BCA5 /* YearReviewGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearReviewGraph.swift; sourceTree = "<group>"; };
 		28A5761C2DD87D9A0085BCA5 /* DailyRecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRecordManager.swift; sourceTree = "<group>"; };
+		28A576212DDC83AD0085BCA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28BDAC212D70302A0033FA2F /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterCheckView.swift; sourceTree = "<group>"; };
 		28EE76A92D83D5960072747C /* SegmentedControlButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlButton.swift; sourceTree = "<group>"; };
@@ -173,6 +174,7 @@
 		288EEEDE2D647134001FACBC /* StudyRecord */ = {
 			isa = PBXGroup;
 			children = (
+				28A576212DDC83AD0085BCA5 /* Info.plist */,
 				28A576082DD713E60085BCA5 /* Data */,
 				2841A8442D79ABD500275EFF /* Utils */,
 				282A227A2D66F3AA005C789C /* Components */,
@@ -479,6 +481,7 @@
 				DEVELOPMENT_TEAM = TABUJ6J9T9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyRecord/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -508,6 +511,7 @@
 				DEVELOPMENT_TEAM = TABUJ6J9T9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyRecord/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct BookSelectView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isTapAddBook = false
     @State private var text: String = ""
+    @State private var selectedItem: PhotosPickerItem? = nil
+    @State private var selectedImage: UIImage? = nil
+
     private let maxCharacters = 20
     
     var body: some View {
@@ -80,10 +84,10 @@ extension BookSelectView {
                         .stroke(
                             style: StrokeStyle(
                                 lineWidth: 4,
-                                dash: [5, 4] // 6pt の線、4pt の隙間
+                                dash: [5, 4]
                             )
                         )
-                        .foregroundColor(Color.mainColor0) // 色の指定はこちら
+                        .foregroundColor(Color.mainColor0)
                 )
             
             Image(systemName: "plus")
@@ -91,16 +95,16 @@ extension BookSelectView {
                 .bold()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-
+        
     }
-
+    
     private var studyMaterialSection: some View {
         VStack(spacing: 40) {
             Text("資格")
                 .padding(.top, 40)
                 .font(.system(size: 32))
                 .frame(maxWidth: .infinity, alignment: .leading)
-
+            
             HStack(spacing: 32) {
                 ForEach(0..<3) { _ in
                     bookCard
@@ -108,49 +112,72 @@ extension BookSelectView {
             }
         }
     }
-
+    
     private var inputBookInformation: some View {
         
         HStack(spacing:48){
+            if let image = selectedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 100)
+                    .cornerRadius(12)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            } else {
                 
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.baseColor20)
-                    .frame(width: 144, height: 180)
-                    .overlay(
+                PhotosPicker(
+                    selection: $selectedItem,
+                    matching: .images,
+                    photoLibrary: .shared()
+                ) {
+                    ZStack {
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.mainColor0, lineWidth: 4) // 枠線
-                    )
-                .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Image(systemName: "photo.badge.plus.fill")
-                    .foregroundColor(.green)
-                    .font(.system(size: 40))
+                            .fill(Color.baseColor20)
+                            .frame(width: 144, height: 180)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.mainColor0, lineWidth: 4) // 枠線
+                            )
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Image(systemName: "photo.badge.plus.fill")
+                            .foregroundColor(.green)
+                            .font(.system(size: 40))
+                    }
+                }
+                .onChange(of: selectedItem) { newItem in
+                    Task {
+                        if let data = try? await newItem?.loadTransferable(type: Data.self),
+                           let uiImage = UIImage(data: data) {
+                            selectedImage = uiImage
+                        }
+                    }
+                }
             }
-            VStack{
-
+                VStack{
+                    
                     LabelSelector()
-                ZStack{
-                    Rectangle()
-                        .frame(width: 156, height: 64)
-                        .foregroundColor(.white)
-                        .padding(.top, 8)
-                    CustomTextEditor(text: $text, maxCharacters: maxCharacters)
-                        .frame(width: 156, height: 56)
-                        .padding(.top, 8)
+                    ZStack{
+                        Rectangle()
+                            .frame(width: 156, height: 64)
+                            .foregroundColor(.white)
+                            .padding(.top, 8)
+                        CustomTextEditor(text: $text, maxCharacters: maxCharacters)
+                            .frame(width: 156, height: 56)
+                            .padding(.top, 8)
+                    }
+                    BasicButton(label: "登録", width: 56, height: 40) {
+                        isTapAddBook = false
+                    }
+                    .padding(.top, 8)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    
                 }
-                BasicButton(label: "登録", width: 56, height: 40) {
-                    isTapAddBook = false
-                }
-                .padding(.top, 8)
-                .frame(maxWidth: .infinity, alignment: .trailing)
-
+                
+                
             }
-            
-
         }
     }
-}
 
 #Preview {
     BookSelectView()
