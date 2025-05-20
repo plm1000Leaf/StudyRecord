@@ -7,6 +7,11 @@
 import Foundation
 import CoreData
 
+enum StudyRangeType {
+    case start
+    case end
+}
+
 final class DailyRecordManager {
     static let shared = DailyRecordManager()
     private init() {}
@@ -47,6 +52,24 @@ final class DailyRecordManager {
     
     func updateEndPage(_ endPage: String, for record: DailyRecord, context: NSManagedObjectContext) {
         record.endPage = endPage
+        do {
+            try context.save()
+        } catch {
+            print("保存失敗: \(error.localizedDescription)")
+        }
+    }
+    
+    func updateStartUnit(_ startUnit: String, for record: DailyRecord, context: NSManagedObjectContext) {
+        record.startUnit = startUnit
+        do {
+            try context.save()
+        } catch {
+            print("保存失敗: \(error.localizedDescription)")
+        }
+    }
+    
+    func updateEndUnit(_ endUnit: String, for record: DailyRecord, context: NSManagedObjectContext) {
+        record.endUnit = endUnit
         do {
             try context.save()
         } catch {

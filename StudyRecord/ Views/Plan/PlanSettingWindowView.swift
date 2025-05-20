@@ -110,7 +110,7 @@ extension PlanSettingWindowView {
                             width: 80,
                             height: 40
                         )
-                        PullDown()
+                        PullDown(dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext), type: .start)
                     }
                     Text("〜")
                         .font(.system(size: 32))
@@ -126,7 +126,7 @@ extension PlanSettingWindowView {
                             height: 40
                         )
 
-                        PullDown()
+                        PullDown(dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext), type: .end)
                     }
                 }
                 

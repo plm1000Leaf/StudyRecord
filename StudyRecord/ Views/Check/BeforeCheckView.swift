@@ -110,7 +110,7 @@ extension BeforeCheckView {
 //                        width: 80,
 //                        height: 40
 //                    )
-                    PullDown()
+//                    PullDown()
 
                 }
                 Text("〜")
@@ -125,8 +125,8 @@ extension BeforeCheckView {
 //                        width: 80,
 //                        height: 40
 //                    )
-                    PullDown()
-                        .foregroundColor(.accentColor1)
+//                    PullDown()
+//                        .foregroundColor(.accentColor1)
 
                 }
             }

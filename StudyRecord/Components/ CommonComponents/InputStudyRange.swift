@@ -7,10 +7,6 @@
 import SwiftUI
 import CoreData
 
-enum StudyRangeType {
-    case start
-    case end
-}
 
 struct InputStudyRange: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -46,7 +42,6 @@ struct InputStudyRange: View {
 extension InputStudyRange {
     private var inputStudyRange: some View {
         TextField(placeholder, text: $text,onCommit: {
-            isInputting = false
             isInputting = false
             switch type {
             case .start:
@@ -89,6 +84,3 @@ extension InputStudyRange {
     }
 }
 
-//#Preview {
-//    InputStudyRange(placeholder: "入力して", dailyRecord: <#DailyRecord#>)
-//}

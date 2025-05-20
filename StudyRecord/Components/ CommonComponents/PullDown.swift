@@ -10,6 +10,9 @@ import SwiftUI
 
 struct PullDown: View {
     @State private var selectedItem = "ページ" // 初期値を明示的に設定
+    @Environment(\.managedObjectContext) private var viewContext
+    @ObservedObject var dailyRecord: DailyRecord
+    var type: StudyRangeType
 
     let options = ["-", "ページ", "章"]
 
@@ -23,6 +26,21 @@ struct PullDown: View {
 
             }
         }
+        .onChange(of: selectedItem) { newValue in
+            switch type {
+            case .start:
+                DailyRecordManager.shared.updateStartUnit(newValue, for: dailyRecord, context: viewContext)
+            case .end:
+                DailyRecordManager.shared.updateEndUnit(newValue, for: dailyRecord, context: viewContext)
+            }
+        }
+        .onAppear {
+            if type == .start {
+                selectedItem = dailyRecord.startUnit ?? ""
+            } else {
+                selectedItem = dailyRecord.endUnit ?? ""
+            }
+        }
         .pickerStyle(MenuPickerStyle()) // プルダウンメニュー風
         .frame(width: 100) // 必要に応じて幅を調整
         .padding(4)
@@ -31,6 +49,6 @@ struct PullDown: View {
 }
 
 
-#Preview {
-    PullDown()
-}
+//#Preview {
+//    PullDown()
+//}
