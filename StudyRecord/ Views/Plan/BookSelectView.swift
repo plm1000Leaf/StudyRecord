@@ -10,12 +10,18 @@ import PhotosUI
 
 struct BookSelectView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.managedObjectContext) private var viewContext
     @State private var isTapAddBook = false
     @State private var text: String = ""
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImage: UIImage? = nil
-
+    @State private var selectedLabel: String = ""
     private let maxCharacters = 20
+    
+    @FetchRequest(
+        entity: Material.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Material.name, ascending: true)]
+    ) private var materials: FetchedResults<Material>
     
     var body: some View {
         ZStack {
@@ -39,13 +45,13 @@ struct BookSelectView: View {
                 }
                 .overlay(
                     Button(action: {
-                        dismiss() // 親ビューの状態を変更する
+                        dismiss()
                     }) {
                         Image(systemName: "xmark")
                             .font(.system(size: 16))
                             .padding(8)
                     },
-                    alignment: .topLeading // 左上に配置
+                    alignment: .topLeading
                 )
 
                 
@@ -62,12 +68,20 @@ struct BookSelectView: View {
 
 extension BookSelectView {
     
-    private var bookCard: some View {
+    private func bookCard(for material: Material) ->some View {
         
         VStack {
-            Rectangle()
-                .frame(width: 96, height: 120)
-            Text("応用情報技術者合格教本")
+            if let imageData = material.imageData, let uiImage = UIImage(data: imageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 96, height: 120)
+                    .clipped()
+            } else {
+                Rectangle()
+                    .frame(width: 96, height: 120)
+            }
+            Text(material.name ?? "")
                 .font(.system(size: 16))
                 .frame(width: 72)
         }
@@ -99,15 +113,16 @@ extension BookSelectView {
     }
     
     private var studyMaterialSection: some View {
-        VStack(spacing: 40) {
+        VStack(spacing: 32) {
             Text("資格")
                 .padding(.top, 40)
                 .font(.system(size: 32))
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            HStack(spacing: 32) {
-                ForEach(0..<3) { _ in
-                    bookCard
+
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 32), count: 3), spacing: 24) {
+                ForEach(materials) { material in
+                    bookCard(for: material)
                 }
             }
         }
@@ -123,7 +138,7 @@ extension BookSelectView {
                             .frame(width: 144, height: 180)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.mainColor0, lineWidth: 4) // 枠線
+                                    .stroke(Color.mainColor0, lineWidth: 4)
                             )
                     ZStack(alignment: .bottomTrailing) {
                         Image(uiImage: image)
@@ -131,7 +146,7 @@ extension BookSelectView {
                             .scaledToFit()
                             .frame(width: 128, height: 96)
                             .cornerRadius(12)
-
+                        //imageData
                         PhotosPicker(
                             selection: $selectedItem,
                             matching: .images,
@@ -150,10 +165,9 @@ extension BookSelectView {
                         }
                     }
                     .frame(width: 128, height: 96)
-//                    .offset(y: 8)
                 }
             } else {
-                
+                //imageData
                 PhotosPicker(
                     selection: $selectedItem,
                     matching: .images,
@@ -165,7 +179,7 @@ extension BookSelectView {
                             .frame(width: 144, height: 180)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.mainColor0, lineWidth: 4) // 枠線
+                                    .stroke(Color.mainColor0, lineWidth: 4)
                             )
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
@@ -176,8 +190,9 @@ extension BookSelectView {
                 }
             }
                 VStack{
-                    
-                    LabelSelector()
+                    //label(データ)
+                    LabelSelector(selectedLabel: $selectedLabel)
+                    //name(データ)
                     ZStack{
                         Rectangle()
                             .frame(width: 156, height: 64)
@@ -188,7 +203,18 @@ extension BookSelectView {
                             .padding(.top, 8)
                     }
                     BasicButton(label: "登録", width: 56, height: 40) {
-                        isTapAddBook = false
+                        let newMaterial = Material(context: viewContext)
+                        newMaterial.id = UUID()
+                        newMaterial.name = text
+                        newMaterial.label = selectedLabel
+                        newMaterial.imageData = selectedImage?.jpegData(compressionQuality: 0.8)
+
+                        do {
+                            try viewContext.save()
+                            isTapAddBook = false
+                        } catch {
+                            print("保存エラー: \(error.localizedDescription)")
+                        }
                     }
                     .padding(.top, 8)
                     .frame(maxWidth: .infinity, alignment: .trailing)

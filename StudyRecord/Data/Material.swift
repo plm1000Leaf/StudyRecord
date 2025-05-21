@@ -11,7 +11,7 @@ import CoreData
 @objc(Material)
 public class Material: NSManagedObject {}
 
-extension Material {
+extension Material: Identifiable {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Material> {
         NSFetchRequest<Material>(entityName: "Material")
     }

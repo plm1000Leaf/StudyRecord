@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct LabelSelector: View {
-    @State private var selectedLabel: String = ""
     @State private var newLabel: String = ""
-    @State private var labels: [String] = ["英語", "国語", "技術"]
+    @State private var labels: [String] = []
     @State private var isAddingNewLabel: Bool = false
+    @Binding var selectedLabel: String
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -25,7 +25,7 @@ struct LabelSelector: View {
 }
 
 #Preview {
-    LabelSelector()
+    LabelSelector(selectedLabel: .constant(""))
 }
 
 extension LabelSelector {
