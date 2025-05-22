@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import CoreData
 
 struct BookSelectView: View {
     @Environment(\.dismiss) private var dismiss
@@ -28,8 +29,10 @@ struct BookSelectView: View {
             ScrollView{
                 VStack(spacing: 40){
                     
-                    ForEach(0..<2) { _ in
-                        studyMaterialSection
+                    let groupedMaterials = Dictionary(grouping: materials) { $0.label ?? "未分類" }
+                    
+                    ForEach(groupedMaterials.sorted(by: { $0.key < $1.key }), id: \.key) { label, items in
+                        studyMaterialSection(label: label, materials: items)
                     }
                     
                     if isTapAddBook == true {
@@ -68,25 +71,25 @@ struct BookSelectView: View {
 
 extension BookSelectView {
     
-    private func bookCard(for material: Material) ->some View {
-        
-        VStack {
-            if let imageData = material.imageData, let uiImage = UIImage(data: imageData) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 96, height: 120)
-                    .clipped()
-            } else {
-                Rectangle()
-                    .frame(width: 96, height: 120)
-            }
-            Text(material.name ?? "")
-                .font(.system(size: 16))
-                .frame(width: 72)
-        }
-        .padding(.bottom, 32)
-    }
+//    private func bookCard(for material: Material) ->some View {
+//        
+//        VStack {
+//            if let imageData = material.imageData, let uiImage = UIImage(data: imageData) {
+//                Image(uiImage: uiImage)
+//                    .resizable()
+//                    .scaledToFill()
+//                    .frame(width: 96, height: 120)
+//                    .clipped()
+//            } else {
+//                Rectangle()
+//                    .frame(width: 96, height: 120)
+//            }
+//            Text(material.name ?? "")
+//                .font(.system(size: 16))
+//                .frame(width: 72)
+//        }
+//        .padding(.bottom, 32)
+//    }
     
     private var bookAddButton: some View {
         ZStack {
@@ -109,12 +112,13 @@ extension BookSelectView {
                 .bold()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.top, 80)
         
     }
     
-    private var studyMaterialSection: some View {
+    private func studyMaterialSection(label: String, materials: [Material]) ->some View {
         VStack(spacing: 32) {
-            Text("資格")
+            Text(label ?? "")
                 .padding(.top, 40)
                 .font(.system(size: 32))
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -122,7 +126,24 @@ extension BookSelectView {
 
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 32), count: 3), spacing: 24) {
                 ForEach(materials) { material in
-                    bookCard(for: material)
+                    
+                    VStack {
+                        if let imageData = material.imageData, let uiImage = UIImage(data: imageData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 96, height: 120)
+                                .clipped()
+                        } else {
+                            Rectangle()
+                                .frame(width: 96, height: 120)
+                        }
+                        Text(material.name ?? "")
+                            .font(.system(size: 16))
+                            .frame(width: 72)
+                    }
+                    .padding(.bottom, 32)
+//                    bookCard(for: material)
                 }
             }
         }
@@ -215,10 +236,16 @@ extension BookSelectView {
                     .padding(.top, 8)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     
+                    Button("全ての教材を削除") {
+                        deleteAllMaterials(context: viewContext)
+                    }
+
+                    
                 }
                 
                 
             }
+        .padding(.top, 40)
         .onChange(of: selectedItem) { newItem in
             Task {
                 if let data = try? await newItem?.loadTransferable(type: Data.self),
@@ -230,6 +257,18 @@ extension BookSelectView {
         }
     }
 
+func deleteAllMaterials(context: NSManagedObjectContext) {
+    let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Material.fetchRequest()
+    let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+    do {
+        try context.execute(deleteRequest)
+        try context.save()
+        print("すべての Material を削除しました")
+    } catch {
+        print("削除に失敗しました: \(error.localizedDescription)")
+    }
+}
 #Preview {
     BookSelectView()
 }

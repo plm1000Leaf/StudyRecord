@@ -7,23 +7,12 @@
 
 import SwiftUI
 
-struct LabelStorage {
-    private static let key = "userLabels"
-
-    static func load() -> [String] {
-        UserDefaults.standard.stringArray(forKey: key) ?? []
-    }
-
-    static func save(_ labels: [String]) {
-        UserDefaults.standard.set(labels, forKey: key)
-    }
-}
-
 
 struct LabelSelector: View {
     @State private var newLabel: String = ""
     @State private var labels: [String] = LabelStorage.load()
     @State private var isAddingNewLabel: Bool = false
+    @State private var isDeleteLabel: Bool = false
     @Binding var selectedLabel: String
 
     var body: some View {
@@ -36,6 +25,7 @@ struct LabelSelector: View {
         }
     }
 }
+
 
 #Preview {
     LabelSelector(selectedLabel: .constant(""))
@@ -92,7 +82,14 @@ extension LabelSelector {
                     .foregroundColor(.blue)
                     
             }
-            
+
+            Button(action: {
+                isDeleteLabel = true
+            }) {
+                Label("ラベルを削除", systemImage: "minus")
+                    .foregroundColor(.blue)
+                    
+            }
 
         } label: {
             HStack {
@@ -112,5 +109,17 @@ extension LabelSelector {
             )
             .frame(width: 156)
         }
+    }
+}
+
+struct LabelStorage {
+    private static let key = "userLabels"
+
+    static func load() -> [String] {
+        UserDefaults.standard.stringArray(forKey: key) ?? []
+    }
+
+    static func save(_ labels: [String]) {
+        UserDefaults.standard.set(labels, forKey: key)
     }
 }
