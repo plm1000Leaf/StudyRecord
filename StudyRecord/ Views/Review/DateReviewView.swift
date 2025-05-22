@@ -116,25 +116,6 @@ extension DateReviewView {
         }
         return DailyRecordManager.shared.fetchOrCreateRecord(for: date, context: viewContext)
     }
-//    private func record(for index: Int) -> DailyRecord {
-//        guard let date = Calendar.current.date(byAdding: .day, value: index, to: startOfMonth(currentMonth)) else {
-//            fatalError("日付の取得に失敗しました")
-//        }
-//
-//        let request: NSFetchRequest<DailyRecord> = DailyRecord.fetchRequest()
-//        request.predicate = NSPredicate(format: "date == %@", date as NSDate)
-//        request.fetchLimit = 1
-//
-//        if let result = try? viewContext.fetch(request).first {
-//            return result
-//        } else {
-//            let new = DailyRecord(context: viewContext)
-//            new.date = date
-//            try? viewContext.save()
-//            return new
-//        }
-//    }
-
     private func startOfMonth(_ date: Date) -> Date {
         Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: date)) ?? Date()
     }

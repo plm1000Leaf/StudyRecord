@@ -12,6 +12,7 @@ struct BeforeCheckView: View {
 //    @Environment(\.managedObjectContext) private var viewContext
     @State private var isDoneStudy = false
     @State private var userInput: String = ""
+    @State private var isTapBookSelect = false
     @Binding var selectedTabIndex: Int
     @Binding var navigateToReview: Bool
     @Binding var navigateToPlan: Bool
@@ -62,6 +63,10 @@ extension BeforeCheckView {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .background(Color.baseColor0)
         }
+        .sheet(isPresented: $isTapBookSelect) {
+            BookSelectView()
+        }
+        
     }
     private var checkViewTitle: some View {
         Text("今日の学習")
@@ -73,9 +78,13 @@ extension BeforeCheckView {
     
     private var studyMaterial: some View {
         VStack(spacing: 8){
-            Rectangle()
-                .foregroundColor(.mainColor0)
-                .frame(width: 136, height: 168)
+            Button(action: {
+                isTapBookSelect.toggle()
+            }){
+                Rectangle()
+                    .foregroundColor(.mainColor0)
+                    .frame(width: 136, height: 168)
+            }
             Text("応用情報技術者合格教本")
                 .font(.system(size: 24))
                 .frame(width: 104, height: 96, alignment: .leading)

@@ -18,6 +18,8 @@ struct BookSelectView: View {
     @State private var selectedImage: UIImage? = nil
     @State private var selectedLabel: String = ""
     @State private var isEditingBook = false
+    @State private var editingMaterial: Material? = nil
+    @State private var editSelectedItem: PhotosPickerItem? = nil
     private let maxCharacters = 20
     
     @FetchRequest(
@@ -119,8 +121,9 @@ extension BookSelectView {
 
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 32), count: 3), spacing: 24) {
                 ForEach(materials) { material in
-                    //BookCard
-            ZStack(alignment: .topLeading){
+
+            ZStack{
+                //BookCard
                     VStack {
                         if let imageData = material.imageData, let uiImage = UIImage(data: imageData) {
                             Image(uiImage: uiImage)
@@ -139,20 +142,71 @@ extension BookSelectView {
                     .padding(.bottom, 32)
                 
                 if isEditingBook {
-                    Button(action: {
-                        deleteMaterial(material)
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 20))
-//                            .foregroundColor(.red)
-                            .background(Circle().fill(Color.white))
+
+                    
+                    VStack {
+                        HStack {
+                            Button(action: {
+                                deleteMaterial(material)
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(.gray)
+                                    .background(Circle().fill(Color.white))
+                            }
+                            .offset(x:8,y: -64)
+
+                            Spacer()
+                        }
+
+                        Spacer()
+
+                        HStack {
+                            Spacer()
+
+                            PhotosPicker(
+                                selection: $editSelectedItem,
+                                matching: .images,
+                                photoLibrary: .shared()
+                            ) {
+                                Image(systemName: "pencil.circle.fill")
+                                    .font(.system(size: 32))
+                                    .foregroundColor(.blue)
+                                    .background(Circle().fill(Color.white))
+                            }
+                            .onTapGesture {
+                                editingMaterial = material
+                            }
+                            .offset(x: -8,y: -20)
+
+                        }
                     }
-                    .offset(x: -8, y: -10)
+                    .frame(width: 128, height: 96)
+
+
                 }
                 }
+            .onChange(of: editSelectedItem) { newItem in
+                Task {
+                    if let item = newItem,
+                       let data = try? await item.loadTransferable(type: Data.self),
+                       let uiImage = UIImage(data: data),
+                       let target = editingMaterial {
+                        
+                        // 更新
+                        target.imageData = uiImage.jpegData(compressionQuality: 0.8)
+                        try? viewContext.save()
+                        
+                        // 状態を初期化
+                        editSelectedItem = nil
+                        editingMaterial = nil
+                    }
+                }
+            }
                 }
             }
         }
+
     }
     
     private var inputBookInformation: some View {
