@@ -7,9 +7,22 @@
 
 import SwiftUI
 
+struct LabelStorage {
+    private static let key = "userLabels"
+
+    static func load() -> [String] {
+        UserDefaults.standard.stringArray(forKey: key) ?? []
+    }
+
+    static func save(_ labels: [String]) {
+        UserDefaults.standard.set(labels, forKey: key)
+    }
+}
+
+
 struct LabelSelector: View {
     @State private var newLabel: String = ""
-    @State private var labels: [String] = []
+    @State private var labels: [String] = LabelStorage.load()
     @State private var isAddingNewLabel: Bool = false
     @Binding var selectedLabel: String
 
@@ -39,6 +52,7 @@ extension LabelSelector {
             Button(action: {
                 guard !newLabel.isEmpty, !labels.contains(newLabel) else { return }
                 labels.append(newLabel)
+                LabelStorage.save(labels)
                 selectedLabel = newLabel
                 newLabel = ""
                 isAddingNewLabel = false

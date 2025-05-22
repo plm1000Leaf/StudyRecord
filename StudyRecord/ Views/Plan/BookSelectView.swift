@@ -146,7 +146,6 @@ extension BookSelectView {
                             .scaledToFit()
                             .frame(width: 128, height: 96)
                             .cornerRadius(12)
-                        //imageData
                         PhotosPicker(
                             selection: $selectedItem,
                             matching: .images,
@@ -167,7 +166,6 @@ extension BookSelectView {
                     .frame(width: 128, height: 96)
                 }
             } else {
-                //imageData
                 PhotosPicker(
                     selection: $selectedItem,
                     matching: .images,
@@ -190,9 +188,7 @@ extension BookSelectView {
                 }
             }
                 VStack{
-                    //label(データ)
                     LabelSelector(selectedLabel: $selectedLabel)
-                    //name(データ)
                     ZStack{
                         Rectangle()
                             .frame(width: 156, height: 64)
