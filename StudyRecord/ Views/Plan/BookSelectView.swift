@@ -20,6 +20,7 @@ struct BookSelectView: View {
     @State private var isEditingBook = false
     @State private var editingMaterial: Material? = nil
     @State private var editSelectedItem: PhotosPickerItem? = nil
+    @State private var refreshID = UUID()
     private let maxCharacters = 20
     
     @FetchRequest(
@@ -165,7 +166,13 @@ extension BookSelectView {
                             Spacer()
 
                             PhotosPicker(
-                                selection: $editSelectedItem,
+                                selection: Binding<PhotosPickerItem?>(
+                                    get: { editSelectedItem },
+                                    set: { newItem in
+                                        editSelectedItem = newItem
+                                        editingMaterial = material 
+                                    }
+                                ),
                                 matching: .images,
                                 photoLibrary: .shared()
                             ) {
@@ -193,19 +200,24 @@ extension BookSelectView {
                        let uiImage = UIImage(data: data),
                        let target = editingMaterial {
                         
-                        // 更新
                         target.imageData = uiImage.jpegData(compressionQuality: 0.8)
                         try? viewContext.save()
                         
-                        // 状態を初期化
                         editSelectedItem = nil
                         editingMaterial = nil
+                        
+                        refreshID = UUID()
+                        print("画像を更新しました for \(target.name ?? "NoName")")
+                    } else {
+                        print("画像の取得または対象Materialが見つかりませんでした")
                     }
                 }
             }
+            
                 }
             }
         }
+        .id(refreshID)
 
     }
     
@@ -247,6 +259,7 @@ extension BookSelectView {
                     .frame(width: 128, height: 96)
                 }
             } else {
+                //imageDataを挿入
                 PhotosPicker(
                     selection: $selectedItem,
                     matching: .images,
@@ -269,7 +282,9 @@ extension BookSelectView {
                 }
             }
                 VStack{
+                    //labelを選択
                     LabelSelector(selectedLabel: $selectedLabel)
+                    //本のnameを入力
                     ZStack{
                         Rectangle()
                             .frame(width: 156, height: 64)

@@ -70,7 +70,7 @@ extension PlanSettingWindowView {
         calendar.locale = Locale(identifier: "ja_JP")
         let day = calendar.component(.day, from: selectedDate)
         let weekdayIndex = calendar.component(.weekday, from: selectedDate)
-        let weekday = calendar.shortWeekdaySymbols[weekdayIndex - 1] // 例: "日", "月", ...
+        let weekday = calendar.shortWeekdaySymbols[weekdayIndex - 1]
 
         return HStack(alignment: .firstTextBaseline) {
             Text("\(day)")
