@@ -17,6 +17,7 @@ struct BookSelectView: View {
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImage: UIImage? = nil
     @State private var selectedLabel: String = ""
+    @State private var isEditingBook = false
     private let maxCharacters = 20
     
     @FetchRequest(
@@ -55,8 +56,20 @@ struct BookSelectView: View {
                             .padding(8)
                     },
                     alignment: .topLeading
+                    
                 )
-
+                .overlay(
+                    Button(action: {
+                        isEditingBook.toggle()
+                    }) {
+                        Text(isEditingBook ? "完了" : "編集")
+                            .font(.system(size: 20))
+                            .padding(8)
+                            .foregroundColor(.blue)
+                    },
+                    alignment: .topTrailing
+                    
+                )
                 
                 .padding(.horizontal, 20)
             }
@@ -70,27 +83,7 @@ struct BookSelectView: View {
 
 
 extension BookSelectView {
-    
-//    private func bookCard(for material: Material) ->some View {
-//        
-//        VStack {
-//            if let imageData = material.imageData, let uiImage = UIImage(data: imageData) {
-//                Image(uiImage: uiImage)
-//                    .resizable()
-//                    .scaledToFill()
-//                    .frame(width: 96, height: 120)
-//                    .clipped()
-//            } else {
-//                Rectangle()
-//                    .frame(width: 96, height: 120)
-//            }
-//            Text(material.name ?? "")
-//                .font(.system(size: 16))
-//                .frame(width: 72)
-//        }
-//        .padding(.bottom, 32)
-//    }
-    
+
     private var bookAddButton: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 8)
@@ -126,7 +119,8 @@ extension BookSelectView {
 
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 32), count: 3), spacing: 24) {
                 ForEach(materials) { material in
-                    
+                    //BookCard
+            ZStack(alignment: .topLeading){
                     VStack {
                         if let imageData = material.imageData, let uiImage = UIImage(data: imageData) {
                             Image(uiImage: uiImage)
@@ -143,7 +137,19 @@ extension BookSelectView {
                             .frame(width: 72)
                     }
                     .padding(.bottom, 32)
-//                    bookCard(for: material)
+                
+                if isEditingBook {
+                    Button(action: {
+                        deleteMaterial(material)
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 20))
+//                            .foregroundColor(.red)
+                            .background(Circle().fill(Color.white))
+                    }
+                    .offset(x: -8, y: -10)
+                }
+                }
                 }
             }
         }
@@ -255,6 +261,15 @@ extension BookSelectView {
             }
         }
         }
+    
+    private func deleteMaterial(_ material: Material) {
+        viewContext.delete(material)
+        do {
+            try viewContext.save()
+        } catch {
+            print("削除に失敗しました: \(error.localizedDescription)")
+        }
+    }
     }
 
 func deleteAllMaterials(context: NSManagedObjectContext) {
@@ -269,6 +284,8 @@ func deleteAllMaterials(context: NSManagedObjectContext) {
         print("削除に失敗しました: \(error.localizedDescription)")
     }
 }
+
+
 #Preview {
     BookSelectView()
 }
