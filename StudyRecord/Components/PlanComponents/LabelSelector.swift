@@ -10,9 +10,9 @@ import SwiftUI
 
 struct LabelSelector: View {
     @State private var newLabel: String = ""
-    @State private var labels: [String] = LabelStorage.load()
     @State private var isAddingNewLabel: Bool = false
     @State private var isDeleteLabel: Bool = false
+    @Binding var labels: [String]
     @Binding var selectedLabel: String
 
     var body: some View {
@@ -27,9 +27,9 @@ struct LabelSelector: View {
 }
 
 
-#Preview {
-    LabelSelector(selectedLabel: .constant(""))
-}
+//#Preview {
+//    LabelSelector(labels: , labels: <#Binding<[String]>#>, selectedLabel: .constant(""))
+//}
 
 extension LabelSelector {
     

@@ -47,7 +47,7 @@ struct PlanSettingWindowView: View {
                 .frame(width: 336, height: 520)
                 .overlay(
                     Button(action: {
-                        onClose() // 親ビューの状態を変更する
+                        onClose() 
                     }) {
                         Image(systemName: "xmark")
                             .font(.system(size: 16))
@@ -149,12 +149,13 @@ extension PlanSettingWindowView {
                     .frame(width: 160 , height: 40)
                     .padding(.bottom, 8)
                 
-                VStack{                                         ZStack {
+                VStack{                                         
+                    ZStack {
                             HStack(spacing: 24){
                                 Text("アラーム")
                                     .font(.system(size: 16))
                                 Toggle(isOn: $isOn) {
-                                    EmptyView() // ラベルを外に出す場合は空
+                                    EmptyView()
                                 }
                                 .labelsHidden()
                                 .toggleStyle(SwitchToggleStyle(tint: .blue))

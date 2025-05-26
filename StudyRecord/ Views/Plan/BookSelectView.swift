@@ -20,6 +20,11 @@ struct BookSelectView: View {
     @State private var isEditingBook = false
     @State private var editingMaterial: Material? = nil
     @State private var editSelectedItem: PhotosPickerItem? = nil
+    @State private var editingMaterialName: String = ""
+    @State private var editingLabelName: String = ""
+    @State private var editingLabelKey: String? = nil
+    @State private var labelList: [String] = LabelStorage.load()
+
     @State private var refreshID = UUID()
     private let maxCharacters = 20
     
@@ -114,31 +119,85 @@ extension BookSelectView {
     
     private func studyMaterialSection(label: String, materials: [Material]) ->some View {
         VStack(spacing: 32) {
+            if isEditingBook && editingLabelKey == label {
+                TextField("教材名", text: $editingLabelName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 96)
+                    .multilineTextAlignment(.center)
+                    .onSubmit {
+                        for material in materials {
+                            if material.label == label {
+                                material.label = editingLabelName
+                            }
+                        }
+                        
+                        if let index = labelList.firstIndex(of: label),
+                           !labelList.contains(editingLabelName) {
+                            labelList[index] = editingLabelName
+                            LabelStorage.save(labelList) 
+                        }
+                        
+                        do {
+                            try viewContext.save()
+                            editingLabelKey = nil
+                            refreshID = UUID()
+                            print("ラベル名を更新しました: \(editingLabelName)")
+                        } catch {
+                            print("保存に失敗しました: \(error.localizedDescription)")
+                        }
+                    }
+        } else {
             Text(label ?? "")
                 .padding(.top, 40)
                 .font(.system(size: 32))
                 .frame(maxWidth: .infinity, alignment: .leading)
-            
+                .onTapGesture {
+                    editingLabelKey = label
+                    editingLabelName = label
+                }
+        }
 
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 32), count: 3), spacing: 24) {
                 ForEach(materials) { material in
 
             ZStack{
                 //BookCard
-                    VStack {
-                        if let imageData = material.imageData, let uiImage = UIImage(data: imageData) {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 96, height: 120)
-                                .clipped()
-                        } else {
-                            Rectangle()
-                                .frame(width: 96, height: 120)
+                VStack {
+                    if let imageData = material.imageData, let uiImage = UIImage(data: imageData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 96, height: 120)
+                            .clipped()
+                    } else {
+                        Rectangle()
+                            .frame(width: 96, height: 120)
+                    }
+                    
+                    if isEditingBook && editingMaterial == material {
+                        TextField("教材名", text: $editingMaterialName)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .frame(width: 96)
+                            .multilineTextAlignment(.center)
+                            .onSubmit {
+                                material.name = editingMaterialName
+                                do {
+                                    try viewContext.save()
+                                    print("教材名を更新しました: \(editingMaterialName)")
+                                } catch {
+                                    print("保存に失敗しました: \(error.localizedDescription)")
+                                }
+                            }
+                    } else {
+                        
+                    Text(material.name ?? "")
+                        .font(.system(size: 16))
+                        .frame(width: 72)
+                        .onTapGesture {
+                            editingMaterial = material
+                            editingMaterialName = material.name ?? ""
                         }
-                        Text(material.name ?? "")
-                            .font(.system(size: 16))
-                            .frame(width: 72)
+                }
                     }
                     .padding(.bottom, 32)
                 
@@ -170,7 +229,9 @@ extension BookSelectView {
                                     get: { editSelectedItem },
                                     set: { newItem in
                                         editSelectedItem = newItem
-                                        editingMaterial = material 
+                                        editingMaterial = material
+                                        editingMaterialName = material.name ?? ""
+                                        editingLabelName = label ?? ""
                                     }
                                 ),
                                 matching: .images,
@@ -181,9 +242,9 @@ extension BookSelectView {
                                     .foregroundColor(.blue)
                                     .background(Circle().fill(Color.white))
                             }
-                            .onTapGesture {
-                                editingMaterial = material
-                            }
+//                            .onTapGesture {
+//                                editingMaterial = material
+//                            }
                             .offset(x: -8,y: -20)
 
                         }
@@ -283,7 +344,7 @@ extension BookSelectView {
             }
                 VStack{
                     //labelを選択
-                    LabelSelector(selectedLabel: $selectedLabel)
+                    LabelSelector(labels: $labelList, selectedLabel: $selectedLabel)
                     //本のnameを入力
                     ZStack{
                         Rectangle()
