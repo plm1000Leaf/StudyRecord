@@ -24,7 +24,6 @@ struct BookSelectView: View {
     @State private var editingLabelName: String = ""
     @State private var editingLabelKey: String? = nil
     @State private var labelList: [String] = LabelStorage.load()
-
     @State private var refreshID = UUID()
     private let maxCharacters = 20
     
@@ -134,7 +133,8 @@ extension BookSelectView {
                         if let index = labelList.firstIndex(of: label),
                            !labelList.contains(editingLabelName) {
                             labelList[index] = editingLabelName
-                            LabelStorage.save(labelList) 
+                            labelList.sort()
+                            LabelStorage.save(labelList)
                         }
                         
                         do {
@@ -146,15 +146,31 @@ extension BookSelectView {
                             print("保存に失敗しました: \(error.localizedDescription)")
                         }
                     }
+
         } else {
-            Text(label ?? "")
-                .padding(.top, 40)
-                .font(.system(size: 32))
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .onTapGesture {
-                    editingLabelKey = label
-                    editingLabelName = label
+            HStack{
+                Text(label ?? "")
+                    .padding(.top, 40)
+                    .font(.system(size: 32))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .onTapGesture {
+                        editingLabelKey = label
+                        editingLabelName = label
+                    }
+                if isEditingBook{
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.gray)
+                        .background(Circle().fill(Color.white))
+                        .frame(width: 24)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, -16)
+                        .padding(.top, 40)
+                        .onTapGesture {
+                            deleteLabel(label)
+                        }
+                    
                 }
+            }
         }
 
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 32), count: 3), spacing: 24) {
@@ -400,6 +416,32 @@ extension BookSelectView {
             print("削除に失敗しました: \(error.localizedDescription)")
         }
     }
+    
+    private func deleteLabel(_ label: String) {
+        // ラベルに紐づく教材を確認
+        let associatedMaterials = materials.filter { $0.label == label }
+
+        // 紐づいている場合はラベルを空に（または"未分類"などに）
+        for material in associatedMaterials {
+            material.label = nil
+        }
+
+        
+        if let index = labelList.firstIndex(of: label) {
+            labelList.remove(at: index)
+            LabelStorage.save(labelList)
+        }
+
+
+        do {
+            try viewContext.save()
+            refreshID = UUID()
+            print("ラベル「\(label)」を削除しました")
+        } catch {
+            print("ラベル削除に失敗しました: \(error.localizedDescription)")
+        }
+    }
+
     }
 
 func deleteAllMaterials(context: NSManagedObjectContext) {
