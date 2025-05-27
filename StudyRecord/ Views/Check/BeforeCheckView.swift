@@ -125,7 +125,7 @@ extension BeforeCheckView {
                         width: 80,
                         height: 40
                     )
-//                    PullDown()
+                    PullDown(dailyRecord: record, type: .start)
 
                 }
                 Text("〜")
@@ -133,15 +133,18 @@ extension BeforeCheckView {
                     .bold()
                     .rotationEffect(.degrees(90))
                 HStack(spacing: -24){
+                    
+                    let record = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
+                    
                     InputStudyRange(
-                        dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext),
+                        dailyRecord: record,
                         type: .end,
                         placeholder: "ページ数",
                         width: 80,
                         height: 40
                     )
-//                    PullDown()
-//                        .foregroundColor(.accentColor1)
+                    PullDown(dailyRecord: record, type: .end)
+                        .foregroundColor(.accentColor1)
 
                 }
             }
