@@ -26,6 +26,7 @@ struct BookSelectView: View {
     @State private var labelList: [String] = LabelStorage.load()
     @State private var refreshID = UUID()
     private let maxCharacters = 20
+    var onMaterialSelect: ((Material) -> Void)? = nil
     
     @FetchRequest(
         entity: Material.entity(),
@@ -185,6 +186,22 @@ extension BookSelectView {
                             .scaledToFill()
                             .frame(width: 96, height: 120)
                             .clipped()
+                            .onTapGesture{
+                                
+                                editingMaterial = material
+                                editingMaterialName = material.name ?? ""
+                                onMaterialSelect?(material)  // ここで親に伝える
+                                dismiss()
+//                                let dailyRecord = DailyRecordManager.shared.fetchOrCreateRecord(for: date, context: viewContext)
+//                                dailyRecord.material = selectedMaterial
+//
+//                                do {
+//                                    try viewContext.save()
+//                                    print("教材が保存されました")
+//                                } catch {
+//                                    print("保存エラー: \(error)")
+//                                }
+                            }
                     } else {
                         Rectangle()
                             .frame(width: 96, height: 120)

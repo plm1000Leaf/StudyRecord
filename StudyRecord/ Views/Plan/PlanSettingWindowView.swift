@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PlanSettingWindowView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
+    @State private var selectedMaterial: Material? = nil
     @State private var isTapBookSelect = false
     @State private var startPage: String = ""
     @State private var endPage: String = ""
@@ -38,11 +38,24 @@ struct PlanSettingWindowView: View {
                     BasicButton(label: "決定",width: 128, height: 48, fontSize: 24){
                         print("Doneボタンが押されました")
                     }
+                    .padding(.top, -16)
                     .padding(.bottom, 8)
                     
                 }
                 .sheet(isPresented: $isTapBookSelect) {
-                    BookSelectView()
+                    BookSelectView{ material in
+                        selectedMaterial = material  // UI表示用に保持
+                        
+                        let record = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
+                        record.material = material
+                        
+                        do {
+                            try viewContext.save()
+                            print("教材を保存しました")
+                        } catch {
+                            print("保存失敗: \(error.localizedDescription)")
+                        }
+                    }
                 }
                 .frame(width: 336, height: 520)
                 .overlay(
@@ -74,8 +87,10 @@ extension PlanSettingWindowView {
 
         return HStack(alignment: .firstTextBaseline) {
             Text("\(day)")
+                .frame(width: 80,height: 80)
                 .font(.system(size: 48))
             Text("(\(weekday))")
+                .frame(width: 40,height: 80)
                 .font(.system(size: 24))
                 .alignmentGuide(.firstTextBaseline) { d in d[.bottom] }
         }
@@ -84,12 +99,39 @@ extension PlanSettingWindowView {
     
     
     private var inputLearningContent: some View {
-        VStack(alignment: .leading){
+        let dailyRecord = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
+        let material = selectedMaterial ?? dailyRecord.material
+        
+        return VStack(alignment: .leading){
             Text("学習予定")
                 .font(.system(size: 24))
+                .frame(width: 80,height: 24)
+                .padding(.bottom, -16)
                 .padding(.leading, 16)
             
             HStack(spacing:32){
+
+
+                if let material = dailyRecord.material,
+                   let imageData = material.imageData,
+                   let uiImage = UIImage(data: imageData) {
+                    VStack{
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .frame(width: 104, height: 120)
+                            .cornerRadius(8)
+                            .clipped()
+                            .onTapGesture {
+                                isTapBookSelect = true
+                            }
+                            .padding(.top, 32)
+                        Text(material.name ?? "無題")
+//                            .font(.caption)
+                            .font(.system(size: 16))
+                            .frame(width: 72, height: 64)
+                    }
+                } else {
+                
                 Button(action: {
                     isTapBookSelect.toggle()
                 }){
@@ -98,7 +140,7 @@ extension PlanSettingWindowView {
                         .foregroundColor(.mainColor0)
                 }
                 .padding(.leading, 24)
-                
+            }
                 
                 VStack(spacing: 16){
                     HStack(spacing: -8){
@@ -134,6 +176,10 @@ extension PlanSettingWindowView {
             .padding(.top, -8)
             .padding(.bottom, 24)
             
+        }
+        .onAppear {
+
+            selectedMaterial = dailyRecord.material
         }
     }
     
@@ -229,6 +275,8 @@ extension PlanSettingWindowView {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             )
     }
+    
+
     
 }
 
