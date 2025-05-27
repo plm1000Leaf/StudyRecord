@@ -20,6 +20,7 @@ struct PlanSettingWindowView: View {
     var onClose: () -> Void
     var selectedDate: Date
 
+
     var body: some View {
         ZStack{
             
@@ -185,13 +186,17 @@ extension PlanSettingWindowView {
     
     
     private var inputScheduledTime: some View {
+
+        
         VStack(alignment: .leading){
             Text("予定時間")
                 .font(.system(size: 24))
                 .padding(.leading, 16)
             
             HStack{
-                TimeSelectButton()
+                let record = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
+                
+                TimeSelectButton(dailyRecord: record)
                     .frame(width: 160 , height: 40)
                     .padding(.bottom, 8)
                 

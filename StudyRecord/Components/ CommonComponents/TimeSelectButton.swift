@@ -1,6 +1,9 @@
 import SwiftUI
+import CoreData
 
 struct TimeSelectButton: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @ObservedObject var dailyRecord: DailyRecord
     @State private var selectedHour = 12
     @State private var selectedMinute = 30
     @State private var showPicker = false
@@ -34,7 +37,7 @@ struct TimeSelectButton: View {
 
             .sheet(isPresented: $showPicker) {
                 TimeSelectPicker(
-                    selectedHour: $selectedHour,
+                    dailyRecord: dailyRecord, selectedHour: $selectedHour,
                     selectedMinute: $selectedMinute,
                     showPicker: $showPicker,
                     confirmedHour: $confirmedHour,
@@ -43,10 +46,16 @@ struct TimeSelectButton: View {
             }
         }
         .padding()
+        .onAppear {
+            confirmedHour = Int(dailyRecord.scheduledHour)
+            confirmedMinute = Int(dailyRecord.scheduledMinute)
+        }
     }
 }
 
 struct TimeSelectPicker: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @ObservedObject var dailyRecord: DailyRecord
     @Binding var selectedHour: Int
     @Binding var selectedMinute: Int
     @Binding var showPicker: Bool
@@ -71,6 +80,11 @@ struct TimeSelectPicker: View {
                     confirmedHour = selectedHour
                     confirmedMinute = selectedMinute
                     showPicker = false
+                    
+                    if let hour = confirmedHour, let minute = confirmedMinute {
+                        DailyRecordManager.shared.updateScheduledHour(Int16(hour), for: dailyRecord, context: viewContext)
+                        DailyRecordManager.shared.updateScheduledMinute(Int16(minute), for: dailyRecord, context: viewContext)
+                    }
                 }
                 .font(.headline)
             }
@@ -96,6 +110,7 @@ struct TimeSelectPicker: View {
                 }
                 .pickerStyle(WheelPickerStyle())
                 .frame(width: 100, height: 150)
+
             }
 
             Spacer()
@@ -104,9 +119,9 @@ struct TimeSelectPicker: View {
     }
 }
 
-struct CustomTimePickerView_Previews: PreviewProvider {
-    static var previews: some View {
-        TimeSelectButton()
-    }
-}
+//struct CustomTimePickerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TimeSelectButton(dailyRecord: $dailyRecord)
+//    }
+//}
 

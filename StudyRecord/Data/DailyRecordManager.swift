@@ -76,5 +76,23 @@ final class DailyRecordManager {
             print("保存失敗: \(error.localizedDescription)")
         }
     }
+    
+    func updateScheduledHour(_ scheduledHour: Int16, for record: DailyRecord, context: NSManagedObjectContext) {
+        record.scheduledHour = scheduledHour
+        do {
+            try context.save()
+        } catch {
+            print("保存失敗: \(error.localizedDescription)")
+        }
+    }
+    
+    func updateScheduledMinute(_ scheduledMinute: Int16, for record: DailyRecord, context: NSManagedObjectContext) {
+        record.scheduledMinute = scheduledMinute
+        do {
+            try context.save()
+        } catch {
+            print("保存失敗: \(error.localizedDescription)")
+        }
+    }
 }
 

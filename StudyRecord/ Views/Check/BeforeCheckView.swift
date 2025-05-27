@@ -145,9 +145,9 @@ extension BeforeCheckView {
                 .frame(width: 8)
 
                 
-                    TimeSelectButton()
-                    .frame(width: 168 , height: 40)
-                    .padding(.trailing, 16)
+//            TimeSelectButton(dailyRecord: <#DailyRecord#>)
+//                    .frame(width: 168 , height: 40)
+//                    .padding(.trailing, 16)
 
                 
 
