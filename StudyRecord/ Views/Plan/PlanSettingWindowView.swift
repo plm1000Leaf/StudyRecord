@@ -281,7 +281,6 @@ extension PlanSettingWindowView {
             )
     }
     
-
     
 }
 

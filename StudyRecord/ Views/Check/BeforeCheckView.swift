@@ -9,14 +9,17 @@ import SwiftUI
 import CoreData
 
 struct BeforeCheckView: View {
-//    @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.managedObjectContext) private var viewContext
     @State private var isDoneStudy = false
     @State private var userInput: String = ""
     @State private var isTapBookSelect = false
+    @State private var startPage: String = "-"
+    @State private var endPage: String = "-"
     @Binding var selectedTabIndex: Int
     @Binding var navigateToReview: Bool
     @Binding var navigateToPlan: Bool
-//    var selectedDate: Date
+    var selectedDate: Date
+
     
     var body: some View {
         Group {
@@ -112,13 +115,16 @@ extension BeforeCheckView {
             VStack(spacing: 16){
                 
                 HStack(spacing: -24){
-//                    InputStudyRange(
-//                        dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext),
-//                        type: .start,
-//                        placeholder: "ページ数",
-//                        width: 80,
-//                        height: 40
-//                    )
+
+                    let record = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
+                    
+                    InputStudyRange(
+                        dailyRecord: record,
+                        type: .start,
+                        placeholder: "ページ数",
+                        width: 80,
+                        height: 40
+                    )
 //                    PullDown()
 
                 }
@@ -127,13 +133,13 @@ extension BeforeCheckView {
                     .bold()
                     .rotationEffect(.degrees(90))
                 HStack(spacing: -24){
-//                    InputStudyRange(
-//                        dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext),
-//                        type: .end,
-//                        placeholder: "ページ数",
-//                        width: 80,
-//                        height: 40
-//                    )
+                    InputStudyRange(
+                        dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext),
+                        type: .end,
+                        placeholder: "ページ数",
+                        width: 80,
+                        height: 40
+                    )
 //                    PullDown()
 //                        .foregroundColor(.accentColor1)
 
@@ -163,8 +169,15 @@ extension BeforeCheckView {
             }
 
         }
+    
+    private func fetchTodayRecord() {
+        let today = Calendar.current.startOfDay(for: Date())
+        let record = DailyRecordManager.shared.fetchOrCreateRecord(for: today, context: viewContext)
+        startPage = record.startPage ?? "-"
+        endPage = record.endPage ?? "-"
+    }
     }
 
-#Preview {
-    BeforeCheckView(selectedTabIndex: .constant(1), navigateToReview: .constant(true), navigateToPlan: .constant(true))
-}
+//#Preview {
+//    BeforeCheckView(selectedTabIndex: .constant(1), navigateToReview: .constant(true), navigateToPlan: .constant(true), selectedDate: $selectedDate)
+//}

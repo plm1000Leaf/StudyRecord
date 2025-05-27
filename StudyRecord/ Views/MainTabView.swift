@@ -25,7 +25,7 @@ struct MainTabView: View {
             BeforeCheckView(
                 selectedTabIndex: $selectedTabIndex,
                 navigateToReview: $navigateToReview,
-                navigateToPlan: $navigateToPlan
+                navigateToPlan: $navigateToPlan, selectedDate: Calendar.current.startOfDay(for: Date())
             )
                 .tabItem {
                     Image(systemName: "person.fill")
