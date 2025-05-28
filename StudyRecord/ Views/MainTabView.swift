@@ -70,9 +70,3 @@ struct SettingsView: View {
     }
 }
 
-
-//#Preview {
-//    MainTabView(selectedTab: <#Int#>, openDateReview: <#Binding<Bool>#>, openPlanSetting: <#Binding<Bool>#>)
-//}
-
-

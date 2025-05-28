@@ -3,6 +3,7 @@ import CoreData
 
 struct DateReviewView: View {
     @Environment(\.managedObjectContext) private var viewContext
+//    @ObservedObject var dailyRecord: DailyRecord
     @State private var selectedRowIndex: Int? = nil
     @State private var isTapEditButton = false
     @State private var userInput: String = ""
@@ -124,6 +125,11 @@ extension DateReviewView {
             return AnyView(EmptyView())
         }
         
+        let dailyRecord = record(for: index)
+        let startPageText = dailyRecord.startPage ?? "-"
+        let startUnitText = dailyRecord.startUnit ?? "-"
+        let endPageText = dailyRecord.endPage ?? "-"
+        let endUnitText = dailyRecord.endUnit ?? "-"
         return AnyView(
             HStack(alignment: .top, spacing: 32) {
                 VStack(alignment: .trailing) {
@@ -159,9 +165,9 @@ extension DateReviewView {
                                     .foregroundColor(.gray0)
                                 
                                 HStack{
-                                    Text("30")
+                                    Text(startPageText)
                                         .font(.system(size: 12))
-                                    Text("ページ")
+                                    Text(startUnitText)
                                         .font(.system(size: 12))
                                 }
                                 Text("〜")
@@ -169,9 +175,9 @@ extension DateReviewView {
                                     .bold()
                                     .rotationEffect(.degrees(90))
                                 HStack{
-                                    Text("30")
+                                    Text(endPageText)
                                         .font(.system(size: 12))
-                                    Text("ページ")
+                                    Text(endUnitText)
                                         .font(.system(size: 12))
                                 }
                                 
@@ -188,4 +194,5 @@ extension DateReviewView {
                 .padding(.bottom, 32)
         )
     }
+    
 }
