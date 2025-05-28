@@ -10,6 +10,7 @@ import CoreData
 
 struct BeforeCheckView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @ObservedObject var dailyRecordWrapper: DailyRecordWrapper
     @State private var isDoneStudy = false
     @State private var userInput: String = ""
     @State private var isTapBookSelect = false
@@ -86,15 +87,29 @@ extension BeforeCheckView {
             Button(action: {
                 isTapBookSelect.toggle()
             }){
-                Rectangle()
-                    .foregroundColor(.mainColor0)
-                    .frame(width: 136, height: 168)
+                if let material = dailyRecordWrapper.record.material,
+                   let imageData = material.imageData,
+                   let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .frame(width: 136, height: 168)
+                } else {
+                    Rectangle()
+                        .foregroundColor(.mainColor0)
+                        .frame(width: 136, height: 168)
+                }
             }
-            Text("応用情報技術者合格教本")
+            Text(dailyRecordWrapper.record.material?.name ?? "未設定")
                 .font(.system(size: 24))
                 .frame(width: 104, height: 96, alignment: .leading)
         }
         .padding(.bottom, 8)
+        .sheet(isPresented: $isTapBookSelect) {
+            BookSelectView { material in
+                dailyRecordWrapper.updateMaterial(material, context: viewContext)
+            }
+        }
+
     }
     
     private var todayStudyPlanTitle: some View {

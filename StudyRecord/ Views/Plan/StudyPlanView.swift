@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import CoreData
 struct StudyPlanView: View {
     
     @State private var isTapDate = false
@@ -15,7 +15,13 @@ struct StudyPlanView: View {
     @State private var currentMonth = Date()
     @State private var isOn = false
     @State private var selectedDate: Date? = nil
-
+    @StateObject private var dailyRecordWrapper = DailyRecordWrapper(
+        record: DailyRecordManager.shared.fetchOrCreateRecord(
+            for: Calendar.current.startOfDay(for: Date()),
+            context: PersistenceController.shared.container.viewContext
+        )
+    )
+    
     var openPlanSettingOnAppear: Bool = false
     
     var body: some View {
@@ -57,7 +63,7 @@ struct StudyPlanView: View {
  
                 if isTapDate, let selectedDate = selectedDate {
                     PlanSettingWindowView(
-                        currentMonth: $currentMonth,
+                        dailyRecordWrapper: dailyRecordWrapper, currentMonth: $currentMonth,
                         isOn: $isOn,
                         onClose: {
                             isTapDate = false

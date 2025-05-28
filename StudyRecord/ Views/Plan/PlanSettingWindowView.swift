@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PlanSettingWindowView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @ObservedObject var dailyRecordWrapper: DailyRecordWrapper
     @State private var selectedMaterial: Material? = nil
     @State private var isTapBookSelect = false
     @State private var startPage: String = ""
@@ -101,7 +102,8 @@ extension PlanSettingWindowView {
     
     private var inputLearningContent: some View {
         let dailyRecord = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
-        let material = selectedMaterial ?? dailyRecord.material
+        let material = dailyRecordWrapper.record.material
+//        let material = selectedMaterial ?? dailyRecord.material
         
         return VStack(alignment: .leading){
             Text("学習予定")
@@ -127,7 +129,6 @@ extension PlanSettingWindowView {
                             }
                             .padding(.top, 32)
                         Text(material.name ?? "無題")
-//                            .font(.caption)
                             .font(.system(size: 16))
                             .frame(width: 72, height: 64)
                     }
@@ -177,6 +178,11 @@ extension PlanSettingWindowView {
             .padding(.top, -8)
             .padding(.bottom, 24)
             
+        }
+        .sheet(isPresented: $isTapBookSelect) {
+            BookSelectView { material in
+                dailyRecordWrapper.updateMaterial(material, context: viewContext)
+            }
         }
         .onAppear {
 
