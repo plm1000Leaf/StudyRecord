@@ -19,7 +19,7 @@ struct MonthReviewView: View {
                 monthView
                     .transition(.move(edge: .leading))
             } else {
-                DateReviewView(showDateReviewView: $showDateReviewView, currentMonth: $currentMonth)
+                DateReviewView(showDateReviewView: $showDateReviewView, currentMonth: $currentMonth, reviewText: .constant(""))
                     .transition(.move(edge: .trailing))
             }
         }

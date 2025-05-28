@@ -18,6 +18,8 @@ struct BeforeCheckView: View {
     @State private var endPage: String = "-"
     @State private var scheduledHour: Int = 12
     @State private var scheduledMinute: Int = 30
+
+
     @Binding var selectedTabIndex: Int
     @Binding var navigateToReview: Bool
     @Binding var navigateToPlan: Bool

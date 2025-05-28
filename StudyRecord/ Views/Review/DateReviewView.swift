@@ -3,13 +3,13 @@ import CoreData
 
 struct DateReviewView: View {
     @Environment(\.managedObjectContext) private var viewContext
-//    @ObservedObject var dailyRecord: DailyRecord
     @State private var selectedRowIndex: Int? = nil
     @State private var isTapEditButton = false
     @State private var userInput: String = ""
+    @State private var reviews: [Int: String] = [:]
     @Binding var showDateReviewView: Bool
     @Binding var currentMonth: Date 
-
+    @Binding var reviewText: String
   
     
     var body: some View {
@@ -67,6 +67,10 @@ extension DateReviewView {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.mainColor0, lineWidth: 4)
                         )
+                    
+                    Text(reviews[index] ?? record(for: index).review ?? "")
+                        .font(.system(size: 12))
+                        .foregroundColor(.gray0)
                 }
             }
                 .padding(.bottom, 32)
@@ -187,7 +191,14 @@ extension DateReviewView {
                         .padding(.top, 24)
                         
                         
-                        InputReviewField(dailyRecord: record(for: index))
+                        InputReviewField(
+                            dailyRecord: record(for: index),
+                            reviewText: Binding(
+                                get: { reviews[index] ?? (record(for: index).review ?? "") },
+                                set: { reviews[index] = $0 }
+                            )
+                        )
+
                     }
                 }
             }

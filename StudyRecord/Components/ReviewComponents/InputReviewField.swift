@@ -6,7 +6,7 @@ struct InputReviewField: View {
     @Environment(\.managedObjectContext) private var viewContext
     @ObservedObject var dailyRecord: DailyRecord
     
-    @State var text: String = ""
+    @Binding var reviewText: String 
     @State private var isEditing: Bool = false
     private let maxCharacters = 35
     
@@ -25,7 +25,7 @@ struct InputReviewField: View {
         }
         .padding()
         .onAppear {
-            text = dailyRecord.review ?? ""
+            reviewText = dailyRecord.review ?? ""
         }
     }
 }
@@ -37,7 +37,7 @@ extension InputReviewField {
             Rectangle()
                 .frame(width: 208, height: 64)
                 .foregroundColor(.mainColor10)
-            Text(text.isEmpty ? "振り返りを入力" : text)
+            Text(reviewText.isEmpty ? "振り返りを入力" : reviewText)
                 .frame(width: 200, height: 64)
                 .multilineTextAlignment(.leading)
                 .lineLimit(nil) // 改行を有効化
@@ -48,7 +48,7 @@ extension InputReviewField {
     
     private var editReviewField: some View {
 
-            CustomTextEditor(text: $text, maxCharacters: maxCharacters)
+        CustomTextEditor(text: $reviewText, maxCharacters: maxCharacters)
                 .frame(width: 200, height: 64)
                 .padding(.leading, 8)
                 .background(.baseColor10)
@@ -79,7 +79,7 @@ extension InputReviewField {
     private var editReviewButton: some View {
         HStack {
             BasicButton(label: "確定", width: 56, height: 32) {
-                DailyRecordManager.shared.updateReview(text, for: dailyRecord, context: viewContext)
+                DailyRecordManager.shared.updateReview(reviewText, for: dailyRecord, context: viewContext)
                 isEditing = false
             }
 

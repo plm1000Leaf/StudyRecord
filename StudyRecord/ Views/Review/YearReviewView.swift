@@ -19,7 +19,7 @@ struct YearReviewView: View {
         ZStack {
 
             if showDateReviewView {
-                DateReviewView(showDateReviewView: $showDateReviewView, currentMonth: $currentMonth)
+                DateReviewView(showDateReviewView: $showDateReviewView, currentMonth: $currentMonth, reviewText: .constant(""))
                     .transition(.move(edge: .trailing))
             } else if !showMonthReviewView {
                 if showPopup {
