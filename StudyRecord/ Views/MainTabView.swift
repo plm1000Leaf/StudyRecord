@@ -40,7 +40,8 @@ struct MainTabView: View {
                 }
                 .tag(1)
             
-            StudyPlanView(openPlanSettingOnAppear: navigateToPlan)
+            StudyPlanView(dailyRecordWrapper: dailyRecordWrapper,
+                          openPlanSettingOnAppear: navigateToPlan)
                 .tabItem {
                     Image(systemName: "gearshape.fill")
                     Text("Study Plan")

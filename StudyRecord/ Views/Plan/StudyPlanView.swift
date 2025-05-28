@@ -9,18 +9,14 @@ import SwiftUI
 import CoreData
 struct StudyPlanView: View {
     
+    @ObservedObject var dailyRecordWrapper: DailyRecordWrapper
     @State private var isTapDate = false
     @State private var showPopup = false
     @State private var text: String = ""
     @State private var currentMonth = Date()
     @State private var isOn = false
     @State private var selectedDate: Date? = nil
-    @StateObject private var dailyRecordWrapper = DailyRecordWrapper(
-        record: DailyRecordManager.shared.fetchOrCreateRecord(
-            for: Calendar.current.startOfDay(for: Date()),
-            context: PersistenceController.shared.container.viewContext
-        )
-    )
+
     
     var openPlanSettingOnAppear: Bool = false
     
@@ -75,6 +71,6 @@ struct StudyPlanView: View {
         }
     }
 }
-#Preview {
-    StudyPlanView()
-}
+//#Preview {
+//    StudyPlanView()
+//}
