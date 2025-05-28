@@ -15,6 +15,8 @@ struct BeforeCheckView: View {
     @State private var isTapBookSelect = false
     @State private var startPage: String = "-"
     @State private var endPage: String = "-"
+    @State private var scheduledHour: Int = 12
+    @State private var scheduledMinute: Int = 30
     @Binding var selectedTabIndex: Int
     @Binding var navigateToReview: Bool
     @Binding var navigateToPlan: Bool
@@ -152,11 +154,12 @@ extension BeforeCheckView {
             
             Spacer()
                 .frame(width: 8)
-
+            
+            let record = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
                 
-//            TimeSelectButton(dailyRecord: <#DailyRecord#>)
-//                    .frame(width: 168 , height: 40)
-//                    .padding(.trailing, 16)
+            TimeSelectButton(dailyRecord: record)
+                    .frame(width: 168 , height: 40)
+                    .padding(.trailing, 16)
 
                 
 
@@ -178,7 +181,9 @@ extension BeforeCheckView {
         let record = DailyRecordManager.shared.fetchOrCreateRecord(for: today, context: viewContext)
         startPage = record.startPage ?? "-"
         endPage = record.endPage ?? "-"
-    }
+        scheduledHour = Int(record.scheduledHour)
+        scheduledMinute = Int(record.scheduledMinute)
+        }
     }
 
 //#Preview {
