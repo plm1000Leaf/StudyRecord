@@ -7,6 +7,8 @@ struct DateReviewView: View {
     @State private var isTapEditButton = false
     @State private var userInput: String = ""
     @State private var reviews: [Int: String] = [:]
+    @State private var materialNames: [Int: String] = [:]
+    @State private var materialImages: [Int: UIImage] = [:]
     @Binding var showDateReviewView: Bool
     @Binding var currentMonth: Date 
     @Binding var reviewText: String
@@ -152,18 +154,23 @@ extension DateReviewView {
                             .frame(width: 248, height: 288)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.mainColor0, lineWidth: 4) // 枠線
-                            )
+                                    .stroke(Color.mainColor0, lineWidth: 4)                             )
                     }
                     VStack{
                         HStack{
-                            
+                        if let image = materialImages[index] {
+                            Image(uiImage: image)
+                                .resizable()
+                                .frame(width: 88, height: 120)
+                                
+                        } else {
                             Rectangle()
                                 .frame(width: 88, height:  120)
                                 .foregroundColor(.mainColor0)
+                        }
                             
                             VStack(spacing: 8){
-                                Text("応用情報技術者合格教本")
+                                Text(materialNames[index] ?? record(for: index).material?.name ?? "教材未設定")
                                     .font(.system(size: 16))
                                     .frame(width: 104)
                                     .foregroundColor(.gray0)
@@ -198,6 +205,18 @@ extension DateReviewView {
                                 set: { reviews[index] = $0 }
                             )
                         )
+                        .onAppear {
+                            
+                            let dailyRecord = record(for: index)
+                            materialNames[index] = record(for: index).material?.name ?? "教材未設定"
+                            
+                            if let data = dailyRecord.material?.imageData,
+                               let uiImage = UIImage(data: data) {
+                                materialImages[index] = uiImage
+                            } else {
+                                materialImages[index] = nil
+                            }
+                        }
 
                     }
                 }
