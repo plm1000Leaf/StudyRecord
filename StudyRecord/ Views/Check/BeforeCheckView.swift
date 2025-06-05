@@ -10,7 +10,6 @@ import CoreData
 
 struct BeforeCheckView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @ObservedObject var dailyRecordWrapper: DailyRecordWrapper
     @State private var isDoneStudy = false
     @State private var userInput: String = ""
     @State private var isTapBookSelect = false
@@ -18,8 +17,7 @@ struct BeforeCheckView: View {
     @State private var endPage: String = "-"
     @State private var scheduledHour: Int = 12
     @State private var scheduledMinute: Int = 30
-
-
+    @StateObject private var recordService = DailyRecordService.shared
     @Binding var selectedTabIndex: Int
     @Binding var navigateToReview: Bool
     @Binding var navigateToPlan: Bool
@@ -67,12 +65,17 @@ extension BeforeCheckView {
                 checkButton
                 
             }
+            .onAppear {
+                recordService.loadTodayRecord(context: viewContext)
+            }
             .padding(.horizontal, 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .background(Color.baseColor0)
         }
         .sheet(isPresented: $isTapBookSelect) {
-            BookSelectView()
+            BookSelectView { material in
+                recordService.updateMaterial(material, context: viewContext)
+            }
         }
         
     }
@@ -89,7 +92,7 @@ extension BeforeCheckView {
             Button(action: {
                 isTapBookSelect.toggle()
             }){
-                if let material = dailyRecordWrapper.record.material,
+                if let material = recordService.getMaterial(),
                    let imageData = material.imageData,
                    let uiImage = UIImage(data: imageData) {
                     Image(uiImage: uiImage)
@@ -101,22 +104,18 @@ extension BeforeCheckView {
                         .frame(width: 136, height: 168)
                 }
             }
-            Text(dailyRecordWrapper.record.material?.name ?? "未設定")
+            Text(recordService.getMaterial()?.name ?? "未設定")
                 .font(.system(size: 24))
                 .frame(width: 104, height: 96, alignment: .leading)
         }
         .padding(.bottom, 8)
-        .sheet(isPresented: $isTapBookSelect) {
-            BookSelectView { material in
-                dailyRecordWrapper.updateMaterial(material, context: viewContext)
-            }
-        }
-
+        
+        
     }
     
     private var todayStudyPlanTitle: some View {
         HStack{
-
+            
             Text("箇所")
                 .font(.system(size: 16))
             Spacer()
@@ -131,77 +130,63 @@ extension BeforeCheckView {
     
     private var todayStudyPlanSetting: some View {
         HStack(alignment: .top){
-            VStack(spacing: 16){
+            
+            HStack {
+                VStack(spacing: 16) {
+                    // 開始範囲
+                    HStack(spacing: -24) {
+                        InputStudyRange(
+                            recordService: recordService,
+                            type: .start,
+                            placeholder: "ページ数",
+                            width: 80,
+                            height: 40
+                        )
+                        PullDown(recordService: recordService, type: .start)
+                    }
+                    
+                    Text("〜")
+                        .font(.system(size: 32))
+                        .bold()
+                    
+                    // 終了範囲
+                    HStack(spacing: -24) {
+                        InputStudyRange(
+                            recordService: recordService,
+                            type: .end,
+                            placeholder: "ページ数",
+                            width: 80,
+                            height: 40
+                        )
+                        PullDown(recordService: recordService, type: .end)
+                            .foregroundColor(.accentColor1)
+                    }
+                }
                 
-                HStack(spacing: -24){
-
-                    let record = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
-                    
-                    InputStudyRange(
-                        dailyRecord: record,
-                        type: .start,
-                        placeholder: "ページ数",
-                        width: 80,
-                        height: 40
-                    )
-                    PullDown(dailyRecord: record, type: .start)
-
-                }
-                Text("〜")
-                    .font(.system(size: 32))
-                    .bold()
-                    .rotationEffect(.degrees(90))
-                HStack(spacing: -24){
-                    
-                    let record = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
-                    
-                    InputStudyRange(
-                        dailyRecord: record,
-                        type: .end,
-                        placeholder: "ページ数",
-                        width: 80,
-                        height: 40
-                    )
-                    PullDown(dailyRecord: record, type: .end)
-                        .foregroundColor(.accentColor1)
-
-                }
+                Spacer()
+                
+                TimeSelectButton(recordService: recordService)
+                                .frame(width: 168, height: 40)
+                                .padding(.trailing, 16)
+//                Text(recordService.getFormattedTime())
+//                    .font(.system(size: 16))
+//                    .frame(width: 168, height: 40)
+//                    .background(Color.gray.opacity(0.2))
+//                    .cornerRadius(8)
             }
-            .padding(.leading, 72)
-            
-            Spacer()
-                .frame(width: 8)
-            
-            let record = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
-                
-            TimeSelectButton(dailyRecord: record)
-                    .frame(width: 168 , height: 40)
-                    .padding(.trailing, 16)
-
-                
-
         }
-        .padding(.leading, -56)
     }
+    
     
     private var checkButton: some View {
-
+        
         BasicButton(label: "Done", icon: "checkmark", width: 288, height: 80,fontSize: 48,imageSize: 32){
-                isDoneStudy = true
-                print("Doneボタンが押されました")
-            }
-
+            isDoneStudy = true
+            print("Doneボタンが押されました")
         }
-    
-    private func fetchTodayRecord() {
-        let today = Calendar.current.startOfDay(for: Date())
-        let record = DailyRecordManager.shared.fetchOrCreateRecord(for: today, context: viewContext)
-        startPage = record.startPage ?? "-"
-        endPage = record.endPage ?? "-"
-        scheduledHour = Int(record.scheduledHour)
-        scheduledMinute = Int(record.scheduledMinute)
-        }
+        
     }
+}
 
 //#Preview {
 //    BeforeCheckView(selectedTabIndex: .constant(1), navigateToReview: .constant(true), navigateToPlan: .constant(true), selectedDate: $selectedDate)

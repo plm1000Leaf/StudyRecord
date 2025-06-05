@@ -12,12 +12,7 @@ struct MainTabView: View {
     @Binding var selectedTabIndex: Int
     @Binding var navigateToReview: Bool
     @Binding var navigateToPlan: Bool
-    @StateObject private var dailyRecordWrapper = DailyRecordWrapper(
-        record: DailyRecordManager.shared.fetchOrCreateRecord(
-            for: Calendar.current.startOfDay(for: Date()),
-            context: PersistenceController.shared.container.viewContext
-        )
-    )
+    
     
     var body: some View {
         TabView(selection: $selectedTabIndex){
@@ -29,7 +24,6 @@ struct MainTabView: View {
                 .tag(0)
             
             BeforeCheckView(
-                dailyRecordWrapper: dailyRecordWrapper,
                 selectedTabIndex: $selectedTabIndex,
                 navigateToReview: $navigateToReview,
                 navigateToPlan: $navigateToPlan, selectedDate: Calendar.current.startOfDay(for: Date())
@@ -40,8 +34,7 @@ struct MainTabView: View {
                 }
                 .tag(1)
             
-            StudyPlanView(dailyRecordWrapper: dailyRecordWrapper,
-                          openPlanSettingOnAppear: navigateToPlan)
+            StudyPlanView(openPlanSettingOnAppear: navigateToPlan)
                 .tabItem {
                     Image(systemName: "gearshape.fill")
                     Text("Study Plan")

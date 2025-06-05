@@ -10,7 +10,7 @@ import CoreData
 
 struct InputStudyRange: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @ObservedObject var dailyRecord: DailyRecord
+    @ObservedObject var recordService: DailyRecordService
     @State private var text: String = ""
     @State private var isInputting: Bool = false
     private let maxCharacters = 15
@@ -30,11 +30,10 @@ struct InputStudyRange: View {
             }
         }
             .onAppear {
-                if type == .start {
-                    text = dailyRecord.startPage ?? ""
-                } else {
-                    text = dailyRecord.endPage ?? ""
-                }
+                updateTextFromService()
+            }
+            .onChange(of: recordService.currentRecord) { _ in
+                updateTextFromService()
             }
     }
 }
@@ -43,12 +42,7 @@ extension InputStudyRange {
     private var inputStudyRange: some View {
         TextField(placeholder, text: $text,onCommit: {
             isInputting = false
-            switch type {
-            case .start:
-                DailyRecordManager.shared.updateStartPage(text, for: dailyRecord, context: viewContext)
-            case .end:
-                DailyRecordManager.shared.updateEndPage(text, for: dailyRecord, context: viewContext)
-            }
+            commitChanges()
         })
             .padding(10)
             .background(Color.baseColor10)
@@ -81,6 +75,25 @@ extension InputStudyRange {
         }
         .frame(width: width, height: height)
         .padding(.vertical, height == nil ? 8 : 0)
+    }
+    
+    private func updateTextFromService() {
+        let studyRange = recordService.getStudyRange()
+        switch type {
+        case .start:
+            text = studyRange.startPage
+        case .end:
+            text = studyRange.endPage
+        }
+    }
+    
+    private func commitChanges() {
+        switch type {
+        case .start:
+            recordService.updateStartPage(text, context: viewContext)
+        case .end:
+            recordService.updateEndPage(text, context: viewContext)
+        }
     }
 }
 

@@ -9,15 +9,16 @@ import SwiftUI
 
 struct PlanSettingWindowView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @ObservedObject var dailyRecordWrapper: DailyRecordWrapper
     @State private var selectedMaterial: Material? = nil
     @State private var isTapBookSelect = false
     @State private var startPage: String = ""
     @State private var endPage: String = ""
     @State private var isDialogShown = false
     @State private var isRepetition = false
+    @StateObject private var recordService = DailyRecordService.shared
     @Binding var currentMonth: Date
     @Binding var isOn: Bool
+    
     var onClose: () -> Void
     var selectedDate: Date
 
@@ -44,19 +45,12 @@ struct PlanSettingWindowView: View {
                     .padding(.bottom, 8)
                     
                 }
+                .onAppear {
+                    recordService.loadRecord(for: selectedDate, context: viewContext)
+                }
                 .sheet(isPresented: $isTapBookSelect) {
-                    BookSelectView{ material in
-                        selectedMaterial = material  // UI表示用に保持
-                        
-                        let record = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
-                        record.material = material
-                        
-                        do {
-                            try viewContext.save()
-                            print("教材を保存しました")
-                        } catch {
-                            print("保存失敗: \(error.localizedDescription)")
-                        }
+                    BookSelectView { material in
+                        recordService.updateMaterial(material, context: viewContext)
                     }
                 }
                 .frame(width: 336, height: 520)
@@ -99,97 +93,87 @@ extension PlanSettingWindowView {
         .foregroundColor(.baseColor10)
     }
     
-    
     private var inputLearningContent: some View {
-        let dailyRecord = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
-        let material = dailyRecordWrapper.record.material
-//        let material = selectedMaterial ?? dailyRecord.material
-        
-        return VStack(alignment: .leading){
-            Text("学習予定")
-                .font(.system(size: 24))
-                .frame(width: 80,height: 24)
-                .padding(.bottom, -16)
-                .padding(.leading, 16)
-            
-            HStack(spacing:32){
+
+         return VStack(alignment: .leading){
+             Text("学習予定")
+                 .font(.system(size: 24))
+                 .frame(width: 80,height: 24)
+                 .padding(.bottom, -16)
+                 .padding(.leading, 16)
+             
+             HStack(spacing:32){
 
 
-                if let material = dailyRecord.material,
-                   let imageData = material.imageData,
-                   let uiImage = UIImage(data: imageData) {
-                    VStack{
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .frame(width: 104, height: 120)
-                            .cornerRadius(8)
-                            .clipped()
-                            .onTapGesture {
-                                isTapBookSelect = true
-                            }
-                            .padding(.top, 32)
-                        Text(material.name ?? "無題")
-                            .font(.system(size: 16))
-                            .frame(width: 72, height: 64)
-                    }
-                } else {
-                
-                Button(action: {
-                    isTapBookSelect.toggle()
-                }){
-                    Rectangle()
-                        .frame(width: 104, height: 120)
-                        .foregroundColor(.mainColor0)
-                }
-                .padding(.leading, 24)
-            }
-                
-                VStack(spacing: 16){
-                    HStack(spacing: -8){
-                        //startPage
-                        InputStudyRange(
-                            dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext),
-                            type: .start,
-                            placeholder: "ページ数",
-                            width: 80,
-                            height: 40
-                        )
-                        PullDown(dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext), type: .start)
-                    }
-                    Text("〜")
-                        .font(.system(size: 32))
-                        .bold()
-                        .rotationEffect(.degrees(90))
-                    HStack(spacing: -8){
-                        //endPage
-                        InputStudyRange(
-                            dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext),
-                            type: .end,
-                            placeholder: "ページ数",
-                            width: 80,
-                            height: 40
-                        )
+                 if let material = recordService.getMaterial(),
+                    let imageData = material.imageData,
+                    let uiImage = UIImage(data: imageData) {
+                     VStack{
+                         Image(uiImage: uiImage)
+                             .resizable()
+                             .frame(width: 104, height: 120)
+                             .cornerRadius(8)
+                             .clipped()
+                             .onTapGesture {
+                                 isTapBookSelect = true
+                             }
+                             .padding(.top, 32)
+                         Text(material.name ?? "無題")
+                             .font(.system(size: 16))
+                             .frame(width: 72, height: 64)
+                     }
+                    } else {
+                         
+                         Button(action: {
+                             isTapBookSelect.toggle()
+                         }){
+                             Rectangle()
+                                 .frame(width: 104, height: 120)
+                                 .foregroundColor(.mainColor0)
+                         }
+                         .padding(.leading, 24)
+                     }
+                         
+                         VStack(spacing: 16){
+                             HStack(spacing: -8){
+                                 //startPage
+                                 InputStudyRange(
+                                    recordService: recordService,
+                                     type: .start,
+                                     placeholder: "ページ数",
+                                     width: 80,
+                                     height: 40
+                                 )
+                                 PullDown(recordService: recordService, type: .start)
+                             }
+                             Text("〜")
+                                 .font(.system(size: 32))
+                                 .bold()
+                                 .rotationEffect(.degrees(90))
+                             HStack(spacing: -8){
+                                 //endPage
+                                 InputStudyRange(
+                                    recordService: recordService,
+                                     type: .end,
+                                     placeholder: "ページ数",
+                                     width: 80,
+                                     height: 40
+                                 )
+                                 PullDown(recordService: recordService, type: .end)
+                             }
+                         }
+                         
+                     }
+                     .padding(.top, -8)
+                     .padding(.bottom, 24)
+                     
+                 }
+                 .onAppear {
+                     recordService.loadTodayRecord(context: viewContext)
+                 }
+             }
 
-                        PullDown(dailyRecord: DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext), type: .end)
-                    }
-                }
-                
-            }
-            .padding(.top, -8)
-            .padding(.bottom, 24)
-            
-        }
-        .sheet(isPresented: $isTapBookSelect) {
-            BookSelectView { material in
-                dailyRecordWrapper.updateMaterial(material, context: viewContext)
-            }
-        }
-        .onAppear {
-
-            selectedMaterial = dailyRecord.material
-        }
-    }
-    
+ 
     
     private var inputScheduledTime: some View {
 
@@ -200,10 +184,9 @@ extension PlanSettingWindowView {
                 .padding(.leading, 16)
             
             HStack{
-                let record = DailyRecordManager.shared.fetchOrCreateRecord(for: selectedDate, context: viewContext)
                 
-                TimeSelectButton(dailyRecord: record)
-                    .frame(width: 160 , height: 40)
+                TimeSelectButton(recordService: recordService)
+                    .frame(width: 160, height: 40)
                     .padding(.bottom, 8)
                 
                 VStack{                                         

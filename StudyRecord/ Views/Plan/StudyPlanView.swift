@@ -9,7 +9,6 @@ import SwiftUI
 import CoreData
 struct StudyPlanView: View {
     
-    @ObservedObject var dailyRecordWrapper: DailyRecordWrapper
     @State private var isTapDate = false
     @State private var showPopup = false
     @State private var text: String = ""
@@ -59,7 +58,7 @@ struct StudyPlanView: View {
  
                 if isTapDate, let selectedDate = selectedDate {
                     PlanSettingWindowView(
-                        dailyRecordWrapper: dailyRecordWrapper, currentMonth: $currentMonth,
+                       currentMonth: $currentMonth,
                         isOn: $isOn,
                         onClose: {
                             isTapDate = false

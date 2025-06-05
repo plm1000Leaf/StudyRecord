@@ -11,7 +11,7 @@ import SwiftUI
 struct PullDown: View {
     @State private var selectedItem = "ページ" // 初期値を明示的に設定
     @Environment(\.managedObjectContext) private var viewContext
-    @ObservedObject var dailyRecord: DailyRecord
+    @ObservedObject var recordService: DailyRecordService
     var type: StudyRangeType
 
     let options = ["-", "ページ", "章"]
@@ -29,22 +29,31 @@ struct PullDown: View {
         .onChange(of: selectedItem) { newValue in
             switch type {
             case .start:
-                DailyRecordManager.shared.updateStartUnit(newValue, for: dailyRecord, context: viewContext)
+                recordService.updateStartUnit(newValue, context: viewContext)
             case .end:
-                DailyRecordManager.shared.updateEndUnit(newValue, for: dailyRecord, context: viewContext)
+                recordService.updateEndUnit(newValue, context: viewContext)
             }
         }
         .onAppear {
-            if type == .start {
-                selectedItem = dailyRecord.startUnit ?? ""
-            } else {
-                selectedItem = dailyRecord.endUnit ?? ""
-            }
+            updateUnitFromService()
+        }
+        .onChange(of: recordService.currentRecord) { _ in
+            updateUnitFromService()
         }
         .pickerStyle(MenuPickerStyle()) // プルダウンメニュー風
         .frame(width: 100) // 必要に応じて幅を調整
         .padding(4)
 
+    }
+    
+    private func updateUnitFromService() {
+        let studyRange = recordService.getStudyRange()
+        switch type {
+        case .start:
+            selectedItem = studyRange.startUnit.isEmpty ? "ページ" : studyRange.startUnit
+        case .end:
+            selectedItem = studyRange.endUnit.isEmpty ? "ページ" : studyRange.endUnit
+        }
     }
 }
 
