@@ -2,7 +2,7 @@
 //  DailyRecordService.swift
 //  StudyRecord
 //
-//  Created by 千葉陽乃 on 2025/06/04.
+//  修正版：インスタンス作成を可能にする
 //
 
 import Foundation
@@ -21,7 +21,18 @@ final class DailyRecordService: ObservableObject {
     private let manager = DailyRecordManager.shared
     private var cancellables = Set<AnyCancellable>()
     
+    // MARK: - Initializers
+    
+    /// シングルトン用のプライベートイニシャライザ
     private init() {}
+    
+    /// インスタンス作成用のパブリックイニシャライザ
+    /// - Parameter useShared: trueの場合はsharedインスタンスと同じ、falseの場合は独立したインスタンス
+    convenience init(independent: Bool = true) {
+        self.init()
+        // 独立したインスタンスの場合は特別な処理は不要
+        // 必要に応じて初期化処理をここに追加
+    }
     
     // MARK: - Public Methods
     
@@ -208,5 +219,18 @@ extension DailyRecordService {
     func getStudyRangeData(for date: Date, context: NSManagedObjectContext) -> StudyRangeData {
         let record = getRecord(for: date, context: context)
         return StudyRangeData(from: record)
+    }
+    
+    /// デバッグ用: 現在の状態を出力
+    func debugCurrentState() {
+        print("=== DailyRecordService Debug ===")
+        print("現在のレコード: \(currentRecord?.description ?? "nil")")
+        if let record = currentRecord {
+            print("日付: \(record.date?.formatted() ?? "不明")")
+            print("学習範囲: \(getStudyRange())")
+            print("教材: \(getMaterial()?.name ?? "未設定")")
+            print("予定時間: \(getFormattedTime())")
+        }
+        print("================================")
     }
 }

@@ -63,8 +63,10 @@ struct StudyPlanView: View {
                         onClose: {
                             isTapDate = false
                         }, selectedDate: selectedDate
+                    
                     )
                     .zIndex(1)
+                    .id("plan-setting-\(selectedDate.timeIntervalSince1970)")
                 }
             }
         }
