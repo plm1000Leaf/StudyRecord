@@ -70,12 +70,20 @@ extension DateReviewView {
                                 .stroke(Color.mainColor0, lineWidth: 4)
                         )
                     
-                    Text(reviews[index] ?? record(for: index).review ?? "")
-                        .font(.system(size: 12))
-                        .foregroundColor(.gray0)
+                    VStack {
+                        
+                        Text(reviews[index] ?? record(for: index).review ?? "")
+                            .font(.system(size: 16))
+                            .foregroundColor(.baseColor10)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2) 
+                            .frame(maxWidth: 240)
+                            .padding(.bottom, 8) // 下部に少し余白
+                    }
+                    .frame(width: 248, height: 88)
                 }
             }
-                .padding(.bottom, 32)
+            .padding(.bottom, 32)
         )
     }
     
@@ -171,13 +179,15 @@ extension DateReviewView {
                             
                             VStack(spacing: 8){
                                 Text(materialNames[index] ?? record(for: index).material?.name ?? "教材未設定")
+                                    .bold()
                                     .font(.system(size: 16))
                                     .frame(width: 104)
                                     .foregroundColor(.gray0)
                                 
                                 HStack{
                                     Text(startPageText)
-                                        .font(.system(size: 12))
+                                        .font(.system(size: 8))
+                                        .frame(width: 56, height: 16)
                                     Text(startUnitText)
                                         .font(.system(size: 12))
                                 }
@@ -187,7 +197,8 @@ extension DateReviewView {
                                     .rotationEffect(.degrees(90))
                                 HStack{
                                     Text(endPageText)
-                                        .font(.system(size: 12))
+                                        .font(.system(size: 8))
+                                        .frame(width: 56, height: 20)
                                     Text(endUnitText)
                                         .font(.system(size: 12))
                                 }
