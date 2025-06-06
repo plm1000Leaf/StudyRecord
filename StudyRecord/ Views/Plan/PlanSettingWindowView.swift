@@ -34,13 +34,10 @@ struct PlanSettingWindowView: View {
             
             windowBase
             
+          
             VStack(spacing: 24) {
-                windowTitle
                 
-                // デバッグ用
-                Text("読み込み日: \(selectedDate.formatted(date: .abbreviated, time: .omitted))")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                
                 
                 VStack(alignment: .leading) {
                     inputLearningContent
@@ -51,8 +48,8 @@ struct PlanSettingWindowView: View {
                     print("決定ボタンが押されました - 日付: \(selectedDate)")
                     onClose()
                 }
-                .padding(.top, -16)
-                .padding(.bottom, 8)
+//                .padding(.top, 8)
+//                .padding(.bottom, 8)
             }
             .onAppear {
                 print("PlanSettingWindow 表示 - 選択日付: \(selectedDate)")
@@ -93,10 +90,8 @@ struct PlanSettingWindowView: View {
 
         return HStack(alignment: .firstTextBaseline) {
             Text("\(day)")
-                .frame(width: 80, height: 80)
                 .font(.system(size: 48))
             Text("(\(weekday))")
-                .frame(width: 40, height: 80)
                 .font(.system(size: 24))
                 .alignmentGuide(.firstTextBaseline) { d in d[.bottom] }
         }
@@ -105,11 +100,6 @@ struct PlanSettingWindowView: View {
     
     private var inputLearningContent: some View {
         VStack(alignment: .leading) {
-            Text("学習予定")
-                .font(.system(size: 24))
-                .frame(width: 80, height: 24)
-                .padding(.bottom, -16)
-                .padding(.leading, 16)
             
             HStack(spacing: 32) {
                 // 教材表示
@@ -170,16 +160,14 @@ struct PlanSettingWindowView: View {
                     }
                 }
             }
-            .padding(.top, -8)
+            .padding(.leading, 16)
+            .padding(.top, 56)
             .padding(.bottom, 24)
         }
     }
     
     private var inputScheduledTime: some View {
         VStack(alignment: .leading) {
-            Text("予定時間")
-                .font(.system(size: 24))
-                .padding(.leading, 16)
             
             HStack {
                 TimeSelectButton(recordService: recordService)
@@ -242,7 +230,7 @@ struct PlanSettingWindowView: View {
                                     )
                                 }
                             }
-                            .padding(.leading, -16)
+                            .padding(.leading, -24)
                         }
                     }
                     .padding(.leading, 8)
@@ -254,13 +242,18 @@ struct PlanSettingWindowView: View {
     private var windowBase: some View {
         Rectangle()
             .fill(Color.baseColor0)
-            .frame(width: 336, height: 544)
+            .frame(width: 336, height: 536)
             .cornerRadius(24)
             .overlay(
-                CustomRoundedCorner(radius: 24, corners: [.topLeft, .topRight])
-                    .foregroundColor(.mainColor0)
-                    .frame(width: 336, height: 80)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                ZStack{
+                    CustomRoundedCorner(radius: 24, corners: [.topLeft, .topRight])
+                        .foregroundColor(.mainColor0)
+                        .frame(width: 336, height: 80)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    windowTitle
+                        .padding(.top, 16)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                }
             )
     }
 }
