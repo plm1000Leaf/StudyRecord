@@ -1,10 +1,14 @@
 import SwiftUI
+import CoreData
 
 struct PlanningCalendar: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @Binding var currentMonth: Date
     @Binding var isTapDate: Bool
     @Binding var showPopup: Bool
     @Binding var selectedDate: Date?
+    
+    @State private var dailyData: [Int: DailyStudyData] = [:]
 
     var body: some View {
         ZStack{
@@ -45,11 +49,56 @@ struct PlanningCalendar: View {
                     .padding(.horizontal)
             }
         }
+        .onAppear {
+            loadMonthlyData()
+        }
+        .onChange(of: currentMonth) { _ in
+            loadMonthlyData()
+        }
+    }
+    
+    // MARK: - Data Loading
+    private func loadMonthlyData() {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: currentMonth)
+        let month = calendar.component(.month, from: currentMonth)
+        let numberOfDays = calendar.range(of: .day, in: .month, for: currentMonth)?.count ?? 0
+        
+        var newData: [Int: DailyStudyData] = [:]
+        
+        for day in 1...numberOfDays {
+            if let date = calendar.date(from: DateComponents(year: year, month: month, day: day)) {
+                let record = DailyRecordManager.shared.fetchOrCreateRecord(for: date, context: viewContext)
+                newData[day] = DailyStudyData(
+                    materialName: record.material?.name,
+                    scheduledTime: formatTime(hour: record.scheduledHour, minute: record.scheduledMinute),
+                    hasData: record.material != nil || record.scheduledHour != 0 || record.scheduledMinute != 0
+                )
+            }
+        }
+        
+        dailyData = newData
+    }
+    
+    private func formatTime(hour: Int16, minute: Int16) -> String {
+        if hour == 0 && minute == 0 {
+            return "未設定"
+        }
+        return String(format: "%02d:%02d", hour, minute)
     }
 }
+
+struct DailyStudyData {
+    let materialName: String?
+    let scheduledTime: String
+    let hasData: Bool
+}
+
 extension PlanningCalendar {
     private func todayStudyPlan(for date: Int) -> some View {
-        VStack {
+        let studyData = dailyData[date]
+        
+    return VStack {
             ZStack {
                 Button(action: {
                     withAnimation {
@@ -61,17 +110,42 @@ extension PlanningCalendar {
                         isTapDate = true
                     }
                 }) {
-                    Rectangle()
-                        .cornerRadius(2.5)
-                        .frame(width: 40, height: 32)
-                        .foregroundColor(.mainColor0)
+                    if let materialName = studyData?.materialName {
+                        ZStack{
+                            Rectangle()
+                                .cornerRadius(2.5)
+                                .frame(width: 40, height: 32)
+                                .foregroundColor(.mainColor0)
+                            Text(studyData?.materialName ?? "")
+                                .font(.system(size: 8))
+                                .foregroundColor(.white)
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                                .frame(maxWidth: 36)
+                                .padding(.horizontal, 2)
+                        }
+                    } else {
+                        ZStack{
+                            Rectangle()
+                                .cornerRadius(2.5)
+                                .frame(width: 40, height: 32)
+                                .foregroundColor( .mainColor0.opacity(0.5))
+                            Text("未設定")
+                                .font(.system(size: 8))
+                                .foregroundColor(.white)
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                                .frame(maxWidth: 36)
+                                .padding(.horizontal, 2)
+                        }
+                    }
                 }
             }
             
             HStack(spacing: 1) {
                 Image(systemName: "clock")
                     .font(.system(size: 8))
-                Text("13:00")
+                Text(studyData?.scheduledTime ?? "未設定")
                     .font(.system(size: 8))
             }
             .padding(.bottom, 8)
