@@ -83,12 +83,12 @@ extension BeforeCheckView {
         Text("今日の学習")
             .font(.system(size: 32))
             .padding(.top, 16)
-            .padding(.leading, 56)
+            .padding(.leading, 32)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var studyMaterial: some View {
-        VStack(spacing: 8){
+        VStack/*(spacing: 8)*/{
             Button(action: {
                 isTapBookSelect.toggle()
             }){
@@ -106,9 +106,9 @@ extension BeforeCheckView {
             }
             Text(recordService.getMaterial()?.name ?? "未設定")
                 .font(.system(size: 24))
-                .frame(width: 104, height: 96, alignment: .leading)
+                .frame(width: 104, height: 104)
         }
-        .padding(.bottom, 8)
+//        .padding(.bottom, 8)
         
         
     }
@@ -124,7 +124,7 @@ extension BeforeCheckView {
                 .font(.system(size: 16))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.leading, 48)
+        .padding(.leading, 16)
         .padding(.bottom, 8)
     }
     
@@ -134,7 +134,7 @@ extension BeforeCheckView {
             HStack {
                 VStack(spacing: 16) {
                     // 開始範囲
-                    HStack(spacing: -24) {
+                    HStack(spacing: -10) {
                         InputStudyRange(
                             recordService: recordService,
                             type: .start,
@@ -150,7 +150,7 @@ extension BeforeCheckView {
                         .bold()
                     
                     // 終了範囲
-                    HStack(spacing: -24) {
+                    HStack(spacing: -10) {
                         InputStudyRange(
                             recordService: recordService,
                             type: .end,
@@ -167,7 +167,8 @@ extension BeforeCheckView {
                 
                 TimeSelectButton(recordService: recordService)
                                 .frame(width: 168, height: 40)
-                                .padding(.trailing, 16)
+                                .padding(.trailing, -8)
+                                .padding(.bottom, 64)
 //                Text(recordService.getFormattedTime())
 //                    .font(.system(size: 16))
 //                    .frame(width: 168, height: 40)
