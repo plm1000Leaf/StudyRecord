@@ -186,7 +186,7 @@ extension BeforeCheckView {
             isDoneStudy = true
             print("Doneボタンが押されました")
         }
-        .disabled(recordService.getIsChecked()) 
+        .disabled(recordService.getIsChecked())
         
     }
 }

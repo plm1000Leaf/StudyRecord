@@ -1,8 +1,13 @@
 import SwiftUI
+import CoreData
+
 
 struct MonthReviewCalendar: View {
-    @Binding var currentMonth: Date 
+    @Environment(\.managedObjectContext) private var viewContext
+    @Binding var currentMonth: Date
     @Binding var showDateReviewView: Bool
+    @State private var checkedDates: [Int: Bool] = [:]
+    
     var body: some View {
         ZStack {
 
@@ -26,7 +31,7 @@ struct MonthReviewCalendar: View {
                                     .font(.system(size: 16))
                                     .padding(.leading, 16)
                                     .cornerRadius(5)
-                                checkMark
+                                checkMark(for: date)
                             }
                         }
                     }
@@ -37,20 +42,40 @@ struct MonthReviewCalendar: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
+        .onAppear {
+            loadCheckedDates()
+        }
+        .onChange(of: currentMonth) { _ in
+            loadCheckedDates()
+        }
     }
 }
 
 extension MonthReviewCalendar {
-    private var checkMark: some View {
+    private func checkMark(for date: Int) -> some View {
         Button(action: {
             withAnimation {
                 showDateReviewView = true
             }
         }){
-            Circle()
-                .frame(width: 30)
-                .padding(.bottom, 8)
-                .foregroundColor(.mainColor0)
+            if checkedDates[date] == true {
+                Circle()
+                    .frame(width: 30)
+                    .padding(.bottom, 8)
+                    .foregroundColor(.mainColor0)
+            } else {
+                Circle()
+                    .stroke(
+                        Color.mainColor0,
+                        style: StrokeStyle(
+                            lineWidth: 2,
+                            dash: [5, 3]  // [線の長さ, 空白の長さ]
+                        )
+                    )
+                    .frame(width: 30)
+                    .padding(.bottom, 8)
+            }
+
         }
     }
     
@@ -75,6 +100,24 @@ extension MonthReviewCalendar {
 
         .padding(.top, 40)
 
+    }
+    
+    private func loadCheckedDates() {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: currentMonth)
+        let month = calendar.component(.month, from: currentMonth)
+        let numberOfDays = calendar.range(of: .day, in: .month, for: currentMonth)?.count ?? 0
+        
+        var newCheckedDates: [Int: Bool] = [:]
+        
+        for day in 1...numberOfDays {
+            if let date = calendar.date(from: DateComponents(year: year, month: month, day: day)) {
+                let record = DailyRecordManager.shared.fetchOrCreateRecord(for: date, context: viewContext)
+                newCheckedDates[day] = record.isChecked
+            }
+        }
+        
+        checkedDates = newCheckedDates
     }
 }
 
