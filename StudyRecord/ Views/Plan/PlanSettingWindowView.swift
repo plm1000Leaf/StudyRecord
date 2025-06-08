@@ -120,13 +120,16 @@ struct PlanSettingWindowView: View {
                             .font(.system(size: 16))
                             .frame(width: 72, height: 64)
                     }
+                    .padding(.leading, 24)
                 } else {
                     Button(action: {
                         isTapBookSelect.toggle()
                     }) {
+                        
                         Rectangle()
                             .frame(width: 104, height: 120)
                             .foregroundColor(.mainColor0)
+                        
                     }
                     .padding(.leading, 24)
                 }

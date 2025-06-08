@@ -94,5 +94,16 @@ final class DailyRecordManager {
             print("保存失敗: \(error.localizedDescription)")
         }
     }
+    func updateIsChecked(_ isChecked: Bool, for record: DailyRecord, context: NSManagedObjectContext) {
+        record.isChecked = isChecked
+        
+        do {
+            try context.save()
+            print("学習完了状態を更新しました: \(isChecked ? "完了" : "未完了")")
+        } catch {
+            print("学習完了状態の保存に失敗しました: \(error.localizedDescription)")
+        }
+    }
+    
 }
 

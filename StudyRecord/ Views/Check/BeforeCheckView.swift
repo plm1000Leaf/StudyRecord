@@ -10,6 +10,7 @@ import CoreData
 
 struct BeforeCheckView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var recordService = DailyRecordService.shared
     @State private var isDoneStudy = false
     @State private var userInput: String = ""
     @State private var isTapBookSelect = false
@@ -17,7 +18,6 @@ struct BeforeCheckView: View {
     @State private var endPage: String = "-"
     @State private var scheduledHour: Int = 12
     @State private var scheduledMinute: Int = 30
-    @StateObject private var recordService = DailyRecordService.shared
     @Binding var selectedTabIndex: Int
     @Binding var navigateToReview: Bool
     @Binding var navigateToPlan: Bool
@@ -182,9 +182,11 @@ extension BeforeCheckView {
     private var checkButton: some View {
         
         BasicButton(label: "Done", icon: "checkmark", width: 288, height: 80,fontSize: 48,imageSize: 32){
+            recordService.updateIsChecked(true, context: viewContext)
             isDoneStudy = true
             print("Doneボタンが押されました")
         }
+        .disabled(recordService.getIsChecked()) 
         
     }
 }

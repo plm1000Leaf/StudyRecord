@@ -118,6 +118,18 @@ final class DailyRecordService: ObservableObject {
         objectWillChange.send()
     }
     
+    /// 学習完了状態を更新
+    func updateIsChecked(_ isChecked: Bool, context: NSManagedObjectContext) {
+        guard let record = currentRecord else {
+            print("更新対象のレコードがありません")
+            return
+        }
+        
+        manager.updateIsChecked(isChecked, for: record, context: context)
+        objectWillChange.send()
+    }
+    
+    
     // MARK: - Getter Methods
     
     /// 現在のレコードの学習範囲情報を取得
@@ -179,6 +191,11 @@ final class DailyRecordService: ObservableObject {
     func getRecord(for date: Date, context: NSManagedObjectContext) -> DailyRecord {
         return manager.fetchOrCreateRecord(for: date, context: context)
     }
+    
+    /// 現在の学習完了状態を取得
+    func getIsChecked() -> Bool {
+        return currentRecord?.isChecked ?? false
+    }
 }
 
 // MARK: - StudyRangeData Structure
@@ -193,7 +210,7 @@ struct StudyRangeData {
     let scheduledMinute: Int16
     let review: String?
     let date: Date
-    
+    let isChecked: Bool
     init(from record: DailyRecord) {
         self.startPage = record.startPage ?? ""
         self.endPage = record.endPage ?? ""
@@ -204,6 +221,7 @@ struct StudyRangeData {
         self.scheduledMinute = record.scheduledMinute
         self.review = record.review
         self.date = record.date ?? Date()
+        self.isChecked = record.isChecked
     }
 }
 
