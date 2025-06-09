@@ -3,15 +3,18 @@ import CoreData
 
 struct DateReviewView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var recordService = DailyRecordService.shared
     @State private var selectedRowIndex: Int? = nil
     @State private var isTapEditButton = false
     @State private var userInput: String = ""
     @State private var reviews: [Int: String] = [:]
     @State private var materialNames: [Int: String] = [:]
     @State private var materialImages: [Int: UIImage] = [:]
+    @State private var checkedDates: [Int: Bool] = [:]
     @Binding var showDateReviewView: Bool
     @Binding var currentMonth: Date 
     @Binding var reviewText: String
+
   
     
     var body: some View {
@@ -37,8 +40,12 @@ struct DateReviewView: View {
                 }
             }
             .background(Color.baseColor0)
-            
-        
+            .onAppear {
+                loadCheckedDates()
+            }
+            .onChange(of: currentMonth) { _ in
+                loadCheckedDates()
+            }
 
     }
     
@@ -50,7 +57,10 @@ extension DateReviewView {
         guard let (day, weekday) = CalendarUtils.dayAndWeekday(at: index, from: currentMonth) else {
             return AnyView(EmptyView())
         }
-        
+        let isChecked = checkedDates[day] ?? false
+        let backgroundColor = isChecked ? Color.mainColor10 : Color.notCheckedColor20
+        let frameColor = isChecked ? Color.mainColor0 : Color.notCheckedColor10
+        let textColor = isChecked ? Color.baseColor10 : Color.gray0
         return AnyView(
             HStack(alignment: .top, spacing: 32) {
                 VStack(alignment: .trailing) {
@@ -63,18 +73,18 @@ extension DateReviewView {
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.mainColor10)
+                        .fill(backgroundColor)
                         .frame(width: 248, height: 88)
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.mainColor0, lineWidth: 4)
+                                .stroke(frameColor, lineWidth: 4)
                         )
                     
                     VStack {
                         
                         Text(reviews[index] ?? record(for: index).review ?? "")
                             .font(.system(size: 16))
-                            .foregroundColor(.baseColor10)
+                            .foregroundColor(textColor)
                             .multilineTextAlignment(.center)
                             .lineLimit(2) 
                             .frame(maxWidth: 240)
@@ -134,6 +144,11 @@ extension DateReviewView {
     private func startOfMonth(_ date: Date) -> Date {
         Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: date)) ?? Date()
     }
+    
+    private func loadCheckedDates() {
+        checkedDates = recordService.loadCheckedDates(for: currentMonth, context: viewContext)
+    }
+    
     private func SelectReview(index: Int) -> some View {
         guard let (day, weekday) = CalendarUtils.dayAndWeekday(at: index, from: currentMonth) else {
             return AnyView(EmptyView())
@@ -144,6 +159,11 @@ extension DateReviewView {
         let startUnitText = dailyRecord.startUnit ?? "-"
         let endPageText = dailyRecord.endPage ?? "-"
         let endUnitText = dailyRecord.endUnit ?? "-"
+        
+        let isChecked = checkedDates[day] ?? false
+        let backgroundColor = isChecked ? Color.mainColor20 : Color.notCheckedColor20
+        let frameColor = isChecked ? Color.mainColor0 : Color.notCheckedColor10
+        
         return AnyView(
             HStack(alignment: .top, spacing: 32) {
                 VStack(alignment: .trailing) {
@@ -158,11 +178,12 @@ extension DateReviewView {
                     
                     ZStack{
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(Color.mainColor20)
+                            .fill(backgroundColor)
                             .frame(width: 248, height: 288)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.mainColor0, lineWidth: 4)                             )
+                                    .stroke(frameColor, lineWidth: 4)
+                            )
                     }
                     VStack{
                         HStack{
@@ -217,6 +238,7 @@ extension DateReviewView {
                             )
                         )
                         .onAppear {
+                            
                             
                             let dailyRecord = record(for: index)
                             materialNames[index] = record(for: index).material?.name ?? "教材未設定"
