@@ -11,7 +11,6 @@ import CoreData
 struct BeforeCheckView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var recordService = DailyRecordService.shared
-    @State private var isDoneStudy = false
     @State private var userInput: String = ""
     @State private var isTapBookSelect = false
     @State private var startPage: String = "-"
@@ -23,23 +22,49 @@ struct BeforeCheckView: View {
     @Binding var navigateToPlan: Bool
     var selectedDate: Date
 
+    // 今日の日付をチェックするための計算プロパティ
+    private var isToday: Bool {
+        Calendar.current.isDate(selectedDate, inSameDayAs: Date())
+    }
+    
+    // 現在のレコードが完了済みかどうかをチェック
+    private var isDoneStudy: Bool {
+        recordService.getIsChecked()
+    }
     
     var body: some View {
+        
         Group {
-            if !isDoneStudy {
-                mainView
-            } else {
+            // 今日の日付で、かつ学習完了済みの場合のみAfterCheckViewを表示
+            if isToday && isDoneStudy {
                 AfterCheckView(
-                    isDoneStudy: $isDoneStudy,
+                    isDoneStudy: .constant(true),
                     selectedTabIndex: $selectedTabIndex,
                     navigateToReview: $navigateToReview,
                     navigateToPlan: $navigateToPlan,
-                    dismiss: {}
+                    dismiss: {
+                    }
                 )
+            } else {
+                mainView
             }
         }
+        .onAppear {
+            loadDataForDate()
+        }
+        .onChange(of: selectedDate) { _ in
+            loadDataForDate()
+        }
     }
+    
+    private func loadDataForDate() {
+        recordService.loadRecord(for: selectedDate, context: viewContext)
+    }
+
 }
+        
+    
+
     
 
 //#Preview {
@@ -64,9 +89,6 @@ extension BeforeCheckView {
                 
                 checkButton
                 
-            }
-            .onAppear {
-                recordService.loadTodayRecord(context: viewContext)
             }
             .padding(.horizontal, 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -169,11 +191,6 @@ extension BeforeCheckView {
                                 .frame(width: 168, height: 40)
                                 .padding(.trailing, -8)
                                 .padding(.bottom, 64)
-//                Text(recordService.getFormattedTime())
-//                    .font(.system(size: 16))
-//                    .frame(width: 168, height: 40)
-//                    .background(Color.gray.opacity(0.2))
-//                    .cornerRadius(8)
             }
         }
     }
@@ -183,10 +200,9 @@ extension BeforeCheckView {
         
         BasicButton(label: "Done", icon: "checkmark", width: 288, height: 80,fontSize: 48,imageSize: 32){
             recordService.updateIsChecked(true, context: viewContext)
-            isDoneStudy = true
             print("Doneボタンが押されました")
         }
-        .disabled(recordService.getIsChecked())
+        .disabled(isDoneStudy || !isToday)
         
     }
 }
