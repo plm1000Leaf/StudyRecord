@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct YearReviewView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var recordService = DailyRecordService.shared
+    
     @State private var showPopup = false
     @State private var selectedSegment: Int = 0
     @State private var selectedYear = 2025
     @State private var selectedMonth: Int? = nil
     @State private var currentMonth: Date = Date()
     @State private var showMonthReviewView = false
+    @State private var monthlyCheckCounts: [Int: Int] = [:]
+    
     @Binding var showDateReviewView: Bool
+    
     var body: some View {
         ZStack {
 
@@ -89,6 +95,9 @@ extension YearReviewView {
             HStack(spacing: 16){
                 ForEach(0..<3, id: \.self) { columnIndex in
                     let monthNumber = rowIndex * 3 + columnIndex + 1
+                    let checkCount = monthlyCheckCounts[monthNumber] ?? 0
+                    let opacity = recordService.getColorOpacity(for: monthNumber, in: monthlyCheckCounts)
+                    
                     Button(action: {
                         withAnimation {
                             selectedMonth = monthNumber
@@ -101,7 +110,7 @@ extension YearReviewView {
                         ZStack{
                             RoundedRectangle(cornerRadius: 8)
                                 .frame(width: 104, height: 104)
-                                .foregroundColor(.mainColor0)
+                                .foregroundColor(.mainColor0.opacity(opacity))
                             Text("\(monthNumber)")
                                 .foregroundColor(.white)
                                 .font(.system(size: 32))

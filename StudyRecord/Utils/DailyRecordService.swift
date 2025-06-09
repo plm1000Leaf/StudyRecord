@@ -2,7 +2,7 @@
 //  DailyRecordService.swift
 //  StudyRecord
 //
-//  修正版：インスタンス作成を可能にする
+//  MonthlyRecordManager分離版：責任を明確化
 //
 
 import Foundation
@@ -18,7 +18,8 @@ final class DailyRecordService: ObservableObject {
     @Published var isLoading = false
     
     // MARK: - Private Properties
-    private let manager = DailyRecordManager.shared
+    private let dailyManager = DailyRecordManager.shared
+    private let monthlyManager = MonthlyRecordManager.shared
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Initializers
@@ -27,11 +28,68 @@ final class DailyRecordService: ObservableObject {
     private init() {}
     
     /// インスタンス作成用のパブリックイニシャライザ
-    /// - Parameter useShared: trueの場合はsharedインスタンスと同じ、falseの場合は独立したインスタンス
     convenience init(independent: Bool = true) {
         self.init()
-        // 独立したインスタンスの場合は特別な処理は不要
-        // 必要に応じて初期化処理をここに追加
+    }
+    
+    // MARK: - Efficient Monthly Check Count Methods
+    
+    /// MonthlyRecordManagerを使用して効率的に年間チェック数を取得
+    func loadMonthlyCheckCountsFromMonthlyRecord(for year: Int, context: NSManagedObjectContext) -> [Int: Int] {
+        return monthlyManager.getMonthlyCheckCounts(for: year, context: context)
+    }
+    
+    /// 指定した年の月別チェック数を取得（フォールバック用）
+    func loadMonthlyCheckCounts(for year: Int, context: NSManagedObjectContext) -> [Int: Int] {
+        var counts: [Int: Int] = [:]
+        
+        for month in 1...12 {
+            if let monthDate = Calendar.current.date(from: DateComponents(year: year, month: month)) {
+                let checkedCount = getCheckedCountForMonth(monthDate, context: context)
+                counts[month] = checkedCount
+            }
+        }
+        
+        return counts
+    }
+    
+    /// 指定した月のチェック数を取得
+    func getCheckedCountForMonth(_ month: Date, context: NSManagedObjectContext) -> Int {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: month)
+        let monthNum = calendar.component(.month, from: month)
+        let numberOfDays = calendar.range(of: .day, in: .month, for: month)?.count ?? 0
+        
+        var checkedCount = 0
+        
+        for day in 1...numberOfDays {
+            if let date = calendar.date(from: DateComponents(year: year, month: monthNum, day: day)) {
+                let record = dailyManager.fetchOrCreateRecord(for: date, context: context)
+                if record.isChecked {
+                    checkedCount += 1
+                }
+            }
+        }
+        
+        return checkedCount
+    }
+    
+    /// 月別チェック数に基づいて色の濃度を計算
+    func getColorOpacity(for month: Int, in monthlyCheckCounts: [Int: Int]) -> Double {
+        let checkCount = monthlyCheckCounts[month] ?? 0
+        let maxCount = monthlyCheckCounts.values.max() ?? 1
+        
+        if maxCount == 0 {
+            return 0.3 // 最低限の濃度
+        }
+        
+        let ratio = Double(checkCount) / Double(maxCount)
+        return 0.3 + (ratio * 0.7) // 0.3 〜 1.0 の範囲
+    }
+    
+    /// 年間統計情報を取得
+    func getYearlyStatistics(for year: Int, context: NSManagedObjectContext) -> YearlyStatistics {
+        return monthlyManager.getYearlyStatistics(for: year, context: context)
     }
     
     // MARK: - Public Methods
@@ -39,9 +97,10 @@ final class DailyRecordService: ObservableObject {
     /// 指定した日付のレコードを取得
     func loadRecord(for date: Date, context: NSManagedObjectContext) {
         isLoading = true
-        currentRecord = manager.fetchOrCreateRecord(for: date, context: context)
+        currentRecord = dailyManager.fetchOrCreateRecord(for: date, context: context)
         isLoading = false
     }
+    
     /// 複数日付のレコードを一括取得
     func loadRecordsForMonth(_ month: Date, context: NSManagedObjectContext) -> [DailyRecord] {
         let calendar = Calendar.current
@@ -51,7 +110,7 @@ final class DailyRecordService: ObservableObject {
         var records: [DailyRecord] = []
         for day in range {
             if let date = calendar.date(byAdding: .day, value: day - 1, to: startOfMonth) {
-                let record = manager.fetchOrCreateRecord(for: date, context: context)
+                let record = dailyManager.fetchOrCreateRecord(for: date, context: context)
                 records.append(record)
             }
         }
@@ -68,7 +127,7 @@ final class DailyRecordService: ObservableObject {
          
          for day in 1...numberOfDays {
              if let date = calendar.date(from: DateComponents(year: year, month: monthNum, day: day)) {
-                 let record = manager.fetchOrCreateRecord(for: date, context: context)
+                 let record = dailyManager.fetchOrCreateRecord(for: date, context: context)
                  checkedDates[day] = record.isChecked
              }
          }
@@ -82,34 +141,33 @@ final class DailyRecordService: ObservableObject {
         loadRecord(for: today, context: context)
     }
     
-    
     // MARK: - Study Range Methods
     
     /// 学習範囲（開始）を更新
     func updateStartPage(_ startPage: String, context: NSManagedObjectContext) {
         guard let record = currentRecord else { return }
-        manager.updateStartPage(startPage, for: record, context: context)
+        dailyManager.updateStartPage(startPage, for: record, context: context)
         objectWillChange.send()
     }
     
     /// 学習範囲（終了）を更新
     func updateEndPage(_ endPage: String, context: NSManagedObjectContext) {
         guard let record = currentRecord else { return }
-        manager.updateEndPage(endPage, for: record, context: context)
+        dailyManager.updateEndPage(endPage, for: record, context: context)
         objectWillChange.send()
     }
     
     /// 学習単位（開始）を更新
     func updateStartUnit(_ startUnit: String, context: NSManagedObjectContext) {
         guard let record = currentRecord else { return }
-        manager.updateStartUnit(startUnit, for: record, context: context)
+        dailyManager.updateStartUnit(startUnit, for: record, context: context)
         objectWillChange.send()
     }
     
     /// 学習単位（終了）を更新
     func updateEndUnit(_ endUnit: String, context: NSManagedObjectContext) {
         guard let record = currentRecord else { return }
-        manager.updateEndUnit(endUnit, for: record, context: context)
+        dailyManager.updateEndUnit(endUnit, for: record, context: context)
         objectWillChange.send()
     }
     
@@ -132,14 +190,14 @@ final class DailyRecordService: ObservableObject {
     /// 予定時間（時）を更新
     func updateScheduledHour(_ hour: Int16, context: NSManagedObjectContext) {
         guard let record = currentRecord else { return }
-        manager.updateScheduledHour(hour, for: record, context: context)
+        dailyManager.updateScheduledHour(hour, for: record, context: context)
         objectWillChange.send()
     }
     
     /// 予定時間（分）を更新
     func updateScheduledMinute(_ minute: Int16, context: NSManagedObjectContext) {
         guard let record = currentRecord else { return }
-        manager.updateScheduledMinute(minute, for: record, context: context)
+        dailyManager.updateScheduledMinute(minute, for: record, context: context)
         objectWillChange.send()
     }
     
@@ -148,21 +206,27 @@ final class DailyRecordService: ObservableObject {
     /// 振り返りを更新
     func updateReview(_ review: String, context: NSManagedObjectContext) {
         guard let record = currentRecord else { return }
-        manager.updateReview(review, for: record, context: context)
+        dailyManager.updateReview(review, for: record, context: context)
         objectWillChange.send()
     }
     
-    /// 学習完了状態を更新
+    /// 学習完了状態を更新（MonthlyRecordも同時更新）
     func updateIsChecked(_ isChecked: Bool, context: NSManagedObjectContext) {
         guard let record = currentRecord else {
             print("更新対象のレコードがありません")
             return
         }
         
-        manager.updateIsChecked(isChecked, for: record, context: context)
+        // DailyRecordを更新
+        dailyManager.updateIsChecked(isChecked, for: record, context: context)
+        
+        // MonthlyRecordのチェック数も更新
+        if let date = record.date {
+            monthlyManager.updateCheckCount(for: date, context: context)
+        }
+        
         objectWillChange.send()
     }
-    
     
     // MARK: - Getter Methods
     
@@ -207,12 +271,24 @@ final class DailyRecordService: ObservableObject {
     
     /// 指定した日付のレコードを直接取得（現在のレコードを変更しない）
     func getRecord(for date: Date, context: NSManagedObjectContext) -> DailyRecord {
-        return manager.fetchOrCreateRecord(for: date, context: context)
+        return dailyManager.fetchOrCreateRecord(for: date, context: context)
     }
     
     /// 現在の学習完了状態を取得
     func getIsChecked() -> Bool {
         return currentRecord?.isChecked ?? false
+    }
+    
+    // MARK: - Data Integrity Methods
+    
+    /// データ整合性をチェック
+    func validateDataIntegrity(for year: Int, context: NSManagedObjectContext) -> Bool {
+        return monthlyManager.validateData(for: year, context: context)
+    }
+    
+    /// データ不整合を修復
+    func repairDataInconsistency(for year: Int, context: NSManagedObjectContext) {
+        monthlyManager.repairDataInconsistency(for: year, context: context)
     }
 }
 
@@ -229,6 +305,7 @@ struct StudyRangeData {
     let review: String?
     let date: Date
     let isChecked: Bool
+    
     init(from record: DailyRecord) {
         self.startPage = record.startPage ?? ""
         self.endPage = record.endPage ?? ""
@@ -257,7 +334,6 @@ extension DailyRecordService {
         return StudyRangeData(from: record)
     }
     
-    
     /// デバッグ用: 現在の状態を出力
     func debugCurrentState() {
         print("=== DailyRecordService Debug ===")
@@ -269,5 +345,10 @@ extension DailyRecordService {
             print("予定時間: \(getFormattedTime())")
         }
         print("================================")
+    }
+    
+    /// デバッグ用: 年間データを出力
+    func debugYearData(for year: Int, context: NSManagedObjectContext) {
+        monthlyManager.debugPrintYearData(for: year, context: context)
     }
 }
