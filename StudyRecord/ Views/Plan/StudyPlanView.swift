@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+
 struct StudyPlanView: View {
     
     @State private var isTapDate = false
@@ -16,9 +17,14 @@ struct StudyPlanView: View {
     @State private var isOn = false
     @State private var selectedDate: Date? = nil
 
-    
     var openPlanSettingOnAppear: Bool = false
+    var openTomorrowPlan: Bool = false
     
+    // 明日の日付を計算
+    private var tomorrowDate: Date {
+        Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
+    }
+
     var body: some View {
         GeometryReader { geometry in
             ZStack{
@@ -29,15 +35,16 @@ struct StudyPlanView: View {
                         showPopup: $showPopup,
                         selectedDate: $selectedDate
                     )
-
-                    
                 }
                 .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .background(Color.baseColor0)
                 .onAppear {
-                    if openPlanSettingOnAppear {
-                        isTapDate = true
+                    handleOnAppear()
+                }
+                .onChange(of: openTomorrowPlan) { newValue in
+                    if newValue {
+                        openTomorrowPlanWindow()
                     }
                 }
                 
@@ -63,7 +70,6 @@ struct StudyPlanView: View {
                         onClose: {
                             isTapDate = false
                         }, selectedDate: selectedDate
-                    
                     )
                     .zIndex(1)
                     .id("plan-setting-\(selectedDate.timeIntervalSince1970)")
@@ -71,7 +77,34 @@ struct StudyPlanView: View {
             }
         }
     }
+    
+    // MARK: - Private Methods
+    
+    private func handleOnAppear() {
+        print("StudyPlanView onAppear - openPlanSettingOnAppear: \(openPlanSettingOnAppear), openTomorrowPlan: \(openTomorrowPlan)")
+        
+        if openPlanSettingOnAppear {
+            // 通常の予定設定（今日の日付）
+            isTapDate = true
+        } else if openTomorrowPlan {
+            // 明日の予定を開く
+            openTomorrowPlanWindow()
+        }
+    }
+    
+    private func openTomorrowPlanWindow() {
+        print("明日の予定を開きます: \(tomorrowDate)")
+        
+        // 明日の日付が属する月にカレンダーを移動
+        let tomorrow = tomorrowDate
+        currentMonth = Calendar.current.date(
+            from: Calendar.current.dateComponents([.year, .month], from: tomorrow)
+        ) ?? tomorrow
+        
+        // 明日の日付を選択
+        selectedDate = tomorrow
+        
+        // PlanSettingWindowViewを表示
+        isTapDate = true
+    }
 }
-//#Preview {
-//    StudyPlanView()
-//}

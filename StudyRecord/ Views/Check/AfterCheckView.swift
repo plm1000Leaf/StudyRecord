@@ -1,42 +1,36 @@
 //
-//   AfterCheckView.swift
+//   AfterCheckView.swift - デバッグ追加版
 //  StudyRecord
 //
 //  Created by 千葉陽乃 on 2025/02/19.
 //
 
 import SwiftUI
+import CoreData
 
 struct AfterCheckView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var recordService = DailyRecordService.shared
+    
     @Binding var isDoneStudy: Bool
     @Binding var selectedTabIndex: Int
-//    @State private var goToMainTab = false
     @Binding var navigateToReview: Bool
     @Binding var navigateToPlan: Bool
-    var dismiss: () -> Void
     
+    @State private var continuationDays: Int = 0
+    
+    var dismiss: () -> Void
+
     var body: some View {
         afterCheckView
             .padding(.horizontal, 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .background(Color.baseColor0)
-//        NavigationStack {
-//            afterCheckView
-//                .background(
-//                    NavigationLink("", isActive: $goToMainTab) {
-//                        MainTabView(
-//                            selectedTab: $selectedTabIndex,
-//                            openDateReview: $navigateToReview,
-//                            openPlanSetting: $navigateToPlan
-//                        )
-//                    }
-//                    .hidden()
-//                )
-//        }
+            .onAppear {
+                loadContinuationDays()
+            }
     }
 }
-
-
 
 extension AfterCheckView {
     
@@ -44,7 +38,7 @@ extension AfterCheckView {
         VStack(spacing: 80){
             checkViewTitle
             studyDoneText
-            continuationDays
+            continuationDaysView
             shareButton
             checkButton
         }
@@ -53,6 +47,7 @@ extension AfterCheckView {
         .navigationBarBackButtonHidden(true)
         .background(Color.baseColor0)
     }
+    
     private var checkViewTitle: some View {
         Text("今日の学習")
             .font(.system(size: 32))
@@ -63,25 +58,22 @@ extension AfterCheckView {
     private var studyDoneText: some View {
         Text("学習完了")
             .font(.system(size: 72))
-        
     }
     
-    private var continuationDays: some View {
+    private var continuationDaysView: some View {
         VStack{
             Text("継続日数")
-            Text("n日")
+                .font(.system(size: 48))
+            Text("\(continuationDays)日")
+                .font(.system(size: 48))
         }
-        .font(.system(size: 48))
         .padding(.bottom, -64)
-        
     }
     
     private var shareButton: some View {
         Image(systemName: "square.and.arrow.up")
             .font(.system(size: 40))
-            .frame(maxWidth: .infinity, alignment:
-                    .trailing)
-        
+            .frame(maxWidth: .infinity, alignment: .trailing)
     }
     
     private var checkButton: some View {
@@ -97,16 +89,24 @@ extension AfterCheckView {
                 selectedTabIndex = 2
                 navigateToPlan = true
                 dismiss()
-                print("明日の予定ボタンが押されました")
             }
-
-            
         }
-        
     }
-
+    
+    // MARK: - Methods
+    
+    private func loadContinuationDays() {
+        continuationDays = recordService.calculateContinuationDays(context: viewContext)
+    }
 }
 
 #Preview {
-    AfterCheckView(isDoneStudy: .constant(true), selectedTabIndex: .constant(1), navigateToReview: .constant(false), navigateToPlan: .constant(false), dismiss: {} )
+    AfterCheckView(
+        isDoneStudy: .constant(true),
+        selectedTabIndex: .constant(1),
+        navigateToReview: .constant(false),
+        navigateToPlan: .constant(false),
+        dismiss: {}
+    )
+    .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
 }

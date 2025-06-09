@@ -279,6 +279,83 @@ final class DailyRecordService: ObservableObject {
         return currentRecord?.isChecked ?? false
     }
     
+    /// 現在日から遡って連続学習日数を計算
+    func calculateContinuationDays(from date: Date = Date(), context: NSManagedObjectContext) -> Int {
+        let calendar = Calendar.current
+        var continuationDays = 0
+        var currentDate = calendar.startOfDay(for: date)
+        
+        // 今日から過去に向かって連続学習日をカウント
+        while true {
+            let record = dailyManager.fetchOrCreateRecord(for: currentDate, context: context)
+            
+            if record.isChecked {
+                continuationDays += 1
+                // 前日に移動
+                guard let previousDay = calendar.date(byAdding: .day, value: -1, to: currentDate) else {
+                    break
+                }
+                currentDate = previousDay
+            } else {
+                // 学習していない日があったら終了
+                break
+            }
+        }
+        
+        return continuationDays
+    }
+    /// 最大継続日数を計算（過去の記録から）
+        func calculateMaxContinuationDays(context: NSManagedObjectContext) -> Int {
+            // すべてのDailyRecordを日付順で取得
+            let request: NSFetchRequest<DailyRecord> = DailyRecord.fetchRequest()
+            request.sortDescriptors = [NSSortDescriptor(keyPath: \DailyRecord.date, ascending: true)]
+            
+            guard let allRecords = try? context.fetch(request) else {
+                return 0
+            }
+            
+            var maxContinuation = 0
+            var currentContinuation = 0
+            
+            // 連続する日付をチェック
+            var previousDate: Date?
+            
+            for record in allRecords {
+                guard let recordDate = record.date else { continue }
+                
+                if record.isChecked {
+                    // 前の日と連続している場合
+                    if let prevDate = previousDate,
+                       Calendar.current.dateInterval(of: .day, for: prevDate)?.end == Calendar.current.dateInterval(of: .day, for: recordDate)?.start {
+                        currentContinuation += 1
+                    } else {
+                        // 新しい連続開始
+                        currentContinuation = 1
+                    }
+                    
+                    maxContinuation = max(maxContinuation, currentContinuation)
+                } else {
+                    currentContinuation = 0
+                }
+                
+                previousDate = recordDate
+            }
+            
+            return maxContinuation
+        }
+        
+        /// 継続日数の統計情報を取得
+        func getContinuationStatistics(context: NSManagedObjectContext) -> ContinuationStatistics {
+            let current = calculateContinuationDays(context: context)
+            let max = calculateMaxContinuationDays(context: context)
+            
+            return ContinuationStatistics(
+                currentContinuation: current,
+                maxContinuation: max,
+                isNewRecord: current > 0 && current == max
+            )
+        }
+
     // MARK: - Data Integrity Methods
     
     /// データ整合性をチェック
@@ -290,6 +367,7 @@ final class DailyRecordService: ObservableObject {
     func repairDataInconsistency(for year: Int, context: NSManagedObjectContext) {
         monthlyManager.repairDataInconsistency(for: year, context: context)
     }
+    
 }
 
 // MARK: - StudyRangeData Structure
@@ -318,6 +396,13 @@ struct StudyRangeData {
         self.date = record.date ?? Date()
         self.isChecked = record.isChecked
     }
+}
+
+// 継続日数統計情報の構造体
+struct ContinuationStatistics {
+    let currentContinuation: Int
+    let maxContinuation: Int
+    let isNewRecord: Bool
 }
 
 // MARK: - Extensions

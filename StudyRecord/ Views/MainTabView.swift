@@ -1,3 +1,6 @@
+
+// MainTabView.swift - 修正版
+
 //
 //  TabView.swift
 //  StudyRecord
@@ -13,6 +16,8 @@ struct MainTabView: View {
     @Binding var navigateToReview: Bool
     @Binding var navigateToPlan: Bool
     
+    // 明日の予定専用のフラグを追加
+    @State private var openTomorrowPlan = false
     
     var body: some View {
         TabView(selection: $selectedTabIndex){
@@ -26,7 +31,8 @@ struct MainTabView: View {
             BeforeCheckView(
                 selectedTabIndex: $selectedTabIndex,
                 navigateToReview: $navigateToReview,
-                navigateToPlan: $navigateToPlan, selectedDate: Calendar.current.startOfDay(for: Date())
+                navigateToPlan: $navigateToPlan,
+                selectedDate: Calendar.current.startOfDay(for: Date())
             )
                 .tabItem {
                     Image(systemName: "person.fill")
@@ -34,14 +40,29 @@ struct MainTabView: View {
                 }
                 .tag(1)
             
-            StudyPlanView(openPlanSettingOnAppear: navigateToPlan)
+            StudyPlanView(
+                openPlanSettingOnAppear: navigateToPlan && !openTomorrowPlan,
+                openTomorrowPlan: openTomorrowPlan
+            )
                 .tabItem {
                     Image(systemName: "gearshape.fill")
                     Text("Study Plan")
                 }
                 .tag(2)
         }
-
+        .onChange(of: selectedTabIndex) { newIndex in
+            // タブ2（Study Plan）に遷移した時の処理
+            if newIndex == 2 && navigateToPlan {
+                // AfterCheckViewからの明日の予定遷移かどうかを判定
+                openTomorrowPlan = true
+                
+                // フラグをリセット
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    navigateToPlan = false
+                    openTomorrowPlan = false
+                }
+            }
+        }
     }
 }
 
@@ -62,4 +83,3 @@ struct SettingsView: View {
         Text("設定画面")
     }
 }
-

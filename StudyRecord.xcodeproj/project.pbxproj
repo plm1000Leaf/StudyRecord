@@ -34,6 +34,7 @@
 		28A5761D2DD87D9A0085BCA5 /* DailyRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A5761C2DD87D9A0085BCA5 /* DailyRecordManager.swift */; };
 		28A576232DDDA6D80085BCA5 /* MaterialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A576222DDDA6D80085BCA5 /* MaterialManager.swift */; };
 		28BB8D4E2DF6991F0070D908 /* MonthlyRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BB8D4D2DF6991F0070D908 /* MonthlyRecordManager.swift */; };
+		28BB8D502DF6AEB90070D908 /* DebugDateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BB8D4F2DF6AEB90070D908 /* DebugDateManager.swift */; };
 		28BDAC222D70302A0033FA2F /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BDAC212D70302A0033FA2F /* MainTabView.swift */; };
 		28CD81A92D65BD8000894BF8 /* AfterCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */; };
 		28EE76AA2D83D5960072747C /* SegmentedControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76A92D83D5960072747C /* SegmentedControlButton.swift */; };
@@ -77,6 +78,7 @@
 		28A576212DDC83AD0085BCA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28A576222DDDA6D80085BCA5 /* MaterialManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialManager.swift; sourceTree = "<group>"; };
 		28BB8D4D2DF6991F0070D908 /* MonthlyRecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyRecordManager.swift; sourceTree = "<group>"; };
+		28BB8D4F2DF6AEB90070D908 /* DebugDateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugDateManager.swift; sourceTree = "<group>"; };
 		28BDAC212D70302A0033FA2F /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterCheckView.swift; sourceTree = "<group>"; };
 		28EE76A92D83D5960072747C /* SegmentedControlButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlButton.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				2841A8452D79AC4900275EFF /* CalendarUtils.swift */,
 				28EE76AF2D8937360072747C /* CustomTextEditor.swift */,
 				28F3633C2DEFC636007F32AC /* DailyRecordService.swift */,
+				28BB8D4F2DF6AEB90070D908 /* DebugDateManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				28EE76AE2D83E3EB0072747C /* InputReviewField.swift in Sources */,
 				28A5761D2DD87D9A0085BCA5 /* DailyRecordManager.swift in Sources */,
 				28A576132DD713E60085BCA5 /* PersistenceController.swift in Sources */,
+				28BB8D502DF6AEB90070D908 /* DebugDateManager.swift in Sources */,
 				282A22842D6973B8005C789C /* DateReviewView.swift in Sources */,
 				288EEEE22D647134001FACBC /* ContentView.swift in Sources */,
 				282A227E2D66F9B6005C789C /* PlanSettingWindowView.swift in Sources */,
