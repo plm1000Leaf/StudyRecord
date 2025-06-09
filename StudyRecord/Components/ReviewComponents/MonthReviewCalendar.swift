@@ -4,6 +4,7 @@ import CoreData
 
 struct MonthReviewCalendar: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var recordService = DailyRecordService.shared
     @Binding var currentMonth: Date
     @Binding var showDateReviewView: Bool
     @State private var checkedDates: [Int: Bool] = [:]
@@ -75,9 +76,13 @@ extension MonthReviewCalendar {
                     .frame(width: 30)
                     .padding(.bottom, 8)
             }
-
+            
         }
     }
+    
+    private func loadCheckedDates() {
+         checkedDates = recordService.loadCheckedDates(for: currentMonth, context: viewContext)
+     }
     
     private var header: some View {
         HStack(alignment: .bottom){
@@ -85,40 +90,23 @@ extension MonthReviewCalendar {
                 .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
                 .font(.system(size: 16))
                 .padding(.leading, 28)
-
+            
             Text(CalendarUtils.monthString(from: currentMonth))
                 .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
                 .font(.system(size: 48))
                 .padding(.leading, 8)
-
+            
             Image(systemName: "square.and.arrow.up")
                 .font(.system(size: 24))
                 .frame(maxWidth: .infinity, alignment:
                         .trailing)
                 .padding(.trailing, 28)
         }
-
+        
         .padding(.top, 40)
-
+        
     }
     
-    private func loadCheckedDates() {
-        let calendar = Calendar.current
-        let year = calendar.component(.year, from: currentMonth)
-        let month = calendar.component(.month, from: currentMonth)
-        let numberOfDays = calendar.range(of: .day, in: .month, for: currentMonth)?.count ?? 0
-        
-        var newCheckedDates: [Int: Bool] = [:]
-        
-        for day in 1...numberOfDays {
-            if let date = calendar.date(from: DateComponents(year: year, month: month, day: day)) {
-                let record = DailyRecordManager.shared.fetchOrCreateRecord(for: date, context: viewContext)
-                newCheckedDates[day] = record.isChecked
-            }
-        }
-        
-        checkedDates = newCheckedDates
-    }
 }
 
 

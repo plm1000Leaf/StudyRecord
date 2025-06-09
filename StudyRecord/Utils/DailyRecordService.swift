@@ -42,12 +42,46 @@ final class DailyRecordService: ObservableObject {
         currentRecord = manager.fetchOrCreateRecord(for: date, context: context)
         isLoading = false
     }
+    /// 複数日付のレコードを一括取得
+    func loadRecordsForMonth(_ month: Date, context: NSManagedObjectContext) -> [DailyRecord] {
+        let calendar = Calendar.current
+        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: month)) ?? month
+        let range = calendar.range(of: .day, in: .month, for: month) ?? 1..<2
+        
+        var records: [DailyRecord] = []
+        for day in range {
+            if let date = calendar.date(byAdding: .day, value: day - 1, to: startOfMonth) {
+                let record = manager.fetchOrCreateRecord(for: date, context: context)
+                records.append(record)
+            }
+        }
+        return records
+    }
     
+    func loadCheckedDates(for month: Date, context: NSManagedObjectContext) -> [Int: Bool] {
+         let calendar = Calendar.current
+         let year = calendar.component(.year, from: month)
+         let monthNum = calendar.component(.month, from: month)
+         let numberOfDays = calendar.range(of: .day, in: .month, for: month)?.count ?? 0
+         
+         var checkedDates: [Int: Bool] = [:]
+         
+         for day in 1...numberOfDays {
+             if let date = calendar.date(from: DateComponents(year: year, month: monthNum, day: day)) {
+                 let record = manager.fetchOrCreateRecord(for: date, context: context)
+                 checkedDates[day] = record.isChecked
+             }
+         }
+         
+         return checkedDates
+     }
+     
     /// 今日のレコードを取得
     func loadTodayRecord(context: NSManagedObjectContext) {
         let today = Calendar.current.startOfDay(for: Date())
         loadRecord(for: today, context: context)
     }
+    
     
     // MARK: - Study Range Methods
     
@@ -171,22 +205,6 @@ final class DailyRecordService: ObservableObject {
     
     // MARK: - Batch Operations
     
-    /// 複数日付のレコードを一括取得
-    func loadRecordsForMonth(_ month: Date, context: NSManagedObjectContext) -> [DailyRecord] {
-        let calendar = Calendar.current
-        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: month)) ?? month
-        let range = calendar.range(of: .day, in: .month, for: month) ?? 1..<2
-        
-        var records: [DailyRecord] = []
-        for day in range {
-            if let date = calendar.date(byAdding: .day, value: day - 1, to: startOfMonth) {
-                let record = manager.fetchOrCreateRecord(for: date, context: context)
-                records.append(record)
-            }
-        }
-        return records
-    }
-    
     /// 指定した日付のレコードを直接取得（現在のレコードを変更しない）
     func getRecord(for date: Date, context: NSManagedObjectContext) -> DailyRecord {
         return manager.fetchOrCreateRecord(for: date, context: context)
@@ -238,6 +256,7 @@ extension DailyRecordService {
         let record = getRecord(for: date, context: context)
         return StudyRangeData(from: record)
     }
+    
     
     /// デバッグ用: 現在の状態を出力
     func debugCurrentState() {
