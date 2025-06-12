@@ -1,0 +1,120 @@
+{
+  "" : {
+    "dependencies" : "/Users/chibahino/Swift学習/StudyRecord/StudyRecord-fwpfuwngfpgqhecrrjtsqwooyjmy/Index.noindex/Build/Intermediates.noindex/StudyRecord.build/Debug-iphoneos/StudyRecord.build/Objects-normal/arm64/StudyRecord-master.d",
+    "diagnostics" : "/Users/chibahino/Swift学習/StudyRecord/StudyRecord-fwpfuwngfpgqhecrrjtsqwooyjmy/Index.noindex/Build/Intermediates.noindex/StudyRecord.build/Debug-iphoneos/StudyRecord.build/Objects-normal/arm64/StudyRecord-master.dia",
+    "emit-module-dependencies" : "/Users/chibahino/Swift学習/StudyRecord/StudyRecord-fwpfuwngfpgqhecrrjtsqwooyjmy/Index.noindex/Build/Intermediates.noindex/StudyRecord.build/Debug-iphoneos/StudyRecord.build/Objects-normal/arm64/StudyRecord-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/chibahino/Swift学習/StudyRecord/StudyRecord-fwpfuwngfpgqhecrrjtsqwooyjmy/Index.noindex/Build/Intermediates.noindex/StudyRecord.build/Debug-iphoneos/StudyRecord.build/Objects-normal/arm64/StudyRecord-master-emit-module.dia",
+    "swift-dependencies" : "/Users/chibahino/Swift学習/StudyRecord/StudyRecord-fwpfuwngfpgqhecrrjtsqwooyjmy/Index.noindex/Build/Intermediates.noindex/StudyRecord.build/Debug-iphoneos/StudyRecord.build/Objects-normal/arm64/StudyRecord-master.swiftdeps"
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord-fwpfuwngfpgqhecrrjtsqwooyjmy/Index.noindex/Build/Intermediates.noindex/StudyRecord.build/Debug-iphoneos/StudyRecord.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/ Views/Check/AfterCheckView.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/ Views/Check/BeforeCheckView.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/ Views/MainTabView.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/ Views/Plan/BookSelectView.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/ Views/Plan/PlanSettingWindowView.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/ Views/Plan/StudyPlanView.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/ Views/Review/DateReviewView.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/ Views/Review/MonthReviewView.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/ Views/Review/YearReviewGraphView.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/ Views/Review/YearReviewView.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/ CommonComponents/BasicButton.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/ CommonComponents/CustomRoundedCorner.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/ CommonComponents/InputStudyRange.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/ CommonComponents/MovePeriodPopup.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/ CommonComponents/PullDown.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/ CommonComponents/TimeSelectButton.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/PlanComponents/LabelSelector.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/PlanComponents/PlanningCalendar.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/ReviewComponents/InputReviewField.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/ReviewComponents/MonthReviewCalendar.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/ReviewComponents/SegmentedControlButton.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/ReviewComponents/SwitchButton.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Components/ReviewComponents/YearReviewGraph.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/ContentView.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Data/DailyRecord.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Data/DailyRecordManager.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Data/Material.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Data/MaterialManager.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Data/MonthlyRecord.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Data/MonthlyRecordManager.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Data/PersistenceController.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/StudyRecordApp.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Utils/CalendarUtils.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Utils/CustomTextEditor.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Utils/DailyRecordService.swift" : {
+
+  },
+  "/Users/chibahino/Swift学習/StudyRecord/StudyRecord/Utils/DebugDateManager.swift" : {
+
+  }
+}

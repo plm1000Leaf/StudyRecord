@@ -1,0 +1,3 @@
+Target dependency graph (2 targets)
+Target 'StudyRecord' in project 'StudyRecord' (no dependencies)
+Target 'StudyRecord' in project 'StudyRecord' (no dependencies)

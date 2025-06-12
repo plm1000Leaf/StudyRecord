@@ -1,0 +1,65 @@
+{
+  "buildCommand" : {
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildAndRun"
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "33fe52ac69e92a687000be7fb398cd120da88283568f619e662e83ad98c9c756"
+    }
+  ],
+  "containerPath" : "/Users/chibahino/Swift学習/StudyRecord/StudyRecord.xcodeproj",
+  "continueBuildingAfterErrors" : false,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "iphoneos",
+      "sdk" : "iphoneos17.2",
+      "sdkVariant" : "iphoneos",
+      "supportedArchitectures" : [
+        "arm64e",
+        "arm64v8",
+        "arm64",
+        "armv8"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/chibahino/Swift学習/StudyRecord/StudyRecord-fwpfuwngfpgqhecrrjtsqwooyjmy/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/chibahino/Swift学習/StudyRecord/StudyRecord-fwpfuwngfpgqhecrrjtsqwooyjmy/Build/Products",
+      "derivedDataPath" : "/Users/chibahino/Swift学習/StudyRecord",
+      "indexDataStoreFolderPath" : "/Users/chibahino/Swift学習/StudyRecord/StudyRecord-fwpfuwngfpgqhecrrjtsqwooyjmy/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/chibahino/Swift学習/StudyRecord/StudyRecord-fwpfuwngfpgqhecrrjtsqwooyjmy/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Users/chibahino/Swift学習/StudyRecord/StudyRecord-fwpfuwngfpgqhecrrjtsqwooyjmy/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "iPad13,16",
+          "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "18.5",
+          "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPad13,16",
+          "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "NO",
+          "TARGET_DEVICE_IDENTIFIER" : "00008103-000D30D93ABB001E",
+          "TARGET_DEVICE_MODEL" : "iPad13,16",
+          "TARGET_DEVICE_OS_VERSION" : "18.5",
+          "TARGET_DEVICE_PLATFORM_NAME" : "iphoneos"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}
