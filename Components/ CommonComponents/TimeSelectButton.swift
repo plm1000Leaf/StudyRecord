@@ -7,6 +7,9 @@ struct TimeSelectButton: View {
     @State private var selectedHour = 12
     @State private var selectedMinute = 30
     @State private var showPicker = false
+    
+    // 時間変更時の通知用コールバック
+    var onTimeChanged: (() -> Void)? = nil
 
     var body: some View {
         VStack {
@@ -26,7 +29,8 @@ struct TimeSelectButton: View {
                     recordService: recordService,
                     selectedHour: $selectedHour,
                     selectedMinute: $selectedMinute,
-                    showPicker: $showPicker
+                    showPicker: $showPicker,
+                    onTimeChanged: onTimeChanged
                 )
             }
         }
@@ -45,6 +49,9 @@ struct TimeSelectPicker: View {
     @Binding var selectedHour: Int
     @Binding var selectedMinute: Int
     @Binding var showPicker: Bool
+    
+    // 時間変更時の通知用コールバック
+    var onTimeChanged: (() -> Void)? = nil
 
     let hours = Array(0...23)
     let minutes = Array(0...59)
@@ -62,6 +69,10 @@ struct TimeSelectPicker: View {
                 Button("確定") {
                     recordService.updateScheduledHour(Int16(selectedHour), context: viewContext)
                     recordService.updateScheduledMinute(Int16(selectedMinute), context: viewContext)
+                    
+                    // 時間変更通知
+                    onTimeChanged?()
+                    
                     showPicker = false
                 }
                 .font(.headline)

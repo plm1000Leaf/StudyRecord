@@ -16,6 +16,7 @@ struct StudyPlanView: View {
     @State private var currentMonth = Date()
     @State private var isOn = false
     @State private var selectedDate: Date? = nil
+    @State private var calendarRefreshId = UUID() // カレンダー更新用
 
     var openPlanSettingOnAppear: Bool = false
     var openTomorrowPlan: Bool = false
@@ -35,6 +36,7 @@ struct StudyPlanView: View {
                         showPopup: $showPopup,
                         selectedDate: $selectedDate
                     )
+                    .id(calendarRefreshId) // IDを使ってカレンダーを強制更新
                 }
                 .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -65,11 +67,16 @@ struct StudyPlanView: View {
  
                 if isTapDate, let selectedDate = selectedDate {
                     PlanSettingWindowView(
-                       currentMonth: $currentMonth,
+                        currentMonth: $currentMonth,
                         isOn: $isOn,
                         onClose: {
                             isTapDate = false
-                        }, selectedDate: selectedDate
+                        },
+                        selectedDate: selectedDate,
+                        onDataUpdate: {
+                            // データ更新時にカレンダーを更新
+                            refreshCalendar()
+                        }
                     )
                     .zIndex(1)
                     .id("plan-setting-\(selectedDate.timeIntervalSince1970)")
@@ -106,5 +113,13 @@ struct StudyPlanView: View {
         
         // PlanSettingWindowViewを表示
         isTapDate = true
+    }
+    
+    /// カレンダーを強制更新
+    private func refreshCalendar() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            calendarRefreshId = UUID()
+            print("🔄 カレンダーを更新しました")
+        }
     }
 }

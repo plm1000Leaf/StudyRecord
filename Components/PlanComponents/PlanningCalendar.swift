@@ -9,6 +9,7 @@ struct PlanningCalendar: View {
     @Binding var selectedDate: Date?
     
     @State private var dailyData: [Int: DailyStudyData] = [:]
+    @State private var refreshTrigger = false // 手動更新用のトリガー
 
     var body: some View {
         ZStack{
@@ -55,6 +56,17 @@ struct PlanningCalendar: View {
         .onChange(of: currentMonth) { _ in
             loadMonthlyData()
         }
+        .onChange(of: refreshTrigger) { _ in
+            // 手動更新トリガー
+            loadMonthlyData()
+        }
+    }
+    
+    // MARK: - Public Methods
+    
+    /// 外部からデータ更新を要求する関数
+    func refreshData() {
+        refreshTrigger.toggle()
     }
     
     // MARK: - Data Loading
@@ -78,6 +90,7 @@ struct PlanningCalendar: View {
         }
         
         dailyData = newData
+        print("📅 カレンダーデータを更新しました: \(newData.count)日分")
     }
     
     private func formatTime(hour: Int16, minute: Int16) -> String {
@@ -220,7 +233,3 @@ extension PlanningCalendar {
             .padding()
         }
     }
-
-//#Preview {
-//    PlanningCalendar(currentMonth: .constant(Date()), isTapDate: .constant(false), showPopup: .constant(false))
-//}

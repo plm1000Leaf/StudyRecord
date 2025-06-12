@@ -4,15 +4,14 @@
 //
 //  Created by 千葉陽乃 on 2025/02/20.
 //
-//
-
 
 import SwiftUI
 
 struct PlanSettingWindowView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @StateObject private var recordService = DailyRecordService(independent: true)
+    // 独立したサービスではなく、共有サービスを使用
+    @StateObject private var recordService = DailyRecordService.shared
     
     @State private var selectedMaterial: Material? = nil
     @State private var isTapBookSelect = false
@@ -25,6 +24,9 @@ struct PlanSettingWindowView: View {
     
     var onClose: () -> Void
     var selectedDate: Date
+    
+    // データ更新通知用のコールバック
+    var onDataUpdate: (() -> Void)? = nil
 
     var body: some View {
         ZStack {
@@ -33,11 +35,7 @@ struct PlanSettingWindowView: View {
             
             windowBase
             
-          
             VStack(spacing: 24) {
-                
-                
-                
                 VStack(alignment: .leading) {
                     inputLearningContent
                     inputScheduledTime
@@ -45,10 +43,11 @@ struct PlanSettingWindowView: View {
                 
                 BasicButton(label: "決定", width: 128, height: 48, fontSize: 24) {
                     print("決定ボタンが押されました - 日付: \(selectedDate)")
+                    
+                    // データを保存した後に親に通知
+                    onDataUpdate?()
                     onClose()
                 }
-//                .padding(.top, 8)
-//                .padding(.bottom, 8)
             }
             .onAppear {
                 print("PlanSettingWindow 表示 - 選択日付: \(selectedDate)")
@@ -63,6 +62,8 @@ struct PlanSettingWindowView: View {
             .sheet(isPresented: $isTapBookSelect) {
                 BookSelectView { material in
                     recordService.updateMaterial(material, context: viewContext)
+                    // 教材更新後に親に通知
+                    onDataUpdate?()
                 }
             }
             .frame(width: 336, height: 520)
@@ -172,7 +173,13 @@ struct PlanSettingWindowView: View {
         VStack(alignment: .leading) {
             
             HStack {
-                TimeSelectButton(recordService: recordService)
+                TimeSelectButton(
+                    recordService: recordService,
+                    onTimeChanged: {
+                        // 時間変更時に親に通知
+                        onDataUpdate?()
+                    }
+                )
                     .frame(width: 160, height: 40)
                     .padding(.bottom, 8)
                 
