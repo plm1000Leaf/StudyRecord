@@ -44,7 +44,11 @@ struct CalendarUtils {
         var calendar = Calendar(identifier: .gregorian)
         calendar.locale = Locale(identifier: "ja_JP")
 
-        guard let dayDate = calendar.date(byAdding: .day, value: index, to: month) else {
+        // monthは月の開始日（1日）であることを前提とする
+        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: month)) ?? month
+        
+        // インデックスから実際の日付を計算（index + 1日目）
+        guard let dayDate = calendar.date(byAdding: .day, value: index, to: startOfMonth) else {
             return nil
         }
 
@@ -54,8 +58,6 @@ struct CalendarUtils {
 
         return (day, weekdaySymbol)
     }
-
-
 }
 
 extension Date {

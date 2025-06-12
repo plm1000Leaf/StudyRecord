@@ -1,4 +1,3 @@
-
 //
 //  YearReviewView.swift
 //  StudyRecord
@@ -58,9 +57,38 @@ struct YearReviewView: View {
             }
         }
         .animation(.easeInOut, value: showMonthReviewView)
+        .onAppear {
+            // AfterCheckViewからの遷移時は今日の月に設定
+            if showDateReviewView {
+                setCurrentMonthToToday()
+            }
+        }
+        .onChange(of: showDateReviewView) { newValue in
+            // DateReviewViewに遷移する時は今日の月に設定
+            if newValue {
+                setCurrentMonthToToday()
+            }
+        }
     }
+    
+    // MARK: - Private Methods
+    
+    /// 今日の日付が属する月の1日に設定
+    private func setCurrentMonthToToday() {
+        let today = Date()
+        let calendar = Calendar.current
+        
+        // 今日の年月を取得して、その月の1日に設定
+        let year = calendar.component(.year, from: today)
+        let month = calendar.component(.month, from: today)
+        
+        if let firstDayOfMonth = calendar.date(from: DateComponents(year: year, month: month, day: 1)) {
+            currentMonth = firstDayOfMonth
+            selectedYear = year
+            selectedMonth = month
+        }
     }
-
+}
 
 extension YearReviewView {
     private var header: some View {
@@ -102,8 +130,9 @@ extension YearReviewView {
                     Button(action: {
                         withAnimation {
                             selectedMonth = monthNumber
+                            // 選択した月の1日に設定
                             currentMonth = Calendar.current.date(
-                                from: DateComponents(year: selectedYear, month: monthNumber)
+                                from: DateComponents(year: selectedYear, month: monthNumber, day: 1)
                             ) ?? Date()
                             showMonthReviewView = true
                         }
