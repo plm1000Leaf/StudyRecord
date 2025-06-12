@@ -4,4 +4,4 @@ DerivedData/
 *.xcuserstate
 *.xcworkspace
 *.xcodeproj/project.xcworkspace
-*.xcuserdatad
+*.xcuserdata
