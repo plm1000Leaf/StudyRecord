@@ -1,12 +1,5 @@
-//
-//  InputTextField.swift
-//  StudyRecord
-//
-//  Created by 千葉陽乃 on 2025/02/28.
-//
 import SwiftUI
 import CoreData
-
 
 struct InputStudyRange: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -14,12 +7,10 @@ struct InputStudyRange: View {
     @State private var text: String = ""
     @State private var isInputting: Bool = false
     private let maxCharacters = 15
-    var type: StudyRangeType  
+    var type: StudyRangeType
     var placeholder: String
     var width: CGFloat? = nil
     var height: CGFloat? = nil
-
-
 
     var body: some View {
         Group {
@@ -29,12 +20,12 @@ struct InputStudyRange: View {
                 displayStudyRange
             }
         }
-            .onAppear {
-                updateTextFromService()
-            }
-            .onChange(of: recordService.currentRecord) { _ in
-                updateTextFromService()
-            }
+        .onAppear {
+            updateTextFromService()
+        }
+        .onChange(of: recordService.currentRecord) { _ in
+            updateTextFromService()
+        }
     }
 }
 
@@ -61,22 +52,6 @@ extension InputStudyRange {
             .padding(.vertical, height == nil ? 8 : 0)
     }
     
-    private var displayStudyRange: some View {
-        Button(action: {
-            isInputting = true
-
-        }){
-            ZStack{
-                Text(text.isEmpty ? "入力" : text)
-                    .frame(width:80,height: 80)
-                    .foregroundColor(.black)
-
-            }
-        }
-        .frame(width: width, height: height)
-        .padding(.vertical, height == nil ? 8 : 0)
-    }
-    
     private func updateTextFromService() {
         let studyRange = recordService.getStudyRange()
         switch type {
@@ -95,5 +70,34 @@ extension InputStudyRange {
             recordService.updateEndPage(text, context: viewContext)
         }
     }
-}
+    
+    private var displayStudyRange: some View {
+        let textFrameHeightSize = max(40, min(text.count * 6, 60))
+        let textFrameWidthSize = max(50, min(text.count * 9, 90))
 
+        if !isInputting && text.isEmpty {
+            return AnyView(
+                BasicButton(label:"学習範囲を入力", colorOpacity: 0.5, width: 80, height: 64) {
+                    isInputting = true
+                }
+            )
+        } else {
+            return AnyView(
+                Button(action: {
+                    isInputting = true
+                }) {
+                    Text(text)
+                        .frame(width: 80, height: 80)
+                        .foregroundColor(.black)
+                }
+                .frame(width: width, height: height)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.mainColor0, lineWidth: 1)
+                        .frame(width: CGFloat(textFrameWidthSize),
+                               height: CGFloat(textFrameHeightSize))
+                )
+            )
+        }
+    }
+}

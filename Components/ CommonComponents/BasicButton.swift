@@ -11,6 +11,7 @@ struct BasicButton: View {
     
     let label: String
     var icon: String? = nil
+    var colorOpacity:CGFloat? = nil
     var width: CGFloat? = nil
     var height: CGFloat? = nil
     var fontSize: CGFloat? = nil
@@ -34,7 +35,7 @@ struct BasicButton: View {
             .padding(.vertical, height == nil ? 8 : 0)
             .fontWeight(.bold)
             .foregroundStyle(.white)
-            .background(Color.mainColor0)
+            .background(Color.mainColor0.opacity(colorOpacity ?? 1))
             .cornerRadius(8)
         }
     }
