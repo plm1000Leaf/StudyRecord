@@ -102,37 +102,8 @@ struct PlanSettingWindowView: View {
         VStack(alignment: .leading) {
             
             HStack(spacing: 32) {
-                // 教材表示
-                if let material = recordService.getMaterial(),
-                   let imageData = material.imageData,
-                   let uiImage = UIImage(data: imageData) {
-                    VStack {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .frame(width: 104, height: 120)
-                            .cornerRadius(8)
-                            .clipped()
-                            .onTapGesture {
-                                isTapBookSelect = true
-                            }
-                            .padding(.top, 32)
-                        Text(material.name ?? "無題")
-                            .font(.system(size: 16))
-                            .frame(width: 72, height: 64)
-                    }
-                    .padding(.leading, 24)
-                } else {
-                    Button(action: {
-                        isTapBookSelect.toggle()
-                    }) {
-                        
-                        Rectangle()
-                            .frame(width: 104, height: 120)
-                            .foregroundColor(.mainColor0)
-                        
-                    }
-                    .padding(.leading, 24)
-                }
+                // 教材表示部分 - 固定サイズのコンテナ
+                materialDisplayContainer
                 
                 VStack(spacing: 16) {
                     HStack(spacing: -8) {
@@ -163,9 +134,50 @@ struct PlanSettingWindowView: View {
                     }
                 }
             }
-            .padding(.leading, 16)
+            .padding(.leading, 8)
             .padding(.top, 56)
             .padding(.bottom, 24)
+        }
+    }
+    
+    // 教材表示部分を固定サイズのコンテナにする
+    private var materialDisplayContainer: some View {
+        VStack {
+            // 教材画像表示部分（固定サイズ）
+            Button(action: {
+                isTapBookSelect = true
+            }) {
+                materialImageView
+                    .frame(width: 104, height: 120) // 固定サイズ
+                    .cornerRadius(8)
+                    .clipped()
+            }
+            .padding(.top, 32)
+            
+            // 教材名表示部分（固定サイズ）
+            Text(recordService.getMaterial()?.name ?? "未設定")
+                .font(.system(size: 16))
+                .frame(width: 72, height: 64) // 固定サイズ
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+        }
+        .padding(.leading, 24)
+        .frame(width: 104 + 24) // コンテナ全体の幅を固定
+    }
+    
+    // 教材画像表示部分
+    private var materialImageView: some View {
+        Group {
+            if let material = recordService.getMaterial(),
+               let imageData = material.imageData,
+               let uiImage = UIImage(data: imageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            } else {
+                Rectangle()
+                    .foregroundColor(.mainColor0)
+            }
         }
     }
     
@@ -245,6 +257,7 @@ struct PlanSettingWindowView: View {
                     .padding(.leading, 8)
                 }
             }
+            .padding(.leading, 16)
         }
     }
     
