@@ -1,3 +1,4 @@
+
 import SwiftUI
 import CoreData
 
@@ -14,37 +15,80 @@ struct DateReviewView: View {
     @Binding var showDateReviewView: Bool
     @Binding var currentMonth: Date
     @Binding var reviewText: String
+    
+    // MonthReviewViewから選択された日付を受け取るパラメータ
+    var selectedDateFromMonthReview: Int? = nil
+    // AfterCheckViewからの遷移かどうかのフラグ
+    var isFromAfterCheck: Bool = false
 
     var body: some View {
         VStack{
             DateReviewHeader
             
-            ScrollView {
-                let numberOfDaysInMonth = Calendar.current.range(of: .day, in: .month, for: currentMonth)?.count ?? 0
-                ForEach(0..<numberOfDaysInMonth, id: \.self){ index in
-                    Group {
-                        if selectedRowIndex == index {
+            ScrollViewReader { proxy in
+                ScrollView {
+                    let numberOfDaysInMonth = Calendar.current.range(of: .day, in: .month, for: currentMonth)?.count ?? 0
+                    ForEach(0..<numberOfDaysInMonth, id: \.self){ index in
+                        Group {
+                            if selectedRowIndex == index {
                                 SelectReview(index: index)
-
-                        } else {
-                            DateReviewRow(index: index)
-                                .onTapGesture {
-                                    selectedRowIndex = index
-                                }
+                                    .id("day-\(index)")
+                            } else {
+                                DateReviewRow(index: index)
+                                    .id("day-\(index)")
+                                    .onTapGesture {
+                                        selectedRowIndex = index
+                                    }
+                            }
                         }
                     }
+                }
+                .onAppear {
+                    setupInitialState(proxy: proxy)
+                }
+                .onChange(of: currentMonth) { _ in
+                    loadCheckedDates()
+                    setupInitialState(proxy: proxy)
                 }
             }
         }
         .background(Color.baseColor0)
-        .onAppear {
-            loadCheckedDates()
-        }
-        .onChange(of: currentMonth) { _ in
-            loadCheckedDates()
+    }
+    
+    // MARK: - Private Methods
+    
+    private func setupInitialState(proxy: ScrollViewProxy) {
+        loadCheckedDates()
+        
+        if isFromAfterCheck {
+            // AfterCheckViewからの遷移：今日の日付を選択してスクロール
+            let today = Date()
+            let calendar = Calendar.current
+            if calendar.isDate(today, equalTo: currentMonth, toGranularity: .month) {
+                let todayDay = calendar.component(.day, from: today)
+                let todayIndex = todayDay - 1 // 0ベースのインデックスに変換
+                selectedRowIndex = todayIndex
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        proxy.scrollTo("day-\(todayIndex)", anchor: .center)
+                    }
+                }
+            }
+        } else if let selectedDay = selectedDateFromMonthReview {
+            // MonthReviewViewからの遷移：選択された日付を使用
+            let selectedIndex = selectedDay - 1 // 0ベースのインデックスに変換
+            selectedRowIndex = selectedIndex
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    proxy.scrollTo("day-\(selectedIndex)", anchor: .center)
+                }
+            }
         }
     }
 }
+
 
 extension DateReviewView {
     private func DateReviewRow(index: Int) -> some View {

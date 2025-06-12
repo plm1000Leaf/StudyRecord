@@ -12,7 +12,6 @@ import SwiftUI
 struct PlanSettingWindowView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    // 独立したサービスインスタンスを使用
     @StateObject private var recordService = DailyRecordService(independent: true)
     
     @State private var selectedMaterial: Material? = nil

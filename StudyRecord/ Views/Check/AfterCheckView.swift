@@ -1,9 +1,4 @@
-//
-//   AfterCheckView.swift - デバッグ追加版
-//  StudyRecord
-//
-//  Created by 千葉陽乃 on 2025/02/19.
-//
+
 
 import SwiftUI
 import CoreData

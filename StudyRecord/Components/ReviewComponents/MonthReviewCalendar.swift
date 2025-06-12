@@ -10,6 +10,8 @@ struct MonthReviewCalendar: View {
     @Binding var showDateReviewView: Bool
     @State private var checkedDates: [Int: Bool] = [:]
     
+    var onDateSelected: ((Int) -> Void)? = nil
+    
     var body: some View {
         ZStack {
 
@@ -56,6 +58,7 @@ struct MonthReviewCalendar: View {
 extension MonthReviewCalendar {
     private func checkMark(for date: Int) -> some View {
         Button(action: {
+            onDateSelected?(date)
             withAnimation {
                 showDateReviewView = true
             }

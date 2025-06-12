@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MonthReviewView: View {
     @State private var showDateReviewView = false
+    @State private var selectedDateFromCalendar: Int? = nil
     @Binding var showMonthReviewView: Bool
     @Binding var currentMonth: Date
     var body: some View {
@@ -19,7 +20,13 @@ struct MonthReviewView: View {
                 monthView
                     .transition(.move(edge: .leading))
             } else {
-                DateReviewView(showDateReviewView: $showDateReviewView, currentMonth: $currentMonth, reviewText: .constant(""))
+                DateReviewView(showDateReviewView: $showDateReviewView, 
+                               currentMonth: $currentMonth,
+                               reviewText: .constant(""),
+                               selectedDateFromMonthReview: selectedDateFromCalendar,
+                               isFromAfterCheck: false
+                               
+                )
                     .transition(.move(edge: .trailing))
             }
         }
@@ -37,7 +44,10 @@ extension MonthReviewView {
             DateReviewHeader
             MonthReviewCalendar(
                 currentMonth: .constant(currentMonth),
-                showDateReviewView:$showDateReviewView
+                showDateReviewView:$showDateReviewView,
+                onDateSelected: { selectedDay in
+                    selectedDateFromCalendar = selectedDay
+                }
             )
 
             
