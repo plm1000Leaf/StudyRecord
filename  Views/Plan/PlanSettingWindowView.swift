@@ -10,7 +10,6 @@ import SwiftUI
 struct PlanSettingWindowView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    // 独立したサービスではなく、共有サービスを使用
     @StateObject private var recordService = DailyRecordService.shared
     
     @State private var selectedMaterial: Material? = nil
@@ -140,7 +139,6 @@ struct PlanSettingWindowView: View {
         }
     }
     
-    // 教材表示部分を固定サイズのコンテナにする
     private var materialDisplayContainer: some View {
         VStack {
             // 教材画像表示部分（固定サイズ）

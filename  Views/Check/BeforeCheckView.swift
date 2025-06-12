@@ -78,17 +78,9 @@ extension BeforeCheckView {
     private var mainView :some View {
         ZStack{
             VStack(spacing: 24){
-                VStack{
-                    checkViewTitle
-                    
-                    studyMaterial
-                }
-                VStack{
-                    todayStudyPlanTitle
-                    
-                    todayStudyPlanSetting
-                }
-                
+                checkViewTitle
+                studyMaterial
+                todayStudyPlanSetting
                 checkButton
                 
             }
@@ -112,7 +104,7 @@ extension BeforeCheckView {
     }
     
     private var studyMaterial: some View {
-        VStack/*(spacing: 8)*/{
+        VStack{
             Button(action: {
                 isTapBookSelect.toggle()
             }){
@@ -132,26 +124,12 @@ extension BeforeCheckView {
                 .font(.system(size: 24))
                 .frame(width: 104, height: 104)
         }
-//        .padding(.bottom, 8)
+        .padding(.bottom, -16)
         
         
     }
     
-    private var todayStudyPlanTitle: some View {
-        HStack{
-            
-            Text("箇所")
-                .font(.system(size: 16))
-            Spacer()
-                .frame(width: 144)
-            Text("予定時間")
-                .font(.system(size: 16))
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.leading, 16)
-        .padding(.bottom, 8)
-    }
-    
+
     private var todayStudyPlanSetting: some View {
         HStack(alignment: .top){
             
@@ -195,6 +173,7 @@ extension BeforeCheckView {
                                 .padding(.bottom, 64)
             }
         }
+        .padding(.bottom, 32)
     }
     
     
