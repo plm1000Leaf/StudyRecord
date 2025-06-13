@@ -10,10 +10,22 @@ import SwiftUI
 struct YearReviewGraphView: View {
     @Binding var selectedSegment: Int
     @State private var showPopup = false
+    @State private var selectedYear = 2025
     
     var body: some View {
         ZStack{
             yearGraphView
+            
+            if showPopup {
+                MovePeriodPopup(
+                    showPopup: $showPopup,
+                    items: (2025...2036).map { "\($0)" },
+                    onSelect: { year in
+                        selectedYear = year
+                        showPopup = false
+                    }
+                )
+            }
         }
     }
 }
