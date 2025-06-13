@@ -24,6 +24,7 @@ struct BookSelectView: View {
     @State private var editingMaterialName: String = ""
     @State private var editingLabelName: String = ""
     @State private var editingLabelKey: String? = nil
+    @State private var isSelectedEditingLabel = false  // ラベル編集状態を管理
     @State private var labelList: [String] = LabelStorage.load()
     @State private var refreshID = UUID()
     private let maxCharacters = 20
@@ -60,6 +61,7 @@ struct BookSelectView: View {
                     Button(action: {
                         dismiss()
                         isSelectedEditingMaterial = false
+                        isSelectedEditingLabel = false
                     }) {
                         Image(systemName: "xmark")
                             .font(.system(size: 16))
@@ -71,11 +73,12 @@ struct BookSelectView: View {
                 .overlay(
                     Button(action: {
                         isEditingBook.toggle()
-                        // 編集モードを終了する時にeditingMaterialをリセット
+                        // 編集モードを終了する時に全ての編集状態をリセット
                         if !isEditingBook {
                             editingMaterial = nil
                             editingLabelKey = nil
                             isSelectedEditingMaterial = false
+                            isSelectedEditingLabel = false
                         }
                     }) {
                         Text(isEditingBook ? "完了" : "編集")
@@ -127,203 +130,233 @@ extension BookSelectView {
     
     private func studyMaterialSection(label: String, materials: [Material]) ->some View {
         VStack(spacing: 32) {
-            if isEditingBook && editingLabelKey == label {
-                TextField("教材名", text: $editingLabelName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 96)
-                    .multilineTextAlignment(.center)
-                    .onSubmit {
-                        for material in materials {
-                            if material.label == label {
-                                material.label = editingLabelName
+            // ラベル名の表示・編集部分
+            HStack {
+                // ラベル名部分（編集中はTextField、通常時はText）
+                if isEditingBook && editingLabelKey == label && isSelectedEditingLabel {
+                    // 編集中：テキストフィールドを表示
+                    TextField("ラベル名", text: $editingLabelName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(width: 200)
+                        .font(.system(size: 24))
+                        .padding(.top, 40)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .onSubmit {
+                            // ラベル名を更新
+                            for material in materials {
+                                if material.label == label {
+                                    material.label = editingLabelName
+                                }
+                            }
+                            
+                            if let index = labelList.firstIndex(of: label),
+                               !labelList.contains(editingLabelName) {
+                                labelList[index] = editingLabelName
+                                labelList.sort()
+                                LabelStorage.save(labelList)
+                            }
+                            
+                            do {
+                                try viewContext.save()
+                                editingLabelKey = nil
+                                isSelectedEditingLabel = false
+                                refreshID = UUID()
+                                print("ラベル名を更新しました: \(editingLabelName)")
+                            } catch {
+                                print("保存に失敗しました: \(error.localizedDescription)")
                             }
                         }
-                        
-                        if let index = labelList.firstIndex(of: label),
-                           !labelList.contains(editingLabelName) {
-                            labelList[index] = editingLabelName
-                            labelList.sort()
-                            LabelStorage.save(labelList)
-                        }
-                        
-                        do {
-                            try viewContext.save()
-                            editingLabelKey = nil
-                            refreshID = UUID()
-                            print("ラベル名を更新しました: \(editingLabelName)")
-                        } catch {
-                            print("保存に失敗しました: \(error.localizedDescription)")
-                        }
-                    }
-
-        } else {
-            HStack{
-                Text(label ?? "")
-                    .padding(.top, 40)
-                    .font(.system(size: 32))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .onTapGesture {
-                        editingLabelKey = label
-                        editingLabelName = label
-                    }
-                if isEditingBook{
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.gray)
-                        .background(Circle().fill(Color.white))
-                        .frame(width: 24)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, -16)
+                } else {
+                    // 通常時：ラベル名を表示
+                    Text(label)
                         .padding(.top, 40)
+                        .font(.system(size: 32))
                         .onTapGesture {
-                            deleteLabel(label)
+                            // ラベル名をタップしても編集モードに入る
+                            if isEditingBook {
+                                editingLabelKey = label
+                                editingLabelName = label
+                                isSelectedEditingLabel = true
+                            }
                         }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                
+
+                // 編集・削除ボタン（編集モード時のみ表示）
+                if isEditingBook {
+                    let labelIcon = editingLabelKey == label && isSelectedEditingLabel ?
+                        "trash.circle.fill" : "pencil.circle.fill"
                     
+                    Button(action: {
+                        if isSelectedEditingLabel && editingLabelKey == label {
+                            // 削除処理
+                            deleteLabel(label)
+                            isSelectedEditingLabel = false
+                            editingLabelKey = nil
+                        } else {
+                            // 編集対象に設定
+                            editingLabelKey = label
+                            editingLabelName = label
+                            isSelectedEditingLabel = true
+                            print("ラベル編集ボタンが押されました: \(label)")
+                        }
+                    }) {
+                        Image(systemName: labelIcon)
+                            .font(.system(size: 32))
+                            .foregroundColor(editingLabelKey == label && isSelectedEditingLabel ? .red : .blue)
+                            .background(Circle().fill(Color.white))
+                    }
+                    .padding(.top, 40)
+                    .padding(.trailing, 32)
                 }
             }
-        }
+            .padding()
 
+            // 教材グリッド表示部分
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 32), count: 3), spacing: 24) {
                 ForEach(materials) { material in
 
-            ZStack{
-                //BookCard
-                VStack {
-                    if let imageData = material.imageData, let uiImage = UIImage(data: imageData) {
-                        // 編集中の教材かどうかで表示を切り替え
-                        if isEditingBook && editingMaterial == material {
-                            PhotosPicker(
-                                selection: Binding<PhotosPickerItem?>(
-                                    get: { editSelectedItem },
-                                    set: { newItem in
-                                        editSelectedItem = newItem
+                    ZStack{
+                        //BookCard
+                        VStack {
+                            if let imageData = material.imageData, let uiImage = UIImage(data: imageData) {
+                                // 編集中の教材かどうかで表示を切り替え
+                                if isEditingBook && editingMaterial == material {
+                                    PhotosPicker(
+                                        selection: Binding<PhotosPickerItem?>(
+                                            get: { editSelectedItem },
+                                            set: { newItem in
+                                                editSelectedItem = newItem
+                                            }
+                                        ),
+                                        matching: .images,
+                                        photoLibrary: .shared()
+                                    ) {
+                                        Image(uiImage: uiImage)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 96, height: 120)
+                                            .clipped()
+                                            .overlay(
+                                                // 編集中の表示を追加
+                                                ZStack{
+                                                    RoundedRectangle(cornerRadius: 8)
+                                                        .foregroundColor(.black)
+                                                        .opacity(0.3)
+                                                    RoundedRectangle(cornerRadius: 8)
+                                                        .stroke(Color.blue, lineWidth: 3)
+                                                    Image(systemName:"photo.fill")
+                                                        .frame(width: 32)
+                                                        .foregroundColor(.white)
+                                                }
+                                            )
                                     }
-                                ),
-                                matching: .images,
-                                photoLibrary: .shared()
-                            ) {
-                                Image(uiImage: uiImage)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 96, height: 120)
-                                    .clipped()
-                                    .overlay(
-                                        // 編集中の表示を追加
-                                        ZStack{
-                                            RoundedRectangle(cornerRadius: 8)
-                                                .foregroundColor(.black)
-                                                .opacity(0.3)
-                                            RoundedRectangle(cornerRadius: 8)
-                                                .stroke(Color.blue, lineWidth: 3)
-                                            Image(systemName:"photo.fill")
-                                                .frame(width: 32)
+                                } else {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 96, height: 120)
+                                        .clipped()
+                                        .onTapGesture{
+                                            if !isEditingBook {
+                                                onMaterialSelect?(material)
+                                                dismiss()
+                                            }
                                         }
-                                    )
-                            }
-                        } else {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 96, height: 120)
-                                .clipped()
-                                .onTapGesture{
-                                    if !isEditingBook {
-                                        onMaterialSelect?(material)
-                                        dismiss()
-                                    }
                                 }
-                        }
-                    } else {
-                        Rectangle()
-                            .frame(width: 96, height: 120)
-                            .foregroundColor(.gray.opacity(0.3))
-                            .onTapGesture{
-                                if !isEditingBook {
-                                    onMaterialSelect?(material)
-                                    dismiss()
-                                }
-                            }
-                    }
-                    
-                    // 教材名の表示・編集
-                    if isEditingBook && editingMaterial == material {
-                        TextField("教材名", text: $editingMaterialName)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .frame(width: 96)
-                            .multilineTextAlignment(.center)
-                            .onSubmit {
-                                material.name = editingMaterialName
-                                do {
-                                    try viewContext.save()
-                                    editingMaterial = nil // 編集完了
-                                    print("教材名を更新しました: \(editingMaterialName)")
-                                } catch {
-                                    print("保存に失敗しました: \(error.localizedDescription)")
-                                }
-                            }
-                    } else {
-                        Text(material.name ?? "")
-                            .font(.system(size: 16))
-                            .frame(width: 72)
-                            .multilineTextAlignment(.center)
-                    }
-                }
-                .padding(.bottom, 32)
-                
-                // 編集ボタンの配置
-                if isEditingBook {
-                    
-                let selectEditMaterialIcon = editingMaterial == material ?
-                    "trash.circle.fill" :"pencil.circle.fill"
-                    
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            
-                            if isSelectedEditingMaterial {
-                                deleteMaterial(material)
                             } else {
-                                editingMaterial = material
-                                editingMaterialName = material.name ?? ""
-                                isSelectedEditingMaterial = true
+                                Rectangle()
+                                    .frame(width: 96, height: 120)
+                                    .foregroundColor(.gray.opacity(0.3))
+                                    .onTapGesture{
+                                        if !isEditingBook {
+                                            onMaterialSelect?(material)
+                                            dismiss()
+                                        }
+                                    }
                             }
-                        }) {
-                            Image(systemName:selectEditMaterialIcon)
-                                .font(.system(size: 32))
-                                .foregroundColor(editingMaterial == material ? .red : .blue)
-                                .background(Circle().fill(Color.white))
+                            
+                            // 教材名の表示・編集
+                            if isEditingBook && editingMaterial == material {
+                                TextField("教材名", text: $editingMaterialName)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .frame(width: 96)
+                                    .multilineTextAlignment(.center)
+                                    .onSubmit {
+                                        material.name = editingMaterialName
+                                        do {
+                                            try viewContext.save()
+                                            editingMaterial = nil
+                                            isSelectedEditingMaterial = false
+                                            print("教材名を更新しました: \(editingMaterialName)")
+                                        } catch {
+                                            print("保存に失敗しました: \(error.localizedDescription)")
+                                        }
+                                    }
+                            } else {
+                                Text(material.name ?? "")
+                                    .font(.system(size: 16))
+                                    .frame(width: 72)
+                                    .multilineTextAlignment(.center)
+                            }
                         }
-                        .offset(x: 8, y: 8)
+                        .padding(.bottom, 32)
+                        
+                        // 編集ボタンの配置
+                        if isEditingBook {
+                            
+                            let selectEditMaterialIcon = editingMaterial == material && isSelectedEditingMaterial ?
+                                "trash.circle.fill" :"pencil.circle.fill"
+                                
+                            HStack {
+                                Spacer()
+                                Button(action: {
+                                    
+                                    if isSelectedEditingMaterial && editingMaterial == material {
+                                        deleteMaterial(material)
+                                        isSelectedEditingMaterial = false
+                                        editingMaterial = nil
+                                    } else {
+                                        editingMaterial = material
+                                        editingMaterialName = material.name ?? ""
+                                        isSelectedEditingMaterial = true
+                                    }
+                                }) {
+                                    Image(systemName:selectEditMaterialIcon)
+                                        .font(.system(size: 32))
+                                        .foregroundColor(editingMaterial == material && isSelectedEditingMaterial ? .red : .blue)
+                                        .background(Circle().fill(Color.white))
+                                }
+                                .offset(x: 8, y: 8)
+                            }
+                        }
                     }
-                }
-            }
-            .onChange(of: editSelectedItem) { newItem in
-                Task {
-                    if let item = newItem,
-                       let data = try? await item.loadTransferable(type: Data.self),
-                       let uiImage = UIImage(data: data),
-                       let target = editingMaterial {
-                        
-                        target.imageData = uiImage.jpegData(compressionQuality: 0.8)
-                        try? viewContext.save()
-                        
-                        editSelectedItem = nil
-                        editingMaterial = nil // 編集完了
-                        
-                        isSelectedEditingMaterial = false
-                        
-                        refreshID = UUID()
-                        print("画像を更新しました for \(target.name ?? "NoName")")
-                    } else {
-                        print("画像の取得または対象Materialが見つかりませんでした")
+                    .onChange(of: editSelectedItem) { newItem in
+                        Task {
+                            if let item = newItem,
+                               let data = try? await item.loadTransferable(type: Data.self),
+                               let uiImage = UIImage(data: data),
+                               let target = editingMaterial {
+                                
+                                target.imageData = uiImage.jpegData(compressionQuality: 0.8)
+                                try? viewContext.save()
+                                
+                                editSelectedItem = nil
+                                editingMaterial = nil
+                                isSelectedEditingMaterial = false
+                                
+                                refreshID = UUID()
+                                print("画像を更新しました for \(target.name ?? "NoName")")
+                            } else {
+                                print("画像の取得または対象Materialが見つかりませんでした")
+                            }
+                        }
                     }
-                }
-            }
-            
                 }
             }
         }
         .id(refreshID)
-
     }
     
     private var inputBookInformation: some View {
@@ -445,6 +478,7 @@ extension BookSelectView {
         viewContext.delete(material)
         do {
             try viewContext.save()
+            print("教材を削除しました: \(material.name ?? "NoName")")
         } catch {
             print("削除に失敗しました: \(error.localizedDescription)")
         }
@@ -454,17 +488,16 @@ extension BookSelectView {
         // ラベルに紐づく教材を確認
         let associatedMaterials = materials.filter { $0.label == label }
 
-        // 紐づいている場合はラベルを空に（または"未分類"などに）
+        // 紐づいている場合はラベルを"未分類"に変更
         for material in associatedMaterials {
-            material.label = nil
+            material.label = "未分類"
         }
 
-        
+        // ラベルリストから削除
         if let index = labelList.firstIndex(of: label) {
             labelList.remove(at: index)
             LabelStorage.save(labelList)
         }
-
 
         do {
             try viewContext.save()
@@ -474,8 +507,7 @@ extension BookSelectView {
             print("ラベル削除に失敗しました: \(error.localizedDescription)")
         }
     }
-
-    }
+}
 
 func deleteAllMaterials(context: NSManagedObjectContext) {
     let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Material.fetchRequest()
