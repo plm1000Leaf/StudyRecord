@@ -19,6 +19,7 @@ struct BookSelectView: View {
     @State private var selectedLabel: String = ""
     @State private var isEditingBook = false
     @State private var editingMaterial: Material? = nil
+    @State private var isSelectedEditingMaterial = false
     @State private var editSelectedItem: PhotosPickerItem? = nil
     @State private var editingMaterialName: String = ""
     @State private var editingLabelName: String = ""
@@ -58,6 +59,7 @@ struct BookSelectView: View {
                 .overlay(
                     Button(action: {
                         dismiss()
+                        isSelectedEditingMaterial = false
                     }) {
                         Image(systemName: "xmark")
                             .font(.system(size: 16))
@@ -69,6 +71,12 @@ struct BookSelectView: View {
                 .overlay(
                     Button(action: {
                         isEditingBook.toggle()
+                        // 編集モードを終了する時にeditingMaterialをリセット
+                        if !isEditingBook {
+                            editingMaterial = nil
+                            editingLabelKey = nil
+                            isSelectedEditingMaterial = false
+                        }
                     }) {
                         Text(isEditingBook ? "完了" : "編集")
                             .font(.system(size: 20))
@@ -181,32 +189,62 @@ extension BookSelectView {
                 //BookCard
                 VStack {
                     if let imageData = material.imageData, let uiImage = UIImage(data: imageData) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 96, height: 120)
-                            .clipped()
-                            .onTapGesture{
-                                
-                                editingMaterial = material
-                                editingMaterialName = material.name ?? ""
-                                onMaterialSelect?(material)  // ここで親に伝える
-                                dismiss()
-//                                let dailyRecord = DailyRecordManager.shared.fetchOrCreateRecord(for: date, context: viewContext)
-//                                dailyRecord.material = selectedMaterial
-//
-//                                do {
-//                                    try viewContext.save()
-//                                    print("教材が保存されました")
-//                                } catch {
-//                                    print("保存エラー: \(error)")
-//                                }
+                        // 編集中の教材かどうかで表示を切り替え
+                        if isEditingBook && editingMaterial == material {
+                            PhotosPicker(
+                                selection: Binding<PhotosPickerItem?>(
+                                    get: { editSelectedItem },
+                                    set: { newItem in
+                                        editSelectedItem = newItem
+                                    }
+                                ),
+                                matching: .images,
+                                photoLibrary: .shared()
+                            ) {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 96, height: 120)
+                                    .clipped()
+                                    .overlay(
+                                        // 編集中の表示を追加
+                                        ZStack{
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .foregroundColor(.black)
+                                                .opacity(0.3)
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .stroke(Color.blue, lineWidth: 3)
+                                            Image(systemName:"photo.fill")
+                                                .frame(width: 32)
+                                        }
+                                    )
                             }
+                        } else {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 96, height: 120)
+                                .clipped()
+                                .onTapGesture{
+                                    if !isEditingBook {
+                                        onMaterialSelect?(material)
+                                        dismiss()
+                                    }
+                                }
+                        }
                     } else {
                         Rectangle()
                             .frame(width: 96, height: 120)
+                            .foregroundColor(.gray.opacity(0.3))
+                            .onTapGesture{
+                                if !isEditingBook {
+                                    onMaterialSelect?(material)
+                                    dismiss()
+                                }
+                            }
                     }
                     
+                    // 教材名の表示・編集
                     if isEditingBook && editingMaterial == material {
                         TextField("教材名", text: $editingMaterialName)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -216,77 +254,48 @@ extension BookSelectView {
                                 material.name = editingMaterialName
                                 do {
                                     try viewContext.save()
+                                    editingMaterial = nil // 編集完了
                                     print("教材名を更新しました: \(editingMaterialName)")
                                 } catch {
                                     print("保存に失敗しました: \(error.localizedDescription)")
                                 }
                             }
                     } else {
-                        
-                    Text(material.name ?? "")
-                        .font(.system(size: 16))
-                        .frame(width: 72)
-                        .onTapGesture {
-                            editingMaterial = material
-                            editingMaterialName = material.name ?? ""
-                        }
-                }
+                        Text(material.name ?? "")
+                            .font(.system(size: 16))
+                            .frame(width: 72)
+                            .multilineTextAlignment(.center)
                     }
-                    .padding(.bottom, 32)
+                }
+                .padding(.bottom, 32)
                 
+                // 編集ボタンの配置
                 if isEditingBook {
-
                     
-                    VStack {
-                        HStack {
-                            Button(action: {
-                                deleteMaterial(material)
-                            }) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.gray)
-                                    .background(Circle().fill(Color.white))
-                            }
-                            .offset(x:8,y: -64)
-
-                            Spacer()
-                        }
-
+                let selectEditMaterialIcon = editingMaterial == material ?
+                    "trash.circle.fill" :"pencil.circle.fill"
+                    
+                    HStack {
                         Spacer()
-
-                        HStack {
-                            Spacer()
-
-                            PhotosPicker(
-                                selection: Binding<PhotosPickerItem?>(
-                                    get: { editSelectedItem },
-                                    set: { newItem in
-                                        editSelectedItem = newItem
-                                        editingMaterial = material
-                                        editingMaterialName = material.name ?? ""
-                                        editingLabelName = label ?? ""
-                                    }
-                                ),
-                                matching: .images,
-                                photoLibrary: .shared()
-                            ) {
-                                Image(systemName: "pencil.circle.fill")
-                                    .font(.system(size: 32))
-                                    .foregroundColor(.blue)
-                                    .background(Circle().fill(Color.white))
+                        Button(action: {
+                            
+                            if isSelectedEditingMaterial {
+                                deleteMaterial(material)
+                            } else {
+                                editingMaterial = material
+                                editingMaterialName = material.name ?? ""
+                                isSelectedEditingMaterial = true
                             }
-//                            .onTapGesture {
-//                                editingMaterial = material
-//                            }
-                            .offset(x: -8,y: -20)
-
+                        }) {
+                            Image(systemName:selectEditMaterialIcon)
+                                .font(.system(size: 32))
+                                .foregroundColor(editingMaterial == material ? .red : .blue)
+                                .background(Circle().fill(Color.white))
                         }
+                        .offset(x: 8, y: 8)
                     }
-                    .frame(width: 128, height: 96)
-
-
                 }
-                }
+            }
             .onChange(of: editSelectedItem) { newItem in
                 Task {
                     if let item = newItem,
@@ -298,7 +307,9 @@ extension BookSelectView {
                         try? viewContext.save()
                         
                         editSelectedItem = nil
-                        editingMaterial = nil
+                        editingMaterial = nil // 編集完了
+                        
+                        isSelectedEditingMaterial = false
                         
                         refreshID = UUID()
                         print("画像を更新しました for \(target.name ?? "NoName")")
@@ -398,6 +409,11 @@ extension BookSelectView {
                         do {
                             try viewContext.save()
                             isTapAddBook = false
+                            // 新規追加後にフィールドをリセット
+                            text = ""
+                            selectedImage = nil
+                            selectedItem = nil
+                            selectedLabel = ""
                         } catch {
                             print("保存エラー: \(error.localizedDescription)")
                         }
@@ -478,4 +494,3 @@ func deleteAllMaterials(context: NSManagedObjectContext) {
 #Preview {
     BookSelectView()
 }
-
