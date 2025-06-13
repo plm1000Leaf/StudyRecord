@@ -53,6 +53,34 @@ final class DailyRecordService: ObservableObject {
         return counts
     }
     
+    func loadMonthlyCheckRatesFromMonthlyRecord(for year: Int, context: NSManagedObjectContext) -> [Int: Double] {
+        let request: NSFetchRequest<MonthlyRecord> = MonthlyRecord.fetchRequest()
+        request.predicate = NSPredicate(format: "year == %d", year)
+        
+        do {
+            let monthlyRecords = try context.fetch(request)
+            var monthlyRates: [Int: Double] = [:]
+            
+            for record in monthlyRecords {
+                let totalDays = record.checkCount
+                let checkedDays = record.checkCount
+                
+                if totalDays > 0 {
+                    let rate = Double(checkedDays) / Double(totalDays) * 100.0
+                    monthlyRates[Int(record.month)] = rate
+                } else {
+                    monthlyRates[Int(record.month)] = 0.0
+                }
+            }
+            
+            return monthlyRates
+        } catch {
+            print("❌ 月別記録の読み込みに失敗: \(error)")
+            return [:]
+        }
+    }
+    
+    
     /// 指定した月のチェック数を取得
     func getCheckedCountForMonth(_ month: Date, context: NSManagedObjectContext) -> Int {
         let calendar = Calendar.current
@@ -91,6 +119,8 @@ final class DailyRecordService: ObservableObject {
     func getYearlyStatistics(for year: Int, context: NSManagedObjectContext) -> YearlyStatistics {
         return monthlyManager.getYearlyStatistics(for: year, context: context)
     }
+    
+    
     
     // MARK: - Public Methods
     
@@ -134,7 +164,10 @@ final class DailyRecordService: ObservableObject {
          
          return checkedDates
      }
-     
+    
+    
+    
+
     /// 今日のレコードを取得
     func loadTodayRecord(context: NSManagedObjectContext) {
         let today = Calendar.current.startOfDay(for: Date())
