@@ -7,34 +7,42 @@ struct TimeSelectButton: View {
     @State private var selectedHour = 12
     @State private var selectedMinute = 30
     @State private var showPicker = false
+    @Binding var confirmedTime: Bool
     
     // 時間変更時の通知用コールバック
     var onTimeChanged: (() -> Void)? = nil
 
     var body: some View {
         VStack {
-            Button(action: {
-                showPicker = true
-            }) {
-                Text(recordService.getFormattedTime())
-                    .font(.system(size: 16))
-                    .foregroundColor(.blue)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color(.systemGray5))
-                    .cornerRadius(10)
-            }
-            .sheet(isPresented: $showPicker) {
-                TimeSelectPicker(
-                    recordService: recordService,
-                    selectedHour: $selectedHour,
-                    selectedMinute: $selectedMinute,
-                    showPicker: $showPicker,
-                    onTimeChanged: onTimeChanged
-                )
+            if !confirmedTime && !recordService.hasScheduledTime() {
+                BasicButton(label: "時間を設定",colorOpacity: 0.5, width: 104, height: 56) {
+                    showPicker = true
+                }
+                .padding(.leading, -16)
+            } else {
+                Button(action: {
+                    showPicker = true
+                }) {
+                    Text(recordService.getFormattedTime())
+                        .font(.system(size: 16))
+                        .foregroundColor(.gray0)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color(.systemGray5))
+                        .cornerRadius(10)
+                }
             }
         }
         .padding()
+        .sheet(isPresented: $showPicker) {
+            TimeSelectPicker(
+                recordService: recordService,
+                selectedHour: $selectedHour,
+                selectedMinute: $selectedMinute,
+                showPicker: $showPicker,
+                onTimeChanged: onTimeChanged
+            )
+        }
         .onAppear {
             let (hour, minute) = recordService.getScheduledTime()
             selectedHour = Int(hour)
@@ -43,9 +51,12 @@ struct TimeSelectButton: View {
     }
 }
 
+
+
 struct TimeSelectPicker: View {
     @Environment(\.managedObjectContext) private var viewContext
     @ObservedObject var recordService: DailyRecordService
+    @State private var confirmedTime = false
     @Binding var selectedHour: Int
     @Binding var selectedMinute: Int
     @Binding var showPicker: Bool
@@ -74,6 +85,7 @@ struct TimeSelectPicker: View {
                     onTimeChanged?()
                     
                     showPicker = false
+                    confirmedTime = true
                 }
                 .font(.headline)
             }
@@ -105,3 +117,6 @@ struct TimeSelectPicker: View {
         .presentationDetents([.fraction(0.4)])
     }
 }
+
+
+    

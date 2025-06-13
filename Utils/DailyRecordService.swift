@@ -141,6 +141,14 @@ final class DailyRecordService: ObservableObject {
         loadRecord(for: today, context: context)
     }
     
+    // DailyRecordService内に追加
+    func hasScheduledTime() -> Bool {
+        let (hour, minute) = getScheduledTime()
+        // デフォルト値（例：0時0分）と異なる場合は設定済みとみなす
+        return !(hour == 0 && minute == 0)
+    }
+
+    
     // MARK: - Study Range Methods
     
     /// 学習範囲（開始）を更新

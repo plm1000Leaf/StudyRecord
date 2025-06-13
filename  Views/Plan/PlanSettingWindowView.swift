@@ -184,7 +184,7 @@ struct PlanSettingWindowView: View {
             
             HStack {
                 TimeSelectButton(
-                    recordService: recordService,
+                    recordService: recordService, confirmedTime: .constant(false),
                     onTimeChanged: {
                         // 時間変更時に親に通知
                         onDataUpdate?()

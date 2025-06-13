@@ -167,7 +167,7 @@ extension BeforeCheckView {
                 
                 Spacer()
                 
-                TimeSelectButton(recordService: recordService)
+                TimeSelectButton(recordService: recordService, confirmedTime: .constant(false))
                                 .frame(width: 168, height: 40)
                                 .padding(.trailing, -8)
                                 .padding(.bottom, 64)
