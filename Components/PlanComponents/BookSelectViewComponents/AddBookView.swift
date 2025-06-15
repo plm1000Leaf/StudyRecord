@@ -28,6 +28,10 @@ struct AddBookView: View {
         .onChange(of: selectedPhotoItem) { newItem in
             loadSelectedImage(newItem)
         }
+        .onAppear {
+            // ラベルリストの同期
+            syncLabelList()
+        }
     }
 }
 
@@ -104,7 +108,21 @@ extension AddBookView {
     }
     
     private var labelSelector: some View {
-        LabelSelector(labels: $labelList, selectedLabel: $selectedLabel)
+        LabelSelector(
+            labels: Binding(
+                get: { labelList },
+                set: { newLabels in
+                    labelList = newLabels
+                    // 他のViewとの同期を保つ
+                    LabelStorage.save(newLabels)
+                }
+            ),
+            selectedLabel: $selectedLabel
+        )
+        .onChange(of: labelList) { _ in
+            // ラベルリストが変更された時の処理
+            validateSelectedLabel()
+        }
     }
     
     private var nameInputField: some View {
@@ -126,6 +144,7 @@ extension AddBookView {
         }
         .padding(.top, 8)
         .frame(maxWidth: .infinity, alignment: .trailing)
+        .disabled(bookName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
     }
 }
 
@@ -146,18 +165,31 @@ extension AddBookView {
     }
     
     private func saveNewMaterial() {
+        let trimmedName = bookName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedName.isEmpty else { return }
+        
         let newMaterial = Material(context: viewContext)
         newMaterial.id = UUID()
-        newMaterial.name = bookName
-        newMaterial.label = selectedLabel
+        newMaterial.name = trimmedName
+        newMaterial.label = selectedLabel.isEmpty ? "未分類" : selectedLabel
         newMaterial.imageData = selectedImage?.jpegData(compressionQuality: 0.8)
         
+        // 新しいラベルの場合はラベルリストに追加
+        if !selectedLabel.isEmpty &&
+           selectedLabel != "未分類" &&
+           !labelList.contains(selectedLabel) {
+            labelList.append(selectedLabel)
+            labelList.sort()
+            LabelStorage.save(labelList)
+        }
+
         do {
             try viewContext.save()
             resetFields()
             isShowing = false
+            print("✅ 新しい教材を保存: \(trimmedName) - \(selectedLabel)")
         } catch {
-            print("新規教材保存エラー: \(error.localizedDescription)")
+            print("❌ 新規教材保存エラー: \(error.localizedDescription)")
         }
     }
     
@@ -166,5 +198,21 @@ extension AddBookView {
         selectedImage = nil
         selectedPhotoItem = nil
         selectedLabel = ""
+    }
+    
+    private func syncLabelList() {
+        let savedLabels = LabelStorage.load()
+        if labelList != savedLabels {
+            labelList = savedLabels
+        }
+    }
+    
+    private func validateSelectedLabel() {
+        // 選択中のラベルがリストに存在しない場合はリセット
+        if !selectedLabel.isEmpty &&
+           selectedLabel != "未分類" &&
+           !labelList.contains(selectedLabel) {
+            selectedLabel = ""
+        }
     }
 }

@@ -33,6 +33,10 @@ struct BookSelectView: View {
             }
             .background(Color.baseColor10)
             .overlay(navigationButtons, alignment: .top)
+            .onAppear {
+                // ラベルリストの同期
+                syncLabelList()
+            }
         }
     }
 }
@@ -47,7 +51,14 @@ extension BookSelectView {
                 label: label,
                 materials: items,
                 isEditingMode: isEditingMode,
-                labelList: $labelList,
+                labelList: Binding(
+                    get: { labelList },
+                    set: { newLabels in
+                        labelList = newLabels
+                        LabelStorage.save(newLabels)
+                        refreshID = UUID() // UI更新のため
+                    }
+                ),
                 refreshID: $refreshID,
                 onMaterialSelect: onMaterialSelect,
                 onDismiss: { dismiss() }
@@ -59,7 +70,13 @@ extension BookSelectView {
         Group {
             if isAddingNewBook {
                 AddBookView(
-                    labelList: $labelList,
+                    labelList: Binding(
+                        get: { labelList },
+                        set: { newLabels in
+                            labelList = newLabels
+                            LabelStorage.save(newLabels)
+                        }
+                    ),
                     isShowing: $isAddingNewBook
                 )
             } else {
@@ -91,6 +108,17 @@ extension BookSelectView {
         }
         .padding(.horizontal, 20)
         .padding(.top, 10)
+    }
+    
+    // MARK: - Private Methods
+    
+    private func syncLabelList() {
+        let savedLabels = LabelStorage.load()
+        if labelList != savedLabels {
+            labelList = savedLabels
+            refreshID = UUID() // UI更新のため
+            print("🔄 BookSelectView: ラベルリストを同期")
+        }
     }
 }
 
