@@ -51,7 +51,7 @@ extension MaterialSectionView {
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 200)
             .font(.system(size: 24))
-            .padding(.top, 40)
+            .padding(.top, 56)
             .frame(maxWidth: .infinity, alignment: .leading)
             .onSubmit {
                 saveLabelEdit()
@@ -60,7 +60,7 @@ extension MaterialSectionView {
     
     private var labelDisplay: some View {
         Text(label)
-            .padding(.top, 40)
+            .padding(.top, 56)
             .font(.system(size: 32))
             .frame(maxWidth: .infinity, alignment: .leading)
             .onTapGesture {
@@ -79,12 +79,13 @@ extension MaterialSectionView {
             }
         }) {
             Image(systemName: isEditingLabel ? "trash.circle.fill" : "pencil.circle.fill")
-                .font(.system(size: 32))
+                .font(.system(size: 24))
                 .foregroundColor(isEditingLabel ? .red : .blue)
                 .background(Circle().fill(Color.white))
         }
         .padding(.top, 40)
-        .padding(.trailing, 32)
+        .padding(.leading, -64)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var materialGrid: some View {

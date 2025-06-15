@@ -160,7 +160,7 @@ extension MaterialCardView {
                 .foregroundColor(isEditingMaterial ? .red : .blue)
                 .background(Circle().fill(Color.white))
         }
-        .offset(x: 8, y: 8)
+        .offset(x: 16, y: 88)
     }
 }
 
