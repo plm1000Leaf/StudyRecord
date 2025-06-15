@@ -2,6 +2,7 @@
 //  MaterialSectionView.swift
 //  StudyRecord
 //
+//  ラベルごとの教材セクション表示コンポーネント
 //
 
 import SwiftUI
@@ -19,6 +20,8 @@ struct MaterialSectionView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State private var isEditingLabel = false
     @State private var editingLabelName = ""
+    
+    private let maxCharacters = 15
     
     var body: some View {
         VStack(spacing: 32) {
@@ -51,8 +54,13 @@ extension MaterialSectionView {
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 200)
             .font(.system(size: 24))
-            .padding(.top, 56)
+            .padding(.top, 40)
             .frame(maxWidth: .infinity, alignment: .leading)
+            .onChange(of: editingLabelName) { newValue in
+                if newValue.count > maxCharacters {
+                    editingLabelName = String(newValue.prefix(maxCharacters))
+                }
+            }
             .onSubmit {
                 saveLabelEdit()
             }
@@ -60,7 +68,7 @@ extension MaterialSectionView {
     
     private var labelDisplay: some View {
         Text(label)
-            .padding(.top, 56)
+            .padding(.top, 40)
             .font(.system(size: 32))
             .frame(maxWidth: .infinity, alignment: .leading)
             .onTapGesture {
@@ -79,13 +87,12 @@ extension MaterialSectionView {
             }
         }) {
             Image(systemName: isEditingLabel ? "trash.circle.fill" : "pencil.circle.fill")
-                .font(.system(size: 24))
+                .font(.system(size: 32))
                 .foregroundColor(isEditingLabel ? .red : .blue)
                 .background(Circle().fill(Color.white))
         }
         .padding(.top, 40)
-        .padding(.leading, -64)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.trailing, 32)
     }
     
     private var materialGrid: some View {
