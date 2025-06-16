@@ -10,12 +10,11 @@ import SwiftUI
 struct MonthReviewView: View {
     @State private var showDateReviewView = false
     @State private var selectedDateFromCalendar: Int? = nil
+    @State private var isTapShareButton = false
     @Binding var showMonthReviewView: Bool
     @Binding var currentMonth: Date
     var body: some View {
         ZStack {
-
-            
             if !showDateReviewView {
                 monthView
                     .transition(.move(edge: .leading))
@@ -29,6 +28,11 @@ struct MonthReviewView: View {
                 )
                     .transition(.move(edge: .trailing))
             }
+            
+            if isTapShareButton {
+                ShareView(isTapShareButton: $isTapShareButton)
+            }
+            
         }
         .animation(.easeInOut, value: showDateReviewView)
 
@@ -43,7 +47,7 @@ extension MonthReviewView {
 
             DateReviewHeader
             MonthReviewCalendar(
-                currentMonth: .constant(currentMonth),
+                isTapShareButton: $isTapShareButton, currentMonth: .constant(currentMonth),
                 showDateReviewView:$showDateReviewView,
                 onDateSelected: { selectedDay in
                     selectedDateFromCalendar = selectedDay

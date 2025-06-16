@@ -17,6 +17,7 @@ struct YearReviewView: View {
     @State private var selectedMonth: Int? = nil
     @State private var currentMonth: Date = Date()
     @State private var showMonthReviewView = false
+    @State private var isTapShareButton = false
     @State private var monthlyCheckCounts: [Int: Int] = [:]
     
     @Binding var showDateReviewView: Bool
@@ -59,6 +60,10 @@ struct YearReviewView: View {
                         showPopup = false
                     }
                 )
+            }
+            
+            if isTapShareButton {
+                ShareView(isTapShareButton: $isTapShareButton)
             }
         }
         .animation(.easeInOut, value: showMonthReviewView)
@@ -113,10 +118,12 @@ extension YearReviewView {
                 }
             }
             Spacer()
-            Image(systemName: "square.and.arrow.up")
-                .font(.system(size: 24))
-                .frame(maxWidth: .infinity, alignment:
-                        .trailing)
+            Button(action: {isTapShareButton = true }){
+                Image(systemName: "square.and.arrow.up")
+                    .font(.system(size: 24))
+                    .frame(maxWidth: .infinity, alignment:
+                            .trailing)
+            }
         }
         .padding(.top, 8)
         .padding(.bottom, 24)

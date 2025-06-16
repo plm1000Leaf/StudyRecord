@@ -5,7 +5,8 @@ import CoreData
 struct MonthReviewCalendar: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var recordService = DailyRecordService.shared
-    
+//    @State private var isTapShareButton = false
+    @Binding var isTapShareButton: Bool
     @Binding var currentMonth: Date
     @Binding var showDateReviewView: Bool
     @State private var checkedDates: [Int: Bool] = [:]
@@ -45,6 +46,7 @@ struct MonthReviewCalendar: View {
 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            
         }
         .onAppear {
             loadCheckedDates()
@@ -99,12 +101,13 @@ extension MonthReviewCalendar {
                 .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
                 .font(.system(size: 48))
                 .padding(.leading, 8)
-            
-            Image(systemName: "square.and.arrow.up")
-                .font(.system(size: 24))
-                .frame(maxWidth: .infinity, alignment:
-                        .trailing)
-                .padding(.trailing, 28)
+            Button(action: {isTapShareButton = true }){
+                Image(systemName: "square.and.arrow.up")
+                    .font(.system(size: 24))
+                    .frame(maxWidth: .infinity, alignment:
+                            .trailing)
+                    .padding(.trailing, 28)
+            }
         }
         
         .padding(.top, 40)
