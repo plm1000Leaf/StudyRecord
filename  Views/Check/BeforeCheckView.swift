@@ -115,9 +115,21 @@ extension BeforeCheckView {
                         .resizable()
                         .frame(width: 136, height: 168)
                 } else {
-                    Rectangle()
-                        .foregroundColor(.mainColor0)
-                        .frame(width: 136, height: 168)
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(.mainColor20)
+                            .frame(width: 136, height: 168)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(
+                                        style: StrokeStyle(lineWidth: 4, dash: [5, 4])
+                                    )
+                                    .foregroundColor(Color.mainColor0)
+                            )
+                        Text("タップして\n教材を選択")
+                            .font(.system(size: 16))
+                            .foregroundColor(.baseColor20)
+                    }
                 }
             }
             Text(recordService.getMaterial()?.name ?? "未設定")

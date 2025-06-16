@@ -80,6 +80,13 @@ extension InputStudyRange {
                 BasicButton(label:"学習範囲を入力", colorOpacity: 0.5, width: 80, height: 64) {
                     isInputting = true
                 }
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(
+                                style: StrokeStyle(lineWidth: 2, dash: [5, 4])
+                            )
+                            .foregroundColor(Color.mainColor0)
+                    )
             )
         } else {
             return AnyView(

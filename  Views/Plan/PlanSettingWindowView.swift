@@ -112,7 +112,7 @@ struct PlanSettingWindowView: View {
                             type: .start,
                             placeholder: "ページ数",
                             width: 80,
-                            height: 40
+                            height: 24
                         )
                         PullDown(recordService: recordService, type: .start)
                     }
@@ -127,7 +127,7 @@ struct PlanSettingWindowView: View {
                             type: .end,
                             placeholder: "ページ数",
                             width: 80,
-                            height: 40
+                            height: 24
                         )
                         PullDown(recordService: recordService, type: .end)
                     }
@@ -173,8 +173,21 @@ struct PlanSettingWindowView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             } else {
-                Rectangle()
-                    .foregroundColor(.mainColor0)
+                ZStack{
+                    RoundedRectangle(cornerRadius: 8)
+                        .foregroundColor(.mainColor10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(
+                                    style: StrokeStyle(lineWidth: 4, dash: [5, 4])
+                                )
+                                .foregroundColor(Color.mainColor0)
+                        )
+                    Text("タップで\n教材を選択")
+                        .bold()
+                        .font(.system(size: 16))
+                        .foregroundColor(.baseColor20)
+                }
             }
         }
     }
