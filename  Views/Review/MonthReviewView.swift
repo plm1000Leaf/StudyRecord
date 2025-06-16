@@ -19,7 +19,7 @@ struct MonthReviewView: View {
                 monthView
                     .transition(.move(edge: .leading))
             } else {
-                DateReviewView(showDateReviewView: $showDateReviewView, 
+                DateReviewView(showDateReviewView: $showDateReviewView,
                                currentMonth: $currentMonth,
                                reviewText: .constant(""),
                                selectedDateFromMonthReview: selectedDateFromCalendar,
@@ -28,9 +28,12 @@ struct MonthReviewView: View {
                 )
                     .transition(.move(edge: .trailing))
             }
-            
+
             if isTapShareButton {
-                ShareView(isTapShareButton: $isTapShareButton)
+                ShareView(
+                    isTapShareButton: $isTapShareButton,
+                    sourceType: .monthReview(currentMonth: currentMonth)
+                )
             }
             
         }

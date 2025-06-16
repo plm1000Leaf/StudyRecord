@@ -63,7 +63,13 @@ struct YearReviewView: View {
             }
             
             if isTapShareButton {
-                ShareView(isTapShareButton: $isTapShareButton)
+                ShareView(
+                    isTapShareButton: $isTapShareButton,
+                    sourceType: .yearReview(
+                        selectedYear: selectedYear,
+                        monthlyCheckCounts: monthlyCheckCounts
+                    )
+                )
             }
         }
         .animation(.easeInOut, value: showMonthReviewView)
