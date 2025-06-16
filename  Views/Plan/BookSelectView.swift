@@ -1,9 +1,3 @@
-//
-//  BookSelectView.swift
-//  StudyRecord
-//
-//
-
 import SwiftUI
 import CoreData
 
@@ -23,16 +17,56 @@ struct BookSelectView: View {
     ) private var materials: FetchedResults<Material>
     
     var body: some View {
-        ZStack {
-            ScrollView {
-                VStack(spacing: 40) {
-                    materialSections
-                    addBookSection
+        GeometryReader { geometry in
+            ZStack {
+                // メインコンテンツ
+                VStack(spacing: 0) {
+                    // ナビゲーションボタン
+                    navigationButtons
+                    
+                    // スクロール可能なコンテンツ
+                    ScrollView {
+                        VStack(spacing: 40) {
+                            materialSections
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 100) // 下部ボタンのスペースを確保
+                    }
                 }
-                .padding(.horizontal, 20)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.baseColor10)
+                
+                // AddBookViewのオーバーレイ
+                if isAddingNewBook {
+                    AddBookView(
+                        labelList: Binding(
+                            get: { labelList },
+                            set: { newLabels in
+                                labelList = newLabels
+                                LabelStorage.save(newLabels)
+                            }
+                        ),
+                        isShowing: $isAddingNewBook,
+                        onDismiss: {
+                            // AddBookViewを閉じるだけ
+                            isAddingNewBook = false
+                        }
+                    )
+                }
+                
+                // フローティングボタン（AddBookViewが表示されていない時のみ）
+                if !isAddingNewBook {
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            addMaterialButtons
+                        }
+                    }
+                    .padding(.trailing, 40)
+                    .padding(.bottom, 20)
+                }
             }
-            .background(Color.baseColor10)
-            .overlay(navigationButtons, alignment: .top)
             .onAppear {
                 // ラベルリストの同期
                 syncLabelList()
@@ -66,27 +100,6 @@ extension BookSelectView {
         }
     }
     
-    private var addBookSection: some View {
-        Group {
-            if isAddingNewBook {
-                AddBookView(
-                    labelList: Binding(
-                        get: { labelList },
-                        set: { newLabels in
-                            labelList = newLabels
-                            LabelStorage.save(newLabels)
-                        }
-                    ),
-                    isShowing: $isAddingNewBook
-                )
-            } else {
-                AddBookButton {
-                    isAddingNewBook = true
-                }
-            }
-        }
-    }
-    
     private var navigationButtons: some View {
         HStack {
             // 閉じるボタン
@@ -108,6 +121,24 @@ extension BookSelectView {
         }
         .padding(.horizontal, 20)
         .padding(.top, 10)
+        .padding(.bottom, 10)
+    }
+    
+    // 教材追加ボタン
+    private var addMaterialButtons: some View {
+        Button(action: {
+            isAddingNewBook = true
+        }) {
+            Circle()
+                .fill(Color.mainColor0)
+                .frame(width: 80, height: 80)
+                .overlay(
+                    Image(systemName: "plus")
+                        .font(.system(size: 24, weight: .medium))
+                        .foregroundColor(.white)
+                )
+                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+        }
     }
     
     // MARK: - Private Methods
@@ -122,7 +153,3 @@ extension BookSelectView {
     }
 }
 
-#Preview {
-    BookSelectView()
-        .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-}

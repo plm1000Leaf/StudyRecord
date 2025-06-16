@@ -17,20 +17,47 @@ struct AddBookView: View {
     @Binding var labelList: [String]
     @Binding var isShowing: Bool
     
+    let onDismiss: () -> Void
+    
     private let maxCharacters = 20
     
     var body: some View {
-        HStack(spacing: 48) {
-            imageSelector
-            inputFields
-        }
-        .padding(.top, 40)
-        .onChange(of: selectedPhotoItem) { newItem in
-            loadSelectedImage(newItem)
-        }
-        .onAppear {
-            // ラベルリストの同期
-            syncLabelList()
+        ZStack{
+            
+            Color.black.opacity(0.5)
+                .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    // 背景タップでも閉じる
+                    onDismiss()
+                }
+            
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.baseColor10)
+                .frame(width: 344, height: 448)
+                .overlay(
+                    Button(action: {
+                        onDismiss()
+                    }) {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 16))
+                            .padding(16)
+                            .padding(.top, -8)
+                    },
+                    alignment: .topLeading
+                )
+            
+            VStack(spacing: 40) {
+                imageSelector
+                inputFields
+            }
+            .onChange(of: selectedPhotoItem) { newItem in
+                loadSelectedImage(newItem)
+            }
+            .onAppear {
+                // ラベルリストの同期
+                syncLabelList()
+            }
+            
         }
     }
 }
@@ -51,12 +78,8 @@ extension AddBookView {
     private func selectedImageView(_ image: UIImage) -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color.baseColor20)
+                .fill(Color.notCheckedColor20)
                 .frame(width: 144, height: 180)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.mainColor0, lineWidth: 4)
-                )
             
             ZStack(alignment: .bottomTrailing) {
                 Image(uiImage: image)
@@ -81,15 +104,11 @@ extension AddBookView {
         PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.baseColor20)
+                    .fill(Color.mainColor10)
                     .frame(width: 144, height: 180)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.mainColor0, lineWidth: 4)
-                    )
                 
                 Image(systemName: "photo.badge.plus.fill")
-                    .foregroundColor(.green)
+                    .foregroundColor(.white)
                     .font(.system(size: 40))
             }
         }
@@ -100,9 +119,13 @@ extension AddBookView {
 extension AddBookView {
     
     private var inputFields: some View {
-        VStack {
-            labelSelector
-            nameInputField
+        HStack{
+            VStack {
+                labelSelector
+                nameInputField
+            }
+            .padding(.top, 16)
+            .padding(.leading, 64)
             registerButton
         }
     }
@@ -142,7 +165,8 @@ extension AddBookView {
         BasicButton(label: "登録", width: 56, height: 40) {
             saveNewMaterial()
         }
-        .padding(.top, 8)
+        .padding(.top, 90)
+        .padding(.trailing, 48)
         .frame(maxWidth: .infinity, alignment: .trailing)
         .disabled(bookName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
     }
@@ -186,7 +210,8 @@ extension AddBookView {
         do {
             try viewContext.save()
             resetFields()
-            isShowing = false
+            // 保存成功後にビューを閉じる
+            onDismiss()
             print("✅ 新しい教材を保存: \(trimmedName) - \(selectedLabel)")
         } catch {
             print("❌ 新規教材保存エラー: \(error.localizedDescription)")
@@ -215,4 +240,9 @@ extension AddBookView {
             selectedLabel = ""
         }
     }
+}
+
+#Preview {
+    BookSelectView()
+        .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
 }
