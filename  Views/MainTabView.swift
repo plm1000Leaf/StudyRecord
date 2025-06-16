@@ -16,14 +16,13 @@ struct MainTabView: View {
     @Binding var navigateToReview: Bool
     @Binding var navigateToPlan: Bool
     
-    // 明日の予定専用のフラグを追加
     @State private var openTomorrowPlan = false
     
     var body: some View {
         TabView(selection: $selectedTabIndex){
             YearReviewView(showDateReviewView: $navigateToReview)
                 .tabItem {
-                    Image(systemName: "house.fill")
+                    Image(systemName: "rectangle.grid.2x2.fill")
                     Text("Review")
                 }
                 .tag(0)
@@ -35,7 +34,7 @@ struct MainTabView: View {
                 selectedDate: Calendar.current.startOfDay(for: Date())
             )
                 .tabItem {
-                    Image(systemName: "person.fill")
+                    Image(systemName: "checkmark")
                     Text("Check")
                 }
                 .tag(1)
@@ -45,18 +44,17 @@ struct MainTabView: View {
                 openTomorrowPlan: openTomorrowPlan
             )
                 .tabItem {
-                    Image(systemName: "gearshape.fill")
-                    Text("Study Plan")
+                    Image(systemName: "calendar")
+                    Text("Plan")
                 }
                 .tag(2)
         }
+        .tint(.mainColor0)
         .onChange(of: selectedTabIndex) { newIndex in
-            // タブ2（Study Plan）に遷移した時の処理
             if newIndex == 2 && navigateToPlan {
                 // AfterCheckViewからの明日の予定遷移かどうかを判定
                 openTomorrowPlan = true
                 
-                // フラグをリセット
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     navigateToPlan = false
                     openTomorrowPlan = false

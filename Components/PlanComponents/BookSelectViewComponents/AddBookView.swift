@@ -46,6 +46,7 @@ struct AddBookView: View {
                     alignment: .topLeading
                 )
             
+            
             VStack(spacing: 40) {
                 imageSelector
                 inputFields
