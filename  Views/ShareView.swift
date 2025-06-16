@@ -37,6 +37,9 @@ struct ShareView: View {
             }
         
         }
+        .onAppear {
+            loadContinuationDays()
+        }
     }
     
 }
