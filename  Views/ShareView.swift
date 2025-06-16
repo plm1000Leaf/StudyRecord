@@ -43,12 +43,26 @@ extension ShareView{
     }
     private var shereButton: some View {
         HStack(spacing: 24){
-            Rectangle()
-                .frame(width:88,height:88)
-            Rectangle()
-                .frame(width:88,height:88)
-            Rectangle()
-                .frame(width:88,height:88)
+//            Button(action: shareToX) {
+                Text("X")
+                    .font(.system(size: 40, weight: .bold))
+                    .foregroundColor(.white)
+                    .frame(width: 88, height: 88)
+                    .background(Color.black)
+                    .cornerRadius(12)
+//            }
+            Image(systemName: "camera")
+                .font(.system(size: 40))
+                .foregroundColor(.white)
+                .frame(width: 88, height: 88)
+                .background(.purple)
+                .cornerRadius(12)
+            Image(systemName: "ellipsis")
+                .font(.system(size: 40))
+                .foregroundColor(.white)
+                .frame(width: 88, height: 88)
+                .background(.notCheckedColor0)
+                .cornerRadius(12)
         }
         .padding(.bottom, 40)
     }
