@@ -6,16 +6,20 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ShareView: View {
     @Binding var isTapShareButton: Bool
+    @State private var continuationDays: Int = 0
+    @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var recordService = DailyRecordService.shared
     
     var body: some View {
         ZStack{
             Color.black.opacity(0.6)
                 .edgesIgnoringSafeArea(.all)
 
-            VStack(spacing: 56){
+            VStack(spacing: 40){
                 Button(action: {
                     isTapShareButton = false
                 }) {
@@ -28,7 +32,8 @@ struct ShareView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 screenShot
-                shereButton
+                continuationResult
+                shareButton
             }
         
         }
@@ -37,11 +42,21 @@ struct ShareView: View {
 }
 
 extension ShareView{
+    
+    private var continuationResult: some View {
+        VStack{
+            Text("継続日数")
+                .font(.system(size: 32))
+            Text("\(continuationDays)日")
+                .font(.system(size: 40))
+        }
+        .foregroundColor(.white)
+    }
     private var screenShot: some View {
         Rectangle()
             .frame(width:312,height:400)
     }
-    private var shereButton: some View {
+    private var shareButton: some View {
         HStack(spacing: 24){
 //            Button(action: shareToX) {
                 Text("X")
@@ -66,7 +81,13 @@ extension ShareView{
         }
         .padding(.bottom, 40)
     }
+    
+    // MARK: - Methods
+    
+    private func loadContinuationDays() {
+        continuationDays = recordService.calculateContinuationDays(context: viewContext)
+    }
 }
 //#Preview {
-//    ShareView(isTapShareButton: $isTapShareButton)
+//    ShareView(isTapShareButton: .constant(.true))
 //}
