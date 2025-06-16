@@ -244,9 +244,16 @@ extension DateReviewView {
                                 .frame(width: 88, height: 120)
                                 
                         } else {
-                            Rectangle()
-                                .frame(width: 88, height:  120)
-                                .foregroundColor(.mainColor0)
+                            ZStack{
+                                RoundedRectangle(cornerRadius: 8)
+                                    .foregroundColor(.notCheckedColor10)
+                                    .frame(width: 88, height:  120)
+                                Text("未設定")
+                                    .bold()
+                                    .font(.system(size: 16))
+                                    .foregroundColor(.baseColor20)
+                            }
+
                         }
                             
                             VStack(spacing: 8){
