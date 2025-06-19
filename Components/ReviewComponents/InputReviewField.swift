@@ -5,8 +5,8 @@ import CoreData
 struct InputReviewField: View {
     @Environment(\.managedObjectContext) private var viewContext
     @ObservedObject var dailyRecord: DailyRecord
-    
-    @Binding var reviewText: String 
+    @Binding var isTapShareButton: Bool
+    @Binding var reviewText: String
     @State private var isEditing: Bool = false
     private let maxCharacters = 35
     
@@ -57,10 +57,14 @@ extension InputReviewField {
     
     private var displayReviewButton: some View {
         HStack(spacing: 120) {
-            Image(systemName:"square.and.arrow.up")
-                .font(.system(size: 24))
-                .frame(width: 32, height: 32)
-                .foregroundColor(.gray0)
+            Button(action: {
+                isTapShareButton = true
+            }) {
+                Image(systemName:"square.and.arrow.up")
+                    .font(.system(size: 24))
+                    .frame(width: 32, height: 32)
+                    .foregroundColor(.gray0)
+            }
             Button(action: {
                 isEditing.toggle()
             }) {

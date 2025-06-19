@@ -11,6 +11,7 @@ struct YearReviewGraphView: View {
     @Binding var selectedSegment: Int
     @State private var showPopup = false
     @State private var selectedYear = 2025
+    @State private var isTapShareButton = false
     
     var body: some View {
         ZStack{
@@ -25,6 +26,9 @@ struct YearReviewGraphView: View {
                         showPopup = false
                     }
                 )
+            }
+            if isTapShareButton {
+                ShareView(isTapShareButton: $isTapShareButton)
             }
         }
     }
@@ -62,10 +66,12 @@ extension YearReviewGraphView {
                 }
             }
             Spacer()
-            Image(systemName: "square.and.arrow.up")
-                .font(.system(size: 24))
-                .frame(maxWidth: .infinity, alignment:
-                        .trailing)
+            Button(action: {isTapShareButton = true }){
+                Image(systemName: "square.and.arrow.up")
+                    .font(.system(size: 24))
+                    .frame(maxWidth: .infinity, alignment:
+                            .trailing)
+            }
         }
         .padding(.top, 8)
         .padding(.bottom, 24)

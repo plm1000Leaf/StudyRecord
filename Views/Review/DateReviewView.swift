@@ -8,6 +8,7 @@ struct DateReviewView: View {
     @State private var selectedRowIndex: Int? = nil
     @State private var isTapEditButton = false
     @State private var userInput: String = ""
+    @State private var isTapShareButton = false
     @State private var reviews: [Int: String] = [:]
     @State private var materialNames: [Int: String] = [:]
     @State private var materialImages: [Int: UIImage] = [:]
@@ -22,6 +23,7 @@ struct DateReviewView: View {
     var isFromAfterCheck: Bool = false
 
     var body: some View {
+        ZStack{
         VStack{
             DateReviewHeader
             
@@ -53,6 +55,10 @@ struct DateReviewView: View {
             }
         }
         .background(Color.baseColor0)
+            if isTapShareButton {
+                ShareView(isTapShareButton: $isTapShareButton)
+            }
+    }
     }
     
     // MARK: - Private Methods
@@ -66,7 +72,7 @@ struct DateReviewView: View {
             let calendar = Calendar.current
             if calendar.isDate(today, equalTo: currentMonth, toGranularity: .month) {
                 let todayDay = calendar.component(.day, from: today)
-                let todayIndex = todayDay - 1 // 0ベースのインデックスに変換
+                let todayIndex = todayDay - 1
                 selectedRowIndex = todayIndex
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -289,7 +295,7 @@ extension DateReviewView {
                         
                         
                         InputReviewField(
-                            dailyRecord: record(for: index),
+                            dailyRecord: record(for: index), isTapShareButton:  $isTapShareButton,
                             reviewText: Binding(
                                 get: { reviews[index] ?? (record(for: index).review ?? "") },
                                 set: { reviews[index] = $0 }
