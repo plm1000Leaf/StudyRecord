@@ -7,89 +7,104 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		282A22792D66E390005C789C /* StudyPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A22782D66E390005C789C /* StudyPlanView.swift */; };
-		282A227C2D66F46F005C789C /* BasicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A227B2D66F46F005C789C /* BasicButton.swift */; };
-		282A227E2D66F9B6005C789C /* PlanSettingWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A227D2D66F9B6005C789C /* PlanSettingWindowView.swift */; };
-		282A22802D682411005C789C /* PlanningCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A227F2D682411005C789C /* PlanningCalendar.swift */; };
-		282A22822D684B89005C789C /* BookSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A22812D684B89005C789C /* BookSelectView.swift */; };
-		282A22842D6973B8005C789C /* DateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A22832D6973B7005C789C /* DateReviewView.swift */; };
-		282A22892D6D8777005C789C /* MonthReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A22882D6D8776005C789C /* MonthReviewView.swift */; };
-		282A228B2D6ED09C005C789C /* YearReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282A228A2D6ED09C005C789C /* YearReviewView.swift */; };
-		2841A8412D71BFA300275EFF /* InputStudyRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2841A8402D71BFA300275EFF /* InputStudyRange.swift */; };
-		2841A8432D79A6BB00275EFF /* MonthReviewCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2841A8422D79A6BB00275EFF /* MonthReviewCalendar.swift */; };
-		2841A8462D79AC4900275EFF /* CalendarUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2841A8452D79AC4900275EFF /* CalendarUtils.swift */; };
-		285A37122D65A01B00190B84 /* BeforeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A37112D65A01B00190B84 /* BeforeCheckView.swift */; };
-		288EEEE02D647134001FACBC /* StudyRecordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288EEEDF2D647134001FACBC /* StudyRecordApp.swift */; };
-		288EEEE22D647134001FACBC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288EEEE12D647134001FACBC /* ContentView.swift */; };
-		288EEEE42D647137001FACBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 288EEEE32D647137001FACBC /* Assets.xcassets */; };
-		288EEEE72D647137001FACBC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 288EEEE62D647137001FACBC /* Preview Assets.xcassets */; };
-		28A5760F2DD713E60085BCA5 /* DailyRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A576092DD713E60085BCA5 /* DailyRecord.swift */; };
-		28A576102DD713E60085BCA5 /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A5760A2DD713E60085BCA5 /* Material.swift */; };
-		28A576112DD713E60085BCA5 /* MonthlyRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A5760B2DD713E60085BCA5 /* MonthlyRecord.swift */; };
-		28A576122DD713E60085BCA5 /* StudyRecordModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 28A5760C2DD713E60085BCA5 /* StudyRecordModel.xcdatamodeld */; };
-		28A576132DD713E60085BCA5 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A5760E2DD713E60085BCA5 /* PersistenceController.swift */; };
-		28A576152DD7140B0085BCA5 /* LabelSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A576142DD7140B0085BCA5 /* LabelSelector.swift */; };
-		28A576172DD714310085BCA5 /* CustomRoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A576162DD714310085BCA5 /* CustomRoundedCorner.swift */; };
-		28A576192DD714530085BCA5 /* YearReviewGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A576182DD714530085BCA5 /* YearReviewGraph.swift */; };
-		28A5761D2DD87D9A0085BCA5 /* DailyRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A5761C2DD87D9A0085BCA5 /* DailyRecordManager.swift */; };
-		28A576232DDDA6D80085BCA5 /* MaterialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A576222DDDA6D80085BCA5 /* MaterialManager.swift */; };
-		28BB8D4E2DF6991F0070D908 /* MonthlyRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BB8D4D2DF6991F0070D908 /* MonthlyRecordManager.swift */; };
-		28BB8D502DF6AEB90070D908 /* DebugDateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BB8D4F2DF6AEB90070D908 /* DebugDateManager.swift */; };
-		28BDAC222D70302A0033FA2F /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BDAC212D70302A0033FA2F /* MainTabView.swift */; };
-		28CD81A92D65BD8000894BF8 /* AfterCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */; };
-		28EE76AA2D83D5960072747C /* SegmentedControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76A92D83D5960072747C /* SegmentedControlButton.swift */; };
-		28EE76AC2D83D8C30072747C /* YearReviewGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76AB2D83D8C30072747C /* YearReviewGraphView.swift */; };
-		28EE76AE2D83E3EB0072747C /* InputReviewField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76AD2D83E3EB0072747C /* InputReviewField.swift */; };
-		28EE76B02D8937360072747C /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76AF2D8937360072747C /* CustomTextEditor.swift */; };
-		28EE76B22D8948D70072747C /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76B12D8948D70072747C /* SwitchButton.swift */; };
-		28EE76B42D895E8E0072747C /* PullDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76B32D895E8E0072747C /* PullDown.swift */; };
-		28EE76B82D93B52D0072747C /* MovePeriodPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EE76B72D93B52D0072747C /* MovePeriodPopup.swift */; };
-		28F3633D2DEFC636007F32AC /* DailyRecordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F3633C2DEFC636007F32AC /* DailyRecordService.swift */; };
-		28FAA01D2D812AC900411760 /* TimeSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FAA01C2D812AC900411760 /* TimeSelectButton.swift */; };
+		2875E9F52E0415C100D9B0FC /* StudyRecordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9AF2E0415C000D9B0FC /* StudyRecordApp.swift */; };
+		2875E9F62E0415C100D9B0FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2875E9B32E0415C000D9B0FC /* Assets.xcassets */; };
+		2875E9F72E0415C100D9B0FC /* DebugDateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9B52E0415C000D9B0FC /* DebugDateManager.swift */; };
+		2875E9F82E0415C100D9B0FC /* GraphDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9B62E0415C000D9B0FC /* GraphDataService.swift */; };
+		2875E9F92E0415C100D9B0FC /* DailyRecordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9B72E0415C000D9B0FC /* DailyRecordService.swift */; };
+		2875E9FA2E0415C100D9B0FC /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9B82E0415C000D9B0FC /* CustomTextEditor.swift */; };
+		2875E9FB2E0415C100D9B0FC /* CalendarUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9B92E0415C000D9B0FC /* CalendarUtils.swift */; };
+		2875E9FC2E0415C100D9B0FC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2875E9BB2E0415C000D9B0FC /* Preview Assets.xcassets */; };
+		2875E9FD2E0415C100D9B0FC /* PlanningCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9BE2E0415C000D9B0FC /* PlanningCalendar.swift */; };
+		2875E9FE2E0415C100D9B0FC /* LabelSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9BF2E0415C000D9B0FC /* LabelSelector.swift */; };
+		2875E9FF2E0415C100D9B0FC /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C12E0415C000D9B0FC /* AddBookView.swift */; };
+		2875EA002E0415C100D9B0FC /* MaterialSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C22E0415C000D9B0FC /* MaterialSectionView.swift */; };
+		2875EA012E0415C100D9B0FC /* MaterialCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C32E0415C000D9B0FC /* MaterialCardView.swift */; };
+		2875EA022E0415C100D9B0FC /* AddBookButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C42E0415C000D9B0FC /* AddBookButton.swift */; };
+		2875EA032E0415C100D9B0FC /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C62E0415C000D9B0FC /* SwitchButton.swift */; };
+		2875EA042E0415C100D9B0FC /* YearReviewGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C72E0415C000D9B0FC /* YearReviewGraph.swift */; };
+		2875EA052E0415C100D9B0FC /* MonthReviewCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C82E0415C000D9B0FC /* MonthReviewCalendar.swift */; };
+		2875EA062E0415C100D9B0FC /* InputReviewField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C92E0415C000D9B0FC /* InputReviewField.swift */; };
+		2875EA072E0415C100D9B0FC /* SegmentedControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9CA2E0415C000D9B0FC /* SegmentedControlButton.swift */; };
+		2875EA082E0415C100D9B0FC /* InputStudyRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9CC2E0415C000D9B0FC /* InputStudyRange.swift */; };
+		2875EA092E0415C100D9B0FC /* MovePeriodPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9CD2E0415C000D9B0FC /* MovePeriodPopup.swift */; };
+		2875EA0A2E0415C100D9B0FC /* BasicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9CE2E0415C000D9B0FC /* BasicButton.swift */; };
+		2875EA0B2E0415C100D9B0FC /* TimeSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9CF2E0415C000D9B0FC /* TimeSelectButton.swift */; };
+		2875EA0C2E0415C100D9B0FC /* CustomRoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9D02E0415C000D9B0FC /* CustomRoundedCorner.swift */; };
+		2875EA0D2E0415C100D9B0FC /* PullDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9D12E0415C000D9B0FC /* PullDown.swift */; };
+		2875EA0E2E0415C100D9B0FC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2875E9D22E0415C000D9B0FC /* .gitignore */; };
+		2875EA0F2E0415C100D9B0FC /* MonthlyRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9D42E0415C000D9B0FC /* MonthlyRecordManager.swift */; };
+		2875EA102E0415C100D9B0FC /* DailyRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9D52E0415C000D9B0FC /* DailyRecordManager.swift */; };
+		2875EA112E0415C100D9B0FC /* DailyRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9D62E0415C000D9B0FC /* DailyRecord.swift */; };
+		2875EA122E0415C100D9B0FC /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9D72E0415C000D9B0FC /* Material.swift */; };
+		2875EA132E0415C100D9B0FC /* MonthlyRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9D82E0415C000D9B0FC /* MonthlyRecord.swift */; };
+		2875EA142E0415C100D9B0FC /* StudyRecordModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9D92E0415C000D9B0FC /* StudyRecordModel.xcdatamodeld */; };
+		2875EA152E0415C100D9B0FC /* MaterialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9DB2E0415C000D9B0FC /* MaterialManager.swift */; };
+		2875EA162E0415C100D9B0FC /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9DC2E0415C000D9B0FC /* PersistenceController.swift */; };
+		2875EA172E0415C100D9B0FC /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9DE2E0415C000D9B0FC /* MainTabView.swift */; };
+		2875EA182E0415C100D9B0FC /* StudyPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9E02E0415C000D9B0FC /* StudyPlanView.swift */; };
+		2875EA192E0415C100D9B0FC /* PlanSettingWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9E12E0415C000D9B0FC /* PlanSettingWindowView.swift */; };
+		2875EA1A2E0415C100D9B0FC /* BookSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9E22E0415C000D9B0FC /* BookSelectView.swift */; };
+		2875EA1B2E0415C100D9B0FC /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9E32E0415C000D9B0FC /* ShareView.swift */; };
+		2875EA1C2E0415C100D9B0FC /* DateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9E52E0415C000D9B0FC /* DateReviewView.swift */; };
+		2875EA1D2E0415C100D9B0FC /* YearReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9E62E0415C000D9B0FC /* YearReviewView.swift */; };
+		2875EA1E2E0415C100D9B0FC /* YearReviewGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9E72E0415C000D9B0FC /* YearReviewGraphView.swift */; };
+		2875EA1F2E0415C100D9B0FC /* MonthReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9E82E0415C000D9B0FC /* MonthReviewView.swift */; };
+		2875EA202E0415C100D9B0FC /* BeforeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9EA2E0415C000D9B0FC /* BeforeCheckView.swift */; };
+		2875EA212E0415C100D9B0FC /* AfterCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9EB2E0415C000D9B0FC /* AfterCheckView.swift */; };
+		2875EA222E0415C100D9B0FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9EC2E0415C000D9B0FC /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		282A22782D66E390005C789C /* StudyPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyPlanView.swift; sourceTree = "<group>"; };
-		282A227B2D66F46F005C789C /* BasicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicButton.swift; sourceTree = "<group>"; };
-		282A227D2D66F9B6005C789C /* PlanSettingWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSettingWindowView.swift; sourceTree = "<group>"; };
-		282A227F2D682411005C789C /* PlanningCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanningCalendar.swift; sourceTree = "<group>"; };
-		282A22812D684B89005C789C /* BookSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSelectView.swift; sourceTree = "<group>"; };
-		282A22832D6973B7005C789C /* DateReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateReviewView.swift; sourceTree = "<group>"; };
-		282A22882D6D8776005C789C /* MonthReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthReviewView.swift; sourceTree = "<group>"; };
-		282A228A2D6ED09C005C789C /* YearReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearReviewView.swift; sourceTree = "<group>"; };
-		2841A8402D71BFA300275EFF /* InputStudyRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputStudyRange.swift; sourceTree = "<group>"; };
-		2841A8422D79A6BB00275EFF /* MonthReviewCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthReviewCalendar.swift; sourceTree = "<group>"; };
-		2841A8452D79AC4900275EFF /* CalendarUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarUtils.swift; sourceTree = "<group>"; };
-		285A37112D65A01B00190B84 /* BeforeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeCheckView.swift; sourceTree = "<group>"; };
+		2875E9AF2E0415C000D9B0FC /* StudyRecordApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyRecordApp.swift; sourceTree = "<group>"; };
+		2875E9B02E0415C000D9B0FC /* StudyRecord.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = StudyRecord.xcodeproj; sourceTree = "<group>"; };
+		2875E9B32E0415C000D9B0FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2875E9B52E0415C000D9B0FC /* DebugDateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugDateManager.swift; sourceTree = "<group>"; };
+		2875E9B62E0415C000D9B0FC /* GraphDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphDataService.swift; sourceTree = "<group>"; };
+		2875E9B72E0415C000D9B0FC /* DailyRecordService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyRecordService.swift; sourceTree = "<group>"; };
+		2875E9B82E0415C000D9B0FC /* CustomTextEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
+		2875E9B92E0415C000D9B0FC /* CalendarUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarUtils.swift; sourceTree = "<group>"; };
+		2875E9BB2E0415C000D9B0FC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2875E9BE2E0415C000D9B0FC /* PlanningCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanningCalendar.swift; sourceTree = "<group>"; };
+		2875E9BF2E0415C000D9B0FC /* LabelSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelSelector.swift; sourceTree = "<group>"; };
+		2875E9C12E0415C000D9B0FC /* AddBookView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookView.swift; sourceTree = "<group>"; };
+		2875E9C22E0415C000D9B0FC /* MaterialSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialSectionView.swift; sourceTree = "<group>"; };
+		2875E9C32E0415C000D9B0FC /* MaterialCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialCardView.swift; sourceTree = "<group>"; };
+		2875E9C42E0415C000D9B0FC /* AddBookButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookButton.swift; sourceTree = "<group>"; };
+		2875E9C62E0415C000D9B0FC /* SwitchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
+		2875E9C72E0415C000D9B0FC /* YearReviewGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearReviewGraph.swift; sourceTree = "<group>"; };
+		2875E9C82E0415C000D9B0FC /* MonthReviewCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthReviewCalendar.swift; sourceTree = "<group>"; };
+		2875E9C92E0415C000D9B0FC /* InputReviewField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputReviewField.swift; sourceTree = "<group>"; };
+		2875E9CA2E0415C000D9B0FC /* SegmentedControlButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlButton.swift; sourceTree = "<group>"; };
+		2875E9CC2E0415C000D9B0FC /* InputStudyRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputStudyRange.swift; sourceTree = "<group>"; };
+		2875E9CD2E0415C000D9B0FC /* MovePeriodPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovePeriodPopup.swift; sourceTree = "<group>"; };
+		2875E9CE2E0415C000D9B0FC /* BasicButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicButton.swift; sourceTree = "<group>"; };
+		2875E9CF2E0415C000D9B0FC /* TimeSelectButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSelectButton.swift; sourceTree = "<group>"; };
+		2875E9D02E0415C000D9B0FC /* CustomRoundedCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRoundedCorner.swift; sourceTree = "<group>"; };
+		2875E9D12E0415C000D9B0FC /* PullDown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullDown.swift; sourceTree = "<group>"; };
+		2875E9D22E0415C000D9B0FC /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		2875E9D42E0415C000D9B0FC /* MonthlyRecordManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthlyRecordManager.swift; sourceTree = "<group>"; };
+		2875E9D52E0415C000D9B0FC /* DailyRecordManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyRecordManager.swift; sourceTree = "<group>"; };
+		2875E9D62E0415C000D9B0FC /* DailyRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyRecord.swift; sourceTree = "<group>"; };
+		2875E9D72E0415C000D9B0FC /* Material.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
+		2875E9D82E0415C000D9B0FC /* MonthlyRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthlyRecord.swift; sourceTree = "<group>"; };
+		2875E9DA2E0415C000D9B0FC /* StudyRecordModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StudyRecordModel.xcdatamodel; sourceTree = "<group>"; };
+		2875E9DB2E0415C000D9B0FC /* MaterialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialManager.swift; sourceTree = "<group>"; };
+		2875E9DC2E0415C000D9B0FC /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		2875E9DE2E0415C000D9B0FC /* MainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		2875E9E02E0415C000D9B0FC /* StudyPlanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyPlanView.swift; sourceTree = "<group>"; };
+		2875E9E12E0415C000D9B0FC /* PlanSettingWindowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanSettingWindowView.swift; sourceTree = "<group>"; };
+		2875E9E22E0415C000D9B0FC /* BookSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookSelectView.swift; sourceTree = "<group>"; };
+		2875E9E32E0415C000D9B0FC /* ShareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
+		2875E9E52E0415C000D9B0FC /* DateReviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateReviewView.swift; sourceTree = "<group>"; };
+		2875E9E62E0415C000D9B0FC /* YearReviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearReviewView.swift; sourceTree = "<group>"; };
+		2875E9E72E0415C000D9B0FC /* YearReviewGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearReviewGraphView.swift; sourceTree = "<group>"; };
+		2875E9E82E0415C000D9B0FC /* MonthReviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthReviewView.swift; sourceTree = "<group>"; };
+		2875E9EA2E0415C000D9B0FC /* BeforeCheckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeforeCheckView.swift; sourceTree = "<group>"; };
+		2875E9EB2E0415C000D9B0FC /* AfterCheckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AfterCheckView.swift; sourceTree = "<group>"; };
+		2875E9EC2E0415C000D9B0FC /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2875E9ED2E0415C000D9B0FC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		288EEEDC2D647134001FACBC /* StudyRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		288EEEDF2D647134001FACBC /* StudyRecordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordApp.swift; sourceTree = "<group>"; };
-		288EEEE12D647134001FACBC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		288EEEE32D647137001FACBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		288EEEE62D647137001FACBC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		28A576092DD713E60085BCA5 /* DailyRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyRecord.swift; sourceTree = "<group>"; };
-		28A5760A2DD713E60085BCA5 /* Material.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
-		28A5760B2DD713E60085BCA5 /* MonthlyRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthlyRecord.swift; sourceTree = "<group>"; };
-		28A5760D2DD713E60085BCA5 /* StudyRecordModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StudyRecordModel.xcdatamodel; sourceTree = "<group>"; };
-		28A5760E2DD713E60085BCA5 /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
-		28A576142DD7140B0085BCA5 /* LabelSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelSelector.swift; sourceTree = "<group>"; };
-		28A576162DD714310085BCA5 /* CustomRoundedCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRoundedCorner.swift; sourceTree = "<group>"; };
-		28A576182DD714530085BCA5 /* YearReviewGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearReviewGraph.swift; sourceTree = "<group>"; };
-		28A5761C2DD87D9A0085BCA5 /* DailyRecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRecordManager.swift; sourceTree = "<group>"; };
-		28A576212DDC83AD0085BCA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		28A576222DDDA6D80085BCA5 /* MaterialManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialManager.swift; sourceTree = "<group>"; };
-		28BB8D4D2DF6991F0070D908 /* MonthlyRecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyRecordManager.swift; sourceTree = "<group>"; };
-		28BB8D4F2DF6AEB90070D908 /* DebugDateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugDateManager.swift; sourceTree = "<group>"; };
-		28BDAC212D70302A0033FA2F /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
-		28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterCheckView.swift; sourceTree = "<group>"; };
-		28EE76A92D83D5960072747C /* SegmentedControlButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlButton.swift; sourceTree = "<group>"; };
-		28EE76AB2D83D8C30072747C /* YearReviewGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearReviewGraphView.swift; sourceTree = "<group>"; };
-		28EE76AD2D83E3EB0072747C /* InputReviewField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputReviewField.swift; sourceTree = "<group>"; };
-		28EE76AF2D8937360072747C /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
-		28EE76B12D8948D70072747C /* SwitchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
-		28EE76B32D895E8E0072747C /* PullDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullDown.swift; sourceTree = "<group>"; };
-		28EE76B72D93B52D0072747C /* MovePeriodPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovePeriodPopup.swift; sourceTree = "<group>"; };
-		28F3633C2DEFC636007F32AC /* DailyRecordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRecordService.swift; sourceTree = "<group>"; };
-		28FAA01C2D812AC900411760 /* TimeSelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSelectButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,72 +118,166 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		282A227A2D66F3AA005C789C /* Components */ = {
+		2875E9A42E0415C000D9B0FC /* StudyRecord */ = {
 			isa = PBXGroup;
 			children = (
-				28EE76BB2D93DFBA0072747C /*  CommonComponents */,
-				28EE76BA2D93DEF60072747C /* PlanComponents */,
-				28EE76B92D93DE790072747C /* ReviewComponents */,
+				2875E9AF2E0415C000D9B0FC /* StudyRecordApp.swift */,
+				2875E9B02E0415C000D9B0FC /* StudyRecord.xcodeproj */,
+				2875E9B32E0415C000D9B0FC /* Assets.xcassets */,
+				2875E9B42E0415C000D9B0FC /* Utils */,
+				2875E9BA2E0415C000D9B0FC /* Preview Content */,
+				2875E9BC2E0415C000D9B0FC /* Components */,
+				2875E9D22E0415C000D9B0FC /* .gitignore */,
+				2875E9D32E0415C000D9B0FC /* Data */,
+				2875E9DD2E0415C000D9B0FC /* Views */,
+				2875E9EC2E0415C000D9B0FC /* ContentView.swift */,
+				2875E9ED2E0415C000D9B0FC /* Info.plist */,
 			);
-			path = Components;
+			name = StudyRecord;
 			sourceTree = "<group>";
 		};
-		282A22852D6973C8005C789C /* Check */ = {
+		2875E9B12E0415C000D9B0FC /* Products */ = {
 			isa = PBXGroup;
-			children = (
-				285A37112D65A01B00190B84 /* BeforeCheckView.swift */,
-				28CD81A82D65BD8000894BF8 /* AfterCheckView.swift */,
-			);
-			path = Check;
+			name = Products;
 			sourceTree = "<group>";
 		};
-		282A22862D6973DD005C789C /* Plan */ = {
+		2875E9B42E0415C000D9B0FC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				282A22782D66E390005C789C /* StudyPlanView.swift */,
-				282A22812D684B89005C789C /* BookSelectView.swift */,
-				282A227D2D66F9B6005C789C /* PlanSettingWindowView.swift */,
-			);
-			path = Plan;
-			sourceTree = "<group>";
-		};
-		282A22872D6973FD005C789C /* Review */ = {
-			isa = PBXGroup;
-			children = (
-				282A22832D6973B7005C789C /* DateReviewView.swift */,
-				282A22882D6D8776005C789C /* MonthReviewView.swift */,
-				282A228A2D6ED09C005C789C /* YearReviewView.swift */,
-				28EE76AB2D83D8C30072747C /* YearReviewGraphView.swift */,
-			);
-			path = Review;
-			sourceTree = "<group>";
-		};
-		2841A8442D79ABD500275EFF /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				2841A8452D79AC4900275EFF /* CalendarUtils.swift */,
-				28EE76AF2D8937360072747C /* CustomTextEditor.swift */,
-				28F3633C2DEFC636007F32AC /* DailyRecordService.swift */,
-				28BB8D4F2DF6AEB90070D908 /* DebugDateManager.swift */,
+				2875E9B52E0415C000D9B0FC /* DebugDateManager.swift */,
+				2875E9B62E0415C000D9B0FC /* GraphDataService.swift */,
+				2875E9B72E0415C000D9B0FC /* DailyRecordService.swift */,
+				2875E9B82E0415C000D9B0FC /* CustomTextEditor.swift */,
+				2875E9B92E0415C000D9B0FC /* CalendarUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		285A37102D659FA800190B84 /*  Views */ = {
+		2875E9BA2E0415C000D9B0FC /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				28BDAC212D70302A0033FA2F /* MainTabView.swift */,
-				282A22872D6973FD005C789C /* Review */,
-				282A22862D6973DD005C789C /* Plan */,
-				282A22852D6973C8005C789C /* Check */,
+				2875E9BB2E0415C000D9B0FC /* Preview Assets.xcassets */,
 			);
-			path = " Views";
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2875E9BC2E0415C000D9B0FC /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				2875E9BD2E0415C000D9B0FC /* PlanComponents */,
+				2875E9C52E0415C000D9B0FC /* ReviewComponents */,
+				2875E9CB2E0415C000D9B0FC /* CommonComponents */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		2875E9BD2E0415C000D9B0FC /* PlanComponents */ = {
+			isa = PBXGroup;
+			children = (
+				2875E9BE2E0415C000D9B0FC /* PlanningCalendar.swift */,
+				2875E9BF2E0415C000D9B0FC /* LabelSelector.swift */,
+				2875E9C02E0415C000D9B0FC /* BookSelectViewComponents */,
+			);
+			path = PlanComponents;
+			sourceTree = "<group>";
+		};
+		2875E9C02E0415C000D9B0FC /* BookSelectViewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				2875E9C12E0415C000D9B0FC /* AddBookView.swift */,
+				2875E9C22E0415C000D9B0FC /* MaterialSectionView.swift */,
+				2875E9C32E0415C000D9B0FC /* MaterialCardView.swift */,
+				2875E9C42E0415C000D9B0FC /* AddBookButton.swift */,
+			);
+			path = BookSelectViewComponents;
+			sourceTree = "<group>";
+		};
+		2875E9C52E0415C000D9B0FC /* ReviewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				2875E9C62E0415C000D9B0FC /* SwitchButton.swift */,
+				2875E9C72E0415C000D9B0FC /* YearReviewGraph.swift */,
+				2875E9C82E0415C000D9B0FC /* MonthReviewCalendar.swift */,
+				2875E9C92E0415C000D9B0FC /* InputReviewField.swift */,
+				2875E9CA2E0415C000D9B0FC /* SegmentedControlButton.swift */,
+			);
+			path = ReviewComponents;
+			sourceTree = "<group>";
+		};
+		2875E9CB2E0415C000D9B0FC /* CommonComponents */ = {
+			isa = PBXGroup;
+			children = (
+				2875E9CC2E0415C000D9B0FC /* InputStudyRange.swift */,
+				2875E9CD2E0415C000D9B0FC /* MovePeriodPopup.swift */,
+				2875E9CE2E0415C000D9B0FC /* BasicButton.swift */,
+				2875E9CF2E0415C000D9B0FC /* TimeSelectButton.swift */,
+				2875E9D02E0415C000D9B0FC /* CustomRoundedCorner.swift */,
+				2875E9D12E0415C000D9B0FC /* PullDown.swift */,
+			);
+			path = CommonComponents;
+			sourceTree = "<group>";
+		};
+		2875E9D32E0415C000D9B0FC /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				2875E9D42E0415C000D9B0FC /* MonthlyRecordManager.swift */,
+				2875E9D52E0415C000D9B0FC /* DailyRecordManager.swift */,
+				2875E9D62E0415C000D9B0FC /* DailyRecord.swift */,
+				2875E9D72E0415C000D9B0FC /* Material.swift */,
+				2875E9D82E0415C000D9B0FC /* MonthlyRecord.swift */,
+				2875E9D92E0415C000D9B0FC /* StudyRecordModel.xcdatamodeld */,
+				2875E9DB2E0415C000D9B0FC /* MaterialManager.swift */,
+				2875E9DC2E0415C000D9B0FC /* PersistenceController.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		2875E9DD2E0415C000D9B0FC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2875E9DE2E0415C000D9B0FC /* MainTabView.swift */,
+				2875E9DF2E0415C000D9B0FC /* Plan */,
+				2875E9E32E0415C000D9B0FC /* ShareView.swift */,
+				2875E9E42E0415C000D9B0FC /* Review */,
+				2875E9E92E0415C000D9B0FC /* Check */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2875E9DF2E0415C000D9B0FC /* Plan */ = {
+			isa = PBXGroup;
+			children = (
+				2875E9E02E0415C000D9B0FC /* StudyPlanView.swift */,
+				2875E9E12E0415C000D9B0FC /* PlanSettingWindowView.swift */,
+				2875E9E22E0415C000D9B0FC /* BookSelectView.swift */,
+			);
+			path = Plan;
+			sourceTree = "<group>";
+		};
+		2875E9E42E0415C000D9B0FC /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				2875E9E52E0415C000D9B0FC /* DateReviewView.swift */,
+				2875E9E62E0415C000D9B0FC /* YearReviewView.swift */,
+				2875E9E72E0415C000D9B0FC /* YearReviewGraphView.swift */,
+				2875E9E82E0415C000D9B0FC /* MonthReviewView.swift */,
+			);
+			path = Review;
+			sourceTree = "<group>";
+		};
+		2875E9E92E0415C000D9B0FC /* Check */ = {
+			isa = PBXGroup;
+			children = (
+				2875E9EA2E0415C000D9B0FC /* BeforeCheckView.swift */,
+				2875E9EB2E0415C000D9B0FC /* AfterCheckView.swift */,
+			);
+			path = Check;
 			sourceTree = "<group>";
 		};
 		288EEED32D647134001FACBC = {
 			isa = PBXGroup;
 			children = (
-				288EEEDE2D647134001FACBC /* StudyRecord */,
+				2875E9A42E0415C000D9B0FC /* StudyRecord */,
 				288EEEDD2D647134001FACBC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -179,79 +288,6 @@
 				288EEEDC2D647134001FACBC /* StudyRecord.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		288EEEDE2D647134001FACBC /* StudyRecord */ = {
-			isa = PBXGroup;
-			children = (
-				28A576212DDC83AD0085BCA5 /* Info.plist */,
-				28A576082DD713E60085BCA5 /* Data */,
-				2841A8442D79ABD500275EFF /* Utils */,
-				282A227A2D66F3AA005C789C /* Components */,
-				285A37102D659FA800190B84 /*  Views */,
-				288EEEDF2D647134001FACBC /* StudyRecordApp.swift */,
-				288EEEE12D647134001FACBC /* ContentView.swift */,
-				288EEEE32D647137001FACBC /* Assets.xcassets */,
-				288EEEE52D647137001FACBC /* Preview Content */,
-			);
-			path = StudyRecord;
-			sourceTree = "<group>";
-		};
-		288EEEE52D647137001FACBC /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				288EEEE62D647137001FACBC /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		28A576082DD713E60085BCA5 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				28A5760C2DD713E60085BCA5 /* StudyRecordModel.xcdatamodeld */,
-				28A576092DD713E60085BCA5 /* DailyRecord.swift */,
-				28A5760A2DD713E60085BCA5 /* Material.swift */,
-				28A5760B2DD713E60085BCA5 /* MonthlyRecord.swift */,
-				28A5760E2DD713E60085BCA5 /* PersistenceController.swift */,
-				28A576222DDDA6D80085BCA5 /* MaterialManager.swift */,
-				28A5761C2DD87D9A0085BCA5 /* DailyRecordManager.swift */,
-				28BB8D4D2DF6991F0070D908 /* MonthlyRecordManager.swift */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		28EE76B92D93DE790072747C /* ReviewComponents */ = {
-			isa = PBXGroup;
-			children = (
-				28A576182DD714530085BCA5 /* YearReviewGraph.swift */,
-				28EE76B12D8948D70072747C /* SwitchButton.swift */,
-				28EE76A92D83D5960072747C /* SegmentedControlButton.swift */,
-				2841A8422D79A6BB00275EFF /* MonthReviewCalendar.swift */,
-				28EE76AD2D83E3EB0072747C /* InputReviewField.swift */,
-			);
-			path = ReviewComponents;
-			sourceTree = "<group>";
-		};
-		28EE76BA2D93DEF60072747C /* PlanComponents */ = {
-			isa = PBXGroup;
-			children = (
-				28A576142DD7140B0085BCA5 /* LabelSelector.swift */,
-				282A227F2D682411005C789C /* PlanningCalendar.swift */,
-			);
-			path = PlanComponents;
-			sourceTree = "<group>";
-		};
-		28EE76BB2D93DFBA0072747C /*  CommonComponents */ = {
-			isa = PBXGroup;
-			children = (
-				28A576162DD714310085BCA5 /* CustomRoundedCorner.swift */,
-				282A227B2D66F46F005C789C /* BasicButton.swift */,
-				28EE76B32D895E8E0072747C /* PullDown.swift */,
-				28FAA01C2D812AC900411760 /* TimeSelectButton.swift */,
-				28EE76B72D93B52D0072747C /* MovePeriodPopup.swift */,
-				2841A8402D71BFA300275EFF /* InputStudyRange.swift */,
-			);
-			path = " CommonComponents";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,6 +336,12 @@
 			mainGroup = 288EEED32D647134001FACBC;
 			productRefGroup = 288EEEDD2D647134001FACBC /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 2875E9B12E0415C000D9B0FC /* Products */;
+					ProjectRef = 2875E9B02E0415C000D9B0FC /* StudyRecord.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				288EEEDB2D647134001FACBC /* StudyRecord */,
@@ -312,8 +354,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				288EEEE72D647137001FACBC /* Preview Assets.xcassets in Resources */,
-				288EEEE42D647137001FACBC /* Assets.xcassets in Resources */,
+				2875EA0E2E0415C100D9B0FC /* .gitignore in Resources */,
+				2875E9FC2E0415C100D9B0FC /* Preview Assets.xcassets in Resources */,
+				2875E9F62E0415C100D9B0FC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,43 +367,49 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2841A8462D79AC4900275EFF /* CalendarUtils.swift in Sources */,
-				28A576122DD713E60085BCA5 /* StudyRecordModel.xcdatamodeld in Sources */,
-				282A227C2D66F46F005C789C /* BasicButton.swift in Sources */,
-				28F3633D2DEFC636007F32AC /* DailyRecordService.swift in Sources */,
-				28EE76AA2D83D5960072747C /* SegmentedControlButton.swift in Sources */,
-				282A22802D682411005C789C /* PlanningCalendar.swift in Sources */,
-				28A576192DD714530085BCA5 /* YearReviewGraph.swift in Sources */,
-				28BDAC222D70302A0033FA2F /* MainTabView.swift in Sources */,
-				28A576172DD714310085BCA5 /* CustomRoundedCorner.swift in Sources */,
-				28EE76B22D8948D70072747C /* SwitchButton.swift in Sources */,
-				28A576152DD7140B0085BCA5 /* LabelSelector.swift in Sources */,
-				28EE76B42D895E8E0072747C /* PullDown.swift in Sources */,
-				28A576232DDDA6D80085BCA5 /* MaterialManager.swift in Sources */,
-				28EE76AE2D83E3EB0072747C /* InputReviewField.swift in Sources */,
-				28A5761D2DD87D9A0085BCA5 /* DailyRecordManager.swift in Sources */,
-				28A576132DD713E60085BCA5 /* PersistenceController.swift in Sources */,
-				28BB8D502DF6AEB90070D908 /* DebugDateManager.swift in Sources */,
-				282A22842D6973B8005C789C /* DateReviewView.swift in Sources */,
-				288EEEE22D647134001FACBC /* ContentView.swift in Sources */,
-				282A227E2D66F9B6005C789C /* PlanSettingWindowView.swift in Sources */,
-				28EE76B02D8937360072747C /* CustomTextEditor.swift in Sources */,
-				288EEEE02D647134001FACBC /* StudyRecordApp.swift in Sources */,
-				28EE76AC2D83D8C30072747C /* YearReviewGraphView.swift in Sources */,
-				28FAA01D2D812AC900411760 /* TimeSelectButton.swift in Sources */,
-				285A37122D65A01B00190B84 /* BeforeCheckView.swift in Sources */,
-				28CD81A92D65BD8000894BF8 /* AfterCheckView.swift in Sources */,
-				282A22822D684B89005C789C /* BookSelectView.swift in Sources */,
-				28A576102DD713E60085BCA5 /* Material.swift in Sources */,
-				28A576112DD713E60085BCA5 /* MonthlyRecord.swift in Sources */,
-				282A228B2D6ED09C005C789C /* YearReviewView.swift in Sources */,
-				282A22892D6D8777005C789C /* MonthReviewView.swift in Sources */,
-				28BB8D4E2DF6991F0070D908 /* MonthlyRecordManager.swift in Sources */,
-				2841A8412D71BFA300275EFF /* InputStudyRange.swift in Sources */,
-				2841A8432D79A6BB00275EFF /* MonthReviewCalendar.swift in Sources */,
-				282A22792D66E390005C789C /* StudyPlanView.swift in Sources */,
-				28A5760F2DD713E60085BCA5 /* DailyRecord.swift in Sources */,
-				28EE76B82D93B52D0072747C /* MovePeriodPopup.swift in Sources */,
+				2875EA132E0415C100D9B0FC /* MonthlyRecord.swift in Sources */,
+				2875EA102E0415C100D9B0FC /* DailyRecordManager.swift in Sources */,
+				2875EA0A2E0415C100D9B0FC /* BasicButton.swift in Sources */,
+				2875EA202E0415C100D9B0FC /* BeforeCheckView.swift in Sources */,
+				2875EA0D2E0415C100D9B0FC /* PullDown.swift in Sources */,
+				2875EA1D2E0415C100D9B0FC /* YearReviewView.swift in Sources */,
+				2875EA032E0415C100D9B0FC /* SwitchButton.swift in Sources */,
+				2875EA1C2E0415C100D9B0FC /* DateReviewView.swift in Sources */,
+				2875E9FB2E0415C100D9B0FC /* CalendarUtils.swift in Sources */,
+				2875EA182E0415C100D9B0FC /* StudyPlanView.swift in Sources */,
+				2875E9F72E0415C100D9B0FC /* DebugDateManager.swift in Sources */,
+				2875EA012E0415C100D9B0FC /* MaterialCardView.swift in Sources */,
+				2875EA172E0415C100D9B0FC /* MainTabView.swift in Sources */,
+				2875EA0B2E0415C100D9B0FC /* TimeSelectButton.swift in Sources */,
+				2875EA0F2E0415C100D9B0FC /* MonthlyRecordManager.swift in Sources */,
+				2875EA112E0415C100D9B0FC /* DailyRecord.swift in Sources */,
+				2875EA192E0415C100D9B0FC /* PlanSettingWindowView.swift in Sources */,
+				2875EA042E0415C100D9B0FC /* YearReviewGraph.swift in Sources */,
+				2875EA1E2E0415C100D9B0FC /* YearReviewGraphView.swift in Sources */,
+				2875EA082E0415C100D9B0FC /* InputStudyRange.swift in Sources */,
+				2875EA142E0415C100D9B0FC /* StudyRecordModel.xcdatamodeld in Sources */,
+				2875EA1A2E0415C100D9B0FC /* BookSelectView.swift in Sources */,
+				2875EA162E0415C100D9B0FC /* PersistenceController.swift in Sources */,
+				2875EA002E0415C100D9B0FC /* MaterialSectionView.swift in Sources */,
+				2875E9FD2E0415C100D9B0FC /* PlanningCalendar.swift in Sources */,
+				2875EA212E0415C100D9B0FC /* AfterCheckView.swift in Sources */,
+				2875EA1F2E0415C100D9B0FC /* MonthReviewView.swift in Sources */,
+				2875EA022E0415C100D9B0FC /* AddBookButton.swift in Sources */,
+				2875E9FA2E0415C100D9B0FC /* CustomTextEditor.swift in Sources */,
+				2875E9F82E0415C100D9B0FC /* GraphDataService.swift in Sources */,
+				2875EA122E0415C100D9B0FC /* Material.swift in Sources */,
+				2875E9F52E0415C100D9B0FC /* StudyRecordApp.swift in Sources */,
+				2875E9FF2E0415C100D9B0FC /* AddBookView.swift in Sources */,
+				2875E9FE2E0415C100D9B0FC /* LabelSelector.swift in Sources */,
+				2875EA0C2E0415C100D9B0FC /* CustomRoundedCorner.swift in Sources */,
+				2875EA072E0415C100D9B0FC /* SegmentedControlButton.swift in Sources */,
+				2875EA152E0415C100D9B0FC /* MaterialManager.swift in Sources */,
+				2875EA052E0415C100D9B0FC /* MonthReviewCalendar.swift in Sources */,
+				2875EA062E0415C100D9B0FC /* InputReviewField.swift in Sources */,
+				2875EA092E0415C100D9B0FC /* MovePeriodPopup.swift in Sources */,
+				2875EA222E0415C100D9B0FC /* ContentView.swift in Sources */,
+				2875E9F92E0415C100D9B0FC /* DailyRecordService.swift in Sources */,
+				2875EA1B2E0415C100D9B0FC /* ShareView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,11 +542,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"StudyRecord/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = TABUJ6J9T9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = StudyRecord/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -523,11 +572,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"StudyRecord/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = TABUJ6J9T9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = StudyRecord/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -570,12 +619,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		28A5760C2DD713E60085BCA5 /* StudyRecordModel.xcdatamodeld */ = {
+		2875E9D92E0415C000D9B0FC /* StudyRecordModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				28A5760D2DD713E60085BCA5 /* StudyRecordModel.xcdatamodel */,
+				2875E9DA2E0415C000D9B0FC /* StudyRecordModel.xcdatamodel */,
 			);
-			currentVersion = 28A5760D2DD713E60085BCA5 /* StudyRecordModel.xcdatamodel */;
+			currentVersion = 2875E9DA2E0415C000D9B0FC /* StudyRecordModel.xcdatamodel */;
 			path = StudyRecordModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
