@@ -10,11 +10,13 @@ import SwiftUI
 @main
 struct StudyRecordApp: App {
     let persistenceController = PersistenceController.shared
+    @StateObject private var snapshotManager = SnapshotManager()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(snapshotManager)
         }
     }
 }

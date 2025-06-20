@@ -9,6 +9,7 @@ import SwiftUI
 
 struct YearReviewView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject private var snapshotManager: SnapshotManager
     @StateObject private var recordService = DailyRecordService.shared
     
     @State private var showPopup = false
@@ -65,7 +66,7 @@ struct YearReviewView: View {
             if isTapShareButton {
                 ShareView(
                     isTapShareButton: $isTapShareButton)
-                
+                .environmentObject(snapshotManager)
             }
         }
         .animation(.easeInOut, value: showMonthReviewView)
@@ -81,6 +82,7 @@ struct YearReviewView: View {
                 setCurrentMonthToToday()
             }
         }
+        
     }
     
     // MARK: - Private Methods
@@ -100,6 +102,17 @@ struct YearReviewView: View {
             selectedMonth = month
         }
     }
+
+    //スクリーンショット用のView
+    private var screenShotView: some View {
+        VStack {
+            header
+            monthButton
+        }
+        .frame(width: 312)
+        .scaleEffect(0.8)
+        .fixedSize(horizontal: false, vertical: true)
+    }
 }
 
 extension YearReviewView {
@@ -107,7 +120,9 @@ extension YearReviewView {
         
         
         HStack{
-            Button(action: {showPopup = true }){
+            Button(action: {
+                showPopup = true
+            }){
                 HStack(alignment: .bottom){
                     Text(String(selectedYear))
                         .font(.system(size: 48))
@@ -120,12 +135,14 @@ extension YearReviewView {
                 }
             }
             Spacer()
-            Button(action: {isTapShareButton = true }){
-                Image(systemName: "square.and.arrow.up")
-                    .font(.system(size: 24))
-                    .frame(maxWidth: .infinity, alignment:
-                            .trailing)
-            }
+
+                Button(action: shareAction) {
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.system(size: 24))
+                        .frame(maxWidth: .infinity, alignment:
+                                .trailing)
+                }
+            
         }
         .padding(.top, 8)
         .padding(.bottom, 24)
@@ -179,6 +196,13 @@ extension YearReviewView {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Color.baseColor0)
+    }
+    
+    private func shareAction() {
+
+        snapshotManager.captureFull(screenShotView, fixedWidth: 312)
+        isTapShareButton = true
+
     }
     
     
