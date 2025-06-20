@@ -31,9 +31,8 @@ struct MonthReviewView: View {
 
             if isTapShareButton {
                 ShareView(
-                    isTapShareButton: $isTapShareButton,
-                    sourceType: .monthReview(currentMonth: currentMonth)
-                )
+                    isTapShareButton: $isTapShareButton)
+        
             }
             
         }
