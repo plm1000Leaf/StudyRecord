@@ -44,7 +44,7 @@ extension ShareView{
         ZStack{
             Rectangle()
                 .fill(Color.baseColor10)
-                .frame(width: 380, height: 470)
+                .frame(width: 296, height: 384)
             Group {
               if let img = snapshotManager.image {
                 Image(uiImage: img)
@@ -54,12 +54,14 @@ extension ShareView{
                          maxHeight: 400)
                   .cornerRadius(8)
                   .shadow(radius: 2)
+                  .padding(.bottom, 40)
               } else {
                 Rectangle()
                   .fill(Color.gray.opacity(0.2))
                   .frame(width: 312, height: 400)
               }
             }
+            
 
         }
     }
