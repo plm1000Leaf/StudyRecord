@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct MonthReviewView: View {
     @State private var showDateReviewView = false
     @State private var selectedDateFromCalendar: Int? = nil
     @State private var isTapShareButton = false
+    @State private var shareImage: UIImage? = nil
     @Binding var showMonthReviewView: Bool
     @Binding var currentMonth: Date
     var body: some View {
@@ -31,7 +33,9 @@ struct MonthReviewView: View {
 
             if isTapShareButton {
                 ShareView(
-                    isTapShareButton: $isTapShareButton)
+                    isTapShareButton: $isTapShareButton,
+                    screenshot: shareImage
+                )
         
             }
             
@@ -49,7 +53,9 @@ extension MonthReviewView {
 
             DateReviewHeader
             MonthReviewCalendar(
-                isTapShareButton: $isTapShareButton, currentMonth: .constant(currentMonth),
+                isTapShareButton: $isTapShareButton,
+                screenshotImage: $shareImage,
+                currentMonth: .constant(currentMonth),
                 showDateReviewView:$showDateReviewView,
                 onDateSelected: { selectedDay in
                     selectedDateFromCalendar = selectedDay

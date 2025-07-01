@@ -56,7 +56,7 @@ struct DateReviewView: View {
         }
         .background(Color.baseColor0)
             if isTapShareButton {
-                ShareView(isTapShareButton: $isTapShareButton)
+//                ShareView(isTapShareButton: $isTapShareButton)
             }
     }
     }

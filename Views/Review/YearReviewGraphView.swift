@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct YearReviewGraphView: View {
     @Binding var selectedSegment: Int
     @State private var showPopup = false
     @State private var selectedYear = 2025
     @State private var isTapShareButton = false
+    @State private var shareImage: UIImage? = nil
     
     var body: some View {
         ZStack{
@@ -28,7 +30,7 @@ struct YearReviewGraphView: View {
                 )
             }
             if isTapShareButton {
-                ShareView(isTapShareButton: $isTapShareButton)
+                ShareView(isTapShareButton: $isTapShareButton, screenshot: shareImage)
             }
         }
     }
@@ -66,7 +68,10 @@ extension YearReviewGraphView {
                 }
             }
             Spacer()
-            Button(action: {isTapShareButton = true }){
+            Button(action: {
+                shareImage = ScreenshotHelper.captureScreen()
+                isTapShareButton = true
+            }){
                 Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 24))
                     .frame(maxWidth: .infinity, alignment:

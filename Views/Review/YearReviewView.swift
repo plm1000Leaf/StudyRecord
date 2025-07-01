@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct YearReviewView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -19,6 +20,7 @@ struct YearReviewView: View {
     @State private var currentMonth: Date = Date()
     @State private var showMonthReviewView = false
     @State private var isTapShareButton = false
+    @State private var shareImage: UIImage? = nil
     @State private var monthlyCheckCounts: [Int: Int] = [:]
     
     @Binding var showDateReviewView: Bool
@@ -65,7 +67,9 @@ struct YearReviewView: View {
             
             if isTapShareButton {
                 ShareView(
-                    isTapShareButton: $isTapShareButton)
+                   isTapShareButton: $isTapShareButton,
+                   screenshot: shareImage
+                )
                 .environmentObject(snapshotManager)
             }
         }
@@ -136,7 +140,10 @@ extension YearReviewView {
             }
             Spacer()
 
-                Button(action: shareAction) {
+            Button(action: {
+                shareImage = ScreenshotHelper.captureScreen()
+                isTapShareButton = true
+            }){
                     Image(systemName: "square.and.arrow.up")
                         .font(.system(size: 24))
                         .frame(maxWidth: .infinity, alignment:

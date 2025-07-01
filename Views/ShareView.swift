@@ -8,10 +8,13 @@
 import SwiftUI
 import UIKit
 
+
+
 struct ShareView: View {
     @EnvironmentObject private var snapshotManager: SnapshotManager
     
     @Binding var isTapShareButton: Bool
+    let screenshot: UIImage?
     
     var body: some View {
         ZStack{
@@ -41,29 +44,16 @@ struct ShareView: View {
 
 extension ShareView{
     private var screenShot: some View {
-        ZStack{
-            Rectangle()
-                .fill(Color.baseColor10)
-                .frame(width: 296, height: 384)
-            Group {
-              if let img = snapshotManager.image {
-                Image(uiImage: img)
-                  .resizable()
-                  .scaledToFit()
-                  .frame(maxWidth: 312,
-                         maxHeight: 400)
-                  .cornerRadius(8)
-                  .shadow(radius: 2)
-                  .padding(.bottom, 40)
-              } else {
+        Group {
+            if let screenshot = screenshot {
+                Image(uiImage: screenshot)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            } else {
                 Rectangle()
-                  .fill(Color.gray.opacity(0.2))
-                  .frame(width: 312, height: 400)
-              }
             }
-            
-
         }
+        .frame(width:312,height:400)
     }
     
     private var shereButton: some View {

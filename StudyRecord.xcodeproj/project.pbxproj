@@ -54,6 +54,7 @@
 		2875EA202E0415C100D9B0FC /* BeforeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9EA2E0415C000D9B0FC /* BeforeCheckView.swift */; };
 		2875EA212E0415C100D9B0FC /* AfterCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9EB2E0415C000D9B0FC /* AfterCheckView.swift */; };
 		2875EA222E0415C100D9B0FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9EC2E0415C000D9B0FC /* ContentView.swift */; };
+		28893F7B2E13B2490084F807 /* ScreenshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28893F7A2E13B2490084F807 /* ScreenshotHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +107,7 @@
 		2875E9EB2E0415C000D9B0FC /* AfterCheckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AfterCheckView.swift; sourceTree = "<group>"; };
 		2875E9EC2E0415C000D9B0FC /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2875E9ED2E0415C000D9B0FC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		28893F7A2E13B2490084F807 /* ScreenshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotHelper.swift; sourceTree = "<group>"; };
 		288EEEDC2D647134001FACBC /* StudyRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -152,6 +154,7 @@
 				2875E9B82E0415C000D9B0FC /* CustomTextEditor.swift */,
 				2875E9B92E0415C000D9B0FC /* CalendarUtils.swift */,
 				281E28C42E050149008A2981 /* SnapshotManager .swift */,
+				28893F7A2E13B2490084F807 /* ScreenshotHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				2875EA0D2E0415C100D9B0FC /* PullDown.swift in Sources */,
 				2875EA1D2E0415C100D9B0FC /* YearReviewView.swift in Sources */,
 				2875EA032E0415C100D9B0FC /* SwitchButton.swift in Sources */,
+				28893F7B2E13B2490084F807 /* ScreenshotHelper.swift in Sources */,
 				2875EA1C2E0415C100D9B0FC /* DateReviewView.swift in Sources */,
 				281E28C52E050149008A2981 /* SnapshotManager .swift in Sources */,
 				2875E9FB2E0415C100D9B0FC /* CalendarUtils.swift in Sources */,
