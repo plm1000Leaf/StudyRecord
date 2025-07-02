@@ -53,7 +53,6 @@ extension ShareView{
                 Rectangle()
             }
         }
-        .frame(width:312,height:400)
     }
     
     private var shereButton: some View {

@@ -5,14 +5,13 @@ import UIKit
 struct MonthReviewCalendar: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var recordService = DailyRecordService.shared
-//    @State private var isTapShareButton = false
-    @Binding var isTapShareButton: Bool
-    @Binding var screenshotImage: UIImage?
+
     @Binding var currentMonth: Date
     @Binding var showDateReviewView: Bool
     @State private var checkedDates: [Int: Bool] = [:]
     
     var onDateSelected: ((Int) -> Void)? = nil
+    var onShareTapped: (() -> Void)? = nil
     
     var body: some View {
         ZStack {
@@ -103,8 +102,7 @@ extension MonthReviewCalendar {
                 .font(.system(size: 48))
                 .padding(.leading, 8)
             Button(action: {
-                screenshotImage = ScreenshotHelper.captureScreen()
-                isTapShareButton = true
+                onShareTapped?()
             }){
                 Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 24))

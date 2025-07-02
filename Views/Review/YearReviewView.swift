@@ -21,6 +21,7 @@ struct YearReviewView: View {
     @State private var showMonthReviewView = false
     @State private var isTapShareButton = false
     @State private var shareImage: UIImage? = nil
+    @State private var captureRect: CGRect = .zero
     @State private var monthlyCheckCounts: [Int: Int] = [:]
     
     @Binding var showDateReviewView: Bool
@@ -70,7 +71,6 @@ struct YearReviewView: View {
                    isTapShareButton: $isTapShareButton,
                    screenshot: shareImage
                 )
-                .environmentObject(snapshotManager)
             }
         }
         .animation(.easeInOut, value: showMonthReviewView)
@@ -106,17 +106,6 @@ struct YearReviewView: View {
             selectedMonth = month
         }
     }
-
-    //スクリーンショット用のView
-    private var screenShotView: some View {
-        VStack {
-            header
-            monthButton
-        }
-        .frame(width: 312)
-        .scaleEffect(0.8)
-        .fixedSize(horizontal: false, vertical: true)
-    }
 }
 
 extension YearReviewView {
@@ -141,7 +130,7 @@ extension YearReviewView {
             Spacer()
 
             Button(action: {
-                shareImage = ScreenshotHelper.captureScreen()
+                shareImage = ScreenshotHelper.captureScreen(in: captureRect)
                 isTapShareButton = true
             }){
                     Image(systemName: "square.and.arrow.up")
@@ -194,9 +183,16 @@ extension YearReviewView {
     
     private var yearView: some View {
         VStack(spacing: 16) {
-            header
-            monthButton
-            
+            VStack(spacing: 16) {
+                header
+                monthButton
+            }
+            .background(
+                GeometryReader { geo -> Color in
+                    DispatchQueue.main.async { captureRect = geo.frame(in: .global) }
+                    return Color.clear
+                }
+            )
             SegmentedControlButton(selectedSegment: $selectedSegment)
                 .frame(width: 264, height: 56)
                 .padding(.top, 24)
@@ -205,12 +201,6 @@ extension YearReviewView {
         .background(Color.baseColor0)
     }
     
-    private func shareAction() {
-
-        snapshotManager.captureFull(screenShotView, fixedWidth: 312)
-        isTapShareButton = true
-
-    }
     
     
 }

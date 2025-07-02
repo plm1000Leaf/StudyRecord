@@ -13,6 +13,7 @@ struct MonthReviewView: View {
     @State private var selectedDateFromCalendar: Int? = nil
     @State private var isTapShareButton = false
     @State private var shareImage: UIImage? = nil
+    @State private var captureRect: CGRect = .zero
     @Binding var showMonthReviewView: Bool
     @Binding var currentMonth: Date
     var body: some View {
@@ -53,19 +54,29 @@ extension MonthReviewView {
 
             DateReviewHeader
             MonthReviewCalendar(
-                isTapShareButton: $isTapShareButton,
-                screenshotImage: $shareImage,
                 currentMonth: .constant(currentMonth),
                 showDateReviewView:$showDateReviewView,
                 onDateSelected: { selectedDay in
-                    selectedDateFromCalendar = selectedDay
-                }
+                selectedDateFromCalendar = selectedDay
+                },
+                onShareTapped: captureScreenshot
             )
-
             
         }
+        .background(
+            GeometryReader { geo -> Color in
+                DispatchQueue.main.async { captureRect = geo.frame(in: .global) }
+                return Color.clear
+            }
+        )
         .background(Color.baseColor0)
     }
+    
+    private func captureScreenshot() {
+        shareImage = ScreenshotHelper.captureScreen(in: captureRect)
+        isTapShareButton = true
+    }
+    
     
     
     private var DateReviewHeader: some View {
