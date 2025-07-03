@@ -9,12 +9,16 @@ import SwiftUI
 import UIKit
 
 struct YearReviewGraphView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var recordService = DailyRecordService.shared
     @Binding var selectedSegment: Int
     @State private var showPopup = false
     @State private var selectedYear = 2025
     @State private var isTapShareButton = false
     @State private var shareImage: UIImage? = nil
     @State private var captureRect: CGRect = .zero
+    @State private var continuationDays: Int = 0
+
     
     var body: some View {
         ZStack{
@@ -31,8 +35,12 @@ struct YearReviewGraphView: View {
                 )
             }
             if isTapShareButton {
-                ShareView(isTapShareButton: $isTapShareButton, screenshot: shareImage)
+                ShareView(isTapShareButton: $isTapShareButton, screenshot: shareImage,
+                          continuationDays: continuationDays)
             }
+        }
+        .onAppear {
+            continuationDays = recordService.calculateContinuationDays(context: viewContext)
         }
     }
 }
@@ -78,6 +86,7 @@ extension YearReviewGraphView {
             Spacer()
             Button(action: {
                 shareImage = ScreenshotHelper.captureScreen(in: captureRect)
+                continuationDays = recordService.calculateContinuationDays(context: viewContext)
                 isTapShareButton = true
             }){
                 Image(systemName: "square.and.arrow.up")

@@ -22,6 +22,7 @@ struct YearReviewView: View {
     @State private var isTapShareButton = false
     @State private var shareImage: UIImage? = nil
     @State private var captureRect: CGRect = .zero
+    @State private var continuationDays: Int = 0
     @State private var monthlyCheckCounts: [Int: Int] = [:]
     
     @Binding var showDateReviewView: Bool
@@ -69,7 +70,8 @@ struct YearReviewView: View {
             if isTapShareButton {
                 ShareView(
                    isTapShareButton: $isTapShareButton,
-                   screenshot: shareImage
+                   screenshot: shareImage,
+                   continuationDays: continuationDays
                 )
             }
         }
@@ -79,6 +81,9 @@ struct YearReviewView: View {
             if showDateReviewView {
                 setCurrentMonthToToday()
             }
+            
+            continuationDays = recordService.calculateContinuationDays(context: viewContext)
+            
         }
         .onChange(of: showDateReviewView) { newValue in
             // DateReviewViewに遷移する時は今日の月に設定
@@ -131,6 +136,7 @@ extension YearReviewView {
 
             Button(action: {
                 shareImage = ScreenshotHelper.captureScreen(in: captureRect)
+                continuationDays = recordService.calculateContinuationDays(context: viewContext)
                 isTapShareButton = true
             }){
                     Image(systemName: "square.and.arrow.up")

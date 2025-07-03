@@ -9,6 +9,7 @@ struct MonthReviewCalendar: View {
     @Binding var currentMonth: Date
     @Binding var showDateReviewView: Bool
     @State private var checkedDates: [Int: Bool] = [:]
+    @State private var continuationDays: Int = 0
     
     var onDateSelected: ((Int) -> Void)? = nil
     var onShareTapped: (() -> Void)? = nil
@@ -103,6 +104,7 @@ extension MonthReviewCalendar {
                 .padding(.leading, 8)
             Button(action: {
                 onShareTapped?()
+                continuationDays = recordService.calculateContinuationDays(context: viewContext)
             }){
                 Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 24))

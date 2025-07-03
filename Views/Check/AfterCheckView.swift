@@ -13,17 +13,34 @@ struct AfterCheckView: View {
     @Binding var navigateToPlan: Bool
     
     @State private var continuationDays: Int = 0
+    @State private var isTapShareButton = false
+    @State private var shareMaterialText: String = ""
+    @State private var shareMonthlySummary: String = ""
+    @State private var shareContinuationDays: Int = 0
     
     var dismiss: () -> Void
 
     var body: some View {
-        afterCheckView
-            .padding(.horizontal, 20)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .background(Color.baseColor0)
-            .onAppear {
-                loadContinuationDays()
+        ZStack {
+            afterCheckView
+                .padding(.horizontal, 20)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .background(Color.baseColor0)
+
+            if isTapShareButton {
+                ShareView(
+                    isTapShareButton: $isTapShareButton, 
+                    screenshot: nil,
+                    fromAfterCheck: true,
+                    materialText: shareMaterialText,
+                    monthlySummary: shareMonthlySummary,
+                    continuationDays: shareContinuationDays 
+                )
             }
+        }
+        .onAppear {
+            loadContinuationDays()
+        }
     }
 }
 
@@ -66,9 +83,14 @@ extension AfterCheckView {
     }
     
     private var shareButton: some View {
-        Image(systemName: "square.and.arrow.up")
-            .font(.system(size: 40))
-            .frame(maxWidth: .infinity, alignment: .trailing)
+        Button(action: {
+            prepareShareTexts()
+            isTapShareButton = true
+        }) {
+            Image(systemName: "square.and.arrow.up")
+                .font(.system(size: 40))
+                .frame(maxWidth: .infinity, alignment: .trailing)
+        }
     }
     
     private var checkButton: some View {
@@ -92,6 +114,17 @@ extension AfterCheckView {
     
     private func loadContinuationDays() {
         continuationDays = recordService.calculateContinuationDays(context: viewContext)
+    }
+    
+    private func prepareShareTexts() {
+        shareMaterialText = "今日の教材: " + (recordService.getMaterial()?.name ?? "未設定")
+
+        let now = Date()
+        let year = Calendar.current.component(.year, from: now)
+        let month = Calendar.current.component(.month, from: now)
+        let count = MonthlyRecordManager.shared.fetchRecord(for: year, month: month, context: viewContext)?.checkCount ?? 0
+        shareMonthlySummary = "今月の学習回数: \(count)回"
+        shareContinuationDays = continuationDays
     }
 }
 

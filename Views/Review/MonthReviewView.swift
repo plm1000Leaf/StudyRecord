@@ -9,11 +9,15 @@ import SwiftUI
 import UIKit
 
 struct MonthReviewView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject private var snapshotManager: SnapshotManager
+    @StateObject private var recordService = DailyRecordService.shared
     @State private var showDateReviewView = false
     @State private var selectedDateFromCalendar: Int? = nil
     @State private var isTapShareButton = false
     @State private var shareImage: UIImage? = nil
     @State private var captureRect: CGRect = .zero
+    @State private var continuationDays: Int = 0
     @Binding var showMonthReviewView: Bool
     @Binding var currentMonth: Date
     var body: some View {
@@ -35,11 +39,15 @@ struct MonthReviewView: View {
             if isTapShareButton {
                 ShareView(
                     isTapShareButton: $isTapShareButton,
-                    screenshot: shareImage
+                    screenshot: shareImage,
+                    continuationDays: continuationDays
                 )
         
             }
             
+        }
+        .onAppear{
+            continuationDays = recordService.calculateContinuationDays(context: viewContext)
         }
         .animation(.easeInOut, value: showDateReviewView)
 

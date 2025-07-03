@@ -1,4 +1,4 @@
-//Add commentMore actions
+
 //  ShereView.swift
 //  StudyRecord
 //
@@ -6,15 +6,23 @@
 //
 
 import SwiftUI
+import CoreData
 import UIKit
 
 
 
 struct ShareView: View {
     @EnvironmentObject private var snapshotManager: SnapshotManager
+    @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var recordService = DailyRecordService.shared
     
     @Binding var isTapShareButton: Bool
+    
     let screenshot: UIImage?
+    var fromAfterCheck: Bool = false
+    var materialText: String? = nil
+    var monthlySummary: String? = nil
+    var continuationDays: Int? = nil
     
     var body: some View {
         ZStack{
@@ -45,14 +53,35 @@ struct ShareView: View {
 extension ShareView{
     private var screenShot: some View {
         Group {
-            if let screenshot = screenshot {
-                Image(uiImage: screenshot)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+            if fromAfterCheck {
+                VStack(spacing: 8) {
+                    Text(materialText ?? "")
+                        .font(.title3)
+                        .foregroundColor(.white)
+                    Text(monthlySummary ?? "")
+                        .foregroundColor(.white)
+                    if let days = continuationDays {
+                        Text("継続日数: \(days)日")
+                            .foregroundColor(.white)
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.gray20)
+            } else if let screenshot = screenshot {
+                VStack(spacing: 8) {
+                    Image(uiImage: screenshot)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                    if let days = continuationDays {
+                        Text("継続日数: \(days)日")
+                            .foregroundColor(.white)
+                    }
+                }
             } else {
                 Rectangle()
             }
         }
+        .frame(width:312,height:400)
     }
     
     private var shereButton: some View {
@@ -83,6 +112,9 @@ extension ShareView{
             view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
         }
     }
+    
+    
+    
 }
 //#Preview {
 //    ShareView(isTapShareButton: $isTapShareButton)
