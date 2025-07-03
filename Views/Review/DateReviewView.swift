@@ -295,7 +295,7 @@ extension DateReviewView {
                         
                         
                         InputReviewField(
-                            dailyRecord: record(for: index), isTapShareButton:  $isTapShareButton,
+                            dailyRecord: record(for: index),
                             reviewText: Binding(
                                 get: { reviews[index] ?? (record(for: index).review ?? "") },
                                 set: { reviews[index] = $0 }
