@@ -55,27 +55,54 @@ extension ShareView{
         Group {
             if fromAfterCheck {
                 VStack(spacing: 8) {
+                    HStack{
+                        Image(systemName:"book")
+                            .font(.system(size: 24))
+                            .foregroundColor(.white)
+                        Text("今日の教材")
+                            .font(.system(size: 32))
+                            .foregroundColor(.white)
+                    }
                     Text(materialText ?? "")
-                        .font(.title3)
+                        .font(.system(size: 32))
                         .foregroundColor(.white)
+                    
+                    Spacer()
+                        .frame(height:32)
+                    HStack{
+                        Image(systemName:"calendar")
+                            .font(.system(size: 24))
+                            .foregroundColor(.white)
+                        Text("今月の学習回数")
+                            .font(.system(size: 32))
+                            .foregroundColor(.white)
+                        }
                     Text(monthlySummary ?? "")
+                        .font(.system(size: 32))
                         .foregroundColor(.white)
+                    Spacer()
+                        .frame(height:32)
                     if let days = continuationDays {
-                        Text("継続日数: \(days)日")
+                        HStack{
+                            Image(systemName:"leaf")
+                                .font(.system(size: 24))
+                                .foregroundColor(.white)
+                            Text("継続日数")
+                                .font(.system(size: 32))
+                                .foregroundColor(.white)
+                            }
+                        Text("\(days)日")
+                            .font(.system(size: 32))
                             .foregroundColor(.white)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.gray20)
+                .background(Color.mainColor0)
             } else if let screenshot = screenshot {
                 VStack(spacing: 8) {
                     Image(uiImage: screenshot)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                    if let days = continuationDays {
-                        Text("継続日数: \(days)日")
-                            .foregroundColor(.white)
-                    }
                 }
             } else {
                 Rectangle()

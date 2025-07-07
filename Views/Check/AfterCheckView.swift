@@ -117,13 +117,13 @@ extension AfterCheckView {
     }
     
     private func prepareShareTexts() {
-        shareMaterialText = "今日の教材: " + (recordService.getMaterial()?.name ?? "未設定")
+        shareMaterialText = recordService.getMaterial()?.name ?? "未設定"
 
         let now = Date()
         let year = Calendar.current.component(.year, from: now)
         let month = Calendar.current.component(.month, from: now)
         let count = MonthlyRecordManager.shared.fetchRecord(for: year, month: month, context: viewContext)?.checkCount ?? 0
-        shareMonthlySummary = "今月の学習回数: \(count)回"
+        shareMonthlySummary =  "\(count)日"
         shareContinuationDays = continuationDays
     }
 }
