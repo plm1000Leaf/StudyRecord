@@ -6,11 +6,18 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct MonthReviewView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject private var snapshotManager: SnapshotManager
+    @StateObject private var recordService = DailyRecordService.shared
     @State private var showDateReviewView = false
     @State private var selectedDateFromCalendar: Int? = nil
     @State private var isTapShareButton = false
+    @State private var shareImage: UIImage? = nil
+    @State private var captureRect: CGRect = .zero
+    @State private var continuationDays: Int = 0
     @Binding var showMonthReviewView: Bool
     @Binding var currentMonth: Date
     var body: some View {
@@ -31,10 +38,16 @@ struct MonthReviewView: View {
 
             if isTapShareButton {
                 ShareView(
-                    isTapShareButton: $isTapShareButton)
+                    isTapShareButton: $isTapShareButton,
+                    screenshot: shareImage,
+                    continuationDays: continuationDays
+                )
         
             }
             
+        }
+        .onAppear{
+            continuationDays = recordService.calculateContinuationDays(context: viewContext)
         }
         .animation(.easeInOut, value: showDateReviewView)
 
@@ -49,17 +62,29 @@ extension MonthReviewView {
 
             DateReviewHeader
             MonthReviewCalendar(
-                isTapShareButton: $isTapShareButton, currentMonth: .constant(currentMonth),
+                currentMonth: .constant(currentMonth),
                 showDateReviewView:$showDateReviewView,
                 onDateSelected: { selectedDay in
-                    selectedDateFromCalendar = selectedDay
-                }
+                selectedDateFromCalendar = selectedDay
+                },
+                onShareTapped: captureScreenshot
             )
-
             
         }
+        .background(
+            GeometryReader { geo -> Color in
+                DispatchQueue.main.async { captureRect = geo.frame(in: .global) }
+                return Color.clear
+            }
+        )
         .background(Color.baseColor0)
     }
+    
+    private func captureScreenshot() {
+        shareImage = ScreenshotHelper.captureScreen(in: captureRect)
+        isTapShareButton = true
+    }
+    
     
     
     private var DateReviewHeader: some View {

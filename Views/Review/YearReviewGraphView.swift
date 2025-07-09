@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct YearReviewGraphView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var recordService = DailyRecordService.shared
     @Binding var selectedSegment: Int
     @State private var showPopup = false
     @State private var selectedYear = 2025
     @State private var isTapShareButton = false
+    @State private var shareImage: UIImage? = nil
+    @State private var captureRect: CGRect = .zero
+    @State private var continuationDays: Int = 0
+
     
     var body: some View {
         ZStack{
@@ -28,20 +35,31 @@ struct YearReviewGraphView: View {
                 )
             }
             if isTapShareButton {
-                ShareView(isTapShareButton: $isTapShareButton)
+                ShareView(isTapShareButton: $isTapShareButton, screenshot: shareImage,
+                          continuationDays: continuationDays)
             }
+        }
+        .onAppear {
+            continuationDays = recordService.calculateContinuationDays(context: viewContext)
         }
     }
 }
 
 extension YearReviewGraphView {
     private var yearGraphView: some View {
-        VStack(spacing: 8) {  // ヘッダーとグラフの間隔を縮小
-            header
-            
-            YearReviewGraphWithYear(selectedYear: selectedYear)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)  // グラフが画面全体を使用
-            
+        VStack(spacing: 8) {
+            VStack(spacing: 8) {
+                header
+
+                YearReviewGraphWithYear(selectedYear: selectedYear)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)  // グラフが画面全体を使用
+            }
+            .background(
+                GeometryReader { geo -> Color in
+                    DispatchQueue.main.async { captureRect = geo.frame(in: .global) }
+                    return Color.clear
+                }
+            )
             SegmentedControlButton(selectedSegment: $selectedSegment)
                 .frame(width: 264, height: 48)  // ボタンの高さを少し縮小
                 .padding(.bottom, 48)  // 下部余白を縮小
@@ -66,7 +84,11 @@ extension YearReviewGraphView {
                 }
             }
             Spacer()
-            Button(action: {isTapShareButton = true }){
+            Button(action: {
+                shareImage = ScreenshotHelper.captureScreen(in: captureRect)
+                continuationDays = recordService.calculateContinuationDays(context: viewContext)
+                isTapShareButton = true
+            }){
                 Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 24))
                     .frame(maxWidth: .infinity, alignment:

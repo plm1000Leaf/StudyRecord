@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct YearReviewView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject private var snapshotManager: SnapshotManager
     @StateObject private var recordService = DailyRecordService.shared
     
     @State private var showPopup = false
@@ -18,6 +20,9 @@ struct YearReviewView: View {
     @State private var currentMonth: Date = Date()
     @State private var showMonthReviewView = false
     @State private var isTapShareButton = false
+    @State private var shareImage: UIImage? = nil
+    @State private var captureRect: CGRect = .zero
+    @State private var continuationDays: Int = 0
     @State private var monthlyCheckCounts: [Int: Int] = [:]
     
     @Binding var showDateReviewView: Bool
@@ -64,8 +69,10 @@ struct YearReviewView: View {
             
             if isTapShareButton {
                 ShareView(
-                    isTapShareButton: $isTapShareButton)
-                
+                   isTapShareButton: $isTapShareButton,
+                   screenshot: shareImage,
+                   continuationDays: continuationDays
+                )
             }
         }
         .animation(.easeInOut, value: showMonthReviewView)
@@ -74,6 +81,9 @@ struct YearReviewView: View {
             if showDateReviewView {
                 setCurrentMonthToToday()
             }
+            
+            continuationDays = recordService.calculateContinuationDays(context: viewContext)
+            
         }
         .onChange(of: showDateReviewView) { newValue in
             // DateReviewViewに遷移する時は今日の月に設定
@@ -81,6 +91,7 @@ struct YearReviewView: View {
                 setCurrentMonthToToday()
             }
         }
+        
     }
     
     // MARK: - Private Methods
@@ -107,7 +118,9 @@ extension YearReviewView {
         
         
         HStack{
-            Button(action: {showPopup = true }){
+            Button(action: {
+                showPopup = true
+            }){
                 HStack(alignment: .bottom){
                     Text(String(selectedYear))
                         .font(.system(size: 48))
@@ -120,12 +133,18 @@ extension YearReviewView {
                 }
             }
             Spacer()
-            Button(action: {isTapShareButton = true }){
-                Image(systemName: "square.and.arrow.up")
-                    .font(.system(size: 24))
-                    .frame(maxWidth: .infinity, alignment:
-                            .trailing)
-            }
+
+            Button(action: {
+                shareImage = ScreenshotHelper.captureScreen(in: captureRect)
+                continuationDays = recordService.calculateContinuationDays(context: viewContext)
+                isTapShareButton = true
+            }){
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.system(size: 24))
+                        .frame(maxWidth: .infinity, alignment:
+                                .trailing)
+                }
+            
         }
         .padding(.top, 8)
         .padding(.bottom, 24)
@@ -170,9 +189,16 @@ extension YearReviewView {
     
     private var yearView: some View {
         VStack(spacing: 16) {
-            header
-            monthButton
-            
+            VStack(spacing: 16) {
+                header
+                monthButton
+            }
+            .background(
+                GeometryReader { geo -> Color in
+                    DispatchQueue.main.async { captureRect = geo.frame(in: .global) }
+                    return Color.clear
+                }
+            )
             SegmentedControlButton(selectedSegment: $selectedSegment)
                 .frame(width: 264, height: 56)
                 .padding(.top, 24)
@@ -180,6 +206,7 @@ extension YearReviewView {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Color.baseColor0)
     }
+    
     
     
 }

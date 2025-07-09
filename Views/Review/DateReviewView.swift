@@ -56,7 +56,7 @@ struct DateReviewView: View {
         }
         .background(Color.baseColor0)
             if isTapShareButton {
-                ShareView(isTapShareButton: $isTapShareButton)
+//                ShareView(isTapShareButton: $isTapShareButton)
             }
     }
     }
@@ -295,7 +295,7 @@ extension DateReviewView {
                         
                         
                         InputReviewField(
-                            dailyRecord: record(for: index), isTapShareButton:  $isTapShareButton,
+                            dailyRecord: record(for: index),
                             reviewText: Binding(
                                 get: { reviews[index] ?? (record(for: index).review ?? "") },
                                 set: { reviews[index] = $0 }

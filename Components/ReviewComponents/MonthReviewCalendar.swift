@@ -1,17 +1,18 @@
 import SwiftUI
 import CoreData
-
+import UIKit
 
 struct MonthReviewCalendar: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var recordService = DailyRecordService.shared
-//    @State private var isTapShareButton = false
-    @Binding var isTapShareButton: Bool
+
     @Binding var currentMonth: Date
     @Binding var showDateReviewView: Bool
     @State private var checkedDates: [Int: Bool] = [:]
+    @State private var continuationDays: Int = 0
     
     var onDateSelected: ((Int) -> Void)? = nil
+    var onShareTapped: (() -> Void)? = nil
     
     var body: some View {
         ZStack {
@@ -101,7 +102,10 @@ extension MonthReviewCalendar {
                 .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
                 .font(.system(size: 48))
                 .padding(.leading, 8)
-            Button(action: {isTapShareButton = true }){
+            Button(action: {
+                onShareTapped?()
+                continuationDays = recordService.calculateContinuationDays(context: viewContext)
+            }){
                 Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 24))
                     .frame(maxWidth: .infinity, alignment:
