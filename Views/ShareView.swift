@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 import UIKit
-
+import Social
 
 
 struct ShareView: View {
@@ -112,6 +112,7 @@ extension ShareView{
     }
     
     private var shereButton: some View {
+    Button(action: shareToX) {
         HStack(spacing: 24){
             ZStack{
                 Rectangle()
@@ -122,7 +123,7 @@ extension ShareView{
                     .font(.system(size: 40))
                     .foregroundColor(.white)
             }
-            
+        }
             ZStack{
                 Rectangle()
                     .cornerRadius(16)
@@ -162,9 +163,49 @@ extension ShareView{
         }
     }
     
-    
+    private func shareToX() {
+        // 1) 共有する画像を用意
+        guard let img = screenshot else { return }
+        
+        // 2) SLComposeViewController を生成
+        if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
+           let topVC = UIApplication.topViewController() {
+            
+            // 初期テキスト（お好みで）
+            composeVC.setInitialText("今日の学習記録をシェアします✨")
+            // 画像を添付
+            composeVC.add(img)
+            
+            // モーダル表示
+            topVC.present(composeVC, animated: true)
+        }
+    }
     
 }
+
+extension UIApplication {
+    /// 現在アクティブな UIViewController を再帰的に取得
+    static func topViewController(
+        _ base: UIViewController? = UIApplication.shared
+            .connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first?
+            .windows.first(where: { $0.isKeyWindow })?
+            .rootViewController
+    ) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return topViewController(nav.visibleViewController)
+        }
+        if let tab = base as? UITabBarController {
+            return topViewController(tab.selectedViewController)
+        }
+        if let presented = base?.presentedViewController {
+            return topViewController(presented)
+        }
+        return base
+    }
+}
+
 //#Preview {
 //    ShareView(isTapShareButton: $isTapShareButton)
 //}
