@@ -118,6 +118,7 @@ extension ShareView{
                 Rectangle()
                     .cornerRadius(16)
                     .frame(width:88,height:88)
+                    .foregroundColor(.black)
                 Text("X")
                     .bold()
                     .font(.system(size: 40))
@@ -128,20 +129,12 @@ extension ShareView{
                 Rectangle()
                     .cornerRadius(16)
                     .frame(width:88,height:88)
-                    .foregroundColor(.purple)
-                Image(systemName:"camera")
+                    .foregroundColor(.shareButtonColor1)
+                Image(systemName:"message.fill")
                     .font(.system(size: 40))
                     .foregroundColor(.white)
             }
-            ZStack{
-                Rectangle()
-                    .cornerRadius(16)
-                    .frame(width:88,height:88)
-                    .foregroundColor(.gray)
-                Image(systemName:"ellipsis")
-                    .font(.system(size: 40))
-                    .foregroundColor(.white)
-            }
+
         }
         .padding(.bottom, 40)
     }
