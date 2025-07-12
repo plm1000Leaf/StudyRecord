@@ -164,20 +164,26 @@ extension ShareView{
     }
     
     private func shareToX() {
+        let material = materialText ?? ""
+        let summary = monthlySummary ?? ""
+        let daysText = continuationDays.map { "\($0)日" } ?? ""
+        let shareTodayRecord = "今日の教材: \(material)\n今月の学習回数: \(summary)\n継続日数: \(daysText)"
+        let shareContinuationDays = " \(daysText)継続して学習しています"
         if fromAfterCheck {
-            let material = materialText ?? ""
-            let summary = monthlySummary ?? ""
-            let daysText = continuationDays.map { "\($0)日" } ?? ""
-            let content = "今日の教材: \(material)\n今月の学習回数: \(summary)\n継続日数: \(daysText)"
+//            let material = materialText ?? ""
+//            let summary = monthlySummary ?? ""
+//            let daysText = continuationDays.map { "\($0)日" } ?? ""
+//            let content = "今日の教材: \(material)\n今月の学習回数: \(summary)\n継続日数: \(daysText)"
             if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
                let topVC = UIApplication.topViewController() {
-                composeVC.setInitialText(content)
+                composeVC.setInitialText(shareTodayRecord)
                 topVC.present(composeVC, animated: true)
             }
         } else if let img = screenshot {
             if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
                let topVC = UIApplication.topViewController() {
-                composeVC.setInitialText("今日の学習記録をシェアします✨")
+                composeVC.setInitialText("今日の学習記録をシェアします")
+                composeVC.setInitialText(shareContinuationDays)
                 composeVC.add(img)
                 topVC.present(composeVC, animated: true)
             }
