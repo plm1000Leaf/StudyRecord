@@ -42,7 +42,7 @@ struct ShareView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 screenShot
-                shereButton
+                shareButton
             }
         
         }
@@ -111,30 +111,34 @@ extension ShareView{
         .frame(width:312,height:400)
     }
     
-    private var shereButton: some View {
-    Button(action: shareToX) {
+    private var shareButton: some View {
         HStack(spacing: 24){
-            ZStack{
-                Rectangle()
-                    .cornerRadius(16)
-                    .frame(width:88,height:88)
-                    .foregroundColor(.black)
-                Text("X")
-                    .bold()
-                    .font(.system(size: 40))
-                    .foregroundColor(.white)
+            Button(action: shareToX) {
+                
+                ZStack{
+                    Rectangle()
+                        .cornerRadius(16)
+                        .frame(width:88,height:88)
+                        .foregroundColor(.black)
+                    Text("X")
+                        .bold()
+                        .font(.system(size: 40))
+                        .foregroundColor(.white)
+                }
             }
-        }
-            ZStack{
-                Rectangle()
-                    .cornerRadius(16)
-                    .frame(width:88,height:88)
-                    .foregroundColor(.shareButtonColor1)
-                Image(systemName:"message.fill")
-                    .font(.system(size: 40))
-                    .foregroundColor(.white)
+            
+            Button(action: shareToGeneral) {
+                ZStack{
+                    Rectangle()
+                        .cornerRadius(16)
+                        .frame(width:88,height:88)
+                        .foregroundColor(.gray)
+                    Image(systemName:"ellipsis")
+                        .font(.system(size: 40))
+                        .foregroundColor(.white)
+                }
             }
-
+            
         }
         .padding(.bottom, 40)
     }
@@ -163,10 +167,6 @@ extension ShareView{
         let shareTodayRecord = "今日の教材: \(material)\n今月の学習回数: \(summary)\n継続日数: \(daysText)"
         let shareContinuationDays = " \(daysText)継続して学習しています"
         if fromAfterCheck {
-//            let material = materialText ?? ""
-//            let summary = monthlySummary ?? ""
-//            let daysText = continuationDays.map { "\($0)日" } ?? ""
-//            let content = "今日の教材: \(material)\n今月の学習回数: \(summary)\n継続日数: \(daysText)"
             if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
                let topVC = UIApplication.topViewController() {
                 composeVC.setInitialText(shareTodayRecord)
@@ -183,10 +183,65 @@ extension ShareView{
         }
     }
     
+    private func shareToGeneral() {
+        let textContent: String = {
+            guard fromAfterCheck else { return "今日の学習記録をシェアします✨" }
+            let material = materialText ?? ""
+            let summary = monthlySummary ?? ""
+            let daysText = continuationDays.map { "\($0)日" } ?? ""
+            return """
+            今日の教材: \(material)
+            今月の学習回数: \(summary)
+            継続日数: \(daysText)
+            """
+        }()
+        if fromAfterCheck {
+                if let url = URL(string: "line://msg/text/\(textContent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"),
+                   UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else if let topVC = UIApplication.topViewController() {
+                    let activityVC = UIActivityViewController(activityItems: [textContent], applicationActivities: nil)
+                    activityVC.excludedActivityTypes = [.postToTwitter, .postToFacebook, .mail, .message]
+                    
+                    if let pop = activityVC.popoverPresentationController {
+                        pop.sourceView = topVC.view
+                        pop.sourceRect = CGRect(
+                            x: topVC.view.bounds.midX,
+                            y: topVC.view.bounds.midY,
+                            width: 0,
+                            height: 0
+                        )
+                        pop.permittedArrowDirections = []
+                    }
+                    
+                    DispatchQueue.main.async {
+                        topVC.present(activityVC, animated: true, completion: nil)
+                    }
+                }
+            } else if let img = screenshot, let topVC = UIApplication.topViewController() {
+                let activityVC = UIActivityViewController(activityItems: [img], applicationActivities: nil)
+                activityVC.excludedActivityTypes = [.postToTwitter, .postToFacebook, .postToWeibo]
+                
+                if let pop = activityVC.popoverPresentationController {
+                    pop.sourceView = topVC.view
+                    pop.sourceRect = CGRect(
+                        x: topVC.view.bounds.midX,
+                        y: topVC.view.bounds.midY,
+                        width: 0,
+                        height: 0
+                    )
+                    pop.permittedArrowDirections = []
+                }
+                
+                DispatchQueue.main.async {
+                    topVC.present(activityVC, animated: true, completion: nil)
+                }
+            }
+    }
+    
 }
 
 extension UIApplication {
-    /// 現在アクティブな UIViewController を再帰的に取得
     static func topViewController(
         _ base: UIViewController? = UIApplication.shared
             .connectedScenes
