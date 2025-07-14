@@ -193,16 +193,20 @@ extension YearReviewView {
                 header
                 monthButton
             }
-            .background(
-                GeometryReader { geo -> Color in
-                    DispatchQueue.main.async { captureRect = geo.frame(in: .global) }
-                    return Color.clear
-                }
-            )
             SegmentedControlButton(selectedSegment: $selectedSegment)
                 .frame(width: 264, height: 56)
                 .padding(.top, 24)
         }
+        .background(
+            GeometryReader { geo -> Color in
+                DispatchQueue.main.async {
+                    // Add a little padding around the captured area
+                    let rect = geo.frame(in: .global).insetBy(dx: -16, dy: -16)
+                    captureRect = rect
+                }
+                return Color.clear
+            }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Color.baseColor0)
     }

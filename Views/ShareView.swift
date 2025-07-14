@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 import UIKit
-
+import Social
 
 
 struct ShareView: View {
@@ -42,7 +42,7 @@ struct ShareView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 screenShot
-                shereButton
+                shareButton
             }
         
         }
@@ -111,36 +111,34 @@ extension ShareView{
         .frame(width:312,height:400)
     }
     
-    private var shereButton: some View {
+    private var shareButton: some View {
         HStack(spacing: 24){
-            ZStack{
-                Rectangle()
-                    .cornerRadius(16)
-                    .frame(width:88,height:88)
-                Text("X")
-                    .bold()
-                    .font(.system(size: 40))
-                    .foregroundColor(.white)
+            Button(action: shareToX) {
+                
+                ZStack{
+                    Rectangle()
+                        .cornerRadius(16)
+                        .frame(width:88,height:88)
+                        .foregroundColor(.black)
+                    Text("X")
+                        .bold()
+                        .font(.system(size: 40))
+                        .foregroundColor(.white)
+                }
             }
             
-            ZStack{
-                Rectangle()
-                    .cornerRadius(16)
-                    .frame(width:88,height:88)
-                    .foregroundColor(.purple)
-                Image(systemName:"camera")
-                    .font(.system(size: 40))
-                    .foregroundColor(.white)
+            Button(action: shareToGeneral) {
+                ZStack{
+                    Rectangle()
+                        .cornerRadius(16)
+                        .frame(width:88,height:88)
+                        .foregroundColor(.gray)
+                    Image(systemName:"ellipsis")
+                        .font(.system(size: 40))
+                        .foregroundColor(.white)
+                }
             }
-            ZStack{
-                Rectangle()
-                    .cornerRadius(16)
-                    .frame(width:88,height:88)
-                    .foregroundColor(.gray)
-                Image(systemName:"ellipsis")
-                    .font(.system(size: 40))
-                    .foregroundColor(.white)
-            }
+            
         }
         .padding(.bottom, 40)
     }
@@ -162,9 +160,109 @@ extension ShareView{
         }
     }
     
+    private func shareToX() {
+        let material = materialText ?? ""
+        let summary = monthlySummary ?? ""
+        let daysText = continuationDays.map { "\($0)日" } ?? ""
+        let shareTodayRecord = "今日の教材: \(material)\n今月の学習回数: \(summary)\n継続日数: \(daysText)"
+        let shareContinuationDays = " \(daysText)継続して学習しています"
+        if fromAfterCheck {
+            if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
+               let topVC = UIApplication.topViewController() {
+                composeVC.setInitialText(shareTodayRecord)
+                topVC.present(composeVC, animated: true)
+            }
+        } else if let img = screenshot {
+            if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
+               let topVC = UIApplication.topViewController() {
+                composeVC.setInitialText("今日の学習記録をシェアします")
+                composeVC.setInitialText(shareContinuationDays)
+                composeVC.add(img)
+                topVC.present(composeVC, animated: true)
+            }
+        }
+    }
     
+    private func shareToGeneral() {
+        let textContent: String = {
+            guard fromAfterCheck else { return "今日の学習記録をシェアします✨" }
+            let material = materialText ?? ""
+            let summary = monthlySummary ?? ""
+            let daysText = continuationDays.map { "\($0)日" } ?? ""
+            return """
+            今日の教材: \(material)
+            今月の学習回数: \(summary)
+            継続日数: \(daysText)
+            """
+        }()
+        if fromAfterCheck {
+                if let url = URL(string: "line://msg/text/\(textContent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"),
+                   UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else if let topVC = UIApplication.topViewController() {
+                    let activityVC = UIActivityViewController(activityItems: [textContent], applicationActivities: nil)
+                    activityVC.excludedActivityTypes = [.postToTwitter, .postToFacebook, .mail, .message]
+                    
+                    if let pop = activityVC.popoverPresentationController {
+                        pop.sourceView = topVC.view
+                        pop.sourceRect = CGRect(
+                            x: topVC.view.bounds.midX,
+                            y: topVC.view.bounds.midY,
+                            width: 0,
+                            height: 0
+                        )
+                        pop.permittedArrowDirections = []
+                    }
+                    
+                    DispatchQueue.main.async {
+                        topVC.present(activityVC, animated: true, completion: nil)
+                    }
+                }
+            } else if let img = screenshot, let topVC = UIApplication.topViewController() {
+                let activityVC = UIActivityViewController(activityItems: [img], applicationActivities: nil)
+                activityVC.excludedActivityTypes = [.postToTwitter, .postToFacebook, .postToWeibo]
+                
+                if let pop = activityVC.popoverPresentationController {
+                    pop.sourceView = topVC.view
+                    pop.sourceRect = CGRect(
+                        x: topVC.view.bounds.midX,
+                        y: topVC.view.bounds.midY,
+                        width: 0,
+                        height: 0
+                    )
+                    pop.permittedArrowDirections = []
+                }
+                
+                DispatchQueue.main.async {
+                    topVC.present(activityVC, animated: true, completion: nil)
+                }
+            }
+    }
     
 }
+
+extension UIApplication {
+    static func topViewController(
+        _ base: UIViewController? = UIApplication.shared
+            .connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first?
+            .windows.first(where: { $0.isKeyWindow })?
+            .rootViewController
+    ) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return topViewController(nav.visibleViewController)
+        }
+        if let tab = base as? UITabBarController {
+            return topViewController(tab.selectedViewController)
+        }
+        if let presented = base?.presentedViewController {
+            return topViewController(presented)
+        }
+        return base
+    }
+}
+
 //#Preview {
 //    ShareView(isTapShareButton: $isTapShareButton)
 //}
