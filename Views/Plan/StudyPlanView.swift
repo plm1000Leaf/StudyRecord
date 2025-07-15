@@ -14,16 +14,24 @@ struct StudyPlanView: View {
     @State private var showPopup = false
     @State private var text: String = ""
     @State private var currentMonth = Date()
-    @State private var isOn = false
+    @State private var alarmStates: [Date: Bool] = [:]
     @State private var selectedDate: Date? = nil
     @State private var calendarRefreshId = UUID() // カレンダー更新用
 
     var openPlanSettingOnAppear: Bool = false
     var openTomorrowPlan: Bool = false
     
-    // 明日の日付を計算
+
     private var tomorrowDate: Date {
         Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
+    }
+    
+    private func alarmBinding(for date: Date) -> Binding<Bool> {
+        let key = Calendar.current.startOfDay(for: date)
+        return Binding<Bool>(
+            get: { alarmStates[key] ?? false },
+            set: { alarmStates[key] = $0 }
+        )
     }
 
     var body: some View {
@@ -68,7 +76,7 @@ struct StudyPlanView: View {
                 if isTapDate, let selectedDate = selectedDate {
                     PlanSettingWindowView(
                         currentMonth: $currentMonth,
-                        isOn: $isOn,
+                        isOn: alarmBinding(for: selectedDate),
                         onClose: {
                             isTapDate = false
                         },
