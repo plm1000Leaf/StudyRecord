@@ -18,6 +18,7 @@ struct PlanSettingWindowView: View {
     @State private var endPage: String = ""
     @State private var isDialogShown = false
     @State private var isRepetition = false
+    @State private var timeConfirmed = false
     @Binding var currentMonth: Date
     @Binding var isOn: Bool
     
@@ -52,11 +53,13 @@ struct PlanSettingWindowView: View {
                 print("PlanSettingWindow 表示 - 選択日付: \(selectedDate)")
                 recordService.loadRecord(for: selectedDate, context: viewContext)
                 recordService.debugCurrentState()
+                timeConfirmed = recordService.hasScheduledTime()
             }
             .onChange(of: selectedDate) { newDate in
                 print("PlanSettingWindow 日付変更: \(selectedDate) → \(newDate)")
                 recordService.loadRecord(for: newDate, context: viewContext)
                 recordService.debugCurrentState()
+                timeConfirmed = recordService.hasScheduledTime()
             }
             .sheet(isPresented: $isTapBookSelect) {
                 BookSelectView { material in
@@ -197,7 +200,8 @@ struct PlanSettingWindowView: View {
             
             HStack {
                 TimeSelectButton(
-                    recordService: recordService, confirmedTime: .constant(false),
+                    recordService: recordService, 
+                    confirmedTime: $timeConfirmed,
                     onTimeChanged: {
                         // 時間変更時に親に通知
                         onDataUpdate?()
@@ -208,16 +212,18 @@ struct PlanSettingWindowView: View {
                 
                 VStack {
                     ZStack {
-                        HStack(spacing: 24) {
-                            Text("アラーム")
-                                .font(.system(size: 16))
-                            Toggle(isOn: $isOn) {
-                                EmptyView()
+                        if timeConfirmed {
+                            HStack(spacing: 24) {
+                                Text("アラーム")
+                                    .font(.system(size: 16))
+                                Toggle(isOn: $isOn) {
+                                    EmptyView()
+                                }
+                                .labelsHidden()
+                                .toggleStyle(SwitchToggleStyle(tint: .blue))
                             }
-                            .labelsHidden()
-                            .toggleStyle(SwitchToggleStyle(tint: .blue))
+                            .padding(.bottom, 64)
                         }
-                        .padding(.bottom, 64)
                         
                         if isOn {
                             Button(action: {
