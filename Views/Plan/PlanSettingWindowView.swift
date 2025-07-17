@@ -35,11 +35,13 @@ struct PlanSettingWindowView: View {
             
             windowBase
             
-            VStack(spacing: 24) {
+            VStack(spacing: 28) {
                 VStack(alignment: .leading) {
                     inputLearningContent
                     inputScheduledTime
                 }
+                .padding(.top, 16)
+
                 
                 BasicButton(label: "決定", width: 128, height: 48, fontSize: 24) {
                     print("決定ボタンが押されました - 日付: \(selectedDate)")
@@ -48,6 +50,7 @@ struct PlanSettingWindowView: View {
                     onDataUpdate?()
                     onClose()
                 }
+                .padding(.top, 16)
             }
             .onAppear {
                 print("PlanSettingWindow 表示 - 選択日付: \(selectedDate)")
@@ -138,7 +141,7 @@ struct PlanSettingWindowView: View {
             }
             .padding(.leading, 8)
             .padding(.top, 56)
-            .padding(.bottom, 24)
+            .padding(.bottom, 40)
         }
     }
     
@@ -198,7 +201,7 @@ struct PlanSettingWindowView: View {
     private var inputScheduledTime: some View {
         VStack(alignment: .leading) {
             
-            HStack {
+            HStack(spacing: 48){
                 TimeSelectButton(
                     recordService: recordService, 
                     confirmedTime: $timeConfirmed,
@@ -210,69 +213,22 @@ struct PlanSettingWindowView: View {
                     .frame(width: 160, height: 40)
                     .padding(.bottom, 8)
                 
-                VStack {
                     ZStack {
                         if timeConfirmed {
-                            HStack(spacing: 24) {
-                                Text("アラーム")
-                                    .font(.system(size: 16))
-                                Toggle(isOn: $isOn) {
-                                    EmptyView()
-                                }
-                                .labelsHidden()
-                                .toggleStyle(SwitchToggleStyle(tint: .blue))
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.white)
+                                    .frame(width: 72, height: 72)
+                                
+                                Image(systemName: "calendar")
+                                    .foregroundColor(Color.mainColor0)
+                                    .font(.system(size: 24))
+                                    .bold()
                             }
-                            .padding(.bottom, 64)
                         }
                         
-                        if isOn {
-                            Button(action: {
-                                isDialogShown = true
-                            }) {
-                                HStack(spacing: 24) {
-                                    Text("繰り返し")
-                                        .frame(width: 72, height: 8)
-                                        .padding(.leading, 14)
-                                        .foregroundColor(.black)
-                                    if isRepetition {
-                                        Text("あり")
-                                            .padding(.leading, 8)
-                                    } else {
-                                        Text("なし")
-                                            .padding(.leading, 8)
-                                    }
-                                }
-                                .font(.system(size: 16))
-                            }
-                            .padding(.top, 40)
-                            .alert(isPresented: $isDialogShown) {
-                                if isRepetition {
-                                    Alert(
-                                        title: Text("毎週木曜日の14時30分\nのアラーム設定を解除します"),
-                                        message: Text("本当に解除してもよろしいですか？"),
-                                        primaryButton: .destructive(Text("はい")) {
-                                            isRepetition = false
-                                            print("はいが選択されました")
-                                        },
-                                        secondaryButton: .cancel(Text("いいえ"))
-                                    )
-                                } else {
-                                    Alert(
-                                        title: Text("毎週木曜日の14時30分\nにアラームを鳴らします"),
-                                        message: Text("本当に設定してもよろしいですか？"),
-                                        primaryButton: .destructive(Text("はい")) {
-                                            isRepetition = true
-                                            print("はいが選択されました")
-                                        },
-                                        secondaryButton: .cancel(Text("いいえ"))
-                                    )
-                                }
-                            }
-                            .padding(.leading, -24)
-                        }
                     }
                     .padding(.leading, 8)
-                }
             }
             .padding(.leading, 16)
         }
