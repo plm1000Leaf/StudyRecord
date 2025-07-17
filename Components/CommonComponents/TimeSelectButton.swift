@@ -8,7 +8,7 @@ struct TimeSelectButton: View {
     @State private var selectedMinute = 30
     @State private var showPicker = false
     @Binding var confirmedTime: Bool
-    
+
     // 時間変更時の通知用コールバック
     var onTimeChanged: (() -> Void)? = nil
 
@@ -37,6 +37,7 @@ struct TimeSelectButton: View {
         .sheet(isPresented: $showPicker) {
             TimeSelectPicker(
                 recordService: recordService,
+                confirmedTime: $confirmedTime,
                 selectedHour: $selectedHour,
                 selectedMinute: $selectedMinute,
                 showPicker: $showPicker,
@@ -47,20 +48,19 @@ struct TimeSelectButton: View {
             let (hour, minute) = recordService.getScheduledTime()
             selectedHour = Int(hour)
             selectedMinute = Int(minute)
+            confirmedTime = recordService.hasScheduledTime()
         }
     }
 }
 
-
-
 struct TimeSelectPicker: View {
     @Environment(\.managedObjectContext) private var viewContext
     @ObservedObject var recordService: DailyRecordService
-    @State private var confirmedTime = false
+    @Binding var confirmedTime: Bool
     @Binding var selectedHour: Int
     @Binding var selectedMinute: Int
     @Binding var showPicker: Bool
-    
+
     // 時間変更時の通知用コールバック
     var onTimeChanged: (() -> Void)? = nil
 
@@ -80,10 +80,10 @@ struct TimeSelectPicker: View {
                 Button("確定") {
                     recordService.updateScheduledHour(Int16(selectedHour), context: viewContext)
                     recordService.updateScheduledMinute(Int16(selectedMinute), context: viewContext)
-                    
+
                     // 時間変更通知
                     onTimeChanged?()
-                    
+
                     showPicker = false
                     confirmedTime = true
                 }
@@ -118,5 +118,3 @@ struct TimeSelectPicker: View {
     }
 }
 
-
-    
