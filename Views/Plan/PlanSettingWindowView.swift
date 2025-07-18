@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PlanSettingWindowView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.openURL) private var openURL
     
     @StateObject private var recordService = DailyRecordService.shared
     
@@ -213,8 +214,8 @@ struct PlanSettingWindowView: View {
                     .frame(width: 160, height: 40)
                     .padding(.bottom, 8)
                 
-                    ZStack {
-                        if timeConfirmed {
+                    if timeConfirmed {
+                        Button(action: openCalendar) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 8)
                                     .fill(Color.white)
@@ -226,11 +227,26 @@ struct PlanSettingWindowView: View {
                                     .bold()
                             }
                         }
-                        
-                    }
-                    .padding(.leading, 8)
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(.leading, 8)
+                        }
+
             }
             .padding(.leading, 16)
+        }
+    }
+    
+    private func openCalendar() {
+        let (hour, minute) = recordService.getScheduledTime()
+        var calendar = Calendar.current
+        var components = calendar.dateComponents([.year, .month, .day], from: selectedDate)
+        components.hour = Int(hour)
+        components.minute = Int(minute)
+        if let targetDate = calendar.date(from: components) {
+            let interval = targetDate.timeIntervalSinceReferenceDate
+            if let url = URL(string: "calshow:\(interval)") {
+                openURL(url)
+            }
         }
     }
     
