@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import EventKit
+import Combine
 
 struct PlanSettingWindowView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -84,6 +86,9 @@ struct PlanSettingWindowView: View {
                 },
                 alignment: .topLeading
             )
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            checkEventUpdate()
         }
     }
 
@@ -238,15 +243,39 @@ struct PlanSettingWindowView: View {
     
     private func openCalendar() {
         let (hour, minute) = recordService.getScheduledTime()
-        var calendar = Calendar.current
-        var components = calendar.dateComponents([.year, .month, .day], from: selectedDate)
-        components.hour = Int(hour)
-        components.minute = Int(minute)
-        if let targetDate = calendar.date(from: components) {
-            let interval = targetDate.timeIntervalSinceReferenceDate
-            if let url = URL(string: "calshow:\(interval)") {
-                openURL(url)
+        CalendarEventHelper.shared.requestAccess { granted in
+            guard granted else { return }
+
+            let identifier = recordService.getEventIdentifier()
+            let newId = CalendarEventHelper.shared.createOrUpdateEvent(for: selectedDate, hour: Int(hour), minute: Int(minute), existingIdentifier: identifier)
+            if newId != identifier {
+                recordService.updateEventIdentifier(newId, context: viewContext)
             }
+            var calendar = Calendar.current
+            var components = calendar.dateComponents([.year, .month, .day], from: selectedDate)
+            components.hour = Int(hour)
+            components.minute = Int(minute)
+            if let targetDate = calendar.date(from: components) {
+                let interval = targetDate.timeIntervalSinceReferenceDate
+                if let url = URL(string: "calshow:\(interval)") {
+                    openURL(url)
+                }
+        
+            }
+        }
+    }
+    
+    private func checkEventUpdate() {
+        guard let id = recordService.getEventIdentifier(),
+              let event = CalendarEventHelper.shared.fetchEvent(identifier: id) else { return }
+        let comps = Calendar.current.dateComponents([.hour, .minute], from: event.startDate)
+        let newHour = comps.hour ?? 0
+        let newMinute = comps.minute ?? 0
+        let (currentHour, currentMinute) = recordService.getScheduledTime()
+        if newHour != currentHour || newMinute != currentMinute {
+            recordService.updateScheduledHour(Int16(newHour), context: viewContext)
+            recordService.updateScheduledMinute(Int16(newMinute), context: viewContext)
+            onDataUpdate?()
         }
     }
     

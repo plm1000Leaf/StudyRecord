@@ -242,6 +242,14 @@ final class DailyRecordService: ObservableObject {
         objectWillChange.send()
     }
     
+
+    /// カレンダーイベントIDを保存
+    func updateEventIdentifier(_ identifier: String?, context: NSManagedObjectContext) {
+        guard let record = currentRecord else { return }
+        dailyManager.updateEventIdentifier(identifier, for: record, context: context)
+        objectWillChange.send()
+    }
+    
     // MARK: - Review Methods
     
     /// 振り返りを更新
@@ -297,6 +305,10 @@ final class DailyRecordService: ObservableObject {
         return (hour: record.scheduledHour, minute: record.scheduledMinute)
     }
     
+    /// 登録済みのカレンダーイベントIDを取得
+    func getEventIdentifier() -> String? {
+        return currentRecord?.eventIdentifier
+    }
     /// 現在のレコードの振り返りを取得
     func getReview() -> String {
         return currentRecord?.review ?? ""
@@ -421,6 +433,7 @@ struct StudyRangeData {
     let material: Material?
     let scheduledHour: Int16
     let scheduledMinute: Int16
+    let eventIdentifier: String?
     let review: String?
     let date: Date
     let isChecked: Bool
@@ -433,6 +446,7 @@ struct StudyRangeData {
         self.material = record.material
         self.scheduledHour = record.scheduledHour
         self.scheduledMinute = record.scheduledMinute
+        self.eventIdentifier = record.eventIdentifier
         self.review = record.review
         self.date = record.date ?? Date()
         self.isChecked = record.isChecked
@@ -469,6 +483,7 @@ extension DailyRecordService {
             print("学習範囲: \(getStudyRange())")
             print("教材: \(getMaterial()?.name ?? "未設定")")
             print("予定時間: \(getFormattedTime())")
+            print("イベントID: \(record.eventIdentifier ?? "nil")")
         }
         print("================================")
     }

@@ -28,6 +28,7 @@ extension DailyRecord {
     @NSManaged public var isRepeating: Bool
     @NSManaged public var scheduledHour: Int16
     @NSManaged public var scheduledMinute: Int16
+    @NSManaged public var eventIdentifier: String?
 
     // リレーション
     @NSManaged public var material: Material?

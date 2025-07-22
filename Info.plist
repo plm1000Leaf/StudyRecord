@@ -4,5 +4,7 @@
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>写真ライブラリへのアクセスを許可してください。</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>カレンダーへのアクセスを許可してください。</string>
 </dict>
 </plist>
