@@ -81,8 +81,8 @@ struct YearReviewView: View {
             if showDateReviewView {
                 setCurrentMonthToToday()
             }
-            
             continuationDays = recordService.calculateContinuationDays(context: viewContext)
+            monthlyCheckCounts = recordService.loadMonthlyCheckCountsFromMonthlyRecord(for: selectedYear,context: viewContext)
             
         }
         .onChange(of: showDateReviewView) { newValue in
@@ -90,6 +90,9 @@ struct YearReviewView: View {
             if newValue {
                 setCurrentMonthToToday()
             }
+        }
+        .onChange(of: selectedYear) { newValue in
+            monthlyCheckCounts = recordService.loadMonthlyCheckCountsFromMonthlyRecord(for: newValue,context: viewContext)
         }
         
     }
@@ -158,7 +161,8 @@ extension YearReviewView {
                 ForEach(0..<3, id: \.self) { columnIndex in
                     let monthNumber = rowIndex * 3 + columnIndex + 1
                     let checkCount = monthlyCheckCounts[monthNumber] ?? 0
-                    let opacity = recordService.getColorOpacity(for: monthNumber, in: monthlyCheckCounts)
+                    let opacity = recordService.getColorOpacity(for: monthNumber,year: selectedYear,
+                        in: monthlyCheckCounts)
                     
                     Button(action: {
                         withAnimation {

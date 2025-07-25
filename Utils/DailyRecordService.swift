@@ -103,15 +103,16 @@ final class DailyRecordService: ObservableObject {
     }
     
     /// 月別チェック数に基づいて色の濃度を計算
-    func getColorOpacity(for month: Int, in monthlyCheckCounts: [Int: Int]) -> Double {
+    func getColorOpacity(for month: Int,
+                         year: Int,
+                         in monthlyCheckCounts: [Int: Int]) -> Double {
         let checkCount = monthlyCheckCounts[month] ?? 0
-        let maxCount = monthlyCheckCounts.values.max() ?? 1
-        
-        if maxCount == 0 {
-            return 0.3 // 最低限の濃度
+        guard let date = Calendar.current.date(from: DateComponents(year: year, month: month)),
+              let numberOfDays = Calendar.current.range(of: .day, in: .month, for: date)?.count else {
+            return 0.3
         }
-        
-        let ratio = Double(checkCount) / Double(maxCount)
+            if numberOfDays == 0 { return 0.3 }
+            let ratio = Double(checkCount) / Double(numberOfDays)
         return 0.3 + (ratio * 0.7) // 0.3 〜 1.0 の範囲
     }
     

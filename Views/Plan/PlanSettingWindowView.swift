@@ -247,7 +247,8 @@ struct PlanSettingWindowView: View {
             guard granted else { return }
 
             let identifier = recordService.getEventIdentifier()
-            let newId = CalendarEventHelper.shared.createOrUpdateEvent(for: selectedDate, hour: Int(hour), minute: Int(minute), existingIdentifier: identifier)
+            let materialTitle = recordService.getMaterial()?.name
+            let newId = CalendarEventHelper.shared.createOrUpdateEvent(for: selectedDate, hour: Int(hour), minute: Int(minute), title: materialTitle, existingIdentifier: identifier)
             if newId != identifier {
                 recordService.updateEventIdentifier(newId, context: viewContext)
             }
