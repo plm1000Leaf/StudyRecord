@@ -5,6 +5,7 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="endPage" optional="YES" attributeType="String"/>
         <attribute name="endUnit" optional="YES" attributeType="String"/>
+        <attribute name="eventIdentifier" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isRepeating" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>

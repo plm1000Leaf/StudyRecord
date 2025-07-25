@@ -94,6 +94,16 @@ final class DailyRecordManager {
             print("保存失敗: \(error.localizedDescription)")
         }
     }
+    
+    func updateEventIdentifier(_ identifier: String?, for record: DailyRecord, context: NSManagedObjectContext) {
+        record.eventIdentifier = identifier
+        do {
+            try context.save()
+        } catch {
+            print("保存失敗: \(error.localizedDescription)")
+        }
+    }
+    
     func updateIsChecked(_ isChecked: Bool, for record: DailyRecord, context: NSManagedObjectContext) {
         record.isChecked = isChecked
         

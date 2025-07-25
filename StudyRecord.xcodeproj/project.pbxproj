@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		281E28C52E050149008A2981 /* SnapshotManager .swift in Sources */ = {isa = PBXBuildFile; fileRef = 281E28C42E050149008A2981 /* SnapshotManager .swift */; };
+		281EBD8F2E2A20A700FB03B1 /* CalendarEventHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281EBD8E2E2A20A700FB03B1 /* CalendarEventHelper.swift */; };
 		2875E9F52E0415C100D9B0FC /* StudyRecordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9AF2E0415C000D9B0FC /* StudyRecordApp.swift */; };
 		2875E9F62E0415C100D9B0FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2875E9B32E0415C000D9B0FC /* Assets.xcassets */; };
 		2875E9F72E0415C100D9B0FC /* DebugDateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9B52E0415C000D9B0FC /* DebugDateManager.swift */; };
@@ -59,6 +60,7 @@
 
 /* Begin PBXFileReference section */
 		281E28C42E050149008A2981 /* SnapshotManager .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SnapshotManager .swift"; sourceTree = "<group>"; };
+		281EBD8E2E2A20A700FB03B1 /* CalendarEventHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventHelper.swift; sourceTree = "<group>"; };
 		2875E9AF2E0415C000D9B0FC /* StudyRecordApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyRecordApp.swift; sourceTree = "<group>"; };
 		2875E9B02E0415C000D9B0FC /* StudyRecord.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = StudyRecord.xcodeproj; sourceTree = "<group>"; };
 		2875E9B32E0415C000D9B0FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				2875E9B92E0415C000D9B0FC /* CalendarUtils.swift */,
 				281E28C42E050149008A2981 /* SnapshotManager .swift */,
 				28893F7A2E13B2490084F807 /* ScreenshotHelper.swift */,
+				281EBD8E2E2A20A700FB03B1 /* CalendarEventHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				2875E9F82E0415C100D9B0FC /* GraphDataService.swift in Sources */,
 				2875EA122E0415C100D9B0FC /* Material.swift in Sources */,
 				2875E9F52E0415C100D9B0FC /* StudyRecordApp.swift in Sources */,
+				281EBD8F2E2A20A700FB03B1 /* CalendarEventHelper.swift in Sources */,
 				2875E9FF2E0415C100D9B0FC /* AddBookView.swift in Sources */,
 				2875E9FE2E0415C100D9B0FC /* LabelSelector.swift in Sources */,
 				2875EA0C2E0415C100D9B0FC /* CustomRoundedCorner.swift in Sources */,
