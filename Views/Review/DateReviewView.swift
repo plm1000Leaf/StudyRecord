@@ -219,13 +219,14 @@ extension DateReviewView {
         let frameColor = isChecked ? Color.mainColor0 : Color.notCheckedColor10
         
         return AnyView(
-            HStack(alignment: .top, spacing: 32) {
+            HStack(alignment: .top, spacing: -8) {
                 VStack(alignment: .trailing) {
                     Text("\(dayNumber)")
                         .font(.system(size: 32))
                     Text("(\(weekday))")
                         .font(.system(size: 16))
                 }
+                .padding(.leading, 38)
                 .foregroundColor(.gray0)
                 
                 ZStack{
