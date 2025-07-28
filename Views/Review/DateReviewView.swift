@@ -116,6 +116,7 @@ extension DateReviewView {
                         .font(.system(size: 16))
                 }
                 .foregroundColor(.gray0)
+                .frame(width: 40, alignment: .trailing)
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
@@ -219,14 +220,14 @@ extension DateReviewView {
         let frameColor = isChecked ? Color.mainColor0 : Color.notCheckedColor10
         
         return AnyView(
-            HStack(alignment: .top, spacing: -8) {
+            HStack(alignment: .top, spacing: 32) {
                 VStack(alignment: .trailing) {
                     Text("\(dayNumber)")
                         .font(.system(size: 32))
                     Text("(\(weekday))")
                         .font(.system(size: 16))
                 }
-                .padding(.leading, 38)
+                .frame(width: 40, alignment: .trailing)
                 .foregroundColor(.gray0)
                 
                 ZStack{

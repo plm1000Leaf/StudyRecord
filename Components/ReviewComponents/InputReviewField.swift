@@ -24,6 +24,7 @@ struct InputReviewField: View {
 
         }
         .padding()
+        .frame(width: 248)
         .onAppear {
             reviewText = dailyRecord.review ?? ""
         }
@@ -70,7 +71,7 @@ extension InputReviewField {
                 }
                 .frame(maxWidth: .infinity, alignment:
                         .trailing)
-                .padding(.trailing, 48)
+                .padding(.trailing, 8)
             }
     }
     

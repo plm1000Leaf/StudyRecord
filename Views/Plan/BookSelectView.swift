@@ -54,7 +54,6 @@ struct BookSelectView: View {
                     )
                 }
                 
-                // フローティングボタン（AddBookViewが表示されていない時のみ）
                 if !isAddingNewBook {
                     VStack {
                         Spacer()
