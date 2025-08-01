@@ -216,9 +216,9 @@
 		2875E9CB2E0415C000D9B0FC /* CommonComponents */ = {
 			isa = PBXGroup;
 			children = (
+				2875E9CE2E0415C000D9B0FC /* BasicButton.swift */,
 				2875E9CC2E0415C000D9B0FC /* InputStudyRange.swift */,
 				2875E9CD2E0415C000D9B0FC /* MovePeriodPopup.swift */,
-				2875E9CE2E0415C000D9B0FC /* BasicButton.swift */,
 				2875E9CF2E0415C000D9B0FC /* TimeSelectButton.swift */,
 				2875E9D02E0415C000D9B0FC /* CustomRoundedCorner.swift */,
 				2875E9D12E0415C000D9B0FC /* PullDown.swift */,

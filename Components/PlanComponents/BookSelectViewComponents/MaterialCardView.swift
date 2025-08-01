@@ -129,8 +129,9 @@ extension MaterialCardView {
     private var nameDisplay: some View {
         Text(material.name ?? "")
             .font(.system(size: 16))
-            .frame(width: 72)
+            .frame(width: 72, height: 100, alignment: .center)
             .multilineTextAlignment(.center)
+//            .lineLimit(2)
     }
 }
 

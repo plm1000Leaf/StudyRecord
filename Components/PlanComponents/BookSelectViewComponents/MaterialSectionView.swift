@@ -24,10 +24,11 @@ struct MaterialSectionView: View {
     private let maxCharacters = 15
     
     var body: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: 24) {
             sectionHeader
             materialGrid
         }
+        .padding(.bottom, -80)
         .id(refreshID)
     }
 }
