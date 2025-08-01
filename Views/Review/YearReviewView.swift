@@ -47,7 +47,8 @@ struct YearReviewView: View {
                         yearView
                             .transition(.move(edge: .leading))
                     } else {
-                        YearReviewGraphView(selectedSegment: $selectedSegment)
+
+                        YearReviewGraphView(selectedSegment: $selectedSegment, selectedYear: $selectedYear)
                             .transition(.move(edge: .leading))
                     }
                 }

@@ -12,8 +12,8 @@ struct YearReviewGraphView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var recordService = DailyRecordService.shared
     @Binding var selectedSegment: Int
+    @Binding var selectedYear: Int
     @State private var showPopup = false
-    @State private var selectedYear = 2025
     @State private var isTapShareButton = false
     @State private var shareImage: UIImage? = nil
     @State private var captureRect: CGRect = .zero
@@ -52,6 +52,7 @@ extension YearReviewGraphView {
                 header
 
                 YearReviewGraphWithYear(selectedYear: selectedYear)
+                    .id(selectedYear)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)  // グラフが画面全体を使用
             }
             .background(
@@ -212,6 +213,4 @@ struct YearReviewGraphWithYear: View {
     }
 }
 
-#Preview {
-    YearReviewGraphView(selectedSegment: .constant(1))
-}
+
