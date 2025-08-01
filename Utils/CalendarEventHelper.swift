@@ -22,16 +22,16 @@ final class CalendarEventHelper {
         }
     }
 
-    func createOrUpdateEvent(for date: Date, hour: Int, minute: Int, existingIdentifier: String?) -> String? {
+    func createOrUpdateEvent(for date: Date, hour: Int, minute: Int, title: String?, existingIdentifier: String?) -> String? {
         let event: EKEvent
         if let id = existingIdentifier, let existing = eventStore.event(withIdentifier: id) {
             event = existing
         } else {
             event = EKEvent(eventStore: eventStore)
             event.calendar = eventStore.defaultCalendarForNewEvents
-            event.title = "Study"
         }
-
+        
+        event.title = "Study"
         var components = Calendar.current.dateComponents([.year, .month, .day], from: date)
         components.hour = hour
         components.minute = minute
