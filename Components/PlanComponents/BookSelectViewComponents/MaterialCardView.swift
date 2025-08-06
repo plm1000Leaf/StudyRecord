@@ -18,6 +18,7 @@ struct MaterialCardView: View {
     @State private var isEditingMaterial = false
     @State private var editingMaterialName = ""
     @State private var selectedPhotoItem: PhotosPickerItem?
+    @State private var showDeleteAlert = false
     
     var body: some View {
         ZStack {
@@ -33,6 +34,14 @@ struct MaterialCardView: View {
         }
         .onChange(of: selectedPhotoItem) { newItem in
             updateMaterialImage(newItem)
+        }
+        .alert("教材を削除", isPresented: $showDeleteAlert) {
+            Button("削除", role: .destructive) {
+                deleteMaterial()
+            }
+            Button("キャンセル", role: .cancel) { }
+        } message: {
+            Text("「\(material.name ?? "")」を削除しますか？")
         }
     }
 }
@@ -151,7 +160,8 @@ extension MaterialCardView {
     private var editActionButton: some View {
         Button(action: {
             if isEditingMaterial {
-                deleteMaterial()
+//                deleteMaterial()
+                showDeleteAlert = true
             } else {
                 startMaterialEdit()
             }
