@@ -248,7 +248,7 @@ extension AddBookView {
     }
 }
 
-#Preview {
-    BookSelectView()
-        .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-}
+//#Preview {
+//    BookSelectView()
+//        .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+//}

@@ -110,7 +110,12 @@ extension BookSelectView {
             Spacer()
             
             // 編集ボタン
-            Button(action: { isEditingMode.toggle() }) {
+            Button(action: { 
+                isEditingMode.toggle()
+                if !isEditingMode {
+                    refreshID = UUID()
+                }
+            }) {
                 Text(isEditingMode ? "完了" : "編集")
                     .font(.system(size: 20))
                     .padding(8)
