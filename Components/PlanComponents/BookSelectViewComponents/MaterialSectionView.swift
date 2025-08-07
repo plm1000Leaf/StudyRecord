@@ -30,6 +30,12 @@ struct MaterialSectionView: View {
         }
         .padding(.bottom, -80)
         .id(refreshID)
+        .onChange(of: isEditingMode) { newValue in
+            if !newValue {
+                isEditingLabel = false
+                editingLabelName = ""
+            }
+        }
     }
 }
 
