@@ -64,8 +64,11 @@ extension AfterCheckView {
         .background(Color.baseColor0)
         .alert("チェックを取消", isPresented: $showCancelCheckAlert) {
             Button("取消し", role: .destructive) {
+                recordService.updateIsChecked(false, context: viewContext)
+                dismiss()
             }
-            Button("キャンセル", role: .cancel) { }
+            Button("キャンセル", role: .cancel) {
+            }
         } message: {
             Text("Doneボタンを押し間違えた場合\n取り消すことができます")
         }
