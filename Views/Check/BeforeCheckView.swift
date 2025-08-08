@@ -108,16 +108,28 @@ extension BeforeCheckView {
             Button(action: {
                 isTapBookSelect.toggle()
             }){
-                if let material = recordService.getMaterial(),
-                   let imageData = material.imageData,
-                   let uiImage = UIImage(data: imageData) {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .frame(width: 136, height: 168)
+                if let material = recordService.getMaterial() {
+                    if let imageData = material.imageData,
+                       let uiImage = UIImage(data: imageData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .frame(width: 136, height: 168)
+                    } else {
+                        ZStack {
+                            Rectangle()
+                                .frame(width: 136, height: 168)
+                                .foregroundColor(.gray.opacity(0.3))
+                            VStack(spacing: 8) {
+                                Image(systemName: "photo")
+                                    .frame(width: 16)
+                                    .foregroundColor(.gray10)
+                                Text("No Image")
+                            }
+                        }
+                    }
                 } else {
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 8)
-                            .foregroundColor(.mainColor20)
+                    ZStack {
+                        Rectangle()
                             .frame(width: 136, height: 168)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)

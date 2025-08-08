@@ -178,12 +178,25 @@ struct PlanSettingWindowView: View {
     // 教材画像表示部分
     private var materialImageView: some View {
         Group {
-            if let material = recordService.getMaterial(),
-               let imageData = material.imageData,
-               let uiImage = UIImage(data: imageData) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+            if let material = recordService.getMaterial() {
+                if let imageData = material.imageData,
+                   let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                } else {
+                    ZStack {
+                        Rectangle()
+                            .frame(width: 104, height: 120)
+                            .foregroundColor(.gray.opacity(0.3))
+                        VStack(spacing: 8) {
+                            Image(systemName: "photo")
+                                .frame(width: 16)
+                                .foregroundColor(.gray10)
+                            Text("No Image")
+                        }
+                    }
+                }
             } else {
                 ZStack{
                     RoundedRectangle(cornerRadius: 8)
