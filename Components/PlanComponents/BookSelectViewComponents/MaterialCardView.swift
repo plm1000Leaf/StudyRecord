@@ -21,12 +21,11 @@ struct MaterialCardView: View {
     @State private var showDeleteAlert = false
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topLeading){
             VStack {
                 materialImage
                 materialName
             }
-            .padding(.bottom, 32)
             
             if isEditingMode {
                 editingOverlay
