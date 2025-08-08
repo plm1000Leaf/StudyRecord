@@ -53,7 +53,9 @@ extension MaterialSectionView {
             if isEditingMode {
                 labelActionButton
             }
+            Spacer()
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var labelEditField: some View {
@@ -62,7 +64,6 @@ extension MaterialSectionView {
             .frame(width: 200)
             .font(.system(size: 24))
             .padding(.top, 40)
-            .frame(maxWidth: .infinity, alignment: .leading)
             .onChange(of: editingLabelName) { newValue in
                 if newValue.count > maxCharacters {
                     editingLabelName = String(newValue.prefix(maxCharacters))
@@ -77,7 +78,6 @@ extension MaterialSectionView {
         Text(label)
             .padding(.top, 40)
             .font(.system(size: 32))
-            .frame(maxWidth: .infinity, alignment: .leading)
             .onTapGesture {
                 if isEditingMode {
                     startLabelEdit()
@@ -93,10 +93,9 @@ extension MaterialSectionView {
                 startLabelEdit()
             }
         }) {
-            Image(systemName: isEditingLabel ? "trash.circle.fill" : "pencil.circle.fill")
-                .font(.system(size: 32))
-                .foregroundColor(isEditingLabel ? .red : .blue)
-                .background(Circle().fill(Color.white))
+            Image(systemName: isEditingLabel ? "trash" : "pencil")
+                .font(.system(size: 24))
+                .foregroundColor(.gray20)
         }
         .padding(.top, 40)
         .padding(.trailing, 32)
