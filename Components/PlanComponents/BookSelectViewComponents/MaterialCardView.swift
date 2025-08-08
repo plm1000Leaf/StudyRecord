@@ -18,14 +18,14 @@ struct MaterialCardView: View {
     @State private var isEditingMaterial = false
     @State private var editingMaterialName = ""
     @State private var selectedPhotoItem: PhotosPickerItem?
+    @State private var showDeleteAlert = false
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topLeading){
             VStack {
                 materialImage
                 materialName
             }
-            .padding(.bottom, 32)
             
             if isEditingMode {
                 editingOverlay
@@ -33,6 +33,14 @@ struct MaterialCardView: View {
         }
         .onChange(of: selectedPhotoItem) { newItem in
             updateMaterialImage(newItem)
+        }
+        .alert("教材を削除", isPresented: $showDeleteAlert) {
+            Button("削除", role: .destructive) {
+                deleteMaterial()
+            }
+            Button("キャンセル", role: .cancel) { }
+        } message: {
+            Text("「\(material.name ?? "")」を削除しますか？")
         }
     }
 }
@@ -79,14 +87,22 @@ extension MaterialCardView {
     }
     
     private var placeholderImage: some View {
-        Rectangle()
-            .frame(width: 96, height: 120)
-            .foregroundColor(.gray.opacity(0.3))
-            .onTapGesture {
-                if !isEditingMode {
-                    selectMaterial()
+        ZStack{
+            Rectangle()
+                .frame(width: 96, height: 120)
+                .foregroundColor(.gray.opacity(0.3))
+                .onTapGesture {
+                    if !isEditingMode {
+                        selectMaterial()
+                    }
                 }
+            VStack(spacing: 8){
+                Image(systemName:"photo")
+                    .frame(width: 16)
+                    .foregroundColor(.gray10)
+                Text("No Image")
             }
+        }
     }
     
     private var editingImageOverlay: some View {
@@ -129,8 +145,9 @@ extension MaterialCardView {
     private var nameDisplay: some View {
         Text(material.name ?? "")
             .font(.system(size: 16))
-            .frame(width: 72)
+            .frame(width: 72, height: 100, alignment: .center)
             .multilineTextAlignment(.center)
+//            .lineLimit(2)
     }
 }
 
@@ -150,7 +167,7 @@ extension MaterialCardView {
     private var editActionButton: some View {
         Button(action: {
             if isEditingMaterial {
-                deleteMaterial()
+                showDeleteAlert = true
             } else {
                 startMaterialEdit()
             }

@@ -19,24 +19,23 @@ struct BookSelectView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                // メインコンテンツ
+
                 VStack(spacing: 0) {
-                    // ナビゲーションボタン
+
                     navigationButtons
-                    
-                    // スクロール可能なコンテンツ
+
                     ScrollView {
                         VStack(spacing: 40) {
                             materialSections
                         }
                         .padding(.horizontal, 20)
-                        .padding(.bottom, 100) // 下部ボタンのスペースを確保
+                        .padding(.bottom, 100)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.baseColor10)
                 
-                // AddBookViewのオーバーレイ
+
                 if isAddingNewBook {
                     AddBookView(
                         labelList: Binding(
@@ -48,7 +47,7 @@ struct BookSelectView: View {
                         ),
                         isShowing: $isAddingNewBook,
                         onDismiss: {
-                            // AddBookViewを閉じるだけ
+
                             isAddingNewBook = false
                         }
                     )
@@ -111,7 +110,12 @@ extension BookSelectView {
             Spacer()
             
             // 編集ボタン
-            Button(action: { isEditingMode.toggle() }) {
+            Button(action: { 
+                isEditingMode.toggle()
+                if !isEditingMode {
+                    refreshID = UUID()
+                }
+            }) {
                 Text(isEditingMode ? "完了" : "編集")
                     .font(.system(size: 20))
                     .padding(8)

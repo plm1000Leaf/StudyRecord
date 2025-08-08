@@ -159,6 +159,11 @@ extension AddBookView {
             CustomTextEditor(text: $bookName, maxCharacters: maxCharacters)
                 .frame(width: 156, height: 56)
                 .padding(.top, 8)
+                .onChange(of: bookName) { newValue in
+                    if newValue.count > maxCharacters {
+                        bookName = String(newValue.prefix(maxCharacters))
+                    }
+                }
         }
     }
     
@@ -243,7 +248,7 @@ extension AddBookView {
     }
 }
 
-#Preview {
-    BookSelectView()
-        .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-}
+//#Preview {
+//    BookSelectView()
+//        .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+//}
