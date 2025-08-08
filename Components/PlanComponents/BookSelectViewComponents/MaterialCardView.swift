@@ -87,14 +87,22 @@ extension MaterialCardView {
     }
     
     private var placeholderImage: some View {
-        Rectangle()
-            .frame(width: 96, height: 120)
-            .foregroundColor(.gray.opacity(0.3))
-            .onTapGesture {
-                if !isEditingMode {
-                    selectMaterial()
+        ZStack{
+            Rectangle()
+                .frame(width: 96, height: 120)
+                .foregroundColor(.gray.opacity(0.3))
+                .onTapGesture {
+                    if !isEditingMode {
+                        selectMaterial()
+                    }
                 }
+            VStack(spacing: 8){
+                Image(systemName:"photo")
+                    .frame(width: 16)
+                    .foregroundColor(.gray10)
+                Text("No Image")
             }
+        }
     }
     
     private var editingImageOverlay: some View {
@@ -159,7 +167,6 @@ extension MaterialCardView {
     private var editActionButton: some View {
         Button(action: {
             if isEditingMaterial {
-//                deleteMaterial()
                 showDeleteAlert = true
             } else {
                 startMaterialEdit()
