@@ -17,6 +17,7 @@ struct AfterCheckView: View {
     @State private var shareMaterialText: String = ""
     @State private var shareMonthlySummary: String = ""
     @State private var shareContinuationDays: Int = 0
+    @State private var showCancelCheckAlert = false
     
     var dismiss: () -> Void
 
@@ -48,16 +49,26 @@ extension AfterCheckView {
     
     private var afterCheckView: some View {
         VStack(spacing: 80){
-            checkViewTitle
+            HStack{
+                checkViewTitle
+                cancelCheckButton
+            }
             studyDoneText
             continuationDaysView
             shareButton
-            checkButton
+            transitionButton
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .navigationBarBackButtonHidden(true)
         .background(Color.baseColor0)
+        .alert("チェックを取消", isPresented: $showCancelCheckAlert) {
+            Button("取消し", role: .destructive) {
+            }
+            Button("キャンセル", role: .cancel) { }
+        } message: {
+            Text("Doneボタンを押し間違えた場合\n取り消すことができます")
+        }
     }
     
     private var checkViewTitle: some View {
@@ -93,7 +104,18 @@ extension AfterCheckView {
         }
     }
     
-    private var checkButton: some View {
+    private var cancelCheckButton: some View {
+        Button(action: {
+            showCancelCheckAlert = true
+        }) {
+            Image(systemName: "return")
+                .font(.system(size: 32))
+                .frame(maxWidth: .infinity, alignment: .trailing)
+        }
+    }
+    
+
+    private var transitionButton: some View {
         HStack(spacing: 56){
             BasicButton(label: "振り返る", width: 144, height: 72, fontSize: 24){
                 selectedTabIndex = 0
