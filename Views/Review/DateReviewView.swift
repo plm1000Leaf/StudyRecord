@@ -243,11 +243,24 @@ extension DateReviewView {
                     }
                     VStack{
                         HStack{
-                        if let image = materialImages[index] {
-                            Image(uiImage: image)
-                                .resizable()
-                                .frame(width: 88, height: 120)
-                                
+                            if let material = record(for: index).material {
+                                if let image = materialImages[index] {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .frame(width: 88, height: 120)
+                                } else {
+                                    ZStack {
+                                        Rectangle()
+                                            .frame(width: 88, height: 120)
+                                            .foregroundColor(.gray.opacity(0.3))
+                                        VStack(spacing: 8) {
+                                            Image(systemName: "photo")
+                                                .frame(width: 16)
+                                                .foregroundColor(.gray10)
+                                            Text("No Image")
+                                        }
+                                    }
+                                }
                         } else {
                             ZStack{
                                 RoundedRectangle(cornerRadius: 8)
