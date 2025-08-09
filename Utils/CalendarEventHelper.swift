@@ -31,7 +31,7 @@ final class CalendarEventHelper {
             event.calendar = eventStore.defaultCalendarForNewEvents
         }
         
-        event.title = "Study"
+
         var components = Calendar.current.dateComponents([.year, .month, .day], from: date)
         components.hour = hour
         components.minute = minute
@@ -49,5 +49,16 @@ final class CalendarEventHelper {
 
     func fetchEvent(identifier: String) -> EKEvent? {
         return eventStore.event(withIdentifier: identifier)
+    }
+    /// 指定した日付に存在するイベントを検索
+    func findEvent(on date: Date, title: String? = nil) -> EKEvent? {
+        let start = Calendar.current.startOfDay(for: date)
+        guard let end = Calendar.current.date(byAdding: .day, value: 1, to: start) else { return nil }
+        let predicate = eventStore.predicateForEvents(withStart: start, end: end, calendars: nil)
+        let events = eventStore.events(matching: predicate)
+        if let title = title {
+            return events.first { $0.title == title }
+        }
+        return events.first
     }
 }
