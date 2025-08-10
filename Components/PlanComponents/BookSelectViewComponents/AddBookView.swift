@@ -19,7 +19,7 @@ struct AddBookView: View {
     
     let onDismiss: () -> Void
     
-    private let maxCharacters = 20
+    private let maxCharacters = 12
     
     var body: some View {
         ZStack{
