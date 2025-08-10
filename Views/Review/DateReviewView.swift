@@ -132,7 +132,7 @@ extension DateReviewView {
                             .font(.system(size: 16))
                             .foregroundColor(textColor)
                             .multilineTextAlignment(.center)
-                            .lineLimit(2)
+                            .lineLimit(4)
                             .frame(maxWidth: 240)
                             .padding(.bottom, 8) // 下部に少し余白
                     }

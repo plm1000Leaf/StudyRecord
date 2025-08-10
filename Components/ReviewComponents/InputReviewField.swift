@@ -8,7 +8,7 @@ struct InputReviewField: View {
 
     @Binding var reviewText: String
     @State private var isEditing: Bool = false
-    private let maxCharacters = 35
+    private let maxCharacters = 48
     
     var body: some View {
         VStack(spacing: 16) {

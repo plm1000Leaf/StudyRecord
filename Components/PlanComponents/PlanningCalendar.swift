@@ -31,11 +31,20 @@ struct PlanningCalendar: View {
                         
                         ForEach(days, id: \.self) { date in
                             VStack {
-                                if date > 0 {
-                                    Text("\(date)")
-                                        .font(.system(size: 16))
-                                        .padding(.leading, 16)
-                                        .cornerRadius(5)
+                                    if date > 0 {
+                                        ZStack{
+                                            if isToday(date: date) {
+                                                Circle()
+                                                    .frame(width: 24, height: 24)
+                                                    .foregroundColor(.accentColor1)
+                                                    .opacity(0.8)
+                                                    .padding(.leading, 16)
+                                            }
+                                            Text("\(date)")
+                                                .font(.system(size: 16))
+                                                .padding(.leading, 16)
+                                                .cornerRadius(5)
+                                        }
                                     todayStudyPlan(for: date)
                                 }
                             }
@@ -237,4 +246,11 @@ extension PlanningCalendar {
             .padding(.bottom, 14)
             .padding()
         }
+    private func isToday(date: Int) -> Bool {
+        var calendar = Calendar.current
+        var components = calendar.dateComponents([.year, .month], from: currentMonth)
+        components.day = date
+        guard let cellDate = calendar.date(from: components) else { return false }
+        return calendar.isDateInToday(cellDate)
+     }
     }
