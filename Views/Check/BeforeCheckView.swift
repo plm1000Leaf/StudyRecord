@@ -34,6 +34,14 @@ struct BeforeCheckView: View {
         recordService.getIsChecked()
     }
     
+    /// 選択された日付を日本語形式で文字列に変換
+    private var formattedSelectedDate: String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.dateFormat = "M月d日(E)"
+        return formatter.string(from: selectedDate)
+    }
+    
     var body: some View {
         
         Group {
@@ -43,7 +51,7 @@ struct BeforeCheckView: View {
                     isDoneStudy: .constant(true),
                     selectedTabIndex: $selectedTabIndex,
                     navigateToReview: $navigateToReview,
-                    navigateToPlan: $navigateToPlan,
+                    navigateToPlan: $navigateToPlan, 
                     dismiss: {
                     }
                 )
@@ -96,7 +104,7 @@ extension BeforeCheckView {
         
     }
     private var checkViewTitle: some View {
-        Text("今日の学習")
+        Text(formattedSelectedDate)
             .font(.system(size: 32))
             .padding(.top, 16)
             .padding(.leading, 32)

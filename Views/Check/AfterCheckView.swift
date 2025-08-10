@@ -20,6 +20,7 @@ struct AfterCheckView: View {
     @State private var showCancelCheckAlert = false
     
     var dismiss: () -> Void
+    
 
     var body: some View {
         ZStack {
