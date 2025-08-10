@@ -1,8 +1,10 @@
 import SwiftUI
 import CoreData
+import Combine
 
 struct PlanningCalendar: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @ObservedObject private var recordService = DailyRecordService.shared
     @Binding var currentMonth: Date
     @Binding var isTapDate: Bool
     @Binding var showPopup: Bool
@@ -29,11 +31,20 @@ struct PlanningCalendar: View {
                         
                         ForEach(days, id: \.self) { date in
                             VStack {
-                                if date > 0 {
-                                    Text("\(date)")
-                                        .font(.system(size: 16))
-                                        .padding(.leading, 16)
-                                        .cornerRadius(5)
+                                    if date > 0 {
+                                        ZStack{
+                                            if isToday(date: date) {
+                                                Circle()
+                                                    .frame(width: 24, height: 24)
+                                                    .foregroundColor(.accentColor1)
+                                                    .opacity(0.8)
+                                                    .padding(.leading, 16)
+                                            }
+                                            Text("\(date)")
+                                                .font(.system(size: 16))
+                                                .padding(.leading, 16)
+                                                .cornerRadius(5)
+                                        }
                                     todayStudyPlan(for: date)
                                 }
                             }
@@ -58,6 +69,9 @@ struct PlanningCalendar: View {
         }
         .onChange(of: refreshTrigger) { _ in
             // 手動更新トリガー
+            loadMonthlyData()
+        }
+        .onReceive(recordService.objectWillChange) { _ in
             loadMonthlyData()
         }
     }
@@ -197,11 +211,11 @@ extension PlanningCalendar {
                 }) {
                     ZStack{
                         Circle()
-                            .fill(Color.lightblue1)
+                            .fill(Color.mainColor0.opacity(0.1))
                             .frame(width: 40, height: 40)
                             .overlay(
                                 Circle()
-                                    .stroke(Color.blue, lineWidth: 2) // 枠線
+                                    .stroke(Color.mainColor0, lineWidth: 2) // 枠線
                             )
                         Image(systemName: "chevron.left")
                             .bold()
@@ -215,11 +229,11 @@ extension PlanningCalendar {
                 }) {
                     ZStack{
                         Circle()
-                            .fill(Color.lightblue1)
+                            .fill(Color.mainColor0.opacity(0.1))
                             .frame(width: 40, height: 40)
                             .overlay(
                                 Circle()
-                                    .stroke(Color.blue, lineWidth: 2) // 枠線
+                                    .stroke(Color.mainColor0, lineWidth: 2) // 枠線
                             )
                         Image(systemName: "chevron.right")
                             .bold()
@@ -232,4 +246,11 @@ extension PlanningCalendar {
             .padding(.bottom, 14)
             .padding()
         }
+    private func isToday(date: Int) -> Bool {
+        var calendar = Calendar.current
+        var components = calendar.dateComponents([.year, .month], from: currentMonth)
+        components.day = date
+        guard let cellDate = calendar.date(from: components) else { return false }
+        return calendar.isDateInToday(cellDate)
+     }
     }

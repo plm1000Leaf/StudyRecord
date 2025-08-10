@@ -33,11 +33,19 @@ struct MonthReviewCalendar: View {
                     ForEach(days, id: \.self) { date in
                         VStack {
                             if date > 0 {
-                                Text("\(date)")
-                                    .font(.system(size: 16))
-                                    .padding(.leading, 16)
-                                    .cornerRadius(5)
-                                checkMark(for: date)
+                                ZStack{
+                                    if isToday(date: date) {
+                                        Circle()
+                                            .frame(width: 24, height: 24)
+                                            .foregroundColor(.accentColor1)
+                                            .opacity(0.8)
+                                    }
+                                    Text("\(date)")
+                                        .font(.system(size: 16))
+                                        .frame(width: 30, height: 30)
+                                }
+                                    checkMark(for: date)
+                                
                             }
                         }
                     }
@@ -59,6 +67,15 @@ struct MonthReviewCalendar: View {
 }
 
 extension MonthReviewCalendar {
+    
+    private func isToday(date: Int) -> Bool {
+        var calendar = Calendar.current
+        var components = calendar.dateComponents([.year, .month], from: currentMonth)
+        components.day = date
+        guard let cellDate = calendar.date(from: components) else { return false }
+        return calendar.isDateInToday(cellDate)
+    }
+    
     private func checkMark(for date: Int) -> some View {
         Button(action: {
             onDateSelected?(date)

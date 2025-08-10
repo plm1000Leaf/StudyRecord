@@ -5,10 +5,11 @@ import CoreData
 struct InputReviewField: View {
     @Environment(\.managedObjectContext) private var viewContext
     @ObservedObject var dailyRecord: DailyRecord
-
     @Binding var reviewText: String
     @State private var isEditing: Bool = false
-    private let maxCharacters = 35
+    private let maxCharacters = 48
+    
+    let isChecked: Bool
     
     var body: some View {
         VStack(spacing: 16) {
@@ -37,7 +38,7 @@ extension InputReviewField {
         ZStack{
             Rectangle()
                 .frame(width: 208, height: 64)
-                .foregroundColor(.mainColor10)
+                .foregroundColor(isChecked ? .mainColor10 : .notCheckedColor10)
             Text(reviewText.isEmpty ? "振り返りを入力" : reviewText)
                 .frame(width: 200, height: 64)
                 .multilineTextAlignment(.leading)

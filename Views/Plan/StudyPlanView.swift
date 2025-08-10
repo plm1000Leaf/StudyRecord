@@ -125,9 +125,8 @@ struct StudyPlanView: View {
     
     /// カレンダーを強制更新
     private func refreshCalendar() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            calendarRefreshId = UUID()
-            print("🔄 カレンダーを更新しました")
-        }
+        calendarRefreshId = UUID()
+        print("🔄 カレンダーを更新しました")
+
     }
 }

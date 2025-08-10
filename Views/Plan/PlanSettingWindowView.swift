@@ -60,12 +60,14 @@ struct PlanSettingWindowView: View {
                 recordService.loadRecord(for: selectedDate, context: viewContext)
                 recordService.debugCurrentState()
                 timeConfirmed = recordService.hasScheduledTime()
+                checkEventUpdate()
             }
             .onChange(of: selectedDate) { newDate in
                 print("PlanSettingWindow 日付変更: \(selectedDate) → \(newDate)")
                 recordService.loadRecord(for: newDate, context: viewContext)
                 recordService.debugCurrentState()
                 timeConfirmed = recordService.hasScheduledTime()
+                checkEventUpdate()
             }
             .sheet(isPresented: $isTapBookSelect) {
                 BookSelectView { material in
@@ -280,15 +282,31 @@ struct PlanSettingWindowView: View {
     }
     
     private func checkEventUpdate() {
-        guard let id = recordService.getEventIdentifier(),
-              let event = CalendarEventHelper.shared.fetchEvent(identifier: id) else { return }
-        let comps = Calendar.current.dateComponents([.hour, .minute], from: event.startDate)
+        let storedId = recordService.getEventIdentifier()
+        var event: EKEvent?
+        if let id = storedId {
+            event = CalendarEventHelper.shared.fetchEvent(identifier: id)
+        }
+        // 予定が見つからない場合は日付から検索
+        if event == nil {
+            event = CalendarEventHelper.shared.findEvent(on: selectedDate)
+        }
+        guard let foundEvent = event else { return }
+
+        // イベントIDが変更されていた場合は更新
+        if foundEvent.eventIdentifier != storedId {
+            recordService.updateEventIdentifier(foundEvent.eventIdentifier, context: viewContext)
+        }
+
+        let comps = Calendar.current.dateComponents([.hour, .minute], from: foundEvent.startDate)
         let newHour = comps.hour ?? 0
         let newMinute = comps.minute ?? 0
+        var didUpdate = false
         let (currentHour, currentMinute) = recordService.getScheduledTime()
         if newHour != currentHour || newMinute != currentMinute {
             recordService.updateScheduledHour(Int16(newHour), context: viewContext)
             recordService.updateScheduledMinute(Int16(newMinute), context: viewContext)
+
             onDataUpdate?()
         }
     }
