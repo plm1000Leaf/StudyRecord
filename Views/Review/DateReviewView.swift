@@ -218,6 +218,7 @@ extension DateReviewView {
         let isChecked = checkedDates[dayNumber] ?? false
         let backgroundColor = isChecked ? Color.mainColor20 : Color.notCheckedColor20
         let frameColor = isChecked ? Color.mainColor0 : Color.notCheckedColor10
+        let notSetPictureColor = isChecked ? Color.mainColor0 : Color.notCheckedColor10
         
         return AnyView(
             HStack(alignment: .top, spacing: 32) {
@@ -264,7 +265,7 @@ extension DateReviewView {
                         } else {
                             ZStack{
                                 RoundedRectangle(cornerRadius: 8)
-                                    .foregroundColor(.notCheckedColor10)
+                                    .foregroundColor(notSetPictureColor)
                                     .frame(width: 88, height:  120)
                                 Text("未設定")
                                     .bold()
@@ -311,7 +312,7 @@ extension DateReviewView {
                             reviewText: Binding(
                                 get: { reviews[index] ?? (record(for: index).review ?? "") },
                                 set: { reviews[index] = $0 }
-                            )
+                            ), isChecked: isChecked
                         )
                         .onAppear {
                             let dailyRecord = record(for: index)

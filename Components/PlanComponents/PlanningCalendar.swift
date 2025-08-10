@@ -211,11 +211,11 @@ extension PlanningCalendar {
                 }) {
                     ZStack{
                         Circle()
-                            .fill(Color.lightblue1)
+                            .fill(Color.mainColor0.opacity(0.1))
                             .frame(width: 40, height: 40)
                             .overlay(
                                 Circle()
-                                    .stroke(Color.blue, lineWidth: 2) // 枠線
+                                    .stroke(Color.mainColor0, lineWidth: 2) // 枠線
                             )
                         Image(systemName: "chevron.left")
                             .bold()
@@ -229,11 +229,11 @@ extension PlanningCalendar {
                 }) {
                     ZStack{
                         Circle()
-                            .fill(Color.lightblue1)
+                            .fill(Color.mainColor0.opacity(0.1))
                             .frame(width: 40, height: 40)
                             .overlay(
                                 Circle()
-                                    .stroke(Color.blue, lineWidth: 2) // 枠線
+                                    .stroke(Color.mainColor0, lineWidth: 2) // 枠線
                             )
                         Image(systemName: "chevron.right")
                             .bold()
