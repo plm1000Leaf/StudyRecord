@@ -25,7 +25,9 @@
 1. このリポジトリをクローン  
    ```bash
    git clone https://github.com/plm1000Leaf/StudyRecord.git
+
 2. StudyRecord.xcodeproj を Xcode で開く
+
 3.　実機またはシミュレータを選択してビルド（⌘R）
 
 ## 今後
