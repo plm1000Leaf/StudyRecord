@@ -1,8 +1,10 @@
 import SwiftUI
 import CoreData
+import Combine
 
 struct PlanningCalendar: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @ObservedObject private var recordService = DailyRecordService.shared
     @Binding var currentMonth: Date
     @Binding var isTapDate: Bool
     @Binding var showPopup: Bool
@@ -58,6 +60,9 @@ struct PlanningCalendar: View {
         }
         .onChange(of: refreshTrigger) { _ in
             // 手動更新トリガー
+            loadMonthlyData()
+        }
+        .onReceive(recordService.objectWillChange) { _ in
             loadMonthlyData()
         }
     }

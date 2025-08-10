@@ -194,10 +194,10 @@ extension BeforeCheckView {
                 TimeSelectButton(recordService: recordService, confirmedTime: .constant(false))
                                 .frame(width: 168, height: 40)
                                 .padding(.trailing, -8)
-                                .padding(.bottom, 64)
             }
         }
         .padding(.bottom, 32)
+        .padding(.leading, 24)
     }
     
     
@@ -208,6 +208,7 @@ extension BeforeCheckView {
             print("Doneボタンが押されました")
         }
         .disabled(isDoneStudy || !isToday)
+        .padding(.top, -16)
         
     }
 }
