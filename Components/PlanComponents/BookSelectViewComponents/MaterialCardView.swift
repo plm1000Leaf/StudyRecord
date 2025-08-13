@@ -111,26 +111,22 @@ extension MaterialCardView {
         }
     }
     
-    private var editablePlaceholderImage : some View {
-
-            ZStack{
+    private var editablePlaceholderImage: some View {
+        PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
+            ZStack {
                 Rectangle()
                     .frame(width: 96, height: 120)
                     .foregroundColor(.gray.opacity(0.3))
-                    .onTapGesture {
-                        if !isEditingMode {
-                            selectMaterial()
-                        }
-                    }
-                VStack(spacing: 8){
-                    Image(systemName:"photo")
+                
+                VStack(spacing: 8) {
+                    Image(systemName: "photo")
                         .frame(width: 16)
                         .foregroundColor(.gray10)
                     Text("No Image")
                 }
             }
             .overlay(editingImageOverlay)
-
+        }
     }
     private var editingImageOverlay: some View {
         ZStack {
