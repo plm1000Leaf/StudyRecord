@@ -57,7 +57,11 @@ extension MaterialCardView {
                     selectableImage(uiImage)
                 }
             } else {
-                placeholderImage
+                if isEditingMode && isEditingMaterial {
+                    editablePlaceholderImage
+                } else {
+                    placeholderImage
+                }
             }
         }
     }
@@ -86,6 +90,8 @@ extension MaterialCardView {
         }
     }
     
+    
+    
     private var placeholderImage: some View {
         ZStack{
             Rectangle()
@@ -105,6 +111,27 @@ extension MaterialCardView {
         }
     }
     
+    private var editablePlaceholderImage : some View {
+
+            ZStack{
+                Rectangle()
+                    .frame(width: 96, height: 120)
+                    .foregroundColor(.gray.opacity(0.3))
+                    .onTapGesture {
+                        if !isEditingMode {
+                            selectMaterial()
+                        }
+                    }
+                VStack(spacing: 8){
+                    Image(systemName:"photo")
+                        .frame(width: 16)
+                        .foregroundColor(.gray10)
+                    Text("No Image")
+                }
+            }
+            .overlay(editingImageOverlay)
+
+    }
     private var editingImageOverlay: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 8)
