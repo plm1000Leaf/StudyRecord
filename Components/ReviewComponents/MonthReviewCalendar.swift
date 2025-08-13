@@ -15,6 +15,7 @@ struct MonthReviewCalendar: View {
     var onShareTapped: (() -> Void)? = nil
     
     var body: some View {
+        
         ZStack {
 
             VStack{
@@ -41,6 +42,7 @@ struct MonthReviewCalendar: View {
                                             .opacity(0.8)
                                     }
                                     Text("\(date)")
+                                        .foregroundColor(isToday(date: date) ? Color.baseColor20 : Color.gray0)
                                         .font(.system(size: 16))
                                         .frame(width: 30, height: 30)
                                 }
