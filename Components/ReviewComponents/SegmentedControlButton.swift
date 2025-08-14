@@ -14,10 +14,13 @@ struct SegmentedControlButton: View {
         VStack {
             // セグメンテッドコントロールの作成
             Picker("選択肢", selection: $selectedSegment) {
-                Image(systemName: "square").tag(0)
-                Image(systemName: "chart.bar.xaxis").tag(1)
+                Image(systemName: "square")
+                    .tag(0)
+                Image(systemName: "chart.bar.xaxis")
+                    .tag(1)
             }
-            .pickerStyle(SegmentedPickerStyle()) // セグメンテッドスタイルを指定
+            .pickerStyle(SegmentedPickerStyle())
+
 
       
         }
