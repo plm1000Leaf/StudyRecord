@@ -19,6 +19,7 @@ struct PlanSettingWindowView: View {
     @State private var isTapBookSelect = false
     @State private var startPage: String = ""
     @State private var endPage: String = ""
+    @State private var selectedUnit: String = "ページ"
     @State private var isDialogShown = false
     @State private var isRepetition = false
     @State private var timeConfirmed = false
@@ -128,7 +129,7 @@ struct PlanSettingWindowView: View {
                             width: 80,
                             height: 24
                         )
-                        PullDown(recordService: recordService, type: .start)
+                        PullDown(selectedItem: $selectedUnit, recordService: recordService)
                     }
                     Text("〜")
                         .font(.system(size: 32))
@@ -143,7 +144,7 @@ struct PlanSettingWindowView: View {
                             width: 80,
                             height: 24
                         )
-                        PullDown(recordService: recordService, type: .end)
+                        PullDown(selectedItem: $selectedUnit, recordService: recordService)
                     }
                 }
             }
