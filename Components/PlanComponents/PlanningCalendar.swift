@@ -1,6 +1,7 @@
 import SwiftUI
 import CoreData
 import Combine
+import EventKit
 
 struct PlanningCalendar: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -96,10 +97,23 @@ struct PlanningCalendar: View {
         for day in 1...numberOfDays {
             if let date = calendar.date(from: DateComponents(year: year, month: month, day: day)) {
                 let record = DailyRecordManager.shared.fetchOrCreateRecord(for: date, context: viewContext)
+                var hour = record.scheduledHour
+                var minute = record.scheduledMinute
+
+                if let event = CalendarEventHelper.shared.findEvent(on: date, title: record.material?.name) {
+                    let comps = Calendar.current.dateComponents([.hour, .minute], from: event.startDate)
+                    hour = Int16(comps.hour ?? Int(hour))
+                    minute = Int16(comps.minute ?? Int(minute))
+                    if record.scheduledHour != hour || record.scheduledMinute != minute {
+                        DailyRecordManager.shared.updateScheduledHour(hour, for: record, context: viewContext)
+                        DailyRecordManager.shared.updateScheduledMinute(minute, for: record, context: viewContext)
+                    }
+                }
+
                 newData[day] = DailyStudyData(
                     materialName: record.material?.name,
-                    scheduledTime: formatTime(hour: record.scheduledHour, minute: record.scheduledMinute),
-                    hasData: record.material != nil || record.scheduledHour != 0 || record.scheduledMinute != 0
+                    scheduledTime: formatTime(hour: hour, minute: minute),
+                    hasData: record.material != nil || hour != 0 || minute != 0
                 )
             }
         }
