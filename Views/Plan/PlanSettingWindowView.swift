@@ -286,11 +286,15 @@ struct PlanSettingWindowView: View {
         let storedId = recordService.getEventIdentifier()
         var event: EKEvent?
         if let id = storedId {
-            event = CalendarEventHelper.shared.fetchEvent(identifier: id)
+            let fetched = CalendarEventHelper.shared.fetchEvent(identifier: id)
+            if let fetched = fetched, !fetched.isAllDay {
+                event = fetched
+            }
         }
         // 予定が見つからない場合は日付から検索
         if event == nil {
-            event = CalendarEventHelper.shared.findEvent(on: selectedDate)
+            let materialTitle = recordService.getMaterial()?.name
+            event = CalendarEventHelper.shared.findEvent(on: selectedDate, title: materialTitle)
         }
         guard let foundEvent = event else { return }
 
