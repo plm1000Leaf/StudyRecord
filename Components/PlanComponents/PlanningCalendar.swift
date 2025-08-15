@@ -41,6 +41,7 @@ struct PlanningCalendar: View {
                                                     .padding(.leading, 16)
                                             }
                                             Text("\(date)")
+                                                .foregroundColor(isToday(date: date) ? Color.baseColor20 : Color.gray0)
                                                 .font(.system(size: 16))
                                                 .padding(.leading, 16)
                                                 .cornerRadius(5)

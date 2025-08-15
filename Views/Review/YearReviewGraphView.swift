@@ -94,6 +94,7 @@ extension YearReviewGraphView {
                     .font(.system(size: 24))
                     .frame(maxWidth: .infinity, alignment:
                             .trailing)
+                    .foregroundColor(.mainColor0)
             }
         }
         .padding(.top, 8)

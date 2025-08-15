@@ -98,7 +98,7 @@ struct YearReviewView: View {
         
     }
     
-    // MARK: - Private Methods
+
     
     /// 今日の日付が属する月の1日に設定
     private func setCurrentMonthToToday() {
@@ -147,6 +147,7 @@ extension YearReviewView {
                         .font(.system(size: 24))
                         .frame(maxWidth: .infinity, alignment:
                                 .trailing)
+                        .foregroundColor(.mainColor0)
                 }
             
         }
