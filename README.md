@@ -3,6 +3,14 @@
 
 ## スクリーンショット / デモ
 
+素早く学習を記録，明日の予定立てをすることができます．
+![StudyRecord_Readme](https://github.com/user-attachments/assets/61db3a3f-6888-4eea-9dd3-6f08b886ccb7)
+
+iPhoneに標準搭載されているカレンダーアプリと連携しています．カレンダーアプリの繰り返し機能にも対応しています．
+![StudyRecord_Readme2](https://github.com/user-attachments/assets/60ca93dd-e834-4664-81ce-2b9d1635847d)
+
+
+
 ## 概要
 勉強時間ではなく今日学習したかどうかをチェックすることで，
 時間のない人でも学習の継続状況を把握でき達成感を得られるiOSアプリ．
