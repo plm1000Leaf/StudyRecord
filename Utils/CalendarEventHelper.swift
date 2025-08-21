@@ -31,6 +31,8 @@ final class CalendarEventHelper {
             event.calendar = eventStore.defaultCalendarForNewEvents
         }
         
+        event.title = title ?? ""
+        event.isAllDay = false
 
         var components = Calendar.current.dateComponents([.year, .month, .day], from: date)
         components.hour = hour
@@ -55,7 +57,7 @@ final class CalendarEventHelper {
         let start = Calendar.current.startOfDay(for: date)
         guard let end = Calendar.current.date(byAdding: .day, value: 1, to: start) else { return nil }
         let predicate = eventStore.predicateForEvents(withStart: start, end: end, calendars: nil)
-        let events = eventStore.events(matching: predicate)
+        let events = eventStore.events(matching: predicate).filter { !$0.isAllDay }
         if let title = title {
             return events.first { $0.title == title }
         }
