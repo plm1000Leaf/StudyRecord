@@ -14,6 +14,8 @@ struct MaterialSectionView: View {
     let isEditingMode: Bool
     @Binding var labelList: [String]
     @Binding var refreshID: UUID
+    @Binding var activeEditingLabel: String?
+    @Binding var activeEditingMaterialID: UUID?
     let onMaterialSelect: ((Material) -> Void)?
     let onDismiss: () -> Void
     
@@ -34,7 +36,12 @@ struct MaterialSectionView: View {
             if !newValue {
                 isEditingLabel = false
                 editingLabelName = ""
+                activeEditingLabel = nil
+                activeEditingMaterialID = nil
             }
+        }
+        .onChange(of: activeEditingLabel) { newValue in
+            isEditingLabel = (newValue == label)
         }
     }
 }
@@ -51,12 +58,7 @@ extension MaterialSectionView {
             }
             
             if isEditingMode {
-                HStack(spacing:-16){
-                    labelActionButton
-                    if isEditingLabel {
-                        confirmedLabelNameButton
-                    }
-                }
+                labelActionButton
             }
             Spacer()
         }
@@ -106,14 +108,6 @@ extension MaterialSectionView {
         .padding(.trailing, 32)
     }
     
-    private var confirmedLabelNameButton: some View {
-    Button(action: saveLabelEdit) {
-        Image(systemName: "checkmark.circle.fill")                    .foregroundColor(.blue)
-            .font(.system(size: 24))
-            .padding(.top, 40)
-    }
-}
-    
     private var materialGrid: some View {
         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 32), count: 3), spacing: 24) {
             ForEach(materials) { material in
@@ -121,7 +115,9 @@ extension MaterialSectionView {
                     material: material,
                     isEditingMode: isEditingMode,
                     onMaterialSelect: onMaterialSelect,
-                    onDismiss: onDismiss
+                    onDismiss:  onDismiss,
+                    activeEditingLabel: $activeEditingLabel,
+                    activeEditingMaterialID: $activeEditingMaterialID
                 )
             }
         }
@@ -134,6 +130,8 @@ extension MaterialSectionView {
     private func startLabelEdit() {
         editingLabelName = label
         isEditingLabel = true
+        activeEditingLabel = label
+        activeEditingMaterialID = nil
     }
     
     private func saveLabelEdit() {
@@ -153,6 +151,7 @@ extension MaterialSectionView {
         do {
             try viewContext.save()
             isEditingLabel = false
+            activeEditingLabel = nil
             refreshID = UUID()
         } catch {
             print("ラベル保存エラー: \(error.localizedDescription)")
@@ -173,6 +172,8 @@ extension MaterialSectionView {
         
         do {
             try viewContext.save()
+            isEditingLabel = false
+            activeEditingLabel = nil
             refreshID = UUID()
         } catch {
             print("ラベル削除エラー: \(error.localizedDescription)")
