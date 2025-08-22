@@ -39,7 +39,7 @@ final class CalendarEventHelper {
         components.minute = minute
         guard let start = Calendar.current.date(from: components) else { return nil }
         event.startDate = start
-        event.endDate = start.addingTimeInterval(60 * 60) // 1 hour
+        event.endDate = start.addingTimeInterval(30 * 60) 
         do {
             try eventStore.save(event, span: .thisEvent, commit: true)
             return event.eventIdentifier
