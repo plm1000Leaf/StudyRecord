@@ -14,6 +14,8 @@ struct MaterialCardView: View {
     let onMaterialSelect: ((Material) -> Void)?
     let onDismiss: () -> Void
     
+    @Binding var activeEditingLabel: String?
+    @Binding var activeEditingMaterialID: UUID?
     @Environment(\.managedObjectContext) private var viewContext
     @State private var isEditingMaterial = false
     @State private var editingMaterialName = ""
@@ -33,6 +35,14 @@ struct MaterialCardView: View {
         }
         .onChange(of: selectedPhotoItem) { newItem in
             updateMaterialImage(newItem)
+        }
+        .onChange(of: activeEditingMaterialID) { newID in
+            isEditingMaterial = (newID == material.id)
+        }
+        .onChange(of: activeEditingLabel) { _ in
+            if activeEditingLabel != nil {
+                isEditingMaterial = false
+            }
         }
         .alert("教材を削除", isPresented: $showDeleteAlert) {
             Button("削除", role: .destructive) {
@@ -215,6 +225,8 @@ extension MaterialCardView {
     private func startMaterialEdit() {
         editingMaterialName = material.name ?? ""
         isEditingMaterial = true
+        activeEditingMaterialID = material.id
+        activeEditingLabel = nil
     }
     
     private func saveMaterialEdit() {
@@ -222,6 +234,7 @@ extension MaterialCardView {
         do {
             try viewContext.save()
             isEditingMaterial = false
+            activeEditingMaterialID = nil
         } catch {
             print("教材名保存エラー: \(error.localizedDescription)")
         }
@@ -231,6 +244,10 @@ extension MaterialCardView {
         viewContext.delete(material)
         do {
             try viewContext.save()
+            isEditingMaterial = false
+            if activeEditingMaterialID == material.id {
+                activeEditingMaterialID = nil
+            }
         } catch {
             print("教材削除エラー: \(error.localizedDescription)")
         }
@@ -247,6 +264,7 @@ extension MaterialCardView {
                     material.imageData = uiImage.jpegData(compressionQuality: 0.8)
                     try? viewContext.save()
                     isEditingMaterial = false
+                    activeEditingMaterialID = nil
                 }
             }
         }

@@ -100,7 +100,7 @@ extension AddBookView {
             .frame(width: 128, height: 96)
         }
     }
-    
+
     private var photoPickerButton: some View {
         PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
             ZStack {

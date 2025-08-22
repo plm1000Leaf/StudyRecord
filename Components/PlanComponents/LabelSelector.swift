@@ -58,8 +58,7 @@ extension LabelSelector {
                 }
 
             Button(action: addNewLabel) {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(.blue)
+                Image(systemName: "checkmark.circle.fill")                    .foregroundColor(.blue)
                     .font(.title3)
             }
             .disabled(newLabel.isEmpty || labels.contains(newLabel))

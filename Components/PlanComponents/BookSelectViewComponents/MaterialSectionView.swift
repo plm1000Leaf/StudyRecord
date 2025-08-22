@@ -14,6 +14,8 @@ struct MaterialSectionView: View {
     let isEditingMode: Bool
     @Binding var labelList: [String]
     @Binding var refreshID: UUID
+    @Binding var activeEditingLabel: String?
+    @Binding var activeEditingMaterialID: UUID?
     let onMaterialSelect: ((Material) -> Void)?
     let onDismiss: () -> Void
     
@@ -34,7 +36,12 @@ struct MaterialSectionView: View {
             if !newValue {
                 isEditingLabel = false
                 editingLabelName = ""
+                activeEditingLabel = nil
+                activeEditingMaterialID = nil
             }
+        }
+        .onChange(of: activeEditingLabel) { newValue in
+            isEditingLabel = (newValue == label)
         }
     }
 }
@@ -108,7 +115,9 @@ extension MaterialSectionView {
                     material: material,
                     isEditingMode: isEditingMode,
                     onMaterialSelect: onMaterialSelect,
-                    onDismiss: onDismiss
+                    onDismiss:  onDismiss,
+                    activeEditingLabel: $activeEditingLabel,
+                    activeEditingMaterialID: $activeEditingMaterialID
                 )
             }
         }
@@ -121,6 +130,8 @@ extension MaterialSectionView {
     private func startLabelEdit() {
         editingLabelName = label
         isEditingLabel = true
+        activeEditingLabel = label
+        activeEditingMaterialID = nil
     }
     
     private func saveLabelEdit() {
@@ -140,6 +151,7 @@ extension MaterialSectionView {
         do {
             try viewContext.save()
             isEditingLabel = false
+            activeEditingLabel = nil
             refreshID = UUID()
         } catch {
             print("ラベル保存エラー: \(error.localizedDescription)")
@@ -160,6 +172,8 @@ extension MaterialSectionView {
         
         do {
             try viewContext.save()
+            isEditingLabel = false
+            activeEditingLabel = nil
             refreshID = UUID()
         } catch {
             print("ラベル削除エラー: \(error.localizedDescription)")

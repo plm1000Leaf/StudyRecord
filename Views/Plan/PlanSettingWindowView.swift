@@ -301,6 +301,7 @@ struct PlanSettingWindowView: View {
         // イベントIDが変更されていた場合は更新
         if foundEvent.eventIdentifier != storedId {
             recordService.updateEventIdentifier(foundEvent.eventIdentifier, context: viewContext)
+
         }
 
         let comps = Calendar.current.dateComponents([.hour, .minute], from: foundEvent.startDate)

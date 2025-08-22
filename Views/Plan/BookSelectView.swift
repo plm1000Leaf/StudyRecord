@@ -8,6 +8,8 @@ struct BookSelectView: View {
     @State private var isEditingMode = false
     @State private var labelList: [String] = LabelStorage.load()
     @State private var refreshID = UUID()
+    @State private var activeEditingLabel: String? = nil
+    @State private var activeEditingMaterialID: UUID? = nil
     
     var onMaterialSelect: ((Material) -> Void)? = nil
     
@@ -92,6 +94,8 @@ extension BookSelectView {
                     }
                 ),
                 refreshID: $refreshID,
+                activeEditingLabel: $activeEditingLabel,
+                activeEditingMaterialID: $activeEditingMaterialID,
                 onMaterialSelect: onMaterialSelect,
                 onDismiss: { dismiss() }
             )
@@ -110,9 +114,11 @@ extension BookSelectView {
             Spacer()
             
             // 編集ボタン
-            Button(action: { 
+            Button(action: {
                 isEditingMode.toggle()
                 if !isEditingMode {
+                    activeEditingLabel = nil
+                    activeEditingMaterialID = nil
                     refreshID = UUID()
                 }
             }) {
@@ -155,4 +161,3 @@ extension BookSelectView {
         }
     }
 }
-
