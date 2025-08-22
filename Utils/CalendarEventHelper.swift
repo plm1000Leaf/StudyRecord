@@ -58,9 +58,9 @@ final class CalendarEventHelper {
         guard let end = Calendar.current.date(byAdding: .day, value: 1, to: start) else { return nil }
         let predicate = eventStore.predicateForEvents(withStart: start, end: end, calendars: nil)
         let events = eventStore.events(matching: predicate).filter { !$0.isAllDay }
-        if let title = title {
-            return events.first { $0.title == title }
+        guard let title = title else {
+            return nil
         }
-        return events.first
+        return events.first { $0.title == title }
     }
 }

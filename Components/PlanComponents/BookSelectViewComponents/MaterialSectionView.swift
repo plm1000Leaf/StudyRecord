@@ -51,7 +51,12 @@ extension MaterialSectionView {
             }
             
             if isEditingMode {
-                labelActionButton
+                HStack(spacing:-16){
+                    labelActionButton
+                    if isEditingLabel {
+                        confirmedLabelNameButton
+                    }
+                }
             }
             Spacer()
         }
@@ -100,6 +105,14 @@ extension MaterialSectionView {
         .padding(.top, 40)
         .padding(.trailing, 32)
     }
+    
+    private var confirmedLabelNameButton: some View {
+    Button(action: saveLabelEdit) {
+        Image(systemName: "checkmark.circle.fill")                    .foregroundColor(.blue)
+            .font(.system(size: 24))
+            .padding(.top, 40)
+    }
+}
     
     private var materialGrid: some View {
         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 32), count: 3), spacing: 24) {
