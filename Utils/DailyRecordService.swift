@@ -251,6 +251,22 @@ final class DailyRecordService: ObservableObject {
         objectWillChange.send()
     }
     
+    /// 繰り返し設定を更新
+    func updateIsRepeating(_ isRepeating: Bool, context: NSManagedObjectContext) {
+        guard let record = currentRecord else { return }
+        dailyManager.updateIsRepeating(isRepeating, for: record, context: context)
+        objectWillChange.send()
+    }
+
+    /// 任意の日付の予定を更新
+    func applySchedule(for date: Date, hour: Int16, minute: Int16, identifier: String?, isRepeating: Bool, context: NSManagedObjectContext) {
+        let record = getRecord(for: date, context: context)
+        dailyManager.updateScheduledHour(hour, for: record, context: context)
+        dailyManager.updateScheduledMinute(minute, for: record, context: context)
+        dailyManager.updateEventIdentifier(identifier, for: record, context: context)
+        dailyManager.updateIsRepeating(isRepeating, for: record, context: context)
+    }
+    
     // MARK: - Review Methods
     
     /// 振り返りを更新

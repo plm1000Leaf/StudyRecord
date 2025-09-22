@@ -104,6 +104,15 @@ final class DailyRecordManager {
         }
     }
     
+    func updateIsRepeating(_ isRepeating: Bool, for record: DailyRecord, context: NSManagedObjectContext) {
+        record.isRepeating = isRepeating
+        do {
+            try context.save()
+        } catch {
+            print("保存失敗: \(error.localizedDescription)")
+        }
+    }
+    
     func updateIsChecked(_ isChecked: Bool, for record: DailyRecord, context: NSManagedObjectContext) {
         record.isChecked = isChecked
         

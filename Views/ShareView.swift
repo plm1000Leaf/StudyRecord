@@ -185,7 +185,7 @@ extension ShareView{
     
     private func shareToGeneral() {
         let textContent: String = {
-            guard fromAfterCheck else { return "今日の学習記録をシェアします✨" }
+            guard fromAfterCheck else { return "今日の学習記録をシェアします" }
             let material = materialText ?? ""
             let summary = monthlySummary ?? ""
             let daysText = continuationDays.map { "\($0)日" } ?? ""

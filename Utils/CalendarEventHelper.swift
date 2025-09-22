@@ -39,7 +39,7 @@ final class CalendarEventHelper {
         components.minute = minute
         guard let start = Calendar.current.date(from: components) else { return nil }
         event.startDate = start
-        event.endDate = start.addingTimeInterval(30 * 60) 
+        event.endDate = start.addingTimeInterval(30 * 60)
         do {
             try eventStore.save(event, span: .thisEvent, commit: true)
             return event.eventIdentifier
@@ -63,4 +63,12 @@ final class CalendarEventHelper {
         }
         return events.first { $0.title == title }
     }
+    
+    /// 指定したIDのイベントの発生を範囲で取得
+    func fetchEvents(identifier: String, from start: Date, to end: Date) -> [EKEvent] {
+        let predicate = eventStore.predicateForEvents(withStart: start, end: end, calendars: nil)
+        let events = eventStore.events(matching: predicate)
+        return events.filter { $0.eventIdentifier == identifier && !$0.isAllDay }
+    }
+    
 }

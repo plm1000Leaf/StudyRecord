@@ -225,7 +225,7 @@ struct PlanSettingWindowView: View {
             
             HStack(spacing: 48){
                 TimeSelectButton(
-                    recordService: recordService, 
+                    recordService: recordService,
                     confirmedTime: $timeConfirmed,
                     onTimeChanged: {
                         // 時間変更時に親に通知
@@ -307,12 +307,25 @@ struct PlanSettingWindowView: View {
         let comps = Calendar.current.dateComponents([.hour, .minute], from: foundEvent.startDate)
         let newHour = comps.hour ?? 0
         let newMinute = comps.minute ?? 0
-        var didUpdate = false
         let (currentHour, currentMinute) = recordService.getScheduledTime()
         if newHour != currentHour || newMinute != currentMinute {
             recordService.updateScheduledHour(Int16(newHour), context: viewContext)
             recordService.updateScheduledMinute(Int16(newMinute), context: viewContext)
+            onDataUpdate?()
+        }
+        
+        let isRepeating = !(foundEvent.recurrenceRules?.isEmpty ?? true)
+        recordService.updateIsRepeating(isRepeating, context: viewContext)
 
+        if isRepeating, let identifier = foundEvent.eventIdentifier {
+            let end = Calendar.current.date(byAdding: .day, value: 30, to: selectedDate) ?? selectedDate
+            let events = CalendarEventHelper.shared.fetchEvents(identifier: identifier, from: selectedDate, to: end)
+            for ev in events {
+                let c = Calendar.current.dateComponents([.hour, .minute], from: ev.startDate)
+                let h = Int16(c.hour ?? 0)
+                let m = Int16(c.minute ?? 0)
+                recordService.applySchedule(for: ev.startDate, hour: h, minute: m, identifier: identifier, isRepeating: true, context: viewContext)
+            }
             onDataUpdate?()
         }
     }
