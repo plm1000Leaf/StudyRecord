@@ -16,7 +16,6 @@
 		2875E9F92E0415C100D9B0FC /* DailyRecordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9B72E0415C000D9B0FC /* DailyRecordService.swift */; };
 		2875E9FA2E0415C100D9B0FC /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9B82E0415C000D9B0FC /* CustomTextEditor.swift */; };
 		2875E9FB2E0415C100D9B0FC /* CalendarUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9B92E0415C000D9B0FC /* CalendarUtils.swift */; };
-		2875E9FC2E0415C100D9B0FC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2875E9BB2E0415C000D9B0FC /* Preview Assets.xcassets */; };
 		2875E9FD2E0415C100D9B0FC /* PlanningCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9BE2E0415C000D9B0FC /* PlanningCalendar.swift */; };
 		2875E9FE2E0415C100D9B0FC /* LabelSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9BF2E0415C000D9B0FC /* LabelSelector.swift */; };
 		2875E9FF2E0415C100D9B0FC /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C12E0415C000D9B0FC /* AddBookView.swift */; };
@@ -68,7 +67,6 @@
 		2875E9B72E0415C000D9B0FC /* DailyRecordService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyRecordService.swift; sourceTree = "<group>"; };
 		2875E9B82E0415C000D9B0FC /* CustomTextEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
 		2875E9B92E0415C000D9B0FC /* CalendarUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarUtils.swift; sourceTree = "<group>"; };
-		2875E9BB2E0415C000D9B0FC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2875E9BE2E0415C000D9B0FC /* PlanningCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanningCalendar.swift; sourceTree = "<group>"; };
 		2875E9BF2E0415C000D9B0FC /* LabelSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelSelector.swift; sourceTree = "<group>"; };
 		2875E9C12E0415C000D9B0FC /* AddBookView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookView.swift; sourceTree = "<group>"; };
@@ -129,7 +127,6 @@
 				2875E9B02E0415C000D9B0FC /* StudyRecord.xcodeproj */,
 				2875E9B32E0415C000D9B0FC /* Assets.xcassets */,
 				2875E9B42E0415C000D9B0FC /* Utils */,
-				2875E9BA2E0415C000D9B0FC /* Preview Content */,
 				2875E9BC2E0415C000D9B0FC /* Components */,
 				2875E9D22E0415C000D9B0FC /* .gitignore */,
 				2875E9D32E0415C000D9B0FC /* Data */,
@@ -158,14 +155,6 @@
 				281EBD8E2E2A20A700FB03B1 /* CalendarEventHelper.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		2875E9BA2E0415C000D9B0FC /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				2875E9BB2E0415C000D9B0FC /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		2875E9BC2E0415C000D9B0FC /* Components */ = {
@@ -361,7 +350,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2875EA0E2E0415C100D9B0FC /* .gitignore in Resources */,
-				2875E9FC2E0415C100D9B0FC /* Preview Assets.xcassets in Resources */,
 				2875E9F62E0415C100D9B0FC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
