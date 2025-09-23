@@ -18,7 +18,7 @@
 		2875E9FB2E0415C100D9B0FC /* CalendarUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9B92E0415C000D9B0FC /* CalendarUtils.swift */; };
 		2875E9FD2E0415C100D9B0FC /* PlanningCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9BE2E0415C000D9B0FC /* PlanningCalendar.swift */; };
 		2875E9FE2E0415C100D9B0FC /* LabelSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9BF2E0415C000D9B0FC /* LabelSelector.swift */; };
-		2875E9FF2E0415C100D9B0FC /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C12E0415C000D9B0FC /* AddBookView.swift */; };
+		2875E9FF2E0415C100D9B0FC /* AddBookOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C12E0415C000D9B0FC /* AddBookOverlay.swift */; };
 		2875EA002E0415C100D9B0FC /* MaterialSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C22E0415C000D9B0FC /* MaterialSectionView.swift */; };
 		2875EA012E0415C100D9B0FC /* MaterialCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C32E0415C000D9B0FC /* MaterialCardView.swift */; };
 		2875EA032E0415C100D9B0FC /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C62E0415C000D9B0FC /* SwitchButton.swift */; };
@@ -69,7 +69,7 @@
 		2875E9B92E0415C000D9B0FC /* CalendarUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarUtils.swift; sourceTree = "<group>"; };
 		2875E9BE2E0415C000D9B0FC /* PlanningCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanningCalendar.swift; sourceTree = "<group>"; };
 		2875E9BF2E0415C000D9B0FC /* LabelSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelSelector.swift; sourceTree = "<group>"; };
-		2875E9C12E0415C000D9B0FC /* AddBookView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookView.swift; sourceTree = "<group>"; };
+		2875E9C12E0415C000D9B0FC /* AddBookOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookOverlay.swift; sourceTree = "<group>"; };
 		2875E9C22E0415C000D9B0FC /* MaterialSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialSectionView.swift; sourceTree = "<group>"; };
 		2875E9C32E0415C000D9B0FC /* MaterialCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialCardView.swift; sourceTree = "<group>"; };
 		2875E9C62E0415C000D9B0FC /* SwitchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
@@ -244,7 +244,7 @@
 				2875E9E02E0415C000D9B0FC /* StudyPlanView.swift */,
 				2875E9E12E0415C000D9B0FC /* PlanSettingWindowView.swift */,
 				2875E9E22E0415C000D9B0FC /* BookSelectView.swift */,
-				2875E9C12E0415C000D9B0FC /* AddBookView.swift */,
+				2875E9C12E0415C000D9B0FC /* AddBookOverlay.swift */,
 			);
 			path = Plan;
 			sourceTree = "<group>";
@@ -395,7 +395,7 @@
 				2875EA122E0415C100D9B0FC /* Material.swift in Sources */,
 				2875E9F52E0415C100D9B0FC /* StudyRecordApp.swift in Sources */,
 				281EBD8F2E2A20A700FB03B1 /* CalendarEventHelper.swift in Sources */,
-				2875E9FF2E0415C100D9B0FC /* AddBookView.swift in Sources */,
+				2875E9FF2E0415C100D9B0FC /* AddBookOverlay.swift in Sources */,
 				2875E9FE2E0415C100D9B0FC /* LabelSelector.swift in Sources */,
 				2875EA0C2E0415C100D9B0FC /* CustomRoundedCorner.swift in Sources */,
 				2875EA072E0415C100D9B0FC /* SegmentedControlButton.swift in Sources */,
