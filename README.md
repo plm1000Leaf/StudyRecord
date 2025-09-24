@@ -27,19 +27,15 @@ StudyRecordは日ごとの学習内容を記録・振り返りできる iOS ア�
 - 毎日の学習記録を可視化してモチベーション維持したい人
 - 時間の無い中で資格取得や読書を継続したい社会人
 
-
-## 技術
-- Swift / SwiftUI / Xcode（15.2）
-- 永続化：Core Data
-- 対応OS：iOS 16+
-
 ## 技術スタック
-- 言語: Swift 5.9
-- UI: SwiftUI
-- データ管理: CoreData
-- アーキテクチャ: MVVM
-- 開発環境: Xcode 15
-- その他: GitHub Actions (CI), Unit/UI Tests
+- **開発言語**: Swift 5.9
+- **UIフレームワーク**: SwiftUI
+- **設計パターン**: MVVM（表示・処理・データを整理して保守しやすくする仕組み）
+- **データ保存**: Core Data（iPhone内に学習記録を保存）
+- **非同期処理**: async/await
+- **テスト**: Unit Test, UI Test
+- **CI/CD**: GitHub Actions（自動ビルド・自動テスト）
+- **開発環境**: Xcode 15 / iOS 16 以上対応（iOS 17で検証済み）
   
 ## こだわり
 - スクリーンショットをSNS共有した時，一目でどのくらい学習したか視覚的にわかりやすいようにReview画面のUIを作りました
