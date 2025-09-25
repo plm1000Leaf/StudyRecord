@@ -4,7 +4,7 @@ import CoreData
 struct BookSelectView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) private var viewContext
-    @State private var isAddingNewBook = false
+    @State private var showAddBookOverlay = false
     @State private var isEditingMode = false
     @State private var labelList: [String] = LabelStorage.load()
     @State private var refreshID = UUID()
@@ -38,8 +38,8 @@ struct BookSelectView: View {
                 .background(Color.baseColor10)
                 
 
-                if isAddingNewBook {
-                    AddBookView(
+                if showAddBookOverlay {
+                    AddBookOverlay(
                         labelList: Binding(
                             get: { labelList },
                             set: { newLabels in
@@ -47,20 +47,20 @@ struct BookSelectView: View {
                                 LabelStorage.save(newLabels)
                             }
                         ),
-                        isShowing: $isAddingNewBook,
+                        isShowing: $showAddBookOverlay,
                         onDismiss: {
 
-                            isAddingNewBook = false
+                            showAddBookOverlay = false
                         }
                     )
                 }
                 
-                if !isAddingNewBook {
+                if !showAddBookOverlay {
                     VStack {
                         Spacer()
                         HStack {
                             Spacer()
-                            addMaterialButtons
+                            showAddBookOverlayButton
                         }
                     }
                     .padding(.trailing, 40)
@@ -134,9 +134,9 @@ extension BookSelectView {
     }
     
     // 教材追加ボタン
-    private var addMaterialButtons: some View {
+    private var showAddBookOverlayButton: some View {
         Button(action: {
-            isAddingNewBook = true
+            showAddBookOverlay = true
         }) {
             Circle()
                 .fill(Color.mainColor0)

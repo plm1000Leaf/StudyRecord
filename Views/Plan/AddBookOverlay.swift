@@ -8,7 +8,7 @@ import SwiftUI
 import PhotosUI
 import CoreData
 
-struct AddBookView: View {
+struct AddBookOverlay: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State private var bookName = ""
     @State private var selectedLabel = ""
@@ -46,7 +46,6 @@ struct AddBookView: View {
                     alignment: .topLeading
                 )
             
-            
             VStack(spacing: 40) {
                 imageSelector
                 inputFields
@@ -64,7 +63,7 @@ struct AddBookView: View {
 }
 
 // MARK: - Image Selector Components
-extension AddBookView {
+extension AddBookOverlay {
     
     private var imageSelector: some View {
         Group {
@@ -117,7 +116,7 @@ extension AddBookView {
 }
 
 // MARK: - Input Fields Components
-extension AddBookView {
+extension AddBookOverlay {
     
     private var inputFields: some View {
         HStack{
@@ -179,7 +178,7 @@ extension AddBookView {
 }
 
 // MARK: - Actions
-extension AddBookView {
+extension AddBookOverlay {
     
     private func loadSelectedImage(_ newItem: PhotosPickerItem?) {
         guard let item = newItem else { return }
