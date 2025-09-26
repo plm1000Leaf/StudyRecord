@@ -1,4 +1,4 @@
-# StudyRecord(仮)
+# StudyRecord
 時間のない人のための学習記録アプリ
 
 ## 概要
