@@ -1,6 +1,5 @@
 # StudyRecord
-![Build](https://github.com/plm1000Leaf/StudyRecord/actions/workflows/ci.yml/badge.svg)
-
+[![iOS CI](https://github.com/plm1000Leaf/StudyRecord/actions/workflows/ios-ci.yml/badge.svg)](https://github.com/plm1000Leaf/StudyRecord/actions/workflows/ios-ci.yml)
 
 時間のない人のための学習記録アプリ
 
