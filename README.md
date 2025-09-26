@@ -1,4 +1,7 @@
 # StudyRecord
+![Build](https://github.com/plm1000Leaf/StudyRecord/actions/workflows/ci.yml/badge.svg)
+
+
 時間のない人のための学習記録アプリ
 
 ## 概要
