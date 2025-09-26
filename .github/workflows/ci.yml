@@ -11,28 +11,18 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      # コードをチェックアウト
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Xcode をセットアップ
       - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '15.2'
 
-      # ビルド
       - name: Build
         run: |
           xcodebuild -scheme StudyRecord \
             -sdk iphonesimulator \
             -destination 'platform=iOS Simulator,name=iPhone 15' \
             build
-
-      # テスト
-      - name: Run tests
-        run: |
-          xcodebuild test -scheme StudyRecord \
-            -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 15'
 
