@@ -26,5 +26,12 @@ struct ContentView: View {
 
 
 #Preview {
-    MainTabView(selectedTabIndex: .constant(1), navigateToReview: .constant(true), navigateToPlan: .constant(true))
+//    MainTabView(selectedTabIndex: .constant(1), navigateToReview: .constant(true), navigateToPlan: .constant(true))
+    let controller = PersistenceController.preview
+    return MainTabView(
+        selectedTabIndex: .constant(1),
+        navigateToReview: .constant(true),
+        navigateToPlan: .constant(true)
+    )
+    .environment(\.managedObjectContext, controller.container.viewContext)
 }

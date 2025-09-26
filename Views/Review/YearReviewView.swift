@@ -220,6 +220,13 @@ extension YearReviewView {
     
     
 }
+
+
 #Preview {
-    YearReviewView(showDateReviewView: .constant(false))
+    // Core Data のプレビュー用コンテナ（あなたの実装に合わせて）
+    let controller = PersistenceController.preview
+
+    return YearReviewView(showDateReviewView: .constant(false))
+        .environment(\.managedObjectContext, controller.container.viewContext) 
+        .environmentObject(SnapshotManager())
 }

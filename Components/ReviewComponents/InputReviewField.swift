@@ -14,7 +14,8 @@ struct InputReviewField: View {
     var body: some View {
         VStack(spacing: 16) {
             if isEditing {
-                editReviewField
+                
+                
                 editReviewButton
                 
             } else {

@@ -413,8 +413,123 @@ final class DailyRecordService: ObservableObject {
             
             return maxContinuation
         }
-        
-        /// 継続日数の統計情報を取得
+
+    // MARK: - Demo & Test Helpers
+
+    /// 指定した月の複数日をランダムに学習済みに設定
+    /// - Parameters:
+    ///   - month: 対象となる月（日付は任意）
+    ///   - countRange: 学習済みに設定する日数の範囲
+    ///   - context: CoreDataのコンテキスト
+    ///   - calendar: 使用するカレンダー（デフォルトは `.current`）
+    /// - Returns: 学習済みに変更された日付一覧（昇順）
+    @discardableResult
+    func markRandomCheckedDays(for month: Date,
+                               countRange: ClosedRange<Int>,
+                               context: NSManagedObjectContext,
+                               calendar: Calendar = .current) -> [Date] {
+        guard countRange.lowerBound <= countRange.upperBound else {
+            print("⚠️ 無効な範囲が指定されました: \(countRange)")
+            return []
+        }
+
+        let baseComponents = calendar.dateComponents([.year, .month], from: month)
+        guard let normalizedMonth = calendar.date(from: baseComponents),
+              let daysRange = calendar.range(of: .day, in: .month, for: normalizedMonth),
+              let year = baseComponents.year,
+              let monthValue = baseComponents.month else {
+            print("⚠️ 指定された月の日付範囲を取得できませんでした")
+            return []
+        }
+
+        let totalDays = daysRange.count
+        guard totalDays > 0 else { return [] }
+
+        let adjustedLower = max(0, min(totalDays, countRange.lowerBound))
+        let adjustedUpper = max(adjustedLower, min(totalDays, countRange.upperBound))
+
+        let targetCount = adjustedUpper == 0 ? 0 : Int.random(in: adjustedLower...adjustedUpper)
+
+        var days = Array(daysRange)
+        days.shuffle()
+
+        let selectedDays = Array(days.prefix(targetCount))
+
+        var updatedDates: [Date] = []
+
+        context.performAndWait {
+            for day in selectedDays.sorted() {
+                guard let date = calendar.date(from: DateComponents(year: year,
+                                                                    month: monthValue,
+                                                                    day: day)) else { continue }
+
+                let record = dailyManager.fetchOrCreateRecord(for: date, context: context)
+                record.isChecked = true
+                updatedDates.append(date)
+            }
+
+            if context.hasChanges {
+                do {
+                    try context.save()
+                } catch {
+                    print("❌ ランダムチェック日の保存に失敗しました: \(error)")
+                }
+            }
+        }
+
+        monthlyManager.updateCheckCount(for: normalizedMonth, context: context)
+
+        updatedDates.sort()
+        return updatedDates
+    }
+
+    /// 指定した月の複数日をランダムに学習済みに設定（固定日数版）
+    @discardableResult
+    func markRandomCheckedDays(for month: Date,
+                               count: Int,
+                               context: NSManagedObjectContext,
+                               calendar: Calendar = .current) -> [Date] {
+        let sanitizedCount = max(0, count)
+        return markRandomCheckedDays(for: month,
+                                     countRange: sanitizedCount...sanitizedCount,
+                                     context: context,
+                                     calendar: calendar)
+    }
+
+    /// 現在の月から過去に遡った複数月でランダムに学習済み日を設定
+    /// - Parameters:
+    ///   - monthsBack: 対象とする月数（現在の月を含む）
+    ///   - countRange: 各月で学習済みにする日数の範囲
+    ///   - context: CoreDataのコンテキスト
+    ///   - calendar: 使用するカレンダー（デフォルトは `.current`）
+    /// - Returns: 変更された日付一覧（昇順）
+    @discardableResult
+    func markRandomCheckedDays(monthsBack: Int,
+                               countRange: ClosedRange<Int>,
+                               context: NSManagedObjectContext,
+                               calendar: Calendar = .current) -> [Date] {
+        guard monthsBack > 0 else { return [] }
+
+        var updatedDates: [Date] = []
+        let today = calendar.startOfDay(for: Date())
+
+        for offset in 0..<monthsBack {
+            guard let monthDate = calendar.date(byAdding: .month, value: -offset, to: today),
+                  let normalizedMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: monthDate)) else {
+                continue
+            }
+
+            let dates = markRandomCheckedDays(for: normalizedMonth,
+                                              countRange: countRange,
+                                              context: context,
+                                              calendar: calendar)
+            updatedDates.append(contentsOf: dates)
+        }
+
+        return updatedDates.sorted()
+    }
+
+    /// 継続日数の統計情報を取得
         func getContinuationStatistics(context: NSManagedObjectContext) -> ContinuationStatistics {
             let current = calculateContinuationDays(context: context)
             let max = calculateMaxContinuationDays(context: context)

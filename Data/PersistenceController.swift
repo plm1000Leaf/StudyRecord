@@ -24,3 +24,38 @@ struct PersistenceController {
         }
     }
 }
+
+#if DEBUG
+extension PersistenceController {
+    /// プレビューやテストで使用するメモリ上の永続化コンテナ
+    static var preview: PersistenceController = {
+        let controller = PersistenceController(inMemory: true)
+        let context = controller.container.viewContext
+
+        DailyRecordService.shared.markRandomCheckedDays(monthsBack: 6,
+                                                        countRange: 5...15,
+                                                        context: context)
+
+        return controller
+    }()
+
+    /// デモ用にランダムな日付を学習済みに設定
+    /// - Parameters:
+    ///   - monthsBack: 現在の月から遡る月数（現在の月を含む）
+    ///   - countRange: 各月で学習済みにする日数の範囲
+    ///   - context: 使用するコンテキスト（省略時は `viewContext`）
+    ///   - calendar: 使用するカレンダー（省略時は `.current`）
+    /// - Returns: 学習済みに設定された日付一覧
+    @discardableResult
+    func seedRandomCheckedDays(monthsBack: Int = 6,
+                               countRange: ClosedRange<Int> = 5...15,
+                               context: NSManagedObjectContext? = nil,
+                               calendar: Calendar = .current) -> [Date] {
+        let workingContext = context ?? container.viewContext
+        return DailyRecordService.shared.markRandomCheckedDays(monthsBack: monthsBack,
+                                                               countRange: countRange,
+                                                               context: workingContext,
+                                                               calendar: calendar)
+    }
+}
+#endif

@@ -112,5 +112,24 @@ extension MonthReviewView {
 }
 
 //#Preview {
-//    MonthReviewView(showMonthReviewView: .constant(true), currentMonth: <#Date#>)
+//
+//let controller = PersistenceController.preview
+//        return     MonthReviewView(showMonthReviewView: .constant(true), currentMonth: $currentMonth)
+//        .environment(\.managedObjectContext, controller.container.viewContext)
+//    
 //}
+
+
+#Preview {
+    // Preview 用のスタブ
+    let controller = PersistenceController.preview
+    @State var showMonth = true
+    @State var month = Date()
+
+    return MonthReviewView(
+        showMonthReviewView: $showMonth,
+        currentMonth: $month
+    )
+    .environment(\.managedObjectContext, controller.container.viewContext)
+    .environmentObject(SnapshotManager()) // ← 必要ならモックでもOK
+}
