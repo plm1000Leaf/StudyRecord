@@ -14,36 +14,38 @@ StudyRecordは日ごとの学習内容を記録・振り返りできる iOS ア�
 - Plan画面では学習に使う教材，学習範囲，学習開始時刻を入力し学習予定を立てることができます．
 - Review画面では年別，月別，日別の学習記録の振り返り，スクリーンショットをSNS共有することができます．
 
-## スクリーンショット / デモ
-### < Check画面 >
+## スクリーンショット 
 
-<img width="200" alt="スクリーンショット 2025-09-25 16 23 12" src="https://github.com/user-attachments/assets/9f423bc3-47ee-4f0a-9498-4677668a4779" />
-
-### < Plan画面 >
-
-<img width="230" alt="スクリーンショット 2025-09-25 16 23 32" src="https://github.com/user-attachments/assets/f44ed274-5945-4d61-961b-c274ff6af25c" />
-
-
-<img width="210" alt="スクリーンショット 2025-09-25 16 30 57" src="https://github.com/user-attachments/assets/9efc1793-947b-4236-9a40-8ebe39a225e4" />
-
-![Check画面](src="https://github.com/user-attachments/assets/9efc1793-947b-4236-9a40-8ebe39a225e4")  
-*毎日の学習記録を簡単に入力できる画面*
-
-### < Review画面 >
-
+### Check画面
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/a0acbae1-4be0-4091-b7c8-6d35238e5af1" width="200" style="vertical-align:top; margin-right:8px;">
-  <img src="https://github.com/user-attachments/assets/7651c2c6-b4c4-49bf-b823-c5f3c3944031" width="200" style="vertical-align:top; margin-right:8px;">
-  <img src="https://github.com/user-attachments/assets/d6efdae5-f0a0-4707-9803-c512926714e4" width="200" style="vertical-align:top;">
+<img src="assets/check.png" alt="Check画面" width="250">
 </p>
+<p>毎日の学習記録をワンタップで入力</p>
 
-素早く学習を記録，明日の予定立てをすることができます．
+### Plan画面
+<p align="center">
+  <img src="assets/calendarPlan.png" alt="カレンダー画面" width="250" style="margin-right:8px;">
+  <img src="assets/inputPlan.png" alt="予定入力画面" width="220">
+</p>
+<p>左：カレンダーで予定を一覧表示　右：予定入力画面</p>
+
+### Review画面
+<p align="center">
+  <img src="assets/yearReview.png" alt="年レビュー" width="250" style="margin-right:8px;">
+  <img src="assets/monthReview.png" alt="月レビュー" width="250" style="margin-right:8px;">
+  <img src="assets/dayReview.png" alt="日レビュー" width="250">
+</p>
+<p>左：年間の学習量（GitHub風）　中：月ごとの学習日　右：1日ごとの振り返り</p>
+
+## デモ
 
 ![StudyRecord_Readme](https://github.com/user-attachments/assets/61db3a3f-6888-4eea-9dd3-6f08b886ccb7)
 
-iPhoneに標準搭載されているカレンダーアプリと連携しています．カレンダーアプリの繰り返し機能にも対応しています．
+素早く学習を記録，明日の予定立てをすることができます．
 
 ![StudyRecord_Readme2](https://github.com/user-attachments/assets/60ca93dd-e834-4664-81ce-2b9d1635847d)
+
+iPhoneに標準搭載されているカレンダーアプリと連携しています．カレンダーアプリの繰り返し機能にも対応しています．
 
 ## 技術スタック
 - **開発言語**: Swift 5.9
