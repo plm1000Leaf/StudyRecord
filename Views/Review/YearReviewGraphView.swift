@@ -40,7 +40,7 @@ struct YearReviewGraphView: View {
             }
         }
         .onAppear {
-            continuationDays = recordService.calculateContinuationDays(context: viewContext)
+            continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
         }
     }
 }
@@ -87,7 +87,7 @@ extension YearReviewGraphView {
             Spacer()
             Button(action: {
                 shareImage = ScreenshotHelper.captureScreen(in: captureRect)
-                continuationDays = recordService.calculateContinuationDays(context: viewContext)
+                continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
                 isTapShareButton = true
             }){
                 Image(systemName: "square.and.arrow.up")

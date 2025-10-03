@@ -139,7 +139,7 @@ extension AfterCheckView {
     // MARK: - Methods
     
     private func loadContinuationDays() {
-        continuationDays = recordService.calculateContinuationDays(context: viewContext)
+        continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
     }
     
     private func prepareShareTexts() {

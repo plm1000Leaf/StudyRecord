@@ -123,7 +123,7 @@ extension MonthReviewCalendar {
                 .padding(.leading, 8)
             Button(action: {
                 onShareTapped?()
-                continuationDays = recordService.calculateContinuationDays(context: viewContext)
+                continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
             }){
                 Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 24))

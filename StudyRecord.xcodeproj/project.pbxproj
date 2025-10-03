@@ -54,7 +54,19 @@
 		2875EA212E0415C100D9B0FC /* AfterCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9EB2E0415C000D9B0FC /* AfterCheckView.swift */; };
 		2875EA222E0415C100D9B0FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9EC2E0415C000D9B0FC /* ContentView.swift */; };
 		28893F7B2E13B2490084F807 /* ScreenshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28893F7A2E13B2490084F807 /* ScreenshotHelper.swift */; };
+		28C2A5E12E8F914E00977297 /* StudyRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C2A5E02E8F914E00977297 /* StudyRecordTests.swift */; };
+		28C2A5E82E8F92C300977297 /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C2A5E72E8F92C300977297 /* TestCoreDataStack.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		28C2A5E22E8F914E00977297 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 288EEED42D647134001FACBC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 288EEEDB2D647134001FACBC;
+			remoteInfo = StudyRecord;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		281E28C42E050149008A2981 /* SnapshotManager .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SnapshotManager .swift"; sourceTree = "<group>"; };
@@ -107,10 +119,20 @@
 		2875E9ED2E0415C000D9B0FC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28893F7A2E13B2490084F807 /* ScreenshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotHelper.swift; sourceTree = "<group>"; };
 		288EEEDC2D647134001FACBC /* StudyRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		28C2A5DE2E8F914E00977297 /* StudyRecordTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudyRecordTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		28C2A5E02E8F914E00977297 /* StudyRecordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordTests.swift; sourceTree = "<group>"; };
+		28C2A5E72E8F92C300977297 /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		288EEED92D647134001FACBC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28C2A5DB2E8F914E00977297 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -273,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				2875E9A42E0415C000D9B0FC /* StudyRecord */,
+				28C2A5DF2E8F914E00977297 /* StudyRecordTests */,
 				288EEEDD2D647134001FACBC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -281,8 +304,18 @@
 			isa = PBXGroup;
 			children = (
 				288EEEDC2D647134001FACBC /* StudyRecord.app */,
+				28C2A5DE2E8F914E00977297 /* StudyRecordTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		28C2A5DF2E8F914E00977297 /* StudyRecordTests */ = {
+			isa = PBXGroup;
+			children = (
+				28C2A5E02E8F914E00977297 /* StudyRecordTests.swift */,
+				28C2A5E72E8F92C300977297 /* TestCoreDataStack.swift */,
+			);
+			path = StudyRecordTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,6 +338,24 @@
 			productReference = 288EEEDC2D647134001FACBC /* StudyRecord.app */;
 			productType = "com.apple.product-type.application";
 		};
+		28C2A5DD2E8F914E00977297 /* StudyRecordTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28C2A5E42E8F914E00977297 /* Build configuration list for PBXNativeTarget "StudyRecordTests" */;
+			buildPhases = (
+				28C2A5DA2E8F914E00977297 /* Sources */,
+				28C2A5DB2E8F914E00977297 /* Frameworks */,
+				28C2A5DC2E8F914E00977297 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				28C2A5E32E8F914E00977297 /* PBXTargetDependency */,
+			);
+			name = StudyRecordTests;
+			productName = StudyRecordTests;
+			productReference = 28C2A5DE2E8F914E00977297 /* StudyRecordTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -317,6 +368,10 @@
 				TargetAttributes = {
 					288EEEDB2D647134001FACBC = {
 						CreatedOnToolsVersion = 15.2;
+					};
+					28C2A5DD2E8F914E00977297 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 288EEEDB2D647134001FACBC;
 					};
 				};
 			};
@@ -340,6 +395,7 @@
 			projectRoot = "";
 			targets = (
 				288EEEDB2D647134001FACBC /* StudyRecord */,
+				28C2A5DD2E8F914E00977297 /* StudyRecordTests */,
 			);
 		};
 /* End PBXProject section */
@@ -351,6 +407,13 @@
 			files = (
 				2875EA0E2E0415C100D9B0FC /* .gitignore in Resources */,
 				2875E9F62E0415C100D9B0FC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28C2A5DC2E8F914E00977297 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,7 +472,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		28C2A5DA2E8F914E00977297 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28C2A5E12E8F914E00977297 /* StudyRecordTests.swift in Sources */,
+				28C2A5E82E8F92C300977297 /* TestCoreDataStack.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		28C2A5E32E8F914E00977297 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 288EEEDB2D647134001FACBC /* StudyRecord */;
+			targetProxy = 28C2A5E22E8F914E00977297 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		288EEEE82D647137001FACBC /* Debug */ = {
@@ -593,6 +673,40 @@
 			};
 			name = Release;
 		};
+		28C2A5E52E8F914E00977297 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.au.uparupa-1029.StudyRecordTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StudyRecord.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StudyRecord";
+			};
+			name = Debug;
+		};
+		28C2A5E62E8F914E00977297 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.au.uparupa-1029.StudyRecordTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StudyRecord.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StudyRecord";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -610,6 +724,15 @@
 			buildConfigurations = (
 				288EEEEB2D647137001FACBC /* Debug */,
 				288EEEEC2D647137001FACBC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		28C2A5E42E8F914E00977297 /* Build configuration list for PBXNativeTarget "StudyRecordTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28C2A5E52E8F914E00977297 /* Debug */,
+				28C2A5E62E8F914E00977297 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
