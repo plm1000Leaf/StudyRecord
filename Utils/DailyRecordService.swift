@@ -125,13 +125,13 @@ final class DailyRecordService: ObservableObject {
     
     // MARK: - Public Methods
     
-    /// 指定した日付のレコードを取得
-    func loadRecord(for date: Date, context: NSManagedObjectContext) {
-        isLoading = true
-        currentRecord = dailyManager.fetchOrCreateRecord(for: date, context: context)
-        isLoading = false
-    }
-    
+//    /// 指定した日付のレコードを取得
+//    func loadRecord(for date: Date, context: NSManagedObjectContext) {
+//        isLoading = true
+//        currentRecord = dailyManager.fetchOrCreateRecord(for: date, context: context)
+//        isLoading = false
+//    }
+//    
     /// 複数日付のレコードを一括取得
     func loadRecordsForMonth(_ month: Date, context: NSManagedObjectContext) -> [DailyRecord] {
         let calendar = Calendar.current
@@ -276,23 +276,23 @@ final class DailyRecordService: ObservableObject {
         objectWillChange.send()
     }
     
-    /// 学習完了状態を更新（MonthlyRecordも同時更新）
-    func updateIsChecked(_ isChecked: Bool, context: NSManagedObjectContext) {
-        guard let record = currentRecord else {
-            print("更新対象のレコードがありません")
-            return
-        }
-        
-        // DailyRecordを更新
-        dailyManager.updateIsChecked(isChecked, for: record, context: context)
-        
-        // MonthlyRecordのチェック数も更新
-        if let date = record.date {
-            monthlyManager.updateCheckCount(for: date, context: context)
-        }
-        
-        objectWillChange.send()
-    }
+//    /// 学習完了状態を更新（MonthlyRecordも同時更新）
+//    func updateIsChecked(_ isChecked: Bool, context: NSManagedObjectContext) {
+//        guard let record = currentRecord else {
+//            print("更新対象のレコードがありません")
+//            return
+//        }
+//        
+//        // DailyRecordを更新
+//        dailyManager.updateIsChecked(isChecked, for: record, context: context)
+//        
+//        // MonthlyRecordのチェック数も更新
+//        if let date = record.date {
+//            monthlyManager.updateCheckCount(for: date, context: context)
+//        }
+//        
+//        objectWillChange.send()
+//    }
     
     // MARK: - Getter Methods
     
@@ -339,41 +339,41 @@ final class DailyRecordService: ObservableObject {
     
     // MARK: - Batch Operations
     
-    /// 指定した日付のレコードを直接取得（現在のレコードを変更しない）
-    func getRecord(for date: Date, context: NSManagedObjectContext) -> DailyRecord {
-        return dailyManager.fetchOrCreateRecord(for: date, context: context)
-    }
+//    /// 指定した日付のレコードを直接取得（現在のレコードを変更しない）
+//    func getRecord(for date: Date, context: NSManagedObjectContext) -> DailyRecord {
+//        return dailyManager.fetchOrCreateRecord(for: date, context: context)
+//    }
     
     /// 現在の学習完了状態を取得
     func getIsChecked() -> Bool {
         return currentRecord?.isChecked ?? false
     }
     
-    /// 現在日から遡って連続学習日数を計算
-    func calculateContinuationDays(from date: Date = Date(), context: NSManagedObjectContext) -> Int {
-        let calendar = Calendar.current
-        var continuationDays = 0
-        var currentDate = calendar.startOfDay(for: date)
-        
-        // 今日から過去に向かって連続学習日をカウント
-        while true {
-            let record = dailyManager.fetchOrCreateRecord(for: currentDate, context: context)
-            
-            if record.isChecked {
-                continuationDays += 1
-                // 前日に移動
-                guard let previousDay = calendar.date(byAdding: .day, value: -1, to: currentDate) else {
-                    break
-                }
-                currentDate = previousDay
-            } else {
-                // 学習していない日があったら終了
-                break
-            }
-        }
-        
-        return continuationDays
-    }
+//    /// 現在日から遡って連続学習日数を計算
+//    func calculateContinuationDays(from date: Date = Date(), context: NSManagedObjectContext) -> Int {
+//        let calendar = Calendar.current
+//        var continuationDays = 0
+//        var currentDate = calendar.startOfDay(for: date)
+//        
+//        // 今日から過去に向かって連続学習日をカウント
+//        while true {
+//            let record = dailyManager.fetchOrCreateRecord(for: currentDate, context: context)
+//            
+//            if record.isChecked {
+//                continuationDays += 1
+//                // 前日に移動
+//                guard let previousDay = calendar.date(byAdding: .day, value: -1, to: currentDate) else {
+//                    break
+//                }
+//                currentDate = previousDay
+//            } else {
+//                // 学習していない日があったら終了
+//                break
+//            }
+//        }
+//        
+//        return continuationDays
+//    }
     /// 最大継続日数を計算（過去の記録から）
         func calculateMaxContinuationDays(context: NSManagedObjectContext) -> Int {
             // すべてのDailyRecordを日付順で取得
@@ -531,7 +531,7 @@ final class DailyRecordService: ObservableObject {
 
     /// 継続日数の統計情報を取得
         func getContinuationStatistics(context: NSManagedObjectContext) -> ContinuationStatistics {
-            let current = calculateContinuationDays(context: context)
+            let current = calculateContinuationDays(from: Date(), context: context)
             let max = calculateMaxContinuationDays(context: context)
             
             return ContinuationStatistics(
@@ -625,3 +625,97 @@ extension DailyRecordService {
         monthlyManager.debugPrintYearData(for: year, context: context)
     }
 }
+
+// ===== BEGIN PATCH: DailyRecordService 日次取得/更新 安定化 =====
+import CoreData
+
+private let _cal: Calendar = {
+    var c = Calendar(identifier: .gregorian)
+    c.timeZone = .current
+    return c
+}()
+
+private func _dayRange(for date: Date) -> (start: Date, end: Date) {
+    let start = _cal.startOfDay(for: date)
+    let end = _cal.date(byAdding: .day, value: 1, to: start)!
+    return (start, end)
+}
+
+extension DailyRecordService {
+
+    /// 指定日の DailyRecord を返す。無ければ作成して「必須を全部セット」して保存。
+    @discardableResult
+    func getRecord(for date: Date, context: NSManagedObjectContext) -> DailyRecord {
+        let (start, end) = _dayRange(for: date)
+
+        // 日単位の範囲で既存を検索
+        let req: NSFetchRequest<DailyRecord> = DailyRecord.fetchRequest()
+        req.fetchLimit = 1
+        req.predicate = NSPredicate(format: "date >= %@ AND date < %@", start as NSDate, end as NSDate)
+
+        if let hit = try? context.fetch(req).first {
+            return hit
+        }
+
+        // 既存なし → 新規作成（**全属性**を初期化）
+        let r = DailyRecord(context: context)
+        r.id = UUID()
+        r.date = start                   // 0時に正規化
+        r.isChecked = false
+        r.alarmOn = false
+        r.isRepeating = false
+        r.scheduledHour = 0
+        r.scheduledMinute = 0
+
+        // 文字列はこのモデルだと nil 不可なので空文字で初期化
+        r.startPage = ""
+        r.endPage = ""
+        r.startUnit = ""
+        r.endUnit = ""
+        r.review = ""
+        r.eventIdentifier = ""
+
+        do { try context.save() } catch {
+            let e = error as NSError
+            assertionFailure("CoreData save failed: \(e), \(e.userInfo)")
+        }
+        return r
+    }
+
+    /// 指定日のレコードを currentRecord にロード（必ず引数 context を使う）
+    func loadRecord(for date: Date, context: NSManagedObjectContext) {
+        self.currentRecord = getRecord(for: date, context: context)
+    }
+
+    /// チェック更新（必ず引数 context を使い、保存まで行う）
+    func updateIsChecked(_ newValue: Bool, context: NSManagedObjectContext) {
+        guard let rec = currentRecord else { return }
+        rec.isChecked = newValue
+        do { try context.save() } catch {
+            let e = error as NSError
+            assertionFailure("save failed: \(e), \(e.userInfo)")
+        }
+        // 月次連動があるなら、ここで同じ context を渡して更新
+        // monthlyManager.updateCheckCount(for: rec.date!, context: context)
+    }
+
+    /// 今日を起点に継続日数を数える（isChecked が連続 true の日数）
+    func calculateContinuationDays(from date: Date, context: NSManagedObjectContext) -> Int {
+        var days = 0
+        var cursor = _cal.startOfDay(for: date)
+
+        while true {
+            let (start, end) = _dayRange(for: cursor)
+            let req: NSFetchRequest<DailyRecord> = DailyRecord.fetchRequest()
+            req.fetchLimit = 1
+            req.predicate = NSPredicate(format: "date >= %@ AND date < %@", start as NSDate, end as NSDate)
+
+            guard let rec = try? context.fetch(req).first, rec.isChecked else { break }
+            days += 1
+            guard let prev = _cal.date(byAdding: .day, value: -1, to: cursor) else { break }
+            cursor = prev
+        }
+        return days
+    }
+}
+// ===== END PATCH =====

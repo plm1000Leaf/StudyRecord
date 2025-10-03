@@ -47,7 +47,7 @@ struct MonthReviewView: View {
             
         }
         .onAppear{
-            continuationDays = recordService.calculateContinuationDays(context: viewContext)
+            continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
         }
         .animation(.easeInOut, value: showDateReviewView)
 
