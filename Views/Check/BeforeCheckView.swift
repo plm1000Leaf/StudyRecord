@@ -110,6 +110,7 @@ extension BeforeCheckView {
             .padding(.top, 16)
             .padding(.leading, 32)
             .frame(maxWidth: .infinity, alignment: .leading)
+            .accessibilityIdentifier("BeforeCheckView")
     }
     
     private var studyMaterial: some View {
@@ -218,6 +219,7 @@ extension BeforeCheckView {
         }
         .disabled(isDoneStudy || !isToday)
         .padding(.top, -16)
+        .accessibilityIdentifier("checkButton")
         
     }
 }

@@ -54,11 +54,28 @@
 		2875EA212E0415C100D9B0FC /* AfterCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9EB2E0415C000D9B0FC /* AfterCheckView.swift */; };
 		2875EA222E0415C100D9B0FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9EC2E0415C000D9B0FC /* ContentView.swift */; };
 		28893F7B2E13B2490084F807 /* ScreenshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28893F7A2E13B2490084F807 /* ScreenshotHelper.swift */; };
+		28B089912E96588A002E7CCD /* StudyRecordUITests2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B089902E96588A002E7CCD /* StudyRecordUITests2.swift */; };
+		28B089932E96588A002E7CCD /* StudyRecordUITests2LaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B089922E96588A002E7CCD /* StudyRecordUITests2LaunchTests.swift */; };
+		28B089992E9658BF002E7CCD /* CheckToReviewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B089822E93AE33002E7CCD /* CheckToReviewUITests.swift */; };
 		28C2A5E12E8F914E00977297 /* StudyRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C2A5E02E8F914E00977297 /* StudyRecordTests.swift */; };
 		28C2A5E82E8F92C300977297 /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C2A5E72E8F92C300977297 /* TestCoreDataStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		28B089842E93AE33002E7CCD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 288EEED42D647134001FACBC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 288EEEDB2D647134001FACBC;
+			remoteInfo = StudyRecord;
+		};
+		28B089942E96588A002E7CCD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 288EEED42D647134001FACBC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 288EEEDB2D647134001FACBC;
+			remoteInfo = StudyRecord;
+		};
 		28C2A5E22E8F914E00977297 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 288EEED42D647134001FACBC /* Project object */;
@@ -119,6 +136,12 @@
 		2875E9ED2E0415C000D9B0FC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28893F7A2E13B2490084F807 /* ScreenshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotHelper.swift; sourceTree = "<group>"; };
 		288EEEDC2D647134001FACBC /* StudyRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		28B089802E93AE33002E7CCD /* StudyRecordUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudyRecordUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		28B089822E93AE33002E7CCD /* CheckToReviewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckToReviewUITests.swift; sourceTree = "<group>"; };
+		28B089892E963758002E7CCD /* StudyRecord.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = StudyRecord.xctestplan; sourceTree = "<group>"; };
+		28B0898E2E96588A002E7CCD /* StudyRecordUITests2.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudyRecordUITests2.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		28B089902E96588A002E7CCD /* StudyRecordUITests2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordUITests2.swift; sourceTree = "<group>"; };
+		28B089922E96588A002E7CCD /* StudyRecordUITests2LaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordUITests2LaunchTests.swift; sourceTree = "<group>"; };
 		28C2A5DE2E8F914E00977297 /* StudyRecordTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudyRecordTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		28C2A5E02E8F914E00977297 /* StudyRecordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordTests.swift; sourceTree = "<group>"; };
 		28C2A5E72E8F92C300977297 /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
@@ -126,6 +149,20 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		288EEED92D647134001FACBC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28B0897D2E93AE33002E7CCD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28B0898B2E96588A002E7CCD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -294,8 +331,11 @@
 		288EEED32D647134001FACBC = {
 			isa = PBXGroup;
 			children = (
+				28B089892E963758002E7CCD /* StudyRecord.xctestplan */,
 				2875E9A42E0415C000D9B0FC /* StudyRecord */,
 				28C2A5DF2E8F914E00977297 /* StudyRecordTests */,
+				28B089812E93AE33002E7CCD /* StudyRecordUITests */,
+				28B0898F2E96588A002E7CCD /* StudyRecordUITests2 */,
 				288EEEDD2D647134001FACBC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -305,8 +345,27 @@
 			children = (
 				288EEEDC2D647134001FACBC /* StudyRecord.app */,
 				28C2A5DE2E8F914E00977297 /* StudyRecordTests.xctest */,
+				28B089802E93AE33002E7CCD /* StudyRecordUITests.xctest */,
+				28B0898E2E96588A002E7CCD /* StudyRecordUITests2.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		28B089812E93AE33002E7CCD /* StudyRecordUITests */ = {
+			isa = PBXGroup;
+			children = (
+				28B089822E93AE33002E7CCD /* CheckToReviewUITests.swift */,
+			);
+			path = StudyRecordUITests;
+			sourceTree = "<group>";
+		};
+		28B0898F2E96588A002E7CCD /* StudyRecordUITests2 */ = {
+			isa = PBXGroup;
+			children = (
+				28B089902E96588A002E7CCD /* StudyRecordUITests2.swift */,
+				28B089922E96588A002E7CCD /* StudyRecordUITests2LaunchTests.swift */,
+			);
+			path = StudyRecordUITests2;
 			sourceTree = "<group>";
 		};
 		28C2A5DF2E8F914E00977297 /* StudyRecordTests */ = {
@@ -337,6 +396,42 @@
 			productName = StudyRecord;
 			productReference = 288EEEDC2D647134001FACBC /* StudyRecord.app */;
 			productType = "com.apple.product-type.application";
+		};
+		28B0897F2E93AE33002E7CCD /* StudyRecordUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28B089882E93AE33002E7CCD /* Build configuration list for PBXNativeTarget "StudyRecordUITests" */;
+			buildPhases = (
+				28B0897C2E93AE33002E7CCD /* Sources */,
+				28B0897D2E93AE33002E7CCD /* Frameworks */,
+				28B0897E2E93AE33002E7CCD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				28B089852E93AE33002E7CCD /* PBXTargetDependency */,
+			);
+			name = StudyRecordUITests;
+			productName = StudyRecordUITests;
+			productReference = 28B089802E93AE33002E7CCD /* StudyRecordUITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		28B0898D2E96588A002E7CCD /* StudyRecordUITests2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28B089962E96588A002E7CCD /* Build configuration list for PBXNativeTarget "StudyRecordUITests2" */;
+			buildPhases = (
+				28B0898A2E96588A002E7CCD /* Sources */,
+				28B0898B2E96588A002E7CCD /* Frameworks */,
+				28B0898C2E96588A002E7CCD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				28B089952E96588A002E7CCD /* PBXTargetDependency */,
+			);
+			name = StudyRecordUITests2;
+			productName = StudyRecordUITests2;
+			productReference = 28B0898E2E96588A002E7CCD /* StudyRecordUITests2.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		28C2A5DD2E8F914E00977297 /* StudyRecordTests */ = {
 			isa = PBXNativeTarget;
@@ -369,6 +464,14 @@
 					288EEEDB2D647134001FACBC = {
 						CreatedOnToolsVersion = 15.2;
 					};
+					28B0897F2E93AE33002E7CCD = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 288EEEDB2D647134001FACBC;
+					};
+					28B0898D2E96588A002E7CCD = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 288EEEDB2D647134001FACBC;
+					};
 					28C2A5DD2E8F914E00977297 = {
 						CreatedOnToolsVersion = 15.2;
 						TestTargetID = 288EEEDB2D647134001FACBC;
@@ -396,6 +499,8 @@
 			targets = (
 				288EEEDB2D647134001FACBC /* StudyRecord */,
 				28C2A5DD2E8F914E00977297 /* StudyRecordTests */,
+				28B0897F2E93AE33002E7CCD /* StudyRecordUITests */,
+				28B0898D2E96588A002E7CCD /* StudyRecordUITests2 */,
 			);
 		};
 /* End PBXProject section */
@@ -407,6 +512,20 @@
 			files = (
 				2875EA0E2E0415C100D9B0FC /* .gitignore in Resources */,
 				2875E9F62E0415C100D9B0FC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28B0897E2E93AE33002E7CCD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28B0898C2E96588A002E7CCD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +591,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		28B0897C2E93AE33002E7CCD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28B0898A2E96588A002E7CCD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28B089992E9658BF002E7CCD /* CheckToReviewUITests.swift in Sources */,
+				28B089932E96588A002E7CCD /* StudyRecordUITests2LaunchTests.swift in Sources */,
+				28B089912E96588A002E7CCD /* StudyRecordUITests2.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		28C2A5DA2E8F914E00977297 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -484,6 +620,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		28B089852E93AE33002E7CCD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 288EEEDB2D647134001FACBC /* StudyRecord */;
+			targetProxy = 28B089842E93AE33002E7CCD /* PBXContainerItemProxy */;
+		};
+		28B089952E96588A002E7CCD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 288EEEDB2D647134001FACBC /* StudyRecord */;
+			targetProxy = 28B089942E96588A002E7CCD /* PBXContainerItemProxy */;
+		};
 		28C2A5E32E8F914E00977297 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 288EEEDB2D647134001FACBC /* StudyRecord */;
@@ -673,6 +819,72 @@
 			};
 			name = Release;
 		};
+		28B089862E93AE33002E7CCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.au.uparupa-1029.StudyRecordUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StudyRecord.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StudyRecord";
+			};
+			name = Debug;
+		};
+		28B089872E93AE33002E7CCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.au.uparupa-1029.StudyRecordUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StudyRecord.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StudyRecord";
+			};
+			name = Release;
+		};
+		28B089972E96588A002E7CCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.au.uparupa-1029.StudyRecordUITests2";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = StudyRecord;
+			};
+			name = Debug;
+		};
+		28B089982E96588A002E7CCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.au.uparupa-1029.StudyRecordUITests2";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = StudyRecord;
+			};
+			name = Release;
+		};
 		28C2A5E52E8F914E00977297 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -724,6 +936,24 @@
 			buildConfigurations = (
 				288EEEEB2D647137001FACBC /* Debug */,
 				288EEEEC2D647137001FACBC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		28B089882E93AE33002E7CCD /* Build configuration list for PBXNativeTarget "StudyRecordUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28B089862E93AE33002E7CCD /* Debug */,
+				28B089872E93AE33002E7CCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		28B089962E96588A002E7CCD /* Build configuration list for PBXNativeTarget "StudyRecordUITests2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28B089972E96588A002E7CCD /* Debug */,
+				28B089982E96588A002E7CCD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

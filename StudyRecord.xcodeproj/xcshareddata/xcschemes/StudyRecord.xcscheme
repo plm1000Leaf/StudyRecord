@@ -26,17 +26,44 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      shouldAutocreateTestPlan = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <TestPlans>
+         <TestPlanReference
+            reference = "container:StudyRecord.xctestplan"
+            default = "YES">
+         </TestPlanReference>
+      </TestPlans>
       <Testables>
          <TestableReference
-            skipped = "NO"
+            skipped = "YES"
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "28C2A5DD2E8F914E00977297"
                BuildableName = "StudyRecordTests.xctest"
                BlueprintName = "StudyRecordTests"
+               ReferencedContainer = "container:StudyRecord.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "28B0897F2E93AE33002E7CCD"
+               BuildableName = "StudyRecordUITests.xctest"
+               BlueprintName = "StudyRecordUITests"
+               ReferencedContainer = "container:StudyRecord.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "28B0898D2E96588A002E7CCD"
+               BuildableName = "StudyRecordUITests2.xctest"
+               BlueprintName = "StudyRecordUITests2"
                ReferencedContainer = "container:StudyRecord.xcodeproj">
             </BuildableReference>
          </TestableReference>

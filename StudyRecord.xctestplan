@@ -1,0 +1,53 @@
+{
+  "configurations" : [
+    {
+      "id" : "7E2D0C46-0E90-4034-9509-BBDC071FA5AF",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    },
+    {
+      "id" : "005044C4-8B7E-4D7F-8901-96DFA7117B82",
+      "name" : "Default",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:StudyRecord.xcodeproj",
+      "identifier" : "288EEEDB2D647134001FACBC",
+      "name" : "StudyRecord"
+    }
+  },
+  "testTargets" : [
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:StudyRecord.xcodeproj",
+        "identifier" : "28C2A5DD2E8F914E00977297",
+        "name" : "StudyRecordTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:StudyRecord.xcodeproj",
+        "identifier" : "28B0897F2E93AE33002E7CCD",
+        "name" : "StudyRecordUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:StudyRecord.xcodeproj",
+        "identifier" : "28B0898D2E96588A002E7CCD",
+        "name" : "StudyRecordUITests2"
+      }
+    }
+  ],
+  "version" : 1
+}
