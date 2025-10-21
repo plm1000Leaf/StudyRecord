@@ -1,6 +1,7 @@
 # StudyRecord
 [![iOS CI](https://github.com/plm1000Leaf/StudyRecord/actions/workflows/ios-ci.yml/badge.svg)](https://github.com/plm1000Leaf/StudyRecord/actions/workflows/ios-ci.yml)
-![UI Test](https://github.com/plm1000Leaf/StudyRecord/actions/workflows/ui-test.yml/badge.svg)
+![UI Test](https://github.com/plm1000Leaf/StudyRecord/actions/workflows/ui-test.yml/badge.svg?branch=main&event=push)
+
 
 
 時間のない人のための学習記録アプリ
