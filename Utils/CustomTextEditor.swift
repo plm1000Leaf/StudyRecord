@@ -33,7 +33,36 @@ struct CustomTextEditor: UIViewRepresentable {
         init(_ parent: CustomTextEditor) {
             self.parent = parent
         }
+        
+        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+            guard let currentText = textView.text,
+                  let textRange = Range(range, in: currentText) else {
+                return true
+            }
 
+            let replacementCount = text.count
+            let currentCount = currentText.count
+            let replacingCount = currentText[textRange].count
+            let baseCount = currentCount - replacingCount
+            let newCount = baseCount + replacementCount
+
+            if newCount <= parent.maxCharacters {
+                return true
+            }
+
+            let allowedAdditional = parent.maxCharacters - baseCount
+            guard allowedAdditional > 0 else {
+                return false
+            }
+
+            let limitedText = String(text.prefix(allowedAdditional))
+            textView.text = currentText.replacingCharacters(in: textRange, with: limitedText)
+            if let startPosition = textView.position(from: textView.beginningOfDocument, offset: range.location + limitedText.count) {
+                textView.selectedTextRange = textView.textRange(from: startPosition, to: startPosition)
+            }
+            parent.text = textView.text
+            return false
+        }
 
         func textViewDidChange(_ textView: UITextView) {
             // 日本語変換中（未確定文字あり）の場合は更新を遅らせる
