@@ -83,9 +83,11 @@ struct PlanSettingWindowView: View {
                     onClose()
                 }) {
                     Image(systemName: "xmark")
-                        .font(.system(size: 16))
+                        .font(.system(size: 22))
                         .padding(16)
                         .padding(.top, -8)
+                        .foregroundColor(.baseColor10)
+
                 },
                 alignment: .topLeading
             )
@@ -341,10 +343,11 @@ struct PlanSettingWindowView: View {
                         .foregroundColor(.mainColor0)
                         .frame(width: 336, height: 80)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                    windowTitle
-                        .padding(.top, 16)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                        windowTitle
+                            .padding(.top, 16)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 }
             )
+
     }
 }
