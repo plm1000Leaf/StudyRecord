@@ -34,6 +34,7 @@ struct CustomTextEditor: UIViewRepresentable {
             self.parent = parent
         }
 
+
         func textViewDidChange(_ textView: UITextView) {
             // 日本語変換中（未確定文字あり）の場合は更新を遅らせる
             if let _ = textView.markedTextRange {

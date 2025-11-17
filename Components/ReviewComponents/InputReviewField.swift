@@ -66,7 +66,7 @@ extension InputReviewField {
                 ZStack{
                     Circle()
                         .frame(width: 32, height: 32)
-                        .foregroundColor(.accentColor1)
+                        .foregroundColor(.mainColor0)
                     Image(systemName:"square.and.pencil")
                         .frame(width: 32, height: 32)
                         .foregroundColor(.baseColor10)
