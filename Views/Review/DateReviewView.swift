@@ -153,7 +153,7 @@ extension DateReviewView {
                     
                     Button(action: {
                         withAnimation {
-                            showDateReviewView = false  // MonthReviewView に戻る
+                            showDateReviewView = false  
                         }
                     }){
                         HStack{

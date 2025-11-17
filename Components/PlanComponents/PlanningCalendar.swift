@@ -20,7 +20,7 @@ struct PlanningCalendar: View {
                 VStack(spacing: 0) {
                     header
                     
-                    let days = CalendarUtils.generateCalendarDays(for: currentMonth)
+                    let daysWithIndex = Array(CalendarUtils.generateCalendarDays(for: currentMonth).enumerated())
                     
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
                         ForEach(["日", "月", "火", "水", "木", "金", "土"], id: \.self) { day in
@@ -30,7 +30,7 @@ struct PlanningCalendar: View {
                                 .padding(.bottom, 8)
                         }
                         
-                        ForEach(days, id: \.self) { date in
+                        ForEach(daysWithIndex, id: \.offset) { _, date in
                             VStack {
                                     if date > 0 {
                                         ZStack{

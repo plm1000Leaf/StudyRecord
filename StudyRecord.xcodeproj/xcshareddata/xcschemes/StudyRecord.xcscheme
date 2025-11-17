@@ -40,6 +40,17 @@
                ReferencedContainer = "container:StudyRecord.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "28BA9A722EA79E6B00279BC5"
+               BuildableName = "StudyRecordUITests.xctest"
+               BlueprintName = "StudyRecordUITests"
+               ReferencedContainer = "container:StudyRecord.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
