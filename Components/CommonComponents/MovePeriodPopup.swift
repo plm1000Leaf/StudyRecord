@@ -57,23 +57,23 @@ extension MovePeriodPopup {
                                             .frame(width:104, height: 72)
                                             .foregroundColor(.mainColor10)
 
-
                                         Text(items[index])
-                                            .onTapGesture {
-                                                if let month = Int(items[index]) {
+                                    }
+                                    .onTapGesture {
+                                            if let month = Int(items[index]) {
                                                     onSelect(month)
                                                     showPopup = false
                                                 }
-                                                if let year = Int(items[index]) {
+                                            if let year = Int(items[index]) {
                                                     onSelect(year)
                                                     showPopup = false
-                                                }
                                             }
+                                    }
                                             .font(.system(size: 24))
                                             .foregroundColor(.white)
                                         
                                         
-                                    }
+
                                 } else {
                                     Rectangle()
                                         .frame(width: 104, height: 72)

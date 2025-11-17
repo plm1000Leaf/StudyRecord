@@ -33,23 +33,24 @@ struct AddBookOverlay: View {
             
             RoundedRectangle(cornerRadius: 8)
                 .fill(Color.baseColor10)
-                .frame(width: 344, height: 448)
+                .frame(width: 344, height: 440)
                 .overlay(
                     Button(action: {
                         onDismiss()
                     }) {
                         Image(systemName: "xmark")
                             .font(.system(size: 16))
-                            .padding(16)
+                            .padding(28)
                             .padding(.top, -8)
                     },
                     alignment: .topLeading
                 )
             
-            VStack(spacing: 40) {
+            VStack(spacing: 36) {
                 imageSelector
                 inputFields
             }
+            .padding(.top, 40)
             .onChange(of: selectedPhotoItem) { newItem in
                 loadSelectedImage(newItem)
             }
@@ -73,6 +74,7 @@ extension AddBookOverlay {
                 photoPickerButton
             }
         }
+
     }
     
     private func selectedImageView(_ image: UIImage) -> some View {
