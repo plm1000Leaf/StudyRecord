@@ -695,6 +695,7 @@ extension DailyRecordService {
             let e = error as NSError
             assertionFailure("save failed: \(e), \(e.userInfo)")
         }
+        objectWillChange.send()
         // 月次連動があるなら、ここで同じ context を渡して更新
         // monthlyManager.updateCheckCount(for: rec.date!, context: context)
     }

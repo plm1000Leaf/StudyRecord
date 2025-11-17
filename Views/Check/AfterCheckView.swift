@@ -63,13 +63,17 @@ extension AfterCheckView {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .navigationBarBackButtonHidden(true)
         .background(Color.baseColor0)
-        .alert("チェックを取消", isPresented: $showCancelCheckAlert) {
-            Button("取消し", role: .destructive) {
+        .alert("チェックを取り消し", isPresented: $showCancelCheckAlert) {
+            
+            Button("取り消し", role: .destructive) {
                 recordService.updateIsChecked(false, context: viewContext)
+                isDoneStudy = false
                 dismiss()
             }
+            
             Button("キャンセル", role: .cancel) {
             }
+            
         } message: {
             Text("Doneボタンを押し間違えた場合\n取り消すことができます")
         }
@@ -85,6 +89,7 @@ extension AfterCheckView {
     private var studyDoneText: some View {
         Text("学習完了")
             .font(.system(size: 72))
+            .accessibilityIdentifier("afterCheckCompletionTitle")
     }
     
     private var continuationDaysView: some View {

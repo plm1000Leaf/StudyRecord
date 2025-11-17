@@ -9,8 +9,17 @@ import SwiftUI
 
 @main
 struct StudyRecordApp: App {
-    let persistenceController = PersistenceController.shared
+    let persistenceController: PersistenceController
     @StateObject private var snapshotManager = SnapshotManager()
+    
+    init() {
+        if ProcessInfo.processInfo.arguments.contains("UI_TEST_MODE") {
+            persistenceController = PersistenceController(inMemory: true)
+        } else {
+            persistenceController = PersistenceController.shared
+        }
+    }
+
 
     var body: some Scene {
         WindowGroup {

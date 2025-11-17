@@ -20,6 +20,7 @@ struct BeforeCheckView: View {
     @State private var selectedUnit: String = "ページ"
     @State private var scheduledHour: Int = 12
     @State private var scheduledMinute: Int = 30
+    @State private var isDoneStudyState: Bool = false
     @Binding var selectedTabIndex: Int
     @Binding var navigateToReview: Bool
     @Binding var navigateToPlan: Bool
@@ -30,11 +31,7 @@ struct BeforeCheckView: View {
         Calendar.current.isDate(selectedDate, inSameDayAs: Date())
     }
     
-    // 現在のレコードが完了済みかどうかをチェック
-    private var isDoneStudy: Bool {
-        recordService.getIsChecked()
-    }
-    
+
     /// 選択された日付を日本語形式で文字列に変換
     private var formattedSelectedDate: String {
         let formatter = DateFormatter()
@@ -47,14 +44,13 @@ struct BeforeCheckView: View {
         
         Group {
             // 今日の日付で、かつ学習完了済みの場合のみAfterCheckViewを表示
-            if isToday && isDoneStudy {
+            if isToday && isDoneStudyState {
                 AfterCheckView(
-                    isDoneStudy: .constant(true),
+                    isDoneStudy: $isDoneStudyState,
                     selectedTabIndex: $selectedTabIndex,
                     navigateToReview: $navigateToReview,
-                    navigateToPlan: $navigateToPlan, 
-                    dismiss: {
-                    }
+                    navigateToPlan: $navigateToPlan,
+                    dismiss: {}
                 )
             } else {
                 mainView
@@ -70,6 +66,7 @@ struct BeforeCheckView: View {
     
     private func loadDataForDate() {
         recordService.loadRecord(for: selectedDate, context: viewContext)
+        isDoneStudyState = recordService.getIsChecked()
     }
 
 }
@@ -214,9 +211,10 @@ extension BeforeCheckView {
         
         BasicButton(label: "Done", icon: "checkmark", width: 288, height: 80,fontSize: 48,imageSize: 32){
             recordService.updateIsChecked(true, context: viewContext)
+            isDoneStudyState = true
             print("Doneボタンが押されました")
         }
-        .disabled(isDoneStudy || !isToday)
+        .disabled(isDoneStudyState || !isToday)
         .padding(.top, -16)
         
     }
