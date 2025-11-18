@@ -139,8 +139,10 @@ extension DateReviewView {
                     .frame(width: 248, height: 88)
                 }
             }
+            .padding(.trailing, 6)
             .padding(.bottom, 32)
         )
+        
     }
     
     private var DateReviewHeader: some View {
@@ -153,7 +155,7 @@ extension DateReviewView {
                     
                     Button(action: {
                         withAnimation {
-                            showDateReviewView = false  
+                            showDateReviewView = false
                         }
                     }){
                         HStack{
@@ -172,12 +174,14 @@ extension DateReviewView {
                             .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
                     }
                 }
+                .padding(.top, 8)
                 Spacer()
                 
             }
             .padding(.leading, 28)
             .foregroundColor(.white)
         }
+
     }
     
     private func record(for index: Int) -> DailyRecord {
@@ -329,6 +333,7 @@ extension DateReviewView {
                     }
                 }
             }
+                .padding(.trailing, 6)
                 .padding(.bottom, 32)
         )
     }
