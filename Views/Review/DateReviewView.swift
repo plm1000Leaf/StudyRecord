@@ -139,8 +139,10 @@ extension DateReviewView {
                     .frame(width: 248, height: 88)
                 }
             }
+            .padding(.trailing, 6)
             .padding(.bottom, 32)
         )
+        
     }
     
     private var DateReviewHeader: some View {
@@ -331,6 +333,7 @@ extension DateReviewView {
                     }
                 }
             }
+                .padding(.trailing, 6)
                 .padding(.bottom, 32)
         )
     }
