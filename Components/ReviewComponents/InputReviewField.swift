@@ -15,6 +15,7 @@ struct InputReviewField: View {
         VStack(spacing: 16) {
             if isEditing {
                 editReviewField
+                editReviewButton
             } else {
                 displayReviewField
             }
@@ -36,58 +37,42 @@ extension InputReviewField {
         }) {
             ZStack{
                 Rectangle()
-                    .frame(width: 208, height: 64)
+                    .frame(width: 208, height: 104)
+                    .cornerRadius(8)
                     .foregroundColor(isChecked ? .mainColor10 : .notCheckedColor10)
                 Text(reviewText.isEmpty ? "振り返りを入力" : reviewText)
-                    .frame(width: 200, height: 64)
+                    .frame(width: 200, height: 104)
                     .multilineTextAlignment(.leading)
                     .lineLimit(nil) // 改行を有効化
-                    .padding(.leading, 8)
+//                    .padding(.leading, 8)
                 
             }
+            .padding(.bottom, 40)
         }
     }
     
     private var editReviewField: some View {
  
             CustomTextEditor(text: $reviewText, maxCharacters: maxCharacters)
-                .frame(width: 200, height: 64)
+                .frame(width: 200, height: 104)
                 .padding(.leading, 8)
                 .background(.baseColor10)
                 .cornerRadius(8)
-//                .onSubmit {
-//                    DailyRecordManager.shared.updateReview(reviewText, for: dailyRecord, context: viewContext)
-//                    isEditing = false
-//                }
+                .onSubmit {
+                    DailyRecordManager.shared.updateReview(reviewText, for: dailyRecord, context: viewContext)
+                    isEditing = false
+                }
         
     }
     
-//    private var displayReviewButton: some View {
-//
-//            Button(action: {
-//                isEditing.toggle()
-//            }) {
-//                ZStack{
-//                    Circle()
-//                        .frame(width: 32, height: 32)
-//                        .foregroundColor(.mainColor0)
-//                    Image(systemName:"square.and.pencil")
-//                        .frame(width: 32, height: 32)
-//                        .foregroundColor(.baseColor10)
-//                }
-//                .frame(maxWidth: .infinity, alignment:
-//                        .trailing)
-//                .padding(.trailing, 8)
-//            }
-//    }
-//    private var editReviewButton: some View {
-//        HStack {
-//            BasicButton(label: "確定", width: 56, height: 32) {
-//                DailyRecordManager.shared.updateReview(reviewText, for: dailyRecord, context: viewContext)
-//                isEditing = false
-//            }
-//
-//        }
-//        .padding(.leading, 144)
-//    }
+    private var editReviewButton: some View {
+        HStack {
+            BasicButton(label: "確定", width: 56, height: 32) {
+                DailyRecordManager.shared.updateReview(reviewText, for: dailyRecord, context: viewContext)
+                isEditing = false
+            }
+
+        }
+        .padding(.leading, 144)
+    }
 }
