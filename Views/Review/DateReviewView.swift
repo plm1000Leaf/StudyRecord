@@ -240,7 +240,7 @@ extension DateReviewView {
                     ZStack{
                         RoundedRectangle(cornerRadius: 8)
                             .fill(backgroundColor)
-                            .frame(width: 248, height: 344)
+                            .frame(width: 248, height: 376)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(frameColor, lineWidth: 4)
@@ -248,7 +248,7 @@ extension DateReviewView {
                     }
                     VStack{
                         ZStack{
-                            HStack{
+                            HStack(spacing: 16){
                                 if let material = record(for: index).material {
                                     if let image = materialImages[index] {
                                         Image(uiImage: image)
@@ -283,33 +283,35 @@ extension DateReviewView {
                                 VStack(spacing: 8){
                                     Text(materialNames[index] ?? record(for: index).material?.name ?? "教材未設定")
                                         .bold()
-                                        .font(.system(size: 16))
+                                        .font(.system(size: 20))
                                         .frame(width: 104)
                                         .foregroundColor(.gray0)
                                     
                                     HStack{
                                         Text(startPageText)
-                                            .font(.system(size: 8))
+                                            .font(.system(size: 16))
                                             .frame(width: 56, height: 16)
                                         Text(startUnitText)
-                                            .font(.system(size: 12))
+                                            .font(.system(size: 16))
                                     }
+                                    .padding(.trailing, 18)
                                     Text("〜")
                                         .font(.system(size: 16))
                                         .bold()
                                         .rotationEffect(.degrees(90))
                                     HStack{
                                         Text(endPageText)
-                                            .font(.system(size: 8))
+                                            .font(.system(size: 16))
                                             .frame(width: 56, height: 20)
                                         Text(endUnitText)
-                                            .font(.system(size: 12))
+                                            .font(.system(size: 16))
                                     }
+                                    .padding(.trailing, 18)
                                     
                                 }
                                 .foregroundColor(.gray0)
                             }
-                            .padding(.bottom, 184)
+                            .padding(.bottom, 200)
                             
                             
                             InputReviewField(
@@ -319,7 +321,7 @@ extension DateReviewView {
                                     set: { reviews[index] = $0 }
                                 ), isChecked: isChecked
                             )
-                            .padding(.top, 160)
+                            .padding(.top, 168)
                             .onAppear {
                                 let dailyRecord = record(for: index)
                                 materialNames[index] = record(for: index).material?.name ?? "教材未設定"
