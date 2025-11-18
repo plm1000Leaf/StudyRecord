@@ -14,15 +14,11 @@ struct InputReviewField: View {
     var body: some View {
         VStack(spacing: 16) {
             if isEditing {
-                
                 editReviewField
                 editReviewButton
-                
             } else {
                 displayReviewField
-                displayReviewButton
             }
-
 
         }
         .padding()
@@ -36,45 +32,37 @@ struct InputReviewField: View {
 
 extension InputReviewField {
     private var displayReviewField: some View {
-        ZStack{
-            Rectangle()
-                .frame(width: 208, height: 64)
-                .foregroundColor(isChecked ? .mainColor10 : .notCheckedColor10)
-            Text(reviewText.isEmpty ? "振り返りを入力" : reviewText)
-                .frame(width: 200, height: 64)
-                .multilineTextAlignment(.leading)
-                .lineLimit(nil) // 改行を有効化
-                .padding(.leading, 8)
-
+        Button(action: {
+            isEditing.toggle()
+        }) {
+            ZStack{
+                Rectangle()
+                    .frame(width: 208, height: 104)
+                    .cornerRadius(8)
+                    .foregroundColor(isChecked ? .mainColor10 : .notCheckedColor10)
+                Text(reviewText.isEmpty ? "振り返りをタップで入力" : reviewText)
+                    .frame(width: 200, height: 104)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(nil)
+                    .foregroundColor(isChecked ?  .baseColor20: .baseColor20)
+                
+            }
+            .padding(.bottom, 40)
         }
     }
     
     private var editReviewField: some View {
-
-        CustomTextEditor(text: $reviewText, maxCharacters: maxCharacters)
-                .frame(width: 200, height: 64)
+ 
+            CustomTextEditor(text: $reviewText, maxCharacters: maxCharacters)
+                .frame(width: 200, height: 104)
                 .padding(.leading, 8)
                 .background(.baseColor10)
                 .cornerRadius(8)
-    }
-    
-    private var displayReviewButton: some View {
-
-            Button(action: {
-                isEditing.toggle()
-            }) {
-                ZStack{
-                    Circle()
-                        .frame(width: 32, height: 32)
-                        .foregroundColor(.mainColor0)
-                    Image(systemName:"square.and.pencil")
-                        .frame(width: 32, height: 32)
-                        .foregroundColor(.baseColor10)
+                .onSubmit {
+                    DailyRecordManager.shared.updateReview(reviewText, for: dailyRecord, context: viewContext)
+                    isEditing = false
                 }
-                .frame(maxWidth: .infinity, alignment:
-                        .trailing)
-                .padding(.trailing, 8)
-            }
+        
     }
     
     private var editReviewButton: some View {

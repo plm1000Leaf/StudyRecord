@@ -240,96 +240,100 @@ extension DateReviewView {
                     ZStack{
                         RoundedRectangle(cornerRadius: 8)
                             .fill(backgroundColor)
-                            .frame(width: 248, height: 288)
+                            .frame(width: 248, height: 376)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(frameColor, lineWidth: 4)
                             )
                     }
                     VStack{
-                        HStack{
-                            if let material = record(for: index).material {
-                                if let image = materialImages[index] {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .frame(width: 88, height: 120)
-                                } else {
-                                    ZStack {
-                                        Rectangle()
+                        ZStack{
+                            HStack(spacing: 16){
+                                if let material = record(for: index).material {
+                                    if let image = materialImages[index] {
+                                        Image(uiImage: image)
+                                            .resizable()
                                             .frame(width: 88, height: 120)
-                                            .foregroundColor(.gray.opacity(0.3))
-                                        VStack(spacing: 8) {
-                                            Image(systemName: "photo")
-                                                .frame(width: 16)
-                                                .foregroundColor(.gray10)
-                                            Text("No Image")
+                                    } else {
+                                        ZStack {
+                                            Rectangle()
+                                                .frame(width: 88, height: 120)
+                                                .foregroundColor(.gray.opacity(0.3))
+                                            VStack(spacing: 8) {
+                                                Image(systemName: "photo")
+                                                    .frame(width: 16)
+                                                    .foregroundColor(.gray10)
+                                                Text("No Image")
+                                            }
                                         }
                                     }
+                                } else {
+                                    ZStack{
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .foregroundColor(notSetPictureColor)
+                                            .frame(width: 88, height:  120)
+                                        Text("未設定")
+                                            .bold()
+                                            .font(.system(size: 16))
+                                            .foregroundColor(.baseColor20)
+                                    }
+                                    
                                 }
-                        } else {
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 8)
-                                    .foregroundColor(notSetPictureColor)
-                                    .frame(width: 88, height:  120)
-                                Text("未設定")
-                                    .bold()
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.baseColor20)
+                                //ページ数表示
+                                VStack(spacing: 8){
+                                    Text(materialNames[index] ?? record(for: index).material?.name ?? "教材未設定")
+                                        .bold()
+                                        .font(.system(size: 20))
+                                        .frame(width: 104)
+                                        .foregroundColor(.gray0)
+                                    
+                                    HStack{
+                                        Text(startPageText)
+                                            .font(.system(size: 16))
+                                            .frame(width: 56, height: 16)
+                                        Text(startUnitText)
+                                            .font(.system(size: 16))
+                                    }
+                                    .padding(.trailing, 18)
+                                    Text("〜")
+                                        .font(.system(size: 16))
+                                        .bold()
+                                        .rotationEffect(.degrees(90))
+                                    HStack{
+                                        Text(endPageText)
+                                            .font(.system(size: 16))
+                                            .frame(width: 56, height: 20)
+                                        Text(endUnitText)
+                                            .font(.system(size: 16))
+                                    }
+                                    .padding(.trailing, 18)
+                                    
+                                }
+                                .foregroundColor(.gray0)
                             }
-
-                        }
+                            .padding(.bottom, 200)
                             
-                            VStack(spacing: 8){
-                                Text(materialNames[index] ?? record(for: index).material?.name ?? "教材未設定")
-                                    .bold()
-                                    .font(.system(size: 16))
-                                    .frame(width: 104)
-                                    .foregroundColor(.gray0)
-                                
-                                HStack{
-                                    Text(startPageText)
-                                        .font(.system(size: 8))
-                                        .frame(width: 56, height: 16)
-                                    Text(startUnitText)
-                                        .font(.system(size: 12))
-                                }
-                                Text("〜")
-                                    .font(.system(size: 16))
-                                    .bold()
-                                    .rotationEffect(.degrees(90))
-                                HStack{
-                                    Text(endPageText)
-                                        .font(.system(size: 8))
-                                        .frame(width: 56, height: 20)
-                                    Text(endUnitText)
-                                        .font(.system(size: 12))
-                                }
-                                
-                            }
-                            .foregroundColor(.gray0)
-                        }
-                        .padding(.top, 24)
-                        
-                        
-                        InputReviewField(
-                            dailyRecord: record(for: index),
-                            reviewText: Binding(
-                                get: { reviews[index] ?? (record(for: index).review ?? "") },
-                                set: { reviews[index] = $0 }
-                            ), isChecked: isChecked
-                        )
-                        .onAppear {
-                            let dailyRecord = record(for: index)
-                            materialNames[index] = record(for: index).material?.name ?? "教材未設定"
                             
-                            if let data = dailyRecord.material?.imageData,
-                               let uiImage = UIImage(data: data) {
-                                materialImages[index] = uiImage
-                            } else {
-                                materialImages[index] = nil
+                            InputReviewField(
+                                dailyRecord: record(for: index),
+                                reviewText: Binding(
+                                    get: { reviews[index] ?? (record(for: index).review ?? "") },
+                                    set: { reviews[index] = $0 }
+                                ), isChecked: isChecked
+                            )
+                            .padding(.top, 168)
+                            .onAppear {
+                                let dailyRecord = record(for: index)
+                                materialNames[index] = record(for: index).material?.name ?? "教材未設定"
+                                
+                                if let data = dailyRecord.material?.imageData,
+                                   let uiImage = UIImage(data: data) {
+                                    materialImages[index] = uiImage
+                                } else {
+                                    materialImages[index] = nil
+                                }
                             }
                         }
-
                     }
                 }
             }
