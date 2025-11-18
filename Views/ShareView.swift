@@ -54,34 +54,24 @@ extension ShareView{
     private var screenShot: some View {
         Group {
             if fromAfterCheck {
-                VStack(spacing: 8) {
+                VStack(spacing: 16) {
                     HStack{
                         Image(systemName:"book")
                             .font(.system(size: 24))
                             .foregroundColor(.white)
-                        Text("今日の教材")
+                        Text("教材")
                             .font(.system(size: 32))
                             .foregroundColor(.white)
                     }
+
+                    
                     Text(materialText ?? "")
-                        .font(.system(size: 32))
+                        .font(.system(size: 48))
                         .foregroundColor(.white)
                     
                     Spacer()
-                        .frame(height:32)
-                    HStack{
-                        Image(systemName:"calendar")
-                            .font(.system(size: 24))
-                            .foregroundColor(.white)
-                        Text("今月の学習回数")
-                            .font(.system(size: 32))
-                            .foregroundColor(.white)
-                        }
-                    Text(monthlySummary ?? "")
-                        .font(.system(size: 32))
-                        .foregroundColor(.white)
-                    Spacer()
-                        .frame(height:32)
+                        .frame(height:24)
+                    
                     if let days = continuationDays {
                         HStack{
                             Image(systemName:"leaf")
@@ -91,9 +81,13 @@ extension ShareView{
                                 .font(.system(size: 32))
                                 .foregroundColor(.white)
                             }
+
+                        
                         Text("\(days)日")
-                            .font(.system(size: 32))
+                            .font(.system(size: 48))
                             .foregroundColor(.white)
+                            .padding(.leading, 8)
+
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
