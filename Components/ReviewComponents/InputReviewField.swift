@@ -40,11 +40,11 @@ extension InputReviewField {
                     .frame(width: 208, height: 104)
                     .cornerRadius(8)
                     .foregroundColor(isChecked ? .mainColor10 : .notCheckedColor10)
-                Text(reviewText.isEmpty ? "振り返りを入力" : reviewText)
+                Text(reviewText.isEmpty ? "振り返りをタップで入力" : reviewText)
                     .frame(width: 200, height: 104)
                     .multilineTextAlignment(.leading)
-                    .lineLimit(nil) // 改行を有効化
-//                    .padding(.leading, 8)
+                    .lineLimit(nil)
+                    .foregroundColor(isChecked ?  .baseColor20: .baseColor20)
                 
             }
             .padding(.bottom, 40)
