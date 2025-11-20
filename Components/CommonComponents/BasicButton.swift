@@ -31,7 +31,7 @@ struct BasicButton: View {
                 Text(label)
                     .font(.system(size:fontSize ?? 16))
             }
-            .frame(width: width, height: height)
+            .frame(width:width, height: height)
             .padding(.vertical, height == nil ? 8 : 0)
             .fontWeight(.bold)
             .foregroundStyle(.white)

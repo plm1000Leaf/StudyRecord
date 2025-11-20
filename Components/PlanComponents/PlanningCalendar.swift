@@ -59,7 +59,7 @@ struct PlanningCalendar: View {
             
             VStack {
                 Spacer()
-                moveButton
+                moveMonthButton
                     .padding(.horizontal)
             }
         }
@@ -219,7 +219,7 @@ extension PlanningCalendar {
             .foregroundColor(.black)
         }
     }
-        private var moveButton: some View {
+        private var moveMonthButton: some View {
             HStack {
                 Button(action: {
                     currentMonth = CalendarUtils.changeMonth(currentMonth: currentMonth, by: -1)

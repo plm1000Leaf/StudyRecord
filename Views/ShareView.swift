@@ -42,7 +42,7 @@ struct ShareView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 screenShot
-                shareButton
+                openExternalShareButton
             }
         
         }
@@ -105,7 +105,7 @@ extension ShareView{
         .frame(width:312,height:400)
     }
     
-    private var shareButton: some View {
+    private var openExternalShareButton: some View {
         HStack(spacing: 24){
             Button(action: shareToX) {
                 

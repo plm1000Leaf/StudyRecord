@@ -58,7 +58,7 @@ extension MaterialSectionView {
             }
             
             if isEditingMode {
-                labelActionButton
+                actionLabelButton
             }
             Spacer()
         }
@@ -92,7 +92,7 @@ extension MaterialSectionView {
             }
     }
     
-    private var labelActionButton: some View {
+    private var actionLabelButton: some View {
         Button(action: {
             if isEditingLabel {
                 deleteLabel()

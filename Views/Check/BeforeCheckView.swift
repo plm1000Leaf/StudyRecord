@@ -87,7 +87,7 @@ extension BeforeCheckView {
                 checkViewTitle
                 studyMaterial
                 todayStudyPlanSetting
-                checkButton
+                checkStudyRecordButton
                 
             }
             .padding(.horizontal, 20)
@@ -207,7 +207,7 @@ extension BeforeCheckView {
     }
     
     
-    private var checkButton: some View {
+    private var checkStudyRecordButton: some View {
         
         BasicButton(label: "Done", icon: "checkmark", width: 288, height: 80,fontSize: 48,imageSize: 32){
             recordService.updateIsChecked(true, context: viewContext)

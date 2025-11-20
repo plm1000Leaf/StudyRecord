@@ -191,13 +191,13 @@ extension MaterialCardView {
         VStack {
             HStack {
                 Spacer()
-                editActionButton
+                actionMaterialButton
             }
             Spacer()
         }
     }
     
-    private var editActionButton: some View {
+    private var actionMaterialButton: some View {
         Button(action: {
             if isEditingMaterial {
                 showDeleteAlert = true

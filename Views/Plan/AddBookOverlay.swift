@@ -71,7 +71,7 @@ extension AddBookOverlay {
             if let image = selectedImage {
                 selectedImageView(image)
             } else {
-                photoPickerButton
+                openCameraRollButton
             }
         }
 
@@ -102,7 +102,7 @@ extension AddBookOverlay {
         }
     }
 
-    private var photoPickerButton: some View {
+    private var openCameraRollButton: some View {
         PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
@@ -128,7 +128,7 @@ extension AddBookOverlay {
             }
             .padding(.top, 16)
             .padding(.leading, 64)
-            registerButton
+            registerMaterialButton
         }
     }
     
@@ -168,7 +168,7 @@ extension AddBookOverlay {
         }
     }
     
-    private var registerButton: some View {
+    private var registerMaterialButton: some View {
         BasicButton(label: "登録", width: 56, height: 40) {
             saveNewMaterial()
         }
