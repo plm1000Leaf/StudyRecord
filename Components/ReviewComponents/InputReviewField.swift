@@ -47,8 +47,8 @@ extension InputReviewField {
                     .foregroundColor(isChecked ?  .baseColor20: .baseColor20)
                 
             }
-            .padding(.bottom, 40)
         }
+        .padding(.bottom, 40)
     }
     
     private var editReviewField: some View {
