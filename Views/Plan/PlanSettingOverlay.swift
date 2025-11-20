@@ -36,6 +36,9 @@ struct PlanSettingOverlay: View {
         ZStack {
             Color.black.opacity(0.5)
                 .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    onClose()
+                }
             
             windowBase
             
