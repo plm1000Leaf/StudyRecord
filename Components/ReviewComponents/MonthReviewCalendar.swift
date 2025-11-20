@@ -121,14 +121,13 @@ extension MonthReviewCalendar {
                 .alignmentGuide(.bottom) { d in d[.firstTextBaseline] }
                 .font(.system(size: 48))
                 .padding(.leading, 8)
+            Spacer()
             Button(action: {
                 onShareTapped?()
                 continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
             }){
                 Image(systemName: "square.and.arrow.up")
-                    .font(.system(size: 24))
-                    .frame(maxWidth: .infinity, alignment:
-                            .trailing)
+                    .font(.system(size: 32))
                     .padding(.trailing, 28)
             }
         }

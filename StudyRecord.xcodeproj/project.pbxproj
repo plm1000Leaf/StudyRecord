@@ -292,10 +292,10 @@
 		2875E9E42E0415C000D9B0FC /* Review */ = {
 			isa = PBXGroup;
 			children = (
-				2875E9E52E0415C000D9B0FC /* DateReviewView.swift */,
 				2875E9E62E0415C000D9B0FC /* YearReviewView.swift */,
 				2875E9E72E0415C000D9B0FC /* YearReviewGraphView.swift */,
 				2875E9E82E0415C000D9B0FC /* MonthReviewView.swift */,
+				2875E9E52E0415C000D9B0FC /* DateReviewView.swift */,
 			);
 			path = Review;
 			sourceTree = "<group>";

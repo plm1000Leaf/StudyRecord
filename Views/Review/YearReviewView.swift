@@ -144,9 +144,7 @@ extension YearReviewView {
                 isTapShareButton = true
             }){
                     Image(systemName: "square.and.arrow.up")
-                        .font(.system(size: 24))
-                        .frame(maxWidth: .infinity, alignment:
-                                .trailing)
+                        .font(.system(size: 32))
                         .foregroundColor(.mainColor0)
                 }
             

@@ -103,13 +103,16 @@ extension AfterCheckView {
     }
     
     private var openShareScreenButton: some View {
-        Button(action: {
-            prepareShareTexts()
-            isTapShareButton = true
-        }) {
-            Image(systemName: "square.and.arrow.up")
-                .font(.system(size: 40))
-                .frame(maxWidth: .infinity, alignment: .trailing)
+        
+        HStack{
+            Spacer()
+            Button(action: {
+                prepareShareTexts()
+                isTapShareButton = true
+            }) {
+                Image(systemName: "square.and.arrow.up")
+                    .font(.system(size: 40))
+            }
         }
     }
     
@@ -119,7 +122,6 @@ extension AfterCheckView {
         }) {
             Image(systemName: "return")
                 .font(.system(size: 32))
-                .frame(maxWidth: .infinity, alignment: .trailing)
         }
     }
     
