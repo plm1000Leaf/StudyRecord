@@ -169,8 +169,10 @@ extension AddBookOverlay {
     }
     
     private var registerMaterialButton: some View {
-        BasicButton(label: "登録", width: 56, height: 40) {
+        Button(action: {
             saveNewMaterial()
+        }) {
+            BasicButton(label: "登録", width: 56, height: 40)
         }
         .padding(.top, 90)
         .padding(.trailing, 48)

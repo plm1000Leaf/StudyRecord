@@ -209,10 +209,12 @@ extension BeforeCheckView {
     
     private var checkStudyRecordButton: some View {
         
-        BasicButton(label: "Done", icon: "checkmark", width: 288, height: 80,fontSize: 48,imageSize: 32){
+        Button(action: {
             recordService.updateIsChecked(true, context: viewContext)
             isDoneStudyState = true
             print("Doneボタンが押されました")
+        }){
+            BasicButton(label: "Done", icon: "checkmark", width: 288, height: 80,fontSize: 48,imageSize: 32)
         }
         .disabled(isDoneStudyState || !isToday)
         .padding(.top, -16)

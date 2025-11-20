@@ -15,8 +15,10 @@ struct TimeSelectButton: View {
     var body: some View {
         VStack {
             if !confirmedTime && !recordService.hasScheduledTime() {
-                BasicButton(label: "時間を設定",colorOpacity: 0.5, width: 104, height: 56) {
+                Button(action: {
                     showPicker = true
+                }){
+                    BasicButton(label: "時間を設定",colorOpacity: 0.5, width: 104, height: 56)
                 }
                 .padding(.leading, -16)
             } else {

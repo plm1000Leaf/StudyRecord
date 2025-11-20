@@ -77,11 +77,13 @@ extension InputStudyRange {
 
         if !isInputting && text.isEmpty {
             return AnyView(
-                BasicButton(label:"学習範囲を入力", colorOpacity: 0.5, width: 80, height: 64) {
+                Button(action: {
                     isInputting = true
+                }){
+                    BasicButton(label:"学習範囲を入力", colorOpacity: 0.5, width: 80, height: 64)
                 }
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
                             .stroke(
                                 style: StrokeStyle(lineWidth: 2, dash: [5, 4])
                             )

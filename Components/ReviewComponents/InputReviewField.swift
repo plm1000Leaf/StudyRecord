@@ -47,8 +47,8 @@ extension InputReviewField {
                     .foregroundColor(isChecked ?  .baseColor20: .baseColor20)
                 
             }
-            .padding(.bottom, 40)
         }
+        .padding(.bottom, 40)
     }
     
     private var editReviewField: some View {
@@ -67,11 +67,12 @@ extension InputReviewField {
     
     private var editReviewButton: some View {
         HStack {
-            BasicButton(label: "確定", width: 56, height: 32) {
+            Button(action: {
                 DailyRecordManager.shared.updateReview(reviewText, for: dailyRecord, context: viewContext)
                 isEditing = false
+            }) {
+                BasicButton(label: "確定", width: 56, height: 32)
             }
-
         }
         .padding(.leading, 144)
     }

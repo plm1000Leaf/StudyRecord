@@ -36,6 +36,9 @@ struct PlanSettingOverlay: View {
         ZStack {
             Color.black.opacity(0.5)
                 .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    onClose()
+                }
             
             windowBase
             
@@ -45,14 +48,14 @@ struct PlanSettingOverlay: View {
                     inputScheduledTime
                 }
                 .padding(.top, 16)
-
                 
-                BasicButton(label: "決定", width: 128, height: 48, fontSize: 24) {
+                Button(action: {
                     print("決定ボタンが押されました - 日付: \(selectedDate)")
-                    
                     // データを保存した後に親に通知
                     onDataUpdate?()
                     onClose()
+                }){
+                    BasicButton(label: "決定", width: 128, height: 48, fontSize: 24)
                 }
                 .padding(.top, 16)
             }

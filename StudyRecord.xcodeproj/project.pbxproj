@@ -21,7 +21,6 @@
 		2875E9FF2E0415C100D9B0FC /* AddBookOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C12E0415C000D9B0FC /* AddBookOverlay.swift */; };
 		2875EA002E0415C100D9B0FC /* LabelSeparatedMaterials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C22E0415C000D9B0FC /* LabelSeparatedMaterials.swift */; };
 		2875EA012E0415C100D9B0FC /* MaterialCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C32E0415C000D9B0FC /* MaterialCard.swift */; };
-		2875EA032E0415C100D9B0FC /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C62E0415C000D9B0FC /* SwitchButton.swift */; };
 		2875EA042E0415C100D9B0FC /* YearReviewGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C72E0415C000D9B0FC /* YearReviewGraph.swift */; };
 		2875EA052E0415C100D9B0FC /* MonthReviewCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C82E0415C000D9B0FC /* MonthReviewCalendar.swift */; };
 		2875EA062E0415C100D9B0FC /* InputReviewField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C92E0415C000D9B0FC /* InputReviewField.swift */; };
@@ -94,7 +93,6 @@
 		2875E9C12E0415C000D9B0FC /* AddBookOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookOverlay.swift; sourceTree = "<group>"; };
 		2875E9C22E0415C000D9B0FC /* LabelSeparatedMaterials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelSeparatedMaterials.swift; sourceTree = "<group>"; };
 		2875E9C32E0415C000D9B0FC /* MaterialCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialCard.swift; sourceTree = "<group>"; };
-		2875E9C62E0415C000D9B0FC /* SwitchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
 		2875E9C72E0415C000D9B0FC /* YearReviewGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearReviewGraph.swift; sourceTree = "<group>"; };
 		2875E9C82E0415C000D9B0FC /* MonthReviewCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthReviewCalendar.swift; sourceTree = "<group>"; };
 		2875E9C92E0415C000D9B0FC /* InputReviewField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputReviewField.swift; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 		2875E9C52E0415C000D9B0FC /* ReviewComponents */ = {
 			isa = PBXGroup;
 			children = (
-				2875E9C62E0415C000D9B0FC /* SwitchButton.swift */,
 				2875E9C72E0415C000D9B0FC /* YearReviewGraph.swift */,
 				2875E9C82E0415C000D9B0FC /* MonthReviewCalendar.swift */,
 				2875E9C92E0415C000D9B0FC /* InputReviewField.swift */,
@@ -295,10 +292,10 @@
 		2875E9E42E0415C000D9B0FC /* Review */ = {
 			isa = PBXGroup;
 			children = (
-				2875E9E52E0415C000D9B0FC /* DateReviewView.swift */,
 				2875E9E62E0415C000D9B0FC /* YearReviewView.swift */,
 				2875E9E72E0415C000D9B0FC /* YearReviewGraphView.swift */,
 				2875E9E82E0415C000D9B0FC /* MonthReviewView.swift */,
+				2875E9E52E0415C000D9B0FC /* DateReviewView.swift */,
 			);
 			path = Review;
 			sourceTree = "<group>";
@@ -493,7 +490,6 @@
 				2875EA202E0415C100D9B0FC /* BeforeCheckView.swift in Sources */,
 				2875EA0D2E0415C100D9B0FC /* PullDown.swift in Sources */,
 				2875EA1D2E0415C100D9B0FC /* YearReviewView.swift in Sources */,
-				2875EA032E0415C100D9B0FC /* SwitchButton.swift in Sources */,
 				28893F7B2E13B2490084F807 /* ScreenshotHelper.swift in Sources */,
 				2875EA1C2E0415C100D9B0FC /* DateReviewView.swift in Sources */,
 				281E28C52E050149008A2981 /* SnapshotManager .swift in Sources */,
