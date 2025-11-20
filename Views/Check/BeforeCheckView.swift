@@ -95,7 +95,7 @@ extension BeforeCheckView {
             .background(Color.baseColor0)
         }
         .sheet(isPresented: $isTapBookSelect) {
-            BookSelectView { material in
+            BookSelectModal { material in
                 recordService.updateMaterial(material, context: viewContext)
             }
         }

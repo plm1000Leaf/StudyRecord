@@ -1,7 +1,7 @@
 import SwiftUI
 import CoreData
 
-struct BookSelectView: View {
+struct BookSelectModal: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) private var viewContext
     @State private var showAddBookOverlay = false
@@ -75,13 +75,13 @@ struct BookSelectView: View {
     }
 }
 
-extension BookSelectView {
+extension BookSelectModal {
     
     private var materialSections: some View {
         let groupedMaterials = Dictionary(grouping: materials) { $0.label ?? "未分類" }
         
         return ForEach(groupedMaterials.sorted(by: { $0.key < $1.key }), id: \.key) { label, items in
-            MaterialSectionView(
+            LabelSeparatedMaterials(
                 label: label,
                 materials: items,
                 isEditingMode: isEditingMode,

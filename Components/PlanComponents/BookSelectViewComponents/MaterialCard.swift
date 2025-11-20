@@ -8,7 +8,7 @@ import SwiftUI
 import PhotosUI
 import CoreData
 
-struct MaterialCardView: View {
+struct MaterialCard: View {
     let material: Material
     let isEditingMode: Bool
     let onMaterialSelect: ((Material) -> Void)?
@@ -56,7 +56,7 @@ struct MaterialCardView: View {
 }
 
 // MARK: - Image Components
-extension MaterialCardView {
+extension MaterialCard {
     
     private var materialImage: some View {
         Group {
@@ -153,7 +153,7 @@ extension MaterialCardView {
 }
 
 // MARK: - Name Components
-extension MaterialCardView {
+extension MaterialCard {
     
     private var materialName: some View {
         Group {
@@ -185,7 +185,7 @@ extension MaterialCardView {
 }
 
 // MARK: - Editing Overlay
-extension MaterialCardView {
+extension MaterialCard {
     
     private var editingOverlay: some View {
         VStack {
@@ -215,7 +215,7 @@ extension MaterialCardView {
 }
 
 // MARK: - Actions
-extension MaterialCardView {
+extension MaterialCard {
     
     private func selectMaterial() {
         onMaterialSelect?(material)

@@ -9,7 +9,7 @@ import SwiftUI
 import EventKit
 import Combine
 
-struct PlanSettingWindowView: View {
+struct PlanSettingOverlay: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.openURL) private var openURL
     
@@ -71,7 +71,7 @@ struct PlanSettingWindowView: View {
                 checkEventUpdate()
             }
             .sheet(isPresented: $isTapBookSelect) {
-                BookSelectView { material in
+                BookSelectModal { material in
                     recordService.updateMaterial(material, context: viewContext)
                     // 教材更新後に親に通知
                     onDataUpdate?()
