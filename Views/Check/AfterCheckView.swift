@@ -126,17 +126,22 @@ extension AfterCheckView {
 
     private var transitionScreenButton: some View {
         HStack(spacing: 56){
-            BasicButton(label: "振り返る", width: 144, height: 72, fontSize: 24){
+            
+            Button(action: {
                 selectedTabIndex = 0
                 navigateToReview = true
                 dismiss()
                 print("振り返るボタンが押されました")
+            }) {
+                BasicButton(label: "振り返る", width: 144, height: 72, fontSize: 24)
             }
-            
-            BasicButton(label: "明日の予定", width: 144, height: 72, fontSize: 24){
+
+            Button(action: {
                 selectedTabIndex = 2
                 navigateToPlan = true
                 dismiss()
+            }){
+                BasicButton(label: "明日の予定", width: 144, height: 72, fontSize: 24)
             }
         }
     }

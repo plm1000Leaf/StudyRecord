@@ -17,12 +17,9 @@ struct BasicButton: View {
     var fontSize: CGFloat? = nil
     var imageSize: CGFloat? = nil
     var cornerRadius: CGFloat = 8
-    let action: () -> Void
+//    let action: () -> Void
     
     var body: some View {
-        Button {
-            action()
-        } label: {
             HStack{
                 if let name = icon {
                     Image(systemName: name)
@@ -39,10 +36,8 @@ struct BasicButton: View {
             .cornerRadius(8)
         }
     }
-}
+
 
 #Preview {
-    BasicButton(label: "ボタン") {
-        print("ボタンがタップされました")
-    }
+    BasicButton(label: "ボタン")
 }
