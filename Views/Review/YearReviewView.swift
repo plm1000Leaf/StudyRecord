@@ -157,7 +157,7 @@ extension YearReviewView {
         .foregroundColor(.gray10)
     }
     
-    private var monthButton: some View {
+    private var                 moveSelectMonthButton: some View {
         ForEach(0..<4, id: \.self) { rowIndex in
             HStack(spacing: 16){
                 ForEach(0..<3, id: \.self) { columnIndex in
@@ -197,7 +197,7 @@ extension YearReviewView {
         VStack(spacing: 16) {
             VStack(spacing: 16) {
                 header
-                monthButton
+                                moveSelectMonthButton
             }
             SegmentedControlButton(selectedSegment: $selectedSegment)
                 .frame(width: 264, height: 56)

@@ -74,7 +74,7 @@ struct StudyPlanView: View {
                 }
  
                 if isTapDate, let selectedDate = selectedDate {
-                    PlanSettingWindowView(
+                    PlanSettingOverlay(
                         currentMonth: $currentMonth,
                         isOn: alarmBinding(for: selectedDate),
                         onClose: {

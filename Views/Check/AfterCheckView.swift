@@ -56,8 +56,8 @@ extension AfterCheckView {
             }
             studyDoneText
             continuationDaysView
-            shareButton
-            transitionButton
+            openShareScreenButton
+            transitionScreenButton
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -102,7 +102,7 @@ extension AfterCheckView {
         .padding(.bottom, -64)
     }
     
-    private var shareButton: some View {
+    private var openShareScreenButton: some View {
         Button(action: {
             prepareShareTexts()
             isTapShareButton = true
@@ -124,7 +124,7 @@ extension AfterCheckView {
     }
     
 
-    private var transitionButton: some View {
+    private var transitionScreenButton: some View {
         HStack(spacing: 56){
             BasicButton(label: "振り返る", width: 144, height: 72, fontSize: 24){
                 selectedTabIndex = 0

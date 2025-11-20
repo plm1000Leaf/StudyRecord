@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct MaterialSectionView: View {
+struct LabelSeparatedMaterials: View {
     let label: String
     let materials: [Material]
     let isEditingMode: Bool
@@ -47,7 +47,7 @@ struct MaterialSectionView: View {
 }
 
 // MARK: - Header Components
-extension MaterialSectionView {
+extension LabelSeparatedMaterials {
     
     private var sectionHeader: some View {
         HStack {
@@ -58,7 +58,7 @@ extension MaterialSectionView {
             }
             
             if isEditingMode {
-                labelActionButton
+                actionLabelButton
             }
             Spacer()
         }
@@ -92,7 +92,7 @@ extension MaterialSectionView {
             }
     }
     
-    private var labelActionButton: some View {
+    private var actionLabelButton: some View {
         Button(action: {
             if isEditingLabel {
                 deleteLabel()
@@ -111,7 +111,7 @@ extension MaterialSectionView {
     private var materialGrid: some View {
         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 32), count: 3), spacing: 24) {
             ForEach(materials) { material in
-                MaterialCardView(
+                MaterialCard(
                     material: material,
                     isEditingMode: isEditingMode,
                     onMaterialSelect: onMaterialSelect,
@@ -125,7 +125,7 @@ extension MaterialSectionView {
 }
 
 // MARK: - Label Edit Actions
-extension MaterialSectionView {
+extension LabelSeparatedMaterials {
     
     private func startLabelEdit() {
         editingLabelName = label
