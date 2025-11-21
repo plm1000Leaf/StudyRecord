@@ -26,7 +26,7 @@ struct LabelSeparatedMaterials: View {
     private let maxCharacters = 15
     
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 24){
             sectionHeader
             materialGrid
         }
@@ -111,14 +111,15 @@ extension LabelSeparatedMaterials {
     private var materialGrid: some View {
         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 32), count: 3), spacing: 24) {
             ForEach(materials) { material in
-                MaterialCard(
-                    material: material,
-                    isEditingMode: isEditingMode,
-                    onMaterialSelect: onMaterialSelect,
-                    onDismiss:  onDismiss,
-                    activeEditingLabel: $activeEditingLabel,
-                    activeEditingMaterialID: $activeEditingMaterialID
-                )
+                    MaterialCard(
+                        material: material,
+                        isEditingMode: isEditingMode,
+                        onMaterialSelect: onMaterialSelect,
+                        onDismiss:  onDismiss,
+                        activeEditingLabel: $activeEditingLabel,
+                        activeEditingMaterialID: $activeEditingMaterialID
+                    )
+                
             }
         }
     }

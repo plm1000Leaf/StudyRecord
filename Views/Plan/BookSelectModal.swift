@@ -99,7 +99,9 @@ extension BookSelectModal {
                 onMaterialSelect: onMaterialSelect,
                 onDismiss: { dismiss() }
             )
+            .padding(.bottom, 40)
         }
+        
     }
     
     private var navigationButtons: some View {
