@@ -166,18 +166,28 @@ extension MaterialCard {
     }
     
     private var nameEditField: some View {
-        TextField("教材名", text: $editingMaterialName)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            .frame(width: 96)
-            .multilineTextAlignment(.center)
-            .onSubmit {
-                saveMaterialEdit()
-            }
+
+        ZStack {
+            Rectangle()
+                .frame(width: 88, height: 72)
+                .foregroundColor(.white)
+            
+            CustomTextEditor(text: $editingMaterialName, maxCharacters: 35)
+                .frame(width: 72, height: 100)
+                .padding(.top, 26)
+                .multilineTextAlignment(.center)
+                .onSubmit {
+                    saveMaterialEdit()
+                }
+
+        }
+
     }
     
     private var nameDisplay: some View {
         Text(material.name ?? "")
             .font(.system(size: 16))
+            .padding(.top, 16)
             .frame(width: 72, height: 100, alignment: .center)
             .multilineTextAlignment(.center)
 //            .lineLimit(2)
