@@ -24,7 +24,7 @@ struct MaterialCard: View {
     
     var body: some View {
         ZStack(alignment: .topLeading){
-            VStack {
+            VStack(spacing: -8){
                 materialImage
                 materialName
                     .padding(.top, -16)
@@ -34,6 +34,7 @@ struct MaterialCard: View {
                 editingOverlay
             }
         }
+        .frame(height: 250, alignment: .top)
         .onChange(of: selectedPhotoItem) { newItem in
             updateMaterialImage(newItem)
         }
