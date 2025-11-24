@@ -124,7 +124,7 @@ struct PlanSettingOverlay: View {
                 // 教材表示部分 - 固定サイズのコンテナ
                 materialDisplayContainer
                 
-                VStack(spacing: 16) {
+                VStack(spacing: 24) {
                     HStack(spacing: -8) {
                         // 開始ページ
                         InputStudyRange(
@@ -132,7 +132,7 @@ struct PlanSettingOverlay: View {
                             type: .start,
                             placeholder: "ページ数",
                             width: 80,
-                            height: 24
+                            height: 40
                         )
                         PullDown(selectedItem: $selectedUnit, recordService: recordService)
                     }
@@ -147,7 +147,7 @@ struct PlanSettingOverlay: View {
                             type: .end,
                             placeholder: "ページ数",
                             width: 80,
-                            height: 24
+                            height: 40
                         )
                         PullDown(selectedItem: $selectedUnit, recordService: recordService)
                     }

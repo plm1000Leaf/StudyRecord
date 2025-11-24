@@ -31,7 +31,10 @@ struct InputStudyRange: View {
 
 extension InputStudyRange {
     private var inputStudyRange: some View {
-        TextField(placeholder, text: $text,onCommit: {
+        let baseWidth = width ?? 80
+        let baseHeight = height ?? 80
+
+        return TextField(placeholder, text: $text,onCommit: {
             isInputting = false
             commitChanges()
         })
@@ -48,7 +51,7 @@ extension InputStudyRange {
                     .stroke(Color.mainColor0, lineWidth: 1)
             )
             .padding(.horizontal)
-            .frame(width: width, height: height)
+            .frame(width: baseWidth, height: baseHeight)
             .padding(.vertical, height == nil ? 8 : 0)
     }
     
@@ -72,15 +75,17 @@ extension InputStudyRange {
     }
     
     private var displayStudyRange: some View {
-        let textFrameHeightSize = max(40, min(text.count * 6, 60))
-        let textFrameWidthSize = max(50, min(text.count * 9, 90))
+        let baseWidth = width ?? 40
+        let baseHeight = height ?? 40
+        let textFrameHeightSize = max(Int(baseHeight), min(text.count * 6, 60))
+        let textFrameWidthSize = max(Int(baseWidth * 0.625), min(text.count * 9, 90))
 
         if !isInputting && text.isEmpty {
             return AnyView(
                 Button(action: {
                     isInputting = true
                 }){
-                    BasicButton(label:"学習範囲を入力", colorOpacity: 0.5, width: 80, height: 64)
+                    BasicButton(label:"学習範囲を入力", colorOpacity: 0.5, width: baseWidth, height: baseHeight)
                 }
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
@@ -96,15 +101,15 @@ extension InputStudyRange {
                     isInputting = true
                 }) {
                     Text(text)
-                        .frame(width: 80, height: 80)
+                        .frame(width: baseWidth, height: baseHeight)
                         .foregroundColor(.black)
                 }
-                .frame(width: width, height: height)
+                .frame(width: baseWidth, height: baseHeight)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color.mainColor0, lineWidth: 1)
-                        .frame(width: CGFloat(textFrameWidthSize),
-                               height: CGFloat(textFrameHeightSize))
+                        .frame(width: max(CGFloat(textFrameWidthSize), baseWidth),
+                               height: max(CGFloat(textFrameHeightSize), baseHeight))
                 )
             )
         }
