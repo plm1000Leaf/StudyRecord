@@ -80,7 +80,11 @@ extension BookSelectModal {
     private var materialSections: some View {
         let groupedMaterials = Dictionary(grouping: materials) { $0.label ?? "未分類" }
         
-        return ForEach(groupedMaterials.sorted(by: { $0.key < $1.key }), id: \.key) { label, items in
+        return ForEach(groupedMaterials.sorted(by: { lhs, rhs in
+            if lhs.key == "未分類" { return false }
+            if rhs.key == "未分類" { return true }
+            return lhs.key < rhs.key
+        }), id: \.key) { label, items in
             LabelSeparatedMaterials(
                 label: label,
                 materials: items,
