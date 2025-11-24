@@ -57,7 +57,7 @@ extension LabelSeparatedMaterials {
                 labelDisplay
             }
             
-            if isEditingMode {
+            if isEditingMode && label != "未分類"{
                 actionLabelButton
             }
             Spacer()
