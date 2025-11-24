@@ -27,6 +27,7 @@ struct MaterialCard: View {
             VStack(spacing: -8){
                 materialImage
                 materialName
+                    .padding(.top, -16)
             }
             
             if isEditingMode {
