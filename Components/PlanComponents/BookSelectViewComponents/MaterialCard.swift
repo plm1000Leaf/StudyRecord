@@ -158,7 +158,12 @@ extension MaterialCard {
     private var materialName: some View {
         Group {
             if isEditingMode && isEditingMaterial {
-                nameEditField
+                VStack{
+                    VStack{
+                        nameEditField
+                        confirmedMaterialNameButton
+                    }
+                }
             } else {
                 nameDisplay
             }
@@ -180,6 +185,15 @@ extension MaterialCard {
                     saveMaterialEdit()
                 }
 
+        }
+
+    }
+    
+    private var confirmedMaterialNameButton: some View {
+        Button(action: {
+            saveMaterialEdit()
+        }) {
+            BasicButton(label: "登録", width: 40, height: 40)
         }
 
     }
