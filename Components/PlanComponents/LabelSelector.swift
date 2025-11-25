@@ -13,19 +13,17 @@ struct LabelSelector: View {
     @State private var isDeleteLabel: Bool = false
     @State private var showDeleteAlert: Bool = false
     @State private var labelToDelete: String = ""
+
+    var onAddLabelTapped: () -> Void = {}
     
     @Binding var labels: [String]
     @Binding var selectedLabel: String
     
     private let maxLabelLength = 15
-
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            if isAddingNewLabel {
-                addLabelField
-            } else {
-                selectLabelField
-            }
+        VStack {
+            selectLabelField
         }
         .onAppear {
             // ラベル一覧を同期
@@ -45,66 +43,25 @@ struct LabelSelector: View {
 // MARK: - Private Views
 extension LabelSelector {
     
-    private var addLabelField: some View {
-        HStack(spacing: 8) {
-            TextField("ラベル名", text: $newLabel)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(width: 100)
-                .onChange(of: newLabel) { newValue in
-                    // 文字数制限
-                    if newValue.count > maxLabelLength {
-                        newLabel = String(newValue.prefix(maxLabelLength))
-                    }
-                }
-
-            Button(action: addNewLabel) {
-                Image(systemName: "checkmark.circle.fill")                    .foregroundColor(.blue)
-                    .font(.title3)
-            }
-            .disabled(newLabel.isEmpty || labels.contains(newLabel))
-
-            Button(action: cancelAddingLabel) {
-                Image(systemName: "xmark.circle.fill")
-                    .foregroundColor(.gray)
-                    .font(.title3)
-            }
-        }
-    }
     
     private var selectLabelField: some View {
         Menu {
             // 既存のラベル一覧
-            ForEach(labels.sorted(), id: \.self) { label in
+            ForEach(normalizedLabels, id: \.self) { label in
                 Button(label) {
                     selectedLabel = label
                 }
             }
             
-            // 「未分類」オプション（ラベルリストに含まれていない場合）
-            if !labels.contains("未分類") {
-                Button("未分類") {
-                    selectedLabel = "未分類"
-                }
-            }
 
             Divider()
 
             // ラベル追加ボタン
             Button(action: {
                 isAddingNewLabel = true
+                onAddLabelTapped()
             }) {
                 Label("ラベルを追加", systemImage: "plus")
-            }
-
-            // ラベル削除ボタン（選択中のラベルがある場合のみ）
-            if !selectedLabel.isEmpty && selectedLabel != "未分類" && labels.contains(selectedLabel) {
-                Button(action: {
-                    labelToDelete = selectedLabel
-                    showDeleteAlert = true
-                }) {
-                    Label("「\(selectedLabel)」を削除", systemImage: "trash")
-                        .foregroundColor(.red)
-                }
             }
 
         } label: {
@@ -132,6 +89,22 @@ extension LabelSelector {
 
 // MARK: - Private Methods
 extension LabelSelector {
+    
+    private var normalizedLabels: [String] {
+        Array(
+            Set(
+                labels
+                    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                    .filter { !$0.isEmpty && $0 != "未分類" }
+            )
+        )
+        .sorted()
+    }
+
+    private var containsUncategorized: Bool {
+        labels.contains { $0.trimmingCharacters(in: .whitespacesAndNewlines) == "未分類" }
+    }
+
     
     private func addNewLabel() {
         let trimmedLabel = newLabel.trimmingCharacters(in: .whitespacesAndNewlines)

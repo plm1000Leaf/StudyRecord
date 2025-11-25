@@ -73,10 +73,17 @@ extension MonthReviewView {
         }
         .background(
             GeometryReader { geo -> Color in
-                DispatchQueue.main.async { captureRect = geo.frame(in: .global) }
+                DispatchQueue.main.async {
+                    let frame = geo.frame(in: .global)
+
+                    let adjusted = frame.insetBy(dx: 1, dy: 20)
+
+                    captureRect = adjusted
+                }
                 return Color.clear
             }
         )
+
         .background(Color.baseColor0)
     }
     
