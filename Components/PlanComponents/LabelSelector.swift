@@ -47,18 +47,12 @@ extension LabelSelector {
     private var selectLabelField: some View {
         Menu {
             // 既存のラベル一覧
-            ForEach(labels.sorted(), id: \.self) { label in
+            ForEach(normalizedLabels, id: \.self) { label in
                 Button(label) {
                     selectedLabel = label
                 }
             }
             
-            // 「未分類」オプション（ラベルリストに含まれていない場合）
-            if !labels.contains("未分類") {
-                Button("未分類") {
-                    selectedLabel = "未分類"
-                }
-            }
 
             Divider()
 
@@ -95,6 +89,22 @@ extension LabelSelector {
 
 // MARK: - Private Methods
 extension LabelSelector {
+    
+    private var normalizedLabels: [String] {
+        Array(
+            Set(
+                labels
+                    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                    .filter { !$0.isEmpty && $0 != "未分類" }
+            )
+        )
+        .sorted()
+    }
+
+    private var containsUncategorized: Bool {
+        labels.contains { $0.trimmingCharacters(in: .whitespacesAndNewlines) == "未分類" }
+    }
+
     
     private func addNewLabel() {
         let trimmedLabel = newLabel.trimmingCharacters(in: .whitespacesAndNewlines)
