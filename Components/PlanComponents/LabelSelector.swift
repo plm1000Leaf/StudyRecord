@@ -14,6 +14,7 @@ struct LabelSelector: View {
     @State private var showDeleteAlert: Bool = false
     @State private var labelToDelete: String = ""
 
+    var onAddLabelTapped: () -> Void = {}
     
     @Binding var labels: [String]
     @Binding var selectedLabel: String
@@ -93,6 +94,7 @@ extension LabelSelector {
             // ラベル追加ボタン
             Button(action: {
                 isAddingNewLabel = true
+                onAddLabelTapped()
             }) {
                 Label("ラベルを追加", systemImage: "plus")
             }

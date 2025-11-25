@@ -7,12 +7,29 @@
 
 import SwiftUI
 
-struct LabelAddModal {
+struct LabelAddModal: View{
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            addLabelArea
+        }
     }
 }
 
+extension LabelAddModal {
+
+    
+    private var addLabelArea: some View {
+        HStack(spacing: 16){
+            Rectangle()
+                .frame(width: 256,height: 48)
+            Circle()
+                .frame(width: 40)
+        }
+    }
+}
+    
+
+
 #Preview {
-    LabelAddModal() as! any View
+    LabelAddModal()
 }

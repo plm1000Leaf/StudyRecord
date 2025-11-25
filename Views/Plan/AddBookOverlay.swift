@@ -15,6 +15,7 @@ struct AddBookOverlay: View {
     @State private var selectedImage: UIImage?
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var canRegister = false
+    @State private var isLabelAddModalPresented = false
     @Binding var labelList: [String]
     @Binding var isShowing: Bool
     
@@ -61,9 +62,11 @@ struct AddBookOverlay: View {
             }
             
         }
-//        .sheet(isPresented: $tapLabelSelectButton) {
-//            LabelAddModal()
-//            }
+        .sheet(isPresented: $isLabelAddModalPresented) {
+            LabelAddModal()
+              .presentationDetents([.fraction(0.15)])
+          }
+        
         }
     }
 
@@ -138,26 +141,24 @@ extension AddBookOverlay {
     }
     
     private var labelSelector: some View {
-        Button(action: {
-            saveNewMaterial()
-        }) {
         LabelSelector(
+            onAddLabelTapped: {
+                isLabelAddModalPresented = true
+            },
             labels: Binding(
                 get: { labelList },
                 set: { newLabels in
                     labelList = newLabels
-                    // 他のViewとの同期を保つ
                     LabelStorage.save(newLabels)
                 }
             ),
             selectedLabel: $selectedLabel
         )
         .onChange(of: labelList) { _ in
-            // ラベルリストが変更された時の処理
             validateSelectedLabel()
         }
-        }
     }
+
 
 
     
