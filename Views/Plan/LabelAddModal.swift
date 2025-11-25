@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct LabelAddModal: View{
+    @Environment(\.dismiss) private var dismiss
     @State private var newLabel: String = ""
     @State private var isAddingNewLabel: Bool = false
     @Binding var labels: [String]
     @Binding var selectedLabel: String
     
-//    var dismiss:() -> Void
     private let maxLabelLength = 15
     var body: some View {
         VStack{
@@ -36,13 +36,16 @@ extension LabelAddModal {
                         newLabel = String(newValue.prefix(maxLabelLength))
                     }
                 }
-            Button(
-                action: addNewLabel
-            ) {
-                Image(systemName: "checkmark.circle.fill")                    .foregroundColor(.blue)
+            Button {
+                addNewLabel()
+                dismiss()
+            } label: {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.blue)
                     .font(.system(size: 40))
             }
             .disabled(newLabel.isEmpty || labels.contains(newLabel))
+        
         }
     }
     

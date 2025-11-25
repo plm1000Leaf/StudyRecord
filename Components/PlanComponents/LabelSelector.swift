@@ -22,12 +22,8 @@ struct LabelSelector: View {
     private let maxLabelLength = 15
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            if isAddingNewLabel {
-                addLabelField
-            } else {
-                selectLabelField
-            }
+        VStack {
+            selectLabelField
         }
         .onAppear {
             // ラベル一覧を同期
@@ -47,31 +43,6 @@ struct LabelSelector: View {
 // MARK: - Private Views
 extension LabelSelector {
     
-    private var addLabelField: some View {
-        HStack(spacing: 8) {
-            TextField("ラベル名", text: $newLabel)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(width: 100)
-                .onChange(of: newLabel) { newValue in
-                    // 文字数制限
-                    if newValue.count > maxLabelLength {
-                        newLabel = String(newValue.prefix(maxLabelLength))
-                    }
-                }
-
-            Button(action: addNewLabel) {
-                Image(systemName: "checkmark.circle.fill")                    .foregroundColor(.blue)
-                    .font(.title3)
-            }
-            .disabled(newLabel.isEmpty || labels.contains(newLabel))
-
-            Button(action: cancelAddingLabel) {
-                Image(systemName: "xmark.circle.fill")
-                    .foregroundColor(.gray)
-                    .font(.title3)
-            }
-        }
-    }
     
     private var selectLabelField: some View {
         Menu {
