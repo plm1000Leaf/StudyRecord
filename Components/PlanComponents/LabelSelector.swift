@@ -13,12 +13,13 @@ struct LabelSelector: View {
     @State private var isDeleteLabel: Bool = false
     @State private var showDeleteAlert: Bool = false
     @State private var labelToDelete: String = ""
+
     
     @Binding var labels: [String]
     @Binding var selectedLabel: String
     
     private let maxLabelLength = 15
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             if isAddingNewLabel {

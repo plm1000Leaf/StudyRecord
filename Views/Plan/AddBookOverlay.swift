@@ -17,7 +17,6 @@ struct AddBookOverlay: View {
     @State private var canRegister = false
     @Binding var labelList: [String]
     @Binding var isShowing: Bool
-
     
     let onDismiss: () -> Void
     
@@ -62,8 +61,12 @@ struct AddBookOverlay: View {
             }
             
         }
+//        .sheet(isPresented: $tapLabelSelectButton) {
+//            LabelAddModal()
+//            }
+        }
     }
-}
+
 
 // MARK: - Image Selector Components
 extension AddBookOverlay {
@@ -135,6 +138,9 @@ extension AddBookOverlay {
     }
     
     private var labelSelector: some View {
+        Button(action: {
+            saveNewMaterial()
+        }) {
         LabelSelector(
             labels: Binding(
                 get: { labelList },
@@ -150,7 +156,10 @@ extension AddBookOverlay {
             // ラベルリストが変更された時の処理
             validateSelectedLabel()
         }
+        }
     }
+
+
     
     private var nameInputField: some View {
         ZStack {
