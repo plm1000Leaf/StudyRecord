@@ -14,8 +14,10 @@ struct AddBookOverlay: View {
     @State private var selectedLabel = ""
     @State private var selectedImage: UIImage?
     @State private var selectedPhotoItem: PhotosPickerItem?
+    @State private var canRegister = false
     @Binding var labelList: [String]
     @Binding var isShowing: Bool
+
     
     let onDismiss: () -> Void
     
@@ -164,7 +166,10 @@ extension AddBookOverlay {
                     if newValue.count > maxCharacters {
                         bookName = String(newValue.prefix(maxCharacters))
                     }
+                    let trimmed = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
+                    canRegister = !trimmed.isEmpty
                 }
+
         }
     }
     
@@ -172,12 +177,17 @@ extension AddBookOverlay {
         Button(action: {
             saveNewMaterial()
         }) {
-            BasicButton(label: "登録", width: 56, height: 40)
+            BasicButton(
+                label: "登録",
+                color:canRegister ? nil : .gray, 
+                width: 56,
+                height: 40
+            )
         }
         .padding(.top, 90)
         .padding(.trailing, 48)
         .frame(maxWidth: .infinity, alignment: .trailing)
-        .disabled(bookName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+        .disabled(!canRegister)
     }
 }
 
