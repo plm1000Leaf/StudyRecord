@@ -66,14 +66,24 @@ extension InputReviewField {
     }
     
     private var editReviewButton: some View {
-        HStack {
-            Button(action: {
-                DailyRecordManager.shared.updateReview(reviewText, for: dailyRecord, context: viewContext)
-                isEditing = false
-            }) {
-                BasicButton(label: "確定", width: 56, height: 32)
+
+
+            HStack {
+                
+                Button(action: {
+                    DailyRecordManager.shared.updateReview(reviewText, for: dailyRecord, context: viewContext)
+                    isEditing = false
+                }) {
+                    ZStack{
+                        Rectangle()
+                            .frame(width: 400, height: 40)
+                            .cornerRadius(8)
+                            .opacity(0.0)
+                        BasicButton(label: "確定", width: 56, height: 32)
+                    }
+                }
             }
+            .padding(.leading, 144)
+            
         }
-        .padding(.leading, 144)
-    }
 }
