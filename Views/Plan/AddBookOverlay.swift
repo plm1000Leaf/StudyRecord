@@ -63,7 +63,7 @@ struct AddBookOverlay: View {
             
         }
         .sheet(isPresented: $isLabelAddModalPresented) {
-            LabelAddModal()
+            LabelAddModal(labels: $labelList, selectedLabel: $selectedLabel)
               .presentationDetents([.fraction(0.15)])
           }
         
