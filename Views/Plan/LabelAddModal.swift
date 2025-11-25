@@ -19,6 +19,11 @@ struct LabelAddModal: View{
         VStack{
             addLabelArea
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            Color(.mainColor0)
+                .ignoresSafeArea()
+        )
     }
 }
 
@@ -41,7 +46,7 @@ extension LabelAddModal {
                 dismiss()
             } label: {
                 Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(.blue)
+                    .foregroundColor(.baseColor10)
                     .font(.system(size: 40))
             }
             .disabled(newLabel.isEmpty || labels.contains(newLabel))
