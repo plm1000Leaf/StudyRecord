@@ -16,14 +16,19 @@ struct LabelAddModal: View{
     
     private let maxLabelLength = 15
     var body: some View {
-        VStack{
-            addLabelArea
+        ZStack{
+            Color.black.opacity(0.8)
+                .edgesIgnoringSafeArea(.all)
+
+            VStack{
+                addLabelArea
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                Color(.mainColor0)
+                    .ignoresSafeArea()
+            )
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            Color(.mainColor0)
-                .ignoresSafeArea()
-        )
     }
 }
 

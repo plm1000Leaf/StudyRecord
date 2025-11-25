@@ -70,17 +70,6 @@ extension LabelSelector {
                 Label("ラベルを追加", systemImage: "plus")
             }
 
-            // ラベル削除ボタン（選択中のラベルがある場合のみ）
-            if !selectedLabel.isEmpty && selectedLabel != "未分類" && labels.contains(selectedLabel) {
-                Button(action: {
-                    labelToDelete = selectedLabel
-                    showDeleteAlert = true
-                }) {
-                    Label("「\(selectedLabel)」を削除", systemImage: "trash")
-                        .foregroundColor(.red)
-                }
-            }
-
         } label: {
             HStack {
                 Text(selectedLabel.isEmpty ? "ラベルを選択" : selectedLabel)
