@@ -98,31 +98,27 @@ extension EditMaterialOverlay {
                 openCameraRollButton
             }
         }
-
+        
     }
     
     private func selectedImageView(_ image: UIImage) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.notCheckedColor20)
-                .frame(width: 144, height: 180)
-            
-            ZStack(alignment: .bottomTrailing) {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 128, height: 96)
-                    .cornerRadius(12)
+        PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.notCheckedColor20)
+                    .frame(width: 144, height: 180)
                 
-                PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
-                    Image(systemName: "pencil.circle.fill")
-                        .font(.system(size: 32))
-                        .foregroundColor(.blue)
-                        .background(Circle().fill(Color.white).frame(width: 37, height: 37))
-                        .offset(y: -8)
+                ZStack(alignment: .bottomTrailing) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 128, height: 96)
+                        .cornerRadius(12)
+                    
                 }
             }
-            .frame(width: 128, height: 96)
+            .overlay(editingImageOverlay)
+            
         }
     }
 
@@ -234,6 +230,19 @@ extension EditMaterialOverlay {
         .padding(.trailing, 48)
         .frame(maxWidth: .infinity, alignment: .trailing)
         .disabled(!canRegister)
+    }
+    
+    private var editingImageOverlay: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 8)
+                .foregroundColor(.black)
+                .opacity(0.3)
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.blue, lineWidth: 3)
+            Image(systemName: "photo.fill")
+                .frame(width: 32)
+                .foregroundColor(.white)
+        }
     }
 }
 
