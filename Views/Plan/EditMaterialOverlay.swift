@@ -139,7 +139,11 @@ extension EditMaterialOverlay {
             }
             .padding(.top, 16)
             .padding(.leading, 64)
-            registerMaterialButton
+            VStack{
+                deleteMaterialButton
+                registerMaterialButton
+            }
+            .padding(.top, 16)
         }
     }
     
@@ -185,19 +189,35 @@ extension EditMaterialOverlay {
 
         }
     }
-    
+   
     private var registerMaterialButton: some View {
         Button(action: {
             saveMaterialChanges()
         }) {
             BasicButton(
-                label: "登録",
+                label: "変更",
                 color:canRegister ? nil : .gray,
                 width: 56,
                 height: 40
             )
         }
-        .padding(.top, 90)
+        .padding(.top, 16)
+        .padding(.trailing, 48)
+        .frame(maxWidth: .infinity, alignment: .trailing)
+        .disabled(!canRegister)
+    }
+    
+    private var deleteMaterialButton: some View {
+        Button(action: {
+            saveMaterialChanges()
+        }) {
+            BasicButton(
+                label: "削除",
+                color: Color.accentColor1,
+                width: 56,
+                height: 40
+            )
+        }
         .padding(.trailing, 48)
         .frame(maxWidth: .infinity, alignment: .trailing)
         .disabled(!canRegister)
