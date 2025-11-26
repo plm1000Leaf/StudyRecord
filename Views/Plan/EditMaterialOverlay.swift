@@ -80,7 +80,7 @@ struct EditMaterialOverlay: View {
             }
             
         } message: {
-            Text("Doneボタンを押し間違えた場合\n取り消すことができます")
+            Text("\(bookName)を削除しますか?")
         }
         
         }
