@@ -24,6 +24,7 @@ struct MonthReviewView: View {
         ZStack {
             if !showDateReviewView {
                 monthView
+                    .zIndex(0)
                     .transition(.move(edge: .leading))
             } else {
                 DateReviewView(showDateReviewView: $showDateReviewView,
@@ -33,7 +34,8 @@ struct MonthReviewView: View {
                                isFromAfterCheck: false
                                
                 )
-                    .transition(.move(edge: .trailing))
+                .zIndex(1)
+                .transition(.move(edge: .trailing))
             }
 
             if isTapShareButton {

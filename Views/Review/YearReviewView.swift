@@ -37,25 +37,30 @@ struct YearReviewView: View {
                     selectedDateFromMonthReview: nil,
                     isFromAfterCheck: true  // AfterCheckViewからの遷移フラグ
                 )
-                    .transition(.move(edge: .trailing))
+                .zIndex(2)
+                .transition(.move(edge: .trailing))
             } else if !showMonthReviewView {
                 if showPopup {
                     yearView
+                        .zIndex(1)
                         .transition(.move(edge: .leading))
                 } else {
                     if selectedSegment == 0 {
                         yearView
+                            .zIndex(1)
                             .transition(.move(edge: .leading))
                     } else {
 
                         YearReviewGraphView(selectedSegment: $selectedSegment, selectedYear: $selectedYear)
+                            .zIndex(1)
                             .transition(.move(edge: .leading))
                     }
                 }
             } else {
                 MonthReviewView(showMonthReviewView:$showMonthReviewView, currentMonth: $currentMonth
                 )
-                    .transition(.move(edge: .trailing))
+                .zIndex(0)
+                .transition(.move(edge: .trailing))
             }
             if showPopup {
                 MovePeriodPopup(
