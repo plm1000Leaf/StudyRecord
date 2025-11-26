@@ -16,6 +16,7 @@ struct LabelSeparatedMaterials: View {
     @Binding var refreshID: UUID
     @Binding var activeEditingLabel: String?
     @Binding var activeEditingMaterialID: UUID?
+    let onMaterialEdit: (Material) -> Void
     let onMaterialSelect: ((Material) -> Void)?
     let onDismiss: () -> Void
     
@@ -114,6 +115,7 @@ extension LabelSeparatedMaterials {
                     MaterialCard(
                         material: material,
                         isEditingMode: isEditingMode,
+                        onMaterialEdit: onMaterialEdit,
                         onMaterialSelect: onMaterialSelect,
                         onDismiss:  onDismiss,
                         activeEditingLabel: $activeEditingLabel,

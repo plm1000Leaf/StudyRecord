@@ -5,10 +5,12 @@ struct BookSelectModal: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) private var viewContext
     @State private var showAddBookOverlay = false
+    @State private var showEditMaterialOverlay = false
     @State private var isEditingMode = false
     @State private var labelList: [String] = LabelStorage.load()
     @State private var refreshID = UUID()
     @State private var activeEditingLabel: String? = nil
+    @State private var materialToEdit: Material? = nil
     @State private var activeEditingMaterialID: UUID? = nil
     
     var onMaterialSelect: ((Material) -> Void)? = nil
@@ -51,6 +53,26 @@ struct BookSelectModal: View {
                         onDismiss: {
 
                             showAddBookOverlay = false
+                        }
+                    )
+                }
+ 
+
+                if showEditMaterialOverlay, let materialToEdit {
+                    EditMaterialOverlay(
+                        labelList: Binding(
+                            get: { labelList },
+                            set: { newLabels in
+                                labelList = newLabels
+                                LabelStorage.save(newLabels)
+                            }
+                        ),
+                        isShowing: $showEditMaterialOverlay,
+                        material: materialToEdit,
+                        onDismiss: {
+                            showEditMaterialOverlay = false
+//                            materialToEdit = nil
+                            activeEditingMaterialID = nil
                         }
                     )
                 }
@@ -100,6 +122,11 @@ extension BookSelectModal {
                 refreshID: $refreshID,
                 activeEditingLabel: $activeEditingLabel,
                 activeEditingMaterialID: $activeEditingMaterialID,
+                onMaterialEdit: { material in
+                    materialToEdit = material
+                    showEditMaterialOverlay = true
+                    activeEditingMaterialID = material.id
+                },
                 onMaterialSelect: onMaterialSelect,
                 onDismiss: { dismiss() }
             )

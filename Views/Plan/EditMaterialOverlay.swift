@@ -20,6 +20,7 @@ struct EditMaterialOverlay: View {
     @Binding var labelList: [String]
     @Binding var isShowing: Bool
     
+    let material: Material
     let onDismiss: () -> Void
     
     private let maxCharacters = 12
@@ -60,6 +61,7 @@ struct EditMaterialOverlay: View {
             .onAppear {
                 // ラベルリストの同期
                 syncLabelList()
+                initializeFields()
             }
             
         }
@@ -186,7 +188,7 @@ extension EditMaterialOverlay {
     
     private var registerMaterialButton: some View {
         Button(action: {
-            saveNewMaterial()
+            saveMaterialChanges()
         }) {
             BasicButton(
                 label: "登録",
@@ -218,15 +220,13 @@ extension EditMaterialOverlay {
         }
     }
     
-    private func saveNewMaterial() {
+    private func saveMaterialChanges() {
         let trimmedName = bookName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedName.isEmpty else { return }
         
-        let newMaterial = Material(context: viewContext)
-        newMaterial.id = UUID()
-        newMaterial.name = trimmedName
-        newMaterial.label = selectedLabel.isEmpty ? "未分類" : selectedLabel
-        newMaterial.imageData = selectedImage?.jpegData(compressionQuality: 0.8)
+        material.name = trimmedName
+        material.label = selectedLabel.isEmpty ? "未分類" : selectedLabel
+        material.imageData = selectedImage?.jpegData(compressionQuality: 0.8)
         
         // 新しいラベルの場合はラベルリストに追加
         if !selectedLabel.isEmpty &&
@@ -242,9 +242,10 @@ extension EditMaterialOverlay {
             resetFields()
             // 保存成功後にビューを閉じる
             onDismiss()
-            print("✅ 新しい教材を保存: \(trimmedName) - \(selectedLabel)")
+            
+            print("✅ 教材を更新: \(trimmedName) - \(selectedLabel)")
         } catch {
-            print("❌ 新規教材保存エラー: \(error.localizedDescription)")
+            print("❌ 教材更新エラー: \(error.localizedDescription)")
         }
     }
     
@@ -269,6 +270,16 @@ extension EditMaterialOverlay {
            !labelList.contains(selectedLabel) {
             selectedLabel = ""
         }
+    }
+    
+    private func initializeFields() {
+        bookName = material.name ?? ""
+        selectedLabel = material.label ?? "未分類"
+        if let imageData = material.imageData {
+            selectedImage = UIImage(data: imageData)
+        }
+        let trimmed = bookName.trimmingCharacters(in: .whitespacesAndNewlines)
+        canRegister = !trimmed.isEmpty
     }
 }
 
