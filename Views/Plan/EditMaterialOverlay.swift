@@ -17,6 +17,7 @@ struct EditMaterialOverlay: View {
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var canRegister = false
     @State private var isLabelAddModalPresented = false
+    @State private var showDeleteCheckAlert = false
     @Binding var labelList: [String]
     @Binding var isShowing: Bool
     
@@ -69,6 +70,18 @@ struct EditMaterialOverlay: View {
             LabelAddModal(labels: $labelList, selectedLabel: $selectedLabel)
               .presentationDetents([.fraction(0.15)])
           }
+        .alert("教材を削除", isPresented: $showDeleteCheckAlert) {
+            
+            Button("削除", role: .destructive) {
+                deleteMaterial()
+            }
+            
+            Button("キャンセル", role: .cancel) {
+            }
+            
+        } message: {
+            Text("Doneボタンを押し間違えた場合\n取り消すことができます")
+        }
         
         }
     }
@@ -209,7 +222,7 @@ extension EditMaterialOverlay {
     
     private var deleteMaterialButton: some View {
         Button(action: {
-            deleteMaterial()
+            showDeleteCheckAlert = true
         }) {
             BasicButton(
                 label: "削除",
