@@ -95,7 +95,7 @@ extension EditMaterialOverlay {
             if let image = selectedImage {
                 selectedImageView(image)
             } else {
-                openCameraRollButton
+                placeholderImage
             }
         }
         
@@ -133,6 +133,40 @@ extension EditMaterialOverlay {
                     .foregroundColor(.white)
                     .font(.system(size: 40))
             }
+        }
+    }
+    
+    private var editingImageOverlay: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 8)
+                .foregroundColor(.black)
+                .opacity(0.3)
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.blue, lineWidth: 3)
+            Image(systemName: "photo.fill")
+                .frame(width: 32)
+                .foregroundColor(.white)
+        }
+    }
+    
+    private var placeholderImage: some View {
+        PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
+            ZStack{
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.notCheckedColor20)
+                    .frame(width: 144, height: 180)
+                Rectangle()
+                    .frame(width: 128, height: 96)
+                    .foregroundColor(.gray.opacity(0.3))
+                
+                VStack(spacing: 8){
+                    Image(systemName:"photo")
+                        .frame(width: 16)
+                        .foregroundColor(.gray10)
+                    Text("No Image")
+                }
+            }
+            .overlay(editingImageOverlay)
         }
     }
 }
@@ -232,18 +266,6 @@ extension EditMaterialOverlay {
         .disabled(!canRegister)
     }
     
-    private var editingImageOverlay: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 8)
-                .foregroundColor(.black)
-                .opacity(0.3)
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(Color.blue, lineWidth: 3)
-            Image(systemName: "photo.fill")
-                .frame(width: 32)
-                .foregroundColor(.white)
-        }
-    }
 }
 
 // MARK: - Actions
