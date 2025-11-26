@@ -6,36 +6,39 @@
 //
 
 import SwiftUI
-import PhotosUI
 import CoreData
+import UIKit
 
 struct EditMaterialOverlay: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State private var bookName = ""
     @State private var selectedLabel = ""
     @State private var selectedImage: UIImage?
-    @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var canRegister = false
     @State private var isLabelAddModalPresented = false
     @State private var showDeleteCheckAlert = false
+    @State private var isShowingImageSourceOptions = false
+    @State private var isShowingCamera = false
+    @State private var isShowingPhotoLibrary = false
+    @State private var isCameraUnavailableAlertPresented = false
     @Binding var labelList: [String]
     @Binding var isShowing: Bool
-    
+
     let material: Material
     let onDismiss: () -> Void
-    
+
     private let maxCharacters = 12
-    
+
     var body: some View {
         ZStack{
-            
+
             Color.black.opacity(0.5)
                 .edgesIgnoringSafeArea(.all)
                 .onTapGesture {
                     // 背景タップでも閉じる
                     onDismiss()
                 }
-            
+
             RoundedRectangle(cornerRadius: 8)
                 .fill(Color.baseColor10)
                 .frame(width: 344, height: 440)
@@ -50,46 +53,64 @@ struct EditMaterialOverlay: View {
                     },
                     alignment: .topLeading
                 )
-            
+
             VStack(spacing: 36) {
                 imageSelector
                 inputFields
             }
             .padding(.top, 40)
-            .onChange(of: selectedPhotoItem) { newItem in
-                loadSelectedImage(newItem)
-            }
             .onAppear {
                 // ラベルリストの同期
                 syncLabelList()
                 initializeFields()
             }
-            
+
         }
         .sheet(isPresented: $isLabelAddModalPresented) {
             LabelAddModal(labels: $labelList, selectedLabel: $selectedLabel)
               .presentationDetents([.fraction(0.15)])
           }
         .alert("教材を削除", isPresented: $showDeleteCheckAlert) {
-            
+
             Button("削除", role: .destructive) {
                 deleteMaterial()
             }
-            
+
             Button("キャンセル", role: .cancel) {
             }
-            
+
         } message: {
             Text("\(bookName)を削除しますか?")
         }
-        
+
+        .sheet(isPresented: $isShowingPhotoLibrary) {
+            ImagePickerView(sourceType: .photoLibrary, selectedImage: $selectedImage)
+        }
+        .sheet(isPresented: $isShowingCamera) {
+            ImagePickerView(sourceType: .camera, selectedImage: $selectedImage)
+        }
+        .confirmationDialog("写真の入力方法", isPresented: $isShowingImageSourceOptions, titleVisibility: .visible) {
+            Button("カメラロールから選択") {
+                isShowingPhotoLibrary = true
+            }
+            Button("カメラで撮影") {
+                presentCamera()
+            }
+            Button("キャンセル", role: .cancel) {}
+        }
+        .alert("カメラが利用できません", isPresented: $isCameraUnavailableAlertPresented) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("設定からカメラへのアクセスを許可してください。")
+        }
+
         }
     }
 
 
 // MARK: - Image Selector Components
 extension EditMaterialOverlay {
-    
+
     private var imageSelector: some View {
         Group {
             if let image = selectedImage {
@@ -98,44 +119,31 @@ extension EditMaterialOverlay {
                 placeholderImage
             }
         }
-        
+
     }
-    
+
     private func selectedImageView(_ image: UIImage) -> some View {
-        PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
+        Button {
+            isShowingImageSourceOptions = true
+        } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.notCheckedColor20)
                     .frame(width: 144, height: 180)
-                
+
                 ZStack(alignment: .bottomTrailing) {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 128, height: 96)
                         .cornerRadius(12)
-                    
+
                 }
             }
             .overlay(editingImageOverlay)
-            
         }
     }
 
-    private var openCameraRollButton: some View {
-        PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.mainColor10)
-                    .frame(width: 144, height: 180)
-                
-                Image(systemName: "photo.badge.plus.fill")
-                    .foregroundColor(.white)
-                    .font(.system(size: 40))
-            }
-        }
-    }
-    
     private var editingImageOverlay: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 8)
@@ -148,9 +156,11 @@ extension EditMaterialOverlay {
                 .foregroundColor(.white)
         }
     }
-    
+
     private var placeholderImage: some View {
-        PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
+        Button {
+            isShowingImageSourceOptions = true
+        } label: {
             ZStack{
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.notCheckedColor20)
@@ -158,7 +168,7 @@ extension EditMaterialOverlay {
                 Rectangle()
                     .frame(width: 128, height: 96)
                     .foregroundColor(.gray.opacity(0.3))
-                
+
                 VStack(spacing: 8){
                     Image(systemName:"photo")
                         .frame(width: 16)
@@ -173,7 +183,7 @@ extension EditMaterialOverlay {
 
 // MARK: - Input Fields Components
 extension EditMaterialOverlay {
-    
+
     private var inputFields: some View {
         HStack{
             VStack {
@@ -189,7 +199,7 @@ extension EditMaterialOverlay {
             .padding(.top, 16)
         }
     }
-    
+
     private var labelSelector: some View {
         LabelSelector(
             onAddLabelTapped: {
@@ -211,14 +221,13 @@ extension EditMaterialOverlay {
 
 
 
-    
     private var nameInputField: some View {
         ZStack {
             Rectangle()
                 .frame(width: 156, height: 64)
                 .foregroundColor(.white)
                 .padding(.top, 8)
-            
+
             CustomTextEditor(text: $bookName, maxCharacters: maxCharacters)
                 .frame(width: 156, height: 56)
                 .padding(.top, 8)
@@ -232,7 +241,7 @@ extension EditMaterialOverlay {
 
         }
     }
-   
+
     private var registerMaterialButton: some View {
         Button(action: {
             saveMaterialChanges()
@@ -249,7 +258,7 @@ extension EditMaterialOverlay {
         .frame(maxWidth: .infinity, alignment: .trailing)
         .disabled(!canRegister)
     }
-    
+
     private var deleteMaterialButton: some View {
         Button(action: {
             showDeleteCheckAlert = true
@@ -265,33 +274,20 @@ extension EditMaterialOverlay {
         .frame(maxWidth: .infinity, alignment: .trailing)
         .disabled(!canRegister)
     }
-    
+
 }
 
 // MARK: - Actions
 extension EditMaterialOverlay {
-    
-    private func loadSelectedImage(_ newItem: PhotosPickerItem?) {
-        guard let item = newItem else { return }
-        
-        Task {
-            if let data = try? await item.loadTransferable(type: Data.self),
-               let uiImage = UIImage(data: data) {
-                await MainActor.run {
-                    selectedImage = uiImage
-                }
-            }
-        }
-    }
-    
+
     private func saveMaterialChanges() {
         let trimmedName = bookName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedName.isEmpty else { return }
-        
+
         material.name = trimmedName
         material.label = selectedLabel.isEmpty ? "未分類" : selectedLabel
         material.imageData = selectedImage?.jpegData(compressionQuality: 0.8)
-        
+
         // 新しいラベルの場合はラベルリストに追加
         if !selectedLabel.isEmpty &&
            selectedLabel != "未分類" &&
@@ -306,13 +302,13 @@ extension EditMaterialOverlay {
             resetFields()
             // 保存成功後にビューを閉じる
             onDismiss()
-            
+
             print("✅ 教材を更新: \(trimmedName) - \(selectedLabel)")
         } catch {
             print("❌ 教材更新エラー: \(error.localizedDescription)")
         }
     }
-    
+
     private func deleteMaterial() {
         viewContext.delete(material)
         onDismiss()
@@ -325,17 +321,16 @@ extension EditMaterialOverlay {
     private func resetFields() {
         bookName = ""
         selectedImage = nil
-        selectedPhotoItem = nil
         selectedLabel = ""
     }
-    
+
     private func syncLabelList() {
         let savedLabels = LabelStorage.load()
         if labelList != savedLabels {
             labelList = savedLabels
         }
     }
-    
+
     private func validateSelectedLabel() {
         // 選択中のラベルがリストに存在しない場合はリセット
         if !selectedLabel.isEmpty &&
@@ -344,7 +339,7 @@ extension EditMaterialOverlay {
             selectedLabel = ""
         }
     }
-    
+
     private func initializeFields() {
         bookName = material.name ?? ""
         selectedLabel = material.label ?? "未分類"
@@ -354,6 +349,13 @@ extension EditMaterialOverlay {
         let trimmed = bookName.trimmingCharacters(in: .whitespacesAndNewlines)
         canRegister = !trimmed.isEmpty
     }
-}
 
+    private func presentCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            isShowingCamera = true
+        } else {
+            isCameraUnavailableAlertPresented = true
+        }
+    }
+}
 

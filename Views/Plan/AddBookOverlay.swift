@@ -3,36 +3,40 @@
 //  StudyRecord
 //
 //
+//
 
 import SwiftUI
-import PhotosUI
 import CoreData
+import UIKit
 
 struct AddBookOverlay: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State private var bookName = ""
     @State private var selectedLabel = ""
     @State private var selectedImage: UIImage?
-    @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var canRegister = false
     @State private var isLabelAddModalPresented = false
+    @State private var isShowingImageSourceOptions = false
+    @State private var isShowingCamera = false
+    @State private var isShowingPhotoLibrary = false
+    @State private var isCameraUnavailableAlertPresented = false
     @Binding var labelList: [String]
     @Binding var isShowing: Bool
-    
+
     let onDismiss: () -> Void
-    
+
     private let maxCharacters = 12
-    
+
     var body: some View {
         ZStack{
-            
+
             Color.black.opacity(0.5)
                 .edgesIgnoringSafeArea(.all)
                 .onTapGesture {
                     // 背景タップでも閉じる
                     onDismiss()
                 }
-            
+
             RoundedRectangle(cornerRadius: 8)
                 .fill(Color.baseColor10)
                 .frame(width: 344, height: 440)
@@ -47,33 +51,50 @@ struct AddBookOverlay: View {
                     },
                     alignment: .topLeading
                 )
-            
+
             VStack(spacing: 36) {
                 imageSelector
                 inputFields
             }
             .padding(.top, 40)
-            .onChange(of: selectedPhotoItem) { newItem in
-                loadSelectedImage(newItem)
-            }
             .onAppear {
                 // ラベルリストの同期
                 syncLabelList()
             }
-            
+
         }
         .sheet(isPresented: $isLabelAddModalPresented) {
             LabelAddModal(labels: $labelList, selectedLabel: $selectedLabel)
               .presentationDetents([.fraction(0.15)])
           }
-        
+
+        .sheet(isPresented: $isShowingPhotoLibrary) {
+            ImagePickerView(sourceType: .photoLibrary, selectedImage: $selectedImage)
+        }
+        .sheet(isPresented: $isShowingCamera) {
+            ImagePickerView(sourceType: .camera, selectedImage: $selectedImage)
+        }
+        .confirmationDialog("写真の入力方法", isPresented: $isShowingImageSourceOptions, titleVisibility: .visible) {
+            Button("カメラロールから選択") {
+                isShowingPhotoLibrary = true
+            }
+            Button("カメラで撮影") {
+                presentCamera()
+            }
+            Button("キャンセル", role: .cancel) {}
+        }
+        .alert("カメラが利用できません", isPresented: $isCameraUnavailableAlertPresented) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("設定からカメラへのアクセスを許可してください。")
+        }
+
         }
     }
 
-
 // MARK: - Image Selector Components
 extension AddBookOverlay {
-    
+
     private var imageSelector: some View {
         Group {
             if let image = selectedImage {
@@ -84,39 +105,43 @@ extension AddBookOverlay {
         }
 
     }
-    
+
     private func selectedImageView(_ image: UIImage) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.notCheckedColor20)
-                .frame(width: 144, height: 180)
-            
-            ZStack(alignment: .bottomTrailing) {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 128, height: 96)
-                    .cornerRadius(12)
-                
-                PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
+        Button {
+            isShowingImageSourceOptions = true
+        } label: {
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.notCheckedColor20)
+                    .frame(width: 144, height: 180)
+
+                ZStack(alignment: .bottomTrailing) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 128, height: 96)
+                        .cornerRadius(12)
+
                     Image(systemName: "pencil.circle.fill")
                         .font(.system(size: 32))
                         .foregroundColor(.blue)
                         .background(Circle().fill(Color.white).frame(width: 37, height: 37))
                         .offset(y: -8)
                 }
+                .frame(width: 128, height: 96)
             }
-            .frame(width: 128, height: 96)
         }
     }
 
     private var openCameraRollButton: some View {
-        PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
+        Button {
+            isShowingImageSourceOptions = true
+        } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.mainColor10)
                     .frame(width: 144, height: 180)
-                
+
                 Image(systemName: "photo.badge.plus.fill")
                     .foregroundColor(.white)
                     .font(.system(size: 40))
@@ -127,7 +152,7 @@ extension AddBookOverlay {
 
 // MARK: - Input Fields Components
 extension AddBookOverlay {
-    
+
     private var inputFields: some View {
         HStack{
             VStack {
@@ -139,7 +164,7 @@ extension AddBookOverlay {
             registerMaterialButton
         }
     }
-    
+
     private var labelSelector: some View {
         LabelSelector(
             onAddLabelTapped: {
@@ -161,14 +186,13 @@ extension AddBookOverlay {
 
 
 
-    
     private var nameInputField: some View {
         ZStack {
             Rectangle()
                 .frame(width: 156, height: 64)
                 .foregroundColor(.white)
                 .padding(.top, 8)
-            
+
             CustomTextEditor(text: $bookName, maxCharacters: maxCharacters)
                 .frame(width: 156, height: 56)
                 .padding(.top, 8)
@@ -182,14 +206,14 @@ extension AddBookOverlay {
 
         }
     }
-    
+
     private var registerMaterialButton: some View {
         Button(action: {
             saveNewMaterial()
         }) {
             BasicButton(
                 label: "登録",
-                color:canRegister ? nil : .gray, 
+                color:canRegister ? nil : .gray,
                 width: 56,
                 height: 40
             )
@@ -203,30 +227,17 @@ extension AddBookOverlay {
 
 // MARK: - Actions
 extension AddBookOverlay {
-    
-    private func loadSelectedImage(_ newItem: PhotosPickerItem?) {
-        guard let item = newItem else { return }
-        
-        Task {
-            if let data = try? await item.loadTransferable(type: Data.self),
-               let uiImage = UIImage(data: data) {
-                await MainActor.run {
-                    selectedImage = uiImage
-                }
-            }
-        }
-    }
-    
+
     private func saveNewMaterial() {
         let trimmedName = bookName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedName.isEmpty else { return }
-        
+
         let newMaterial = Material(context: viewContext)
         newMaterial.id = UUID()
         newMaterial.name = trimmedName
         newMaterial.label = selectedLabel.isEmpty ? "未分類" : selectedLabel
         newMaterial.imageData = selectedImage?.jpegData(compressionQuality: 0.8)
-        
+
         // 新しいラベルの場合はラベルリストに追加
         if !selectedLabel.isEmpty &&
            selectedLabel != "未分類" &&
@@ -246,21 +257,20 @@ extension AddBookOverlay {
             print("❌ 新規教材保存エラー: \(error.localizedDescription)")
         }
     }
-    
+
     private func resetFields() {
         bookName = ""
         selectedImage = nil
-        selectedPhotoItem = nil
         selectedLabel = ""
     }
-    
+
     private func syncLabelList() {
         let savedLabels = LabelStorage.load()
         if labelList != savedLabels {
             labelList = savedLabels
         }
     }
-    
+
     private func validateSelectedLabel() {
         // 選択中のラベルがリストに存在しない場合はリセット
         if !selectedLabel.isEmpty &&
@@ -269,6 +279,13 @@ extension AddBookOverlay {
             selectedLabel = ""
         }
     }
-}
 
+    private func presentCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            isShowingCamera = true
+        } else {
+            isCameraUnavailableAlertPresented = true
+        }
+    }
+}
 
