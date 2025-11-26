@@ -77,7 +77,7 @@ struct BookSelectModal: View {
                     )
                 }
                 
-                if !showAddBookOverlay {
+                if !showAddBookOverlay && !isEditingMode {
                     VStack {
                         Spacer()
                         HStack {
