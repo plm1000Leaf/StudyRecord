@@ -86,6 +86,7 @@ struct YearReviewView: View {
             // AfterCheckViewからの遷移時は今日の月に設定
             if showDateReviewView {
                 setCurrentMonthToToday()
+                showMonthReviewView = true
             }
             continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
             monthlyCheckCounts = recordService.loadMonthlyCheckCountsFromMonthlyRecord(for: selectedYear,context: viewContext)
@@ -95,6 +96,7 @@ struct YearReviewView: View {
             // DateReviewViewに遷移する時は今日の月に設定
             if newValue {
                 setCurrentMonthToToday()
+                showMonthReviewView = true
             }
         }
         .onChange(of: selectedYear) { newValue in
