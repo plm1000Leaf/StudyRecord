@@ -37,25 +37,30 @@ struct YearReviewView: View {
                     selectedDateFromMonthReview: nil,
                     isFromAfterCheck: true  // AfterCheckViewからの遷移フラグ
                 )
-                    .transition(.move(edge: .trailing))
+                .zIndex(2)
+                .transition(.move(edge: .trailing))
             } else if !showMonthReviewView {
                 if showPopup {
                     yearView
+                        .zIndex(1)
                         .transition(.move(edge: .leading))
                 } else {
                     if selectedSegment == 0 {
                         yearView
+                            .zIndex(1)
                             .transition(.move(edge: .leading))
                     } else {
 
                         YearReviewGraphView(selectedSegment: $selectedSegment, selectedYear: $selectedYear)
+                            .zIndex(1)
                             .transition(.move(edge: .leading))
                     }
                 }
             } else {
                 MonthReviewView(showMonthReviewView:$showMonthReviewView, currentMonth: $currentMonth
                 )
-                    .transition(.move(edge: .trailing))
+                .zIndex(0)
+                .transition(.move(edge: .trailing))
             }
             if showPopup {
                 MovePeriodPopup(
@@ -81,6 +86,7 @@ struct YearReviewView: View {
             // AfterCheckViewからの遷移時は今日の月に設定
             if showDateReviewView {
                 setCurrentMonthToToday()
+                showMonthReviewView = true
             }
             continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
             monthlyCheckCounts = recordService.loadMonthlyCheckCountsFromMonthlyRecord(for: selectedYear,context: viewContext)
@@ -90,6 +96,7 @@ struct YearReviewView: View {
             // DateReviewViewに遷移する時は今日の月に設定
             if newValue {
                 setCurrentMonthToToday()
+                showMonthReviewView = true
             }
         }
         .onChange(of: selectedYear) { newValue in
