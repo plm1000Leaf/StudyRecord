@@ -5,12 +5,16 @@ struct BookSelectModal: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) private var viewContext
     @State private var showAddBookOverlay = false
+    @State private var showEditMaterialOverlay = false
+    @State private var showDeleteLabelCheckAlert = false
     @State private var isEditingMode = false
     @State private var labelList: [String] = LabelStorage.load()
     @State private var refreshID = UUID()
     @State private var activeEditingLabel: String? = nil
+    @State private var materialToEdit: Material? = nil
     @State private var activeEditingMaterialID: UUID? = nil
     
+    @State private var labelToDelete: String? = nil
     var onMaterialSelect: ((Material) -> Void)? = nil
     
     @FetchRequest(
@@ -54,8 +58,28 @@ struct BookSelectModal: View {
                         }
                     )
                 }
+ 
+
+                if showEditMaterialOverlay, let materialToEdit {
+                    EditMaterialOverlay(
+                        labelList: Binding(
+                            get: { labelList },
+                            set: { newLabels in
+                                labelList = newLabels
+                                LabelStorage.save(newLabels)
+                            }
+                        ),
+                        isShowing: $showEditMaterialOverlay,
+                        material: materialToEdit,
+                        onDismiss: {
+                            showEditMaterialOverlay = false
+//                            materialToEdit = nil
+                            activeEditingMaterialID = nil
+                        }
+                    )
+                }
                 
-                if !showAddBookOverlay {
+                if !showAddBookOverlay && !isEditingMode {
                     VStack {
                         Spacer()
                         HStack {
@@ -70,6 +94,21 @@ struct BookSelectModal: View {
             .onAppear {
                 // ラベルリストの同期
                 syncLabelList()
+            }
+            .alert("ラベルを削除", isPresented: $showDeleteLabelCheckAlert) {
+                
+                Button("削除", role: .destructive) {
+                    if let labelToDelete = labelToDelete {
+                        deleteLabel(labelToDelete)
+                        self.labelToDelete = nil
+                    }
+                }
+                
+                Button("キャンセル", role: .cancel) {
+                }
+                
+            } message: {
+                Text("このラベルに紐づく教材は「未分類」に移動します。")
             }
         }
     }
@@ -100,7 +139,15 @@ extension BookSelectModal {
                 refreshID: $refreshID,
                 activeEditingLabel: $activeEditingLabel,
                 activeEditingMaterialID: $activeEditingMaterialID,
-                onMaterialSelect: onMaterialSelect,
+                onMaterialEdit: { material in
+                    materialToEdit = material
+                    showEditMaterialOverlay = true
+                    activeEditingMaterialID = material.id
+                },
+                onMaterialSelect: onMaterialSelect, showDeleteLabelCheckAlert: {
+                    labelToDelete = label
+                    showDeleteLabelCheckAlert = true
+                },
                 onDismiss: { dismiss() }
             )
             .padding(.bottom, 40)
@@ -153,6 +200,28 @@ extension BookSelectModal {
                         .foregroundColor(.white)
                 )
                 .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+        }
+    }
+
+    private func deleteLabel(_ label: String) {
+        for material in materials {
+            if material.label == label {
+                material.label = "未分類"
+            }
+        }
+
+        // ラベルリストから削除
+        if let index = labelList.firstIndex(of: label) {
+            labelList.remove(at: index)
+            LabelStorage.save(labelList)
+        }
+
+        do {
+            try viewContext.save()
+            refreshID = UUID()        // 画面更新
+            activeEditingLabel = nil  // 編集状態リセット
+        } catch {
+            print("ラベル削除エラー: \(error.localizedDescription)")
         }
     }
     

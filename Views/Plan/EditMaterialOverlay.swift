@@ -1,14 +1,15 @@
 //
-//  AddBookView.swift
+//  EditMaterialView.swift
 //  StudyRecord
 //
+//  Created by 千葉陽乃 on 2025/11/26.
 //
 
 import SwiftUI
 import PhotosUI
 import CoreData
 
-struct AddBookOverlay: View {
+struct EditMaterialOverlay: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State private var bookName = ""
     @State private var selectedLabel = ""
@@ -16,9 +17,11 @@ struct AddBookOverlay: View {
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var canRegister = false
     @State private var isLabelAddModalPresented = false
+    @State private var showDeleteCheckAlert = false
     @Binding var labelList: [String]
     @Binding var isShowing: Bool
     
+    let material: Material
     let onDismiss: () -> Void
     
     private let maxCharacters = 12
@@ -59,6 +62,7 @@ struct AddBookOverlay: View {
             .onAppear {
                 // ラベルリストの同期
                 syncLabelList()
+                initializeFields()
             }
             
         }
@@ -66,47 +70,55 @@ struct AddBookOverlay: View {
             LabelAddModal(labels: $labelList, selectedLabel: $selectedLabel)
               .presentationDetents([.fraction(0.15)])
           }
+        .alert("教材を削除", isPresented: $showDeleteCheckAlert) {
+            
+            Button("削除", role: .destructive) {
+                deleteMaterial()
+            }
+            
+            Button("キャンセル", role: .cancel) {
+            }
+            
+        } message: {
+            Text("\(bookName)を削除しますか?")
+        }
         
         }
     }
 
 
 // MARK: - Image Selector Components
-extension AddBookOverlay {
+extension EditMaterialOverlay {
     
     private var imageSelector: some View {
         Group {
             if let image = selectedImage {
                 selectedImageView(image)
             } else {
-                openCameraRollButton
+                placeholderImage
             }
         }
-
+        
     }
     
     private func selectedImageView(_ image: UIImage) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.notCheckedColor20)
-                .frame(width: 144, height: 180)
-            
-            ZStack(alignment: .bottomTrailing) {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 128, height: 96)
-                    .cornerRadius(12)
+        PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.notCheckedColor20)
+                    .frame(width: 144, height: 180)
                 
-                PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
-                    Image(systemName: "pencil.circle.fill")
-                        .font(.system(size: 32))
-                        .foregroundColor(.blue)
-                        .background(Circle().fill(Color.white).frame(width: 37, height: 37))
-                        .offset(y: -8)
+                ZStack(alignment: .bottomTrailing) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 128, height: 96)
+                        .cornerRadius(12)
+                    
                 }
             }
-            .frame(width: 128, height: 96)
+            .overlay(editingImageOverlay)
+            
         }
     }
 
@@ -123,10 +135,44 @@ extension AddBookOverlay {
             }
         }
     }
+    
+    private var editingImageOverlay: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 8)
+                .foregroundColor(.black)
+                .opacity(0.3)
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.blue, lineWidth: 3)
+            Image(systemName: "photo.fill")
+                .frame(width: 32)
+                .foregroundColor(.white)
+        }
+    }
+    
+    private var placeholderImage: some View {
+        PhotosPicker(selection: $selectedPhotoItem, matching: .images, photoLibrary: .shared()) {
+            ZStack{
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.notCheckedColor20)
+                    .frame(width: 144, height: 180)
+                Rectangle()
+                    .frame(width: 128, height: 96)
+                    .foregroundColor(.gray.opacity(0.3))
+                
+                VStack(spacing: 8){
+                    Image(systemName:"photo")
+                        .frame(width: 16)
+                        .foregroundColor(.gray10)
+                    Text("No Image")
+                }
+            }
+            .overlay(editingImageOverlay)
+        }
+    }
 }
 
 // MARK: - Input Fields Components
-extension AddBookOverlay {
+extension EditMaterialOverlay {
     
     private var inputFields: some View {
         HStack{
@@ -136,7 +182,11 @@ extension AddBookOverlay {
             }
             .padding(.top, 16)
             .padding(.leading, 64)
-            registerMaterialButton
+            VStack{
+                deleteMaterialButton
+                registerMaterialButton
+            }
+            .padding(.top, 16)
         }
     }
     
@@ -182,27 +232,44 @@ extension AddBookOverlay {
 
         }
     }
-    
+   
     private var registerMaterialButton: some View {
         Button(action: {
-            saveNewMaterial()
+            saveMaterialChanges()
         }) {
             BasicButton(
-                label: "登録",
-                color:canRegister ? nil : .gray, 
+                label: "変更",
+                color:canRegister ? nil : .gray,
                 width: 56,
                 height: 40
             )
         }
-        .padding(.top, 90)
+        .padding(.top, 16)
         .padding(.trailing, 48)
         .frame(maxWidth: .infinity, alignment: .trailing)
         .disabled(!canRegister)
     }
+    
+    private var deleteMaterialButton: some View {
+        Button(action: {
+            showDeleteCheckAlert = true
+        }) {
+            BasicButton(
+                label: "削除",
+                color: Color.accentColor1,
+                width: 56,
+                height: 40
+            )
+        }
+        .padding(.trailing, 48)
+        .frame(maxWidth: .infinity, alignment: .trailing)
+        .disabled(!canRegister)
+    }
+    
 }
 
 // MARK: - Actions
-extension AddBookOverlay {
+extension EditMaterialOverlay {
     
     private func loadSelectedImage(_ newItem: PhotosPickerItem?) {
         guard let item = newItem else { return }
@@ -217,15 +284,13 @@ extension AddBookOverlay {
         }
     }
     
-    private func saveNewMaterial() {
+    private func saveMaterialChanges() {
         let trimmedName = bookName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedName.isEmpty else { return }
         
-        let newMaterial = Material(context: viewContext)
-        newMaterial.id = UUID()
-        newMaterial.name = trimmedName
-        newMaterial.label = selectedLabel.isEmpty ? "未分類" : selectedLabel
-        newMaterial.imageData = selectedImage?.jpegData(compressionQuality: 0.8)
+        material.name = trimmedName
+        material.label = selectedLabel.isEmpty ? "未分類" : selectedLabel
+        material.imageData = selectedImage?.jpegData(compressionQuality: 0.8)
         
         // 新しいラベルの場合はラベルリストに追加
         if !selectedLabel.isEmpty &&
@@ -241,12 +306,22 @@ extension AddBookOverlay {
             resetFields()
             // 保存成功後にビューを閉じる
             onDismiss()
-            print("✅ 新しい教材を保存: \(trimmedName) - \(selectedLabel)")
+            
+            print("✅ 教材を更新: \(trimmedName) - \(selectedLabel)")
         } catch {
-            print("❌ 新規教材保存エラー: \(error.localizedDescription)")
+            print("❌ 教材更新エラー: \(error.localizedDescription)")
         }
     }
     
+    private func deleteMaterial() {
+        viewContext.delete(material)
+        onDismiss()
+        do {
+            try viewContext.save()
+        } catch {
+            print("教材削除エラー: \(error.localizedDescription)")
+        }
+    }
     private func resetFields() {
         bookName = ""
         selectedImage = nil
@@ -268,6 +343,16 @@ extension AddBookOverlay {
            !labelList.contains(selectedLabel) {
             selectedLabel = ""
         }
+    }
+    
+    private func initializeFields() {
+        bookName = material.name ?? ""
+        selectedLabel = material.label ?? "未分類"
+        if let imageData = material.imageData {
+            selectedImage = UIImage(data: imageData)
+        }
+        let trimmed = bookName.trimmingCharacters(in: .whitespacesAndNewlines)
+        canRegister = !trimmed.isEmpty
     }
 }
 

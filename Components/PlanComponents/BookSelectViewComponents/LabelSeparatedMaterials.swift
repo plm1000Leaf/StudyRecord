@@ -16,7 +16,9 @@ struct LabelSeparatedMaterials: View {
     @Binding var refreshID: UUID
     @Binding var activeEditingLabel: String?
     @Binding var activeEditingMaterialID: UUID?
+    let onMaterialEdit: (Material) -> Void
     let onMaterialSelect: ((Material) -> Void)?
+    let showDeleteLabelCheckAlert: () -> Void
     let onDismiss: () -> Void
     
     @Environment(\.managedObjectContext) private var viewContext
@@ -95,7 +97,7 @@ extension LabelSeparatedMaterials {
     private var actionLabelButton: some View {
         Button(action: {
             if isEditingLabel {
-                deleteLabel()
+                showDeleteLabelCheckAlert()
             } else {
                 startLabelEdit()
             }
@@ -114,6 +116,7 @@ extension LabelSeparatedMaterials {
                     MaterialCard(
                         material: material,
                         isEditingMode: isEditingMode,
+                        onMaterialEdit: onMaterialEdit,
                         onMaterialSelect: onMaterialSelect,
                         onDismiss:  onDismiss,
                         activeEditingLabel: $activeEditingLabel,

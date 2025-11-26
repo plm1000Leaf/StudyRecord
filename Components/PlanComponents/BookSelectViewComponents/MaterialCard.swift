@@ -11,8 +11,10 @@ import CoreData
 struct MaterialCard: View {
     let material: Material
     let isEditingMode: Bool
+    let onMaterialEdit: (Material) -> Void
     let onMaterialSelect: ((Material) -> Void)?
     let onDismiss: () -> Void
+
     
     @Binding var activeEditingLabel: String?
     @Binding var activeEditingMaterialID: UUID?
@@ -228,6 +230,7 @@ extension MaterialCard {
                 showDeleteAlert = true
             } else {
                 startMaterialEdit()
+                onMaterialEdit(material)
             }
         }) {
             Image(systemName: isEditingMaterial ? "trash.circle.fill" : "pencil.circle.fill")

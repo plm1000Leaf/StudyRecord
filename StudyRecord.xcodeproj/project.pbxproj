@@ -54,6 +54,7 @@
 		28893F7B2E13B2490084F807 /* ScreenshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28893F7A2E13B2490084F807 /* ScreenshotHelper.swift */; };
 		28A28B1A2ED548F000923885 /* InputReviewField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2875E9C92E0415C000D9B0FC /* InputReviewField.swift */; };
 		28A28B202ED5722F00923885 /* LabelAddModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A28B1F2ED5722F00923885 /* LabelAddModal.swift */; };
+		28A28B252ED6E0C700923885 /* EditMaterialOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A28B242ED6E0C600923885 /* EditMaterialOverlay.swift */; };
 		28BA9A762EA79E6B00279BC5 /* StudyRecordUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BA9A752EA79E6B00279BC5 /* StudyRecordUITests.swift */; };
 		28BA9A782EA79E6B00279BC5 /* StudyRecordUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BA9A772EA79E6B00279BC5 /* StudyRecordUITestsLaunchTests.swift */; };
 		28BA9A7F2EA7A03300279BC5 /* BeforeToAfterCheckUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BA9A7E2EA7A03300279BC5 /* BeforeToAfterCheckUITests.swift */; };
@@ -129,6 +130,7 @@
 		28893F7A2E13B2490084F807 /* ScreenshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotHelper.swift; sourceTree = "<group>"; };
 		288EEEDC2D647134001FACBC /* StudyRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A28B1F2ED5722F00923885 /* LabelAddModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelAddModal.swift; sourceTree = "<group>"; };
+		28A28B242ED6E0C600923885 /* EditMaterialOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMaterialOverlay.swift; sourceTree = "<group>"; };
 		28BA9A732EA79E6B00279BC5 /* StudyRecordUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudyRecordUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		28BA9A752EA79E6B00279BC5 /* StudyRecordUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordUITests.swift; sourceTree = "<group>"; };
 		28BA9A772EA79E6B00279BC5 /* StudyRecordUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				2875E9E12E0415C000D9B0FC /* PlanSettingOverlay.swift */,
 				2875E9E22E0415C000D9B0FC /* BookSelectModal.swift */,
 				2875E9C12E0415C000D9B0FC /* AddBookOverlay.swift */,
+				28A28B242ED6E0C600923885 /* EditMaterialOverlay.swift */,
 				28A28B1F2ED5722F00923885 /* LabelAddModal.swift */,
 			);
 			path = Plan;
@@ -498,6 +501,7 @@
 				281E28C52E050149008A2981 /* SnapshotManager .swift in Sources */,
 				2875E9FB2E0415C100D9B0FC /* CalendarUtils.swift in Sources */,
 				2875EA182E0415C100D9B0FC /* StudyPlanView.swift in Sources */,
+				28A28B252ED6E0C700923885 /* EditMaterialOverlay.swift in Sources */,
 				2875E9F72E0415C100D9B0FC /* DebugDateManager.swift in Sources */,
 				2875EA012E0415C100D9B0FC /* MaterialCard.swift in Sources */,
 				2875EA172E0415C100D9B0FC /* MainTabView.swift in Sources */,
