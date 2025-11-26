@@ -13,6 +13,7 @@ struct MaterialCard: View {
     let isEditingMode: Bool
     let onMaterialSelect: ((Material) -> Void)?
     let onDismiss: () -> Void
+
     
     @Binding var activeEditingLabel: String?
     @Binding var activeEditingMaterialID: UUID?

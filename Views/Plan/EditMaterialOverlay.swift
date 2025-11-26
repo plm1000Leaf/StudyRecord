@@ -1,14 +1,15 @@
 //
-//  AddBookView.swift
+//  EditMaterialView.swift
 //  StudyRecord
 //
+//  Created by 千葉陽乃 on 2025/11/26.
 //
 
 import SwiftUI
 import PhotosUI
 import CoreData
 
-struct AddBookOverlay: View {
+struct EditMaterialOverlay: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State private var bookName = ""
     @State private var selectedLabel = ""
@@ -72,7 +73,7 @@ struct AddBookOverlay: View {
 
 
 // MARK: - Image Selector Components
-extension AddBookOverlay {
+extension EditMaterialOverlay {
     
     private var imageSelector: some View {
         Group {
@@ -126,7 +127,7 @@ extension AddBookOverlay {
 }
 
 // MARK: - Input Fields Components
-extension AddBookOverlay {
+extension EditMaterialOverlay {
     
     private var inputFields: some View {
         HStack{
@@ -189,7 +190,7 @@ extension AddBookOverlay {
         }) {
             BasicButton(
                 label: "登録",
-                color:canRegister ? nil : .gray, 
+                color:canRegister ? nil : .gray,
                 width: 56,
                 height: 40
             )
@@ -202,7 +203,7 @@ extension AddBookOverlay {
 }
 
 // MARK: - Actions
-extension AddBookOverlay {
+extension EditMaterialOverlay {
     
     private func loadSelectedImage(_ newItem: PhotosPickerItem?) {
         guard let item = newItem else { return }
