@@ -209,7 +209,7 @@ extension EditMaterialOverlay {
     
     private var deleteMaterialButton: some View {
         Button(action: {
-            saveMaterialChanges()
+            deleteMaterial()
         }) {
             BasicButton(
                 label: "削除",
@@ -269,6 +269,15 @@ extension EditMaterialOverlay {
         }
     }
     
+    private func deleteMaterial() {
+        viewContext.delete(material)
+        onDismiss()
+        do {
+            try viewContext.save()
+        } catch {
+            print("教材削除エラー: \(error.localizedDescription)")
+        }
+    }
     private func resetFields() {
         bookName = ""
         selectedImage = nil
