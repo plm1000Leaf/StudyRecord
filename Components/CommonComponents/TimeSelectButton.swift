@@ -46,12 +46,20 @@ struct TimeSelectButton: View {
                 onTimeChanged: onTimeChanged
             )
         }
+        
         .onAppear {
-            let (hour, minute) = recordService.getScheduledTime()
-            selectedHour = Int(hour)
-            selectedMinute = Int(minute)
-            confirmedTime = recordService.hasScheduledTime()
+            syncSelectedTime()
         }
+        .onReceive(recordService.objectWillChange) { _ in
+            syncSelectedTime()
+        }
+    }
+
+    private func syncSelectedTime() {
+        let (hour, minute) = recordService.getScheduledTime()
+        selectedHour = Int(hour)
+        selectedMinute = Int(minute)
+        confirmedTime = recordService.hasScheduledTime()
     }
 }
 
