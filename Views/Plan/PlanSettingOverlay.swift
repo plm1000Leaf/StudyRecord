@@ -226,7 +226,9 @@ struct PlanSettingOverlay: View {
     }
     
     private var inputScheduledTime: some View {
-        VStack(alignment: .leading) {
+        
+        let backgroundColor = timeConfirmed ? Color.mainColor10 : Color.notCheckedColor10
+        return VStack(alignment: .leading) {
             
             HStack(spacing: 48){
                 TimeSelectButton(
@@ -240,22 +242,35 @@ struct PlanSettingOverlay: View {
                     .frame(width: 160, height: 40)
                     .padding(.bottom, 8)
                 
-                    if timeConfirmed {
-                        Button(action: openCalendar) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.white)
-                                    .frame(width: 72, height: 72)
-                                
-                                Image(systemName: "calendar")
-                                    .foregroundColor(Color.mainColor0)
-                                    .font(.system(size: 24))
-                                    .bold()
-                            }
+                if timeConfirmed {
+                    Button(action: openCalendar) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.mainColor10)
+                                .frame(width: 72, height: 72)
+                            
+                            Image(systemName: "calendar")
+                                .foregroundColor(Color.white)
+                                .font(.system(size: 24))
+                                .bold()
                         }
-                        .buttonStyle(PlainButtonStyle())
-                        .padding(.leading, 8)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .padding(.leading, 8)
+                } else {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.notCheckedColor10)
+                                .frame(width: 72, height: 72)
+                            
+                            Image(systemName: "calendar")
+                                .foregroundColor(Color.white)
+                                .font(.system(size: 24))
+                                .bold()
                         }
+                    .buttonStyle(PlainButtonStyle())
+                    .padding(.leading, 8)
+                }
 
             }
             .padding(.leading, 16)
