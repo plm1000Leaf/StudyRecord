@@ -233,7 +233,7 @@ struct PlanSettingOverlay: View {
                     recordService: recordService,
                     confirmedTime: $timeConfirmed,
                     onTimeChanged: {
-                        // 時間変更時に親に通知
+                        syncCalendarEvent()
                         onDataUpdate?()
                     }
                 )
@@ -259,6 +259,29 @@ struct PlanSettingOverlay: View {
 
             }
             .padding(.leading, 16)
+        }
+    }
+    
+    
+    private func syncCalendarEvent() {
+        let (hour, minute) = recordService.getScheduledTime()
+
+        CalendarEventHelper.shared.requestAccess { granted in
+            guard granted else { return }
+
+            let identifier = recordService.getEventIdentifier()
+            let materialTitle = recordService.getMaterial()?.name
+            let newId = CalendarEventHelper.shared.createOrUpdateEvent(
+                for: selectedDate,
+                hour: Int(hour),
+                minute: Int(minute),
+                title: materialTitle,
+                existingIdentifier: identifier
+            )
+
+            if newId != identifier {
+                recordService.updateEventIdentifier(newId, context: viewContext)
+            }
         }
     }
     
