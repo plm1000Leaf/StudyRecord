@@ -36,6 +36,7 @@ struct StudyPlanView: View {
 
     var body: some View {
         GeometryReader { geometry in
+//        let calendarHeight = geometry.size.height * 0.98
             ZStack{
                 VStack{
                     PlanningCalendar(
@@ -44,7 +45,9 @@ struct StudyPlanView: View {
                         showPopup: $showPopup,
                         selectedDate: $selectedDate
                     )
-                    .id(calendarRefreshId) // IDを使ってカレンダーを強制更新
+                    .id(calendarRefreshId)
+                    .frame(maxWidth: .infinity)
+//                    .frame(height: calendarHeight)
                 }
                 .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
