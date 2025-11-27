@@ -63,7 +63,7 @@ struct PlanningCalendar: View {
                         .frame(width: baseWidth, alignment: .topLeading)
                         .scaleEffect(scale, anchor: .topLeading)
                         // 必要なら左右に少し余白を足しても OK
-                        .padding(.horizontal, 8)
+//                        .padding(.horizontal, 8)
                     }
                 }
                 
