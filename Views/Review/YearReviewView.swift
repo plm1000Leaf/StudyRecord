@@ -202,7 +202,7 @@ extension YearReviewView {
         VStack(spacing: 16) {
             VStack(spacing: 16) {
                 header
-                                moveSelectMonthButton
+                moveSelectMonthButton
             }
             SegmentedControlButton(selectedSegment: $selectedSegment)
                 .frame(width: 264, height: 56)

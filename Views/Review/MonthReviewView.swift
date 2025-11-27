@@ -52,7 +52,7 @@ struct MonthReviewView: View {
             continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
         }
         .animation(.easeInOut, value: showDateReviewView)
-
+        .background(Color.baseColor0.edgesIgnoringSafeArea(.all))
         }
     }
 

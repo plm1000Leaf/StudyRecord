@@ -15,67 +15,77 @@ struct PlanningCalendar: View {
     @State private var refreshTrigger = false // 手動更新用のトリガー
 
     var body: some View {
-        ZStack{
-            ScrollView {
-                VStack(spacing: 0) {
-                    header
-                    
-                    let daysWithIndex = Array(CalendarUtils.generateCalendarDays(for: currentMonth).enumerated())
-                    
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
-                        ForEach(["日", "月", "火", "水", "木", "金", "土"], id: \.self) { day in
-                            Text(day)
-                                .font(.headline)
-                                .frame(maxWidth: .infinity)
-                                .padding(.bottom, 8)
-                        }
-                        
-                        ForEach(daysWithIndex, id: \.offset) { _, date in
-                            VStack {
-                                    if date > 0 {
-                                        ZStack{
-                                            if isToday(date: date) {
-                                                Circle()
-                                                    .frame(width: 24, height: 24)
-                                                    .foregroundColor(.accentColor1)
-                                                    .opacity(0.8)
-                                                    .padding(.leading, 16)
-                                            }
-                                            Text("\(date)")
-                                                .foregroundColor(isToday(date: date) ? Color.baseColor20 : Color.gray0)
-                                                .font(.system(size: 16))
-                                                .padding(.leading, 16)
-                                                .cornerRadius(5)
-                                        }
-                                    todayStudyPlan(for: date)
+            ZStack{
+                GeometryReader{  geo in
+                    // 基準となる幅（デザインしたときの想定端末の幅）
+                    let baseWidth: CGFloat = 375
+                    // 今の画面幅に応じたスケール
+                    let scale = geo.size.width / baseWidth
+                    ScrollView {
+                        VStack(spacing: 0) {
+                            header
+                            
+                            let daysWithIndex = Array(CalendarUtils.generateCalendarDays(for: currentMonth).enumerated())
+                            
+                            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
+                                ForEach(["日", "月", "火", "水", "木", "金", "土"], id: \.self) { day in
+                                    Text(day)
+                                        .font(.headline)
+                                        .frame(maxWidth: .infinity)
+                                        .padding(.bottom, 8)
                                 }
+                                
+                                ForEach(daysWithIndex, id: \.offset) { _, date in
+                                    VStack {
+                                        if date > 0 {
+                                            ZStack{
+                                                if isToday(date: date) {
+                                                    Circle()
+                                                        .frame(width: 24, height: 24)
+                                                        .foregroundColor(.accentColor1)
+                                                        .opacity(0.8)
+                                                        .padding(.leading, 16)
+                                                }
+                                                Text("\(date)")
+                                                    .foregroundColor(isToday(date: date) ? Color.baseColor20 : Color.gray0)
+                                                    .font(.system(size: 16))
+                                                    .padding(.leading, 16)
+                                                    .cornerRadius(5)
+                                            }
+                                            todayStudyPlan(for: date)
+                                        }
+                                    }
+                                }
+                                
                             }
+                            .padding()
                         }
-
+                        .frame(width: baseWidth, alignment: .topLeading)
+                        .scaleEffect(scale, anchor: .topLeading)
+                        // 必要なら左右に少し余白を足しても OK
+                        .padding(.horizontal, 8)
                     }
-                    .padding()
+                }
+                
+                VStack {
+                    Spacer()
+                    moveMonthButton
+                        .padding(.horizontal)
                 }
             }
-            
-            VStack {
-                Spacer()
-                moveMonthButton
-                    .padding(.horizontal)
+            .onAppear {
+                loadMonthlyData()
             }
-        }
-        .onAppear {
-            loadMonthlyData()
-        }
-        .onChange(of: currentMonth) { _ in
-            loadMonthlyData()
-        }
-        .onChange(of: refreshTrigger) { _ in
-            // 手動更新トリガー
-            loadMonthlyData()
-        }
-        .onReceive(recordService.objectWillChange) { _ in
-            loadMonthlyData()
-        }
+            .onChange(of: currentMonth) { _ in
+                loadMonthlyData()
+            }
+            .onChange(of: refreshTrigger) { _ in
+                // 手動更新トリガー
+                loadMonthlyData()
+            }
+            .onReceive(recordService.objectWillChange) { _ in
+                loadMonthlyData()
+            }
     }
     
     // MARK: - Public Methods
