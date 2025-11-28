@@ -204,9 +204,11 @@ extension YearReviewView {
                 header
                 moveSelectMonthButton
             }
-            SegmentedControlButton(selectedSegment: $selectedSegment)
-                .frame(width: 264, height: 56)
-                .padding(.top, 24)
+            
+                SegmentedControlButton(selectedSegment: $selectedSegment)
+                    .frame(width: 264, height: 56)
+                    .padding(.top, 24)
+            
         }
         .background(
             GeometryReader { geo -> Color in
