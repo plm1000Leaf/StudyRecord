@@ -25,7 +25,7 @@ struct AddBookOverlay: View {
 
     let onDismiss: () -> Void
 
-    private let maxCharacters = 20
+    private let maxCharacters = 25
 
     var body: some View {
         ZStack{

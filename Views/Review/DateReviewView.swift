@@ -287,7 +287,7 @@ extension DateReviewView {
                                     Text(materialNames[index] ?? record(for: index).material?.name ?? "教材未設定")
                                         .bold()
                                         .font(.system(size: 20))
-                                        .frame(width: 104)
+                                        .frame(width: 104, height:72)
                                         .foregroundColor(.gray0)
 
                                     HStack{
