@@ -29,7 +29,7 @@ struct MaterialCard: View {
             VStack(spacing: -8){
                 materialImage
                 materialName
-                    .padding(.top, -16)
+//                    .padding(.top, -16)
             }
             
             if isEditingMode {
@@ -205,9 +205,9 @@ extension MaterialCard {
         Text(material.name ?? "")
             .font(.system(size: 16))
             .padding(.top, 16)
-            .frame(width: 72, height: 100, alignment: .center)
+            .frame(width: 72, height: 120, alignment: .center)
             .multilineTextAlignment(.center)
-//            .lineLimit(2)
+
     }
 }
 
