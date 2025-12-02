@@ -32,20 +32,45 @@ struct DateReviewView: View {
                 ScrollViewReader { proxy in
                     ScrollView {
                         let numberOfDaysInMonth = Calendar.current.range(of: .day, in: .month, for: currentMonth)?.count ?? 0
+                        
                         ForEach(0..<numberOfDaysInMonth, id: \.self){ index in
                             Group {
                                 if selectedRowIndex == index {
-                                    SelectReview(index: index)
+                                    SelectReview(index: index, proxy: proxy)
                                         .id("day-\(index)")
                                 } else {
                                     DateReviewRow(index: index)
                                         .id("day-\(index)")
                                         .onTapGesture {
+                                            // まず選択
                                             selectedRowIndex = index
+
+                                            // タップしたら少しだけ下にスクロール
+                                            DispatchQueue.main.async {
+                                                withAnimation {
+                                                    // y: 0.7 が「真ん中より少し下」
+                                                    let anchor = UnitPoint(x: 0.5, y: 0.1)
+                                                    proxy.scrollTo("day-\(index)", anchor: anchor)
+                                                }
+                                            }
                                         }
                                 }
                             }
                         }
+//                        ForEach(0..<numberOfDaysInMonth, id: \.self){ index in
+//                            Group {
+//                                if selectedRowIndex == index {
+//                                    SelectReview(index: index, proxy: proxy)
+//                                        .id("day-\(index)")
+//                                } else {
+//                                    DateReviewRow(index: index)
+//                                        .id("day-\(index)")
+//                                        .onTapGesture {
+//                                            selectedRowIndex = index
+//                                        }
+//                                }
+//                            }
+//                        }
                     }
                     .background(Color.baseColor0)
                     .onAppear {
@@ -209,7 +234,7 @@ extension DateReviewView {
         checkedDates = recordService.loadCheckedDates(for: currentMonth, context: viewContext)
     }
 
-    private func SelectReview(index: Int) -> some View {
+    private func SelectReview(index: Int, proxy: ScrollViewProxy) -> some View {
         // インデックスから実際の日付を計算
         let dayNumber = index + 1
         guard let (day, weekday) = CalendarUtils.dayAndWeekday(at: index, from: startOfMonth(currentMonth)) else {
@@ -322,8 +347,19 @@ extension DateReviewView {
                                 reviewText: Binding(
                                     get: { reviews[index] ?? (record(for: index).review ?? "") },
                                     set: { reviews[index] = $0 }
-                                ), isChecked: isChecked
+                                ), 
+                                isChecked: isChecked,
+                                onBeginEditing: {
+                                    // ★ 編集開始時にスクロール
+                                    DispatchQueue.main.async {
+                                        withAnimation {
+                                            // 「その日のカード」を画面の下寄せに持ってくる
+                                            proxy.scrollTo("input-\(index)", anchor: .top)
+                                        }
+                                    }
+                                }
                             )
+                            .id("input-\(index)")   
                             .padding(.top, 168)
                             .onAppear {
                                 let dailyRecord = record(for: index)

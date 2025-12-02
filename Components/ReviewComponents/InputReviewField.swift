@@ -11,6 +11,22 @@ struct InputReviewField: View {
     
     let isChecked: Bool
     
+    
+    // ★ 追加：編集開始時に呼ばれるコールバック
+     let onBeginEditing: (() -> Void)?
+
+     init(
+         dailyRecord: DailyRecord,
+         reviewText: Binding<String>,
+         isChecked: Bool,
+         onBeginEditing: (() -> Void)? = nil   // <- デフォルト引数で既存呼び出しも壊さない
+     ) {
+         self.dailyRecord = dailyRecord
+         self._reviewText = reviewText
+         self.isChecked = isChecked
+         self.onBeginEditing = onBeginEditing
+     }
+    
     var body: some View {
         VStack(spacing: 16) {
             if isEditing {
@@ -33,7 +49,10 @@ struct InputReviewField: View {
 extension InputReviewField {
     private var displayReviewField: some View {
         Button(action: {
-            isEditing.toggle()
+            isEditing = true
+            // 編集開始を親に知らせる
+            onBeginEditing?()
+            
         }) {
             ZStack{
                 Rectangle()
