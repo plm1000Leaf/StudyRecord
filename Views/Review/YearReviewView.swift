@@ -29,6 +29,10 @@ struct YearReviewView: View {
     
     var body: some View {
         ZStack {
+            
+            Color.baseColor0
+                .ignoresSafeArea()
+            
             if showDateReviewView {
                 DateReviewView(
                     showDateReviewView: $showDateReviewView,
@@ -82,6 +86,7 @@ struct YearReviewView: View {
             }
         }
         .animation(.easeInOut, value: showMonthReviewView)
+        .animation(.easeInOut, value: showDateReviewView)
         .onAppear {
             // AfterCheckViewからの遷移時は今日の月に設定
             if showDateReviewView {
