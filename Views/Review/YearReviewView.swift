@@ -29,6 +29,10 @@ struct YearReviewView: View {
     
     var body: some View {
         ZStack {
+            
+            Color.baseColor0
+                .ignoresSafeArea()
+            
             if showDateReviewView {
                 DateReviewView(
                     showDateReviewView: $showDateReviewView,
@@ -49,6 +53,7 @@ struct YearReviewView: View {
                         yearView
                             .zIndex(1)
                             .transition(.move(edge: .leading))
+                        
                     } else {
 
                         YearReviewGraphView(selectedSegment: $selectedSegment, selectedYear: $selectedYear)
@@ -62,26 +67,27 @@ struct YearReviewView: View {
                 .zIndex(0)
                 .transition(.move(edge: .trailing))
             }
-            if showPopup {
-                MovePeriodPopup(
-                    showPopup: $showPopup,
-                    items: (2025...2036).map { "\($0)" },
-                    onSelect: { year in
-                        selectedYear = year
-                        showPopup = false
-                    }
-                )
-            }
-            
-            if isTapShareButton {
-                ShareView(
-                   isTapShareButton: $isTapShareButton,
-                   screenshot: shareImage,
-                   continuationDays: continuationDays
-                )
-            }
+//            if showPopup {
+//                MovePeriodPopup(
+//                    showPopup: $showPopup,
+//                    items: (2025...2036).map { "\($0)" },
+//                    onSelect: { year in
+//                        selectedYear = year
+//                        showPopup = false
+//                    }
+//                )
+//            }
+//            
+//            if isTapShareButton {
+//                ShareView(
+//                   isTapShareButton: $isTapShareButton,
+//                   screenshot: shareImage,
+//                   continuationDays: continuationDays
+//                )
+//            }
         }
         .animation(.easeInOut, value: showMonthReviewView)
+        .animation(.easeInOut, value: showDateReviewView)
         .onAppear {
             // AfterCheckViewからの遷移時は今日の月に設定
             if showDateReviewView {
@@ -199,15 +205,36 @@ extension YearReviewView {
     
     
     private var yearView: some View {
-        VStack(spacing: 16) {
+        ZStack{
             VStack(spacing: 16) {
-                header
-                moveSelectMonthButton
-            }
-            
+                VStack(spacing: 16) {
+                    header
+                    moveSelectMonthButton
+                }
+                
                 SegmentedControlButton(selectedSegment: $selectedSegment)
                     .frame(width: 264, height: 56)
                     .padding(.top, 24)
+            }
+            
+            if showPopup {
+                MovePeriodPopup(
+                    showPopup: $showPopup,
+                    items: (2025...2036).map { "\($0)" },
+                    onSelect: { year in
+                        selectedYear = year
+                        showPopup = false
+                    }
+                )
+            }
+            
+            if isTapShareButton {
+                ShareView(
+                   isTapShareButton: $isTapShareButton,
+                   screenshot: shareImage,
+                   continuationDays: continuationDays
+                )
+            }
             
         }
         .background(

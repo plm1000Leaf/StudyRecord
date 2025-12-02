@@ -91,7 +91,7 @@ extension YearReviewGraphView {
                 isTapShareButton = true
             }){
                 Image(systemName: "square.and.arrow.up")
-                    .font(.system(size: 24))
+                    .font(.system(size: 32))
                     .frame(maxWidth: .infinity, alignment:
                             .trailing)
                     .foregroundColor(.mainColor0)
