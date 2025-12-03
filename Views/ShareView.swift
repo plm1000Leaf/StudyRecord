@@ -158,8 +158,8 @@ extension ShareView{
         let material = materialText ?? ""
         let summary = monthlySummary ?? ""
         let daysText = continuationDays.map { "\($0)日" } ?? ""
-        let shareTodayRecord = "今日のテーマ: \(material)\n今月の達成回数: \(summary)\n継続日数: \(daysText)"
-        let shareContinuationDays = " \(daysText)継続して取り組んでいます"
+        let shareTodayRecord = "今日のテーマ: \(material)\n\(daysText)間継続して取り組んでいます\n #リトプス〜忙しい人のための取り組み記録アプリ〜"
+        let shareContinuationDays = " \(daysText)継続して取り組んでいます!"
         if fromAfterCheck {
             if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
                let topVC = UIApplication.topViewController() {
@@ -178,15 +178,15 @@ extension ShareView{
     }
     
     private func shareToGeneral() {
+        //ダウンロードリンク貼ってもいいかも!
         let textContent: String = {
-            guard fromAfterCheck else { return "今日の取り組みをシェアします" }
             let material = materialText ?? ""
             let summary = monthlySummary ?? ""
             let daysText = continuationDays.map { "\($0)日" } ?? ""
+            let shareTodayRecord = "今日のテーマ: \(material)\n\(daysText)間継続して取り組んでいます\n #リトプス〜忙しい人のための取り組み記録アプリ〜"
+            let shareContinuationDays = " \(daysText)継続して取り組んでいます!"
             return """
-            今日のテーマ: \(material)
-            今月の取り組んだ回数: \(summary)
-            継続日数: \(daysText)
+                \(shareTodayRecord)
             """
         }()
         if fromAfterCheck {
