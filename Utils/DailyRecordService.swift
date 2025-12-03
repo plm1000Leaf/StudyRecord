@@ -101,6 +101,32 @@ final class DailyRecordService: ObservableObject {
         
         return checkedCount
     }
+   
+    
+    /// 指定した月で最も使用された教材名を取得
+    func getMostUsedMaterialName(for month: Date, context: NSManagedObjectContext) -> String? {
+        let records = loadRecordsForMonth(month, context: context)
+        var materialCount: [String: Int] = [:]
+
+        for record in records {
+            guard let name = record.material?.name?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  !name.isEmpty else { continue }
+            materialCount[name, default: 0] += 1
+        }
+
+        guard !materialCount.isEmpty else { return nil }
+
+        let mostUsed = materialCount
+            .sorted { lhs, rhs in
+                if lhs.value == rhs.value {
+                    return lhs.key < rhs.key
+                }
+                return lhs.value > rhs.value
+            }
+            .first
+
+        return mostUsed?.key
+    }
     
     /// 月別チェック数に基づいて色の濃度を計算
     func getColorOpacity(for month: Int,
