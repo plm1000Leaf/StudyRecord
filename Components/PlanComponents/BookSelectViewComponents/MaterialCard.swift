@@ -48,7 +48,7 @@ struct MaterialCard: View {
                 isEditingMaterial = false
             }
         }
-        .alert("教材を削除", isPresented: $showDeleteAlert) {
+        .alert("テーマを削除", isPresented: $showDeleteAlert) {
             Button("削除", role: .destructive) {
                 deleteMaterial()
             }

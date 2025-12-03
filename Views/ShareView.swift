@@ -59,7 +59,7 @@ extension ShareView{
                         Image(systemName:"book")
                             .font(.system(size: 24))
                             .foregroundColor(.white)
-                        Text("教材")
+                        Text("テーマ")
                             .font(.system(size: 32))
                             .foregroundColor(.white)
                     }
@@ -158,8 +158,8 @@ extension ShareView{
         let material = materialText ?? ""
         let summary = monthlySummary ?? ""
         let daysText = continuationDays.map { "\($0)日" } ?? ""
-        let shareTodayRecord = "今日の教材: \(material)\n今月の学習回数: \(summary)\n継続日数: \(daysText)"
-        let shareContinuationDays = " \(daysText)継続して学習しています"
+        let shareTodayRecord = "今日のテーマ: \(material)\n今月の達成回数: \(summary)\n継続日数: \(daysText)"
+        let shareContinuationDays = " \(daysText)継続して取り組んでいます"
         if fromAfterCheck {
             if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
                let topVC = UIApplication.topViewController() {
@@ -169,7 +169,7 @@ extension ShareView{
         } else if let img = screenshot {
             if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
                let topVC = UIApplication.topViewController() {
-                composeVC.setInitialText("今日の学習記録をシェアします")
+                composeVC.setInitialText("今日の取り組みをシェアします")
                 composeVC.setInitialText(shareContinuationDays)
                 composeVC.add(img)
                 topVC.present(composeVC, animated: true)
@@ -179,13 +179,13 @@ extension ShareView{
     
     private func shareToGeneral() {
         let textContent: String = {
-            guard fromAfterCheck else { return "今日の学習記録をシェアします" }
+            guard fromAfterCheck else { return "今日の取り組みをシェアします" }
             let material = materialText ?? ""
             let summary = monthlySummary ?? ""
             let daysText = continuationDays.map { "\($0)日" } ?? ""
             return """
-            今日の教材: \(material)
-            今月の学習回数: \(summary)
+            今日のテーマ: \(material)
+            今月の取り組んだ回数: \(summary)
             継続日数: \(daysText)
             """
         }()

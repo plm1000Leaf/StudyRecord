@@ -70,7 +70,7 @@ struct EditMaterialOverlay: View {
             LabelAddModal(labels: $labelList, selectedLabel: $selectedLabel)
               .presentationDetents([.fraction(0.15)])
           }
-        .alert("教材を削除", isPresented: $showDeleteCheckAlert) {
+        .alert("テーマを削除", isPresented: $showDeleteCheckAlert) {
 
             Button("削除", role: .destructive) {
                 deleteMaterial()

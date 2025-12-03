@@ -108,7 +108,7 @@ struct BookSelectModal: View {
                 }
                 
             } message: {
-                Text("このラベルに紐づく教材は「未分類」に移動します。")
+                Text("このラベルに紐づくテーマは「未分類」に移動します。")
             }
         }
     }
