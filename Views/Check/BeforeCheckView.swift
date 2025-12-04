@@ -49,7 +49,7 @@ struct BeforeCheckView: View {
                     isDoneStudy: $isDoneStudyState,
                     selectedTabIndex: $selectedTabIndex,
                     navigateToReview: $navigateToReview,
-                    navigateToPlan: $navigateToPlan,
+                    navigateToPlan: $navigateToPlan, selectedDate: selectedDate,
                     dismiss: {}
                 )
             } else {
@@ -144,7 +144,7 @@ extension BeforeCheckView {
                                     )
                                     .foregroundColor(Color.mainColor0)
                             )
-                        Text("タップして\n教材を選択")
+                        Text("タップして\nテーマを選択")
                             .font(.system(size: 16))
                             .foregroundColor(.baseColor20)
                     }
@@ -203,7 +203,7 @@ extension BeforeCheckView {
             }
         }
         .padding(.bottom, 32)
-        .padding(.leading, 24)
+        .padding(.leading, 48)
     }
     
     
@@ -214,7 +214,7 @@ extension BeforeCheckView {
             isDoneStudyState = true
             print("Doneボタンが押されました")
         }){
-            BasicButton(label: "Done", icon: "checkmark", width: 288, height: 80,fontSize: 48,imageSize: 32)
+            BasicButton(label: "完了", icon: "checkmark", width: 288, height: 80,fontSize: 48,imageSize: 32)
         }
         .disabled(isDoneStudyState || !isToday)
         .padding(.top, -16)

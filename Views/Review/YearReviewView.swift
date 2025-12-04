@@ -77,7 +77,7 @@ struct YearReviewView: View {
 //                    }
 //                )
 //            }
-//            
+//
 //            if isTapShareButton {
 //                ShareView(
 //                   isTapShareButton: $isTapShareButton,
@@ -261,6 +261,6 @@ extension YearReviewView {
     let controller = PersistenceController.preview
 
     return YearReviewView(showDateReviewView: .constant(false))
-        .environment(\.managedObjectContext, controller.container.viewContext) 
+        .environment(\.managedObjectContext, controller.container.viewContext)
         .environmentObject(SnapshotManager())
 }

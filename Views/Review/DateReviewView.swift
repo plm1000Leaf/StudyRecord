@@ -309,7 +309,7 @@ extension DateReviewView {
                                 }
                                 //ページ数表示
                                 VStack(spacing: 8){
-                                    Text(materialNames[index] ?? record(for: index).material?.name ?? "教材未設定")
+                                    Text(materialNames[index] ?? record(for: index).material?.name ?? "未設定")
                                         .bold()
                                         .font(.system(size: 20))
                                         .frame(width: 104, height:72)
@@ -363,7 +363,7 @@ extension DateReviewView {
                             .padding(.top, 168)
                             .onAppear {
                                 let dailyRecord = record(for: index)
-                                materialNames[index] = record(for: index).material?.name ?? "教材未設定"
+                                materialNames[index] = record(for: index).material?.name ?? "未設定"
 
                                 if let data = dailyRecord.material?.imageData,
                                    let uiImage = UIImage(data: data) {

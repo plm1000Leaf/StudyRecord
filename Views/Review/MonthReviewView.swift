@@ -18,6 +18,9 @@ struct MonthReviewView: View {
     @State private var shareImage: UIImage? = nil
     @State private var captureRect: CGRect = .zero
     @State private var continuationDays: Int = 0
+    @State private var shareMaterialText: String = ""
+    @State private var shareMonthlySummary: String = ""
+    @State private var shareContinuationDays: Int = 0
     @Binding var showMonthReviewView: Bool
     @Binding var currentMonth: Date
     var body: some View {
@@ -42,7 +45,9 @@ struct MonthReviewView: View {
                 ShareView(
                     isTapShareButton: $isTapShareButton,
                     screenshot: shareImage,
-                    continuationDays: continuationDays
+                    materialText: shareMaterialText,
+                    monthlySummary: shareMonthlySummary,
+                    continuationDays: shareContinuationDays
                 )
         
             }
@@ -91,6 +96,7 @@ extension MonthReviewView {
     
     private func captureScreenshot() {
         shareImage = ScreenshotHelper.captureScreen(in: captureRect)
+        prepareShareTexts()
         isTapShareButton = true
     }
     
@@ -127,6 +133,21 @@ extension MonthReviewView {
 //        .environment(\.managedObjectContext, controller.container.viewContext)
 //    
 //}
+
+extension MonthReviewView {
+    private func prepareShareTexts() {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: currentMonth)
+        let month = calendar.component(.month, from: currentMonth)
+
+        let checkCount = recordService.getCheckedCountForMonth(currentMonth, context: viewContext)
+        let mostUsedMaterial = recordService.getMostUsedMaterialName(for: currentMonth, context: viewContext) ?? "未設定"
+
+        shareMaterialText = mostUsedMaterial
+        shareMonthlySummary = "\(year)年\(month)月は\(checkCount)日取り組みました\n \(mostUsedMaterial)を主に取り組みました"
+        shareContinuationDays = continuationDays
+    }
+}
 
 
 #Preview {
