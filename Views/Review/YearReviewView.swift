@@ -23,6 +23,7 @@ struct YearReviewView: View {
     @State private var shareImage: UIImage? = nil
     @State private var captureRect: CGRect = .zero
     @State private var continuationDays: Int = 0
+    @State private var yearlyCheckedDays: Int = 0
     @State private var monthlyCheckCounts: [Int: Int] = [:]
     
     @Binding var showDateReviewView: Bool
@@ -95,7 +96,7 @@ struct YearReviewView: View {
                 showMonthReviewView = true
             }
             continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
-            monthlyCheckCounts = recordService.loadMonthlyCheckCountsFromMonthlyRecord(for: selectedYear,context: viewContext)
+            updateMonthlyCheckData(for: selectedYear)
             
         }
         .onChange(of: showDateReviewView) { newValue in
@@ -106,7 +107,7 @@ struct YearReviewView: View {
             }
         }
         .onChange(of: selectedYear) { newValue in
-            monthlyCheckCounts = recordService.loadMonthlyCheckCountsFromMonthlyRecord(for: newValue,context: viewContext)
+            updateMonthlyCheckData(for: newValue)
         }
         
     }
@@ -127,6 +128,11 @@ struct YearReviewView: View {
             selectedYear = year
             selectedMonth = month
         }
+    }
+    
+    private func updateMonthlyCheckData(for year: Int) {
+        monthlyCheckCounts = recordService.loadMonthlyCheckCountsFromMonthlyRecord(for: year, context: viewContext)
+        yearlyCheckedDays = monthlyCheckCounts.values.reduce(0, +)
     }
 }
 
@@ -154,6 +160,7 @@ extension YearReviewView {
             Button(action: {
                 shareImage = ScreenshotHelper.captureScreen(in: captureRect)
                 continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
+                updateMonthlyCheckData(for: selectedYear)
                 isTapShareButton = true
             }){
                     Image(systemName: "square.and.arrow.up")
@@ -232,7 +239,9 @@ extension YearReviewView {
                 ShareView(
                    isTapShareButton: $isTapShareButton,
                    screenshot: shareImage,
-                   continuationDays: continuationDays
+                   continuationDays: continuationDays,
+                   shareYear: selectedYear,
+                   yearlyCheckedDays: yearlyCheckedDays
                 )
             }
             

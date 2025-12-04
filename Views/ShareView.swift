@@ -23,6 +23,8 @@ struct ShareView: View {
     var materialText: String? = nil
     var monthlySummary: String? = nil
     var continuationDays: Int? = nil
+    var shareYear: Int? = nil
+    var yearlyCheckedDays: Int? = nil
     
     var body: some View {
         ZStack{
@@ -159,7 +161,6 @@ extension ShareView{
         let summary = monthlySummary ?? ""
         let daysText = continuationDays.map { "\($0)日" } ?? ""
         let shareTodayRecord = "今日の教材: \(material)\n今月の学習回数: \(summary)\n継続日数: \(daysText)"
-        let shareContinuationDays = " \(daysText)継続して学習しています"
         if fromAfterCheck {
             if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
                let topVC = UIApplication.topViewController() {
@@ -167,10 +168,19 @@ extension ShareView{
                 topVC.present(composeVC, animated: true)
             }
         } else if let img = screenshot {
+            let shareContinuationDays = continuationDays.map { "\($0)日継続して学習しています" } ?? "今日の学習記録をシェアします"
+            let shareYearlyCheckDays: String?
+            if let year = shareYear, let checkedDays = yearlyCheckedDays {
+                shareYearlyCheckDays = "\(year)年は\(checkedDays)日取り組みました\n"
+            } else {
+                shareYearlyCheckDays = nil
+            }
+
+            let shareText = shareYearlyCheckDays ?? shareContinuationDays
+
             if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
                let topVC = UIApplication.topViewController() {
-                composeVC.setInitialText("今日の学習記録をシェアします")
-                composeVC.setInitialText(shareContinuationDays)
+                composeVC.setInitialText(shareText)
                 composeVC.add(img)
                 topVC.present(composeVC, animated: true)
             }
