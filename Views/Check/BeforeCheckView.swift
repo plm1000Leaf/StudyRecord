@@ -203,7 +203,7 @@ extension BeforeCheckView {
             }
         }
         .padding(.bottom, 32)
-        .padding(.leading, 24)
+        .padding(.leading, 48)
     }
     
     

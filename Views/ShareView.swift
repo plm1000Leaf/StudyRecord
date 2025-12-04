@@ -177,7 +177,7 @@ extension ShareView{
                let topVC = UIApplication.topViewController() {
                 let monthlyLines = [
                     summary.isEmpty ? nil : summary,
-                    material.isEmpty ? nil : nil,
+                    material.isEmpty ? nil : "よく取り組んだ教材: \(material)",
                     daysText.isEmpty ? nil : "\(daysText)継続中",
                     hashtag
                 ]
@@ -208,7 +208,7 @@ extension ShareView{
 
         let monthlyShareText = [
             summary.isEmpty ? nil : summary,
-            material.isEmpty ? nil : nil,
+            material.isEmpty ? nil : "よく取り組んだ教材: \(material)",
             daysText.isEmpty ? nil : "\(daysText)継続中",
             hashtag
         ]
