@@ -70,7 +70,7 @@ struct EditMaterialOverlay: View {
             LabelAddModal(labels: $labelList, selectedLabel: $selectedLabel)
               .presentationDetents([.fraction(0.15)])
           }
-        .alert("教材を削除", isPresented: $showDeleteCheckAlert) {
+        .alert("テーマを削除", isPresented: $showDeleteCheckAlert) {
 
             Button("削除", role: .destructive) {
                 deleteMaterial()
@@ -303,9 +303,9 @@ extension EditMaterialOverlay {
             // 保存成功後にビューを閉じる
             onDismiss()
 
-            print("✅ 教材を更新: \(trimmedName) - \(selectedLabel)")
+            print("✅ テーマを更新: \(trimmedName) - \(selectedLabel)")
         } catch {
-            print("❌ 教材更新エラー: \(error.localizedDescription)")
+            print("❌ テーマ更新エラー: \(error.localizedDescription)")
         }
     }
 
@@ -315,7 +315,7 @@ extension EditMaterialOverlay {
         do {
             try viewContext.save()
         } catch {
-            print("教材削除エラー: \(error.localizedDescription)")
+            print("テーマ削除エラー: \(error.localizedDescription)")
         }
     }
     private func resetFields() {

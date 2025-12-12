@@ -35,7 +35,7 @@ struct LabelSelector: View {
             }
             Button("キャンセル", role: .cancel) { }
         } message: {
-            Text("「\(labelToDelete)」を削除しますか？\nこのラベルに紐づく教材は「未分類」に変更されます。")
+            Text("「\(labelToDelete)」を削除しますか？\nこのラベルに紐づくテーマは「未分類」に変更されます。")
         }
     }
 }

@@ -18,7 +18,7 @@ struct YearReviewGraphView: View {
     @State private var shareImage: UIImage? = nil
     @State private var captureRect: CGRect = .zero
     @State private var continuationDays: Int = 0
-
+    @State private var yearlyCheckedDays: Int = 0
     
     var body: some View {
         ZStack{
@@ -36,16 +36,27 @@ struct YearReviewGraphView: View {
             }
             if isTapShareButton {
                 ShareView(isTapShareButton: $isTapShareButton, screenshot: shareImage,
-                          continuationDays: continuationDays)
+                          continuationDays: continuationDays,
+                          shareYear: selectedYear,
+                          yearlyCheckedDays: yearlyCheckedDays)
             }
         }
         .onAppear {
             continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
+            loadYearlyCheckedDays(for: selectedYear)
+        }
+        .onChange(of: selectedYear) { newValue in
+            loadYearlyCheckedDays(for: newValue)
         }
     }
 }
 
 extension YearReviewGraphView {
+    private func loadYearlyCheckedDays(for year: Int) {
+        let statistics = recordService.getYearlyStatistics(for: year, context: viewContext)
+        yearlyCheckedDays = statistics.totalCheckedDays
+    }
+
     private var yearGraphView: some View {
         VStack(spacing: 8) {
             VStack(spacing: 8) {
@@ -89,6 +100,7 @@ extension YearReviewGraphView {
                 shareImage = ScreenshotHelper.captureScreen(in: captureRect)
                 continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
                 isTapShareButton = true
+                loadYearlyCheckedDays(for: selectedYear)
             }){
                 Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 32))
@@ -208,7 +220,7 @@ struct YearReviewGraphWithYear: View {
     
     // MARK: - Private Methods
     
-    /// 月ごとの学習完了率を計算
+    /// 月ごとの完了率を計算
     private func loadMonthlyPercentages() {
         monthlyPercentages = graphDataService.loadMonthlyPercentages(for: selectedYear, context: viewContext)
     }

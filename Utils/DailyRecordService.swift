@@ -102,6 +102,30 @@ final class DailyRecordService: ObservableObject {
         return checkedCount
     }
     
+    /// 指定した月で最も使用された教材名を取得
+    func getMostUsedMaterialName(for month: Date, context: NSManagedObjectContext) -> String? {
+        let records = loadRecordsForMonth(month, context: context)
+        var materialCount: [String: Int] = [:]
+
+        for record in records {
+            guard let name = record.material?.name?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  !name.isEmpty else { continue }
+            materialCount[name, default: 0] += 1
+        }
+
+        guard !materialCount.isEmpty else { return nil }
+
+        let mostUsed = materialCount
+            .sorted { lhs, rhs in
+                if lhs.value == rhs.value {
+                    return lhs.key < rhs.key
+                }
+                return lhs.value > rhs.value
+            }
+            .first
+
+        return mostUsed?.key
+    }
     /// 月別チェック数に基づいて色の濃度を計算
     func getColorOpacity(for month: Int,
                          year: Int,
@@ -223,7 +247,7 @@ final class DailyRecordService: ObservableObject {
             try context.save()
             objectWillChange.send()
         } catch {
-            print("教材の保存に失敗しました: \(error.localizedDescription)")
+            print("テーマの保存に失敗しました: \(error.localizedDescription)")
         }
     }
     
@@ -612,8 +636,8 @@ extension DailyRecordService {
         print("現在のレコード: \(currentRecord?.description ?? "nil")")
         if let record = currentRecord {
             print("日付: \(record.date?.formatted() ?? "不明")")
-            print("学習範囲: \(getStudyRange())")
-            print("教材: \(getMaterial()?.name ?? "未設定")")
+            print("範囲: \(getStudyRange())")
+            print("テーマ: \(getMaterial()?.name ?? "未設定")")
             print("予定時間: \(getFormattedTime())")
             print("イベントID: \(record.eventIdentifier ?? "nil")")
         }

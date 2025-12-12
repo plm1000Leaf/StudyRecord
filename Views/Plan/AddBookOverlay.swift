@@ -252,9 +252,9 @@ extension AddBookOverlay {
             resetFields()
             // 保存成功後にビューを閉じる
             onDismiss()
-            print("✅ 新しい教材を保存: \(trimmedName) - \(selectedLabel)")
+            print("✅ 新しいテーマを保存: \(trimmedName) - \(selectedLabel)")
         } catch {
-            print("❌ 新規教材保存エラー: \(error.localizedDescription)")
+            print("❌ 新規テーマ保存エラー: \(error.localizedDescription)")
         }
     }
 

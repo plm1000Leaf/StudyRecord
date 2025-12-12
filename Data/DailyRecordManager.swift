@@ -118,9 +118,9 @@ final class DailyRecordManager {
         
         do {
             try context.save()
-            print("学習完了状態を更新しました: \(isChecked ? "完了" : "未完了")")
+            print("完了状態を更新しました: \(isChecked ? "完了" : "未完了")")
         } catch {
-            print("学習完了状態の保存に失敗しました: \(error.localizedDescription)")
+            print("完了状態の保存に失敗しました: \(error.localizedDescription)")
         }
     }
     

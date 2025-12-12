@@ -18,9 +18,20 @@ struct AfterCheckView: View {
     @State private var shareMonthlySummary: String = ""
     @State private var shareContinuationDays: Int = 0
     @State private var showCancelCheckAlert = false
-    
+    var selectedDate: Date
+
+    // 今日の日付をチェックするための計算プロパティ
+    private var isToday: Bool {
+        Calendar.current.isDate(selectedDate, inSameDayAs: Date())
+    }
     var dismiss: () -> Void
     
+    private var formattedSelectedDate: String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.dateFormat = "M月d日(E)"
+        return formatter.string(from: selectedDate)
+    }
 
     var body: some View {
         ZStack {
@@ -80,14 +91,14 @@ extension AfterCheckView {
     }
     
     private var checkViewTitle: some View {
-        Text("今日の学習")
+        Text(formattedSelectedDate)
             .font(.system(size: 32))
             .padding(.top, 48)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var studyDoneText: some View {
-        Text("学習完了")
+        Text("完了")
             .font(.system(size: 72))
             .accessibilityIdentifier("afterCheckCompletionTitle")
     }
@@ -166,13 +177,13 @@ extension AfterCheckView {
     }
 }
 
-#Preview {
-    AfterCheckView(
-        isDoneStudy: .constant(true),
-        selectedTabIndex: .constant(1),
-        navigateToReview: .constant(false),
-        navigateToPlan: .constant(false),
-        dismiss: {}
-    )
-    .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-}
+//#Preview {
+//    AfterCheckView(
+//        isDoneStudy: .constant(true),
+//        selectedTabIndex: .constant(1),
+//        navigateToReview: .constant(false),
+//        navigateToPlan: .constant(false), selectedDate: selectedDate,
+//        dismiss: {}
+//    )
+//    .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+//}
