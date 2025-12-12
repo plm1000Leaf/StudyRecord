@@ -220,7 +220,7 @@ struct YearReviewGraphWithYear: View {
     
     // MARK: - Private Methods
     
-    /// 月ごとの学習完了率を計算
+    /// 月ごとの完了率を計算
     private func loadMonthlyPercentages() {
         monthlyPercentages = graphDataService.loadMonthlyPercentages(for: selectedYear, context: viewContext)
     }

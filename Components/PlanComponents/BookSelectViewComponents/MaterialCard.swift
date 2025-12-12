@@ -48,7 +48,7 @@ struct MaterialCard: View {
                 isEditingMaterial = false
             }
         }
-        .alert("教材を削除", isPresented: $showDeleteAlert) {
+        .alert("テーマを削除", isPresented: $showDeleteAlert) {
             Button("削除", role: .destructive) {
                 deleteMaterial()
             }
@@ -264,7 +264,7 @@ extension MaterialCard {
             isEditingMaterial = false
             activeEditingMaterialID = nil
         } catch {
-            print("教材名保存エラー: \(error.localizedDescription)")
+            print("テーマ名保存エラー: \(error.localizedDescription)")
         }
     }
     
@@ -277,7 +277,7 @@ extension MaterialCard {
                 activeEditingMaterialID = nil
             }
         } catch {
-            print("教材削除エラー: \(error.localizedDescription)")
+            print("テーマ削除エラー: \(error.localizedDescription)")
         }
     }
     

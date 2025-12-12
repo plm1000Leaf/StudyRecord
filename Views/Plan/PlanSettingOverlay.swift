@@ -216,7 +216,7 @@ struct PlanSettingOverlay: View {
                                 )
                                 .foregroundColor(Color.mainColor0)
                         )
-                    Text("タップで\n教材を選択")
+                    Text("タップで\nテーマを選択")
                         .bold()
                         .font(.system(size: 16))
                         .foregroundColor(.baseColor20)

@@ -61,7 +61,7 @@ extension ShareView{
                         Image(systemName:"book")
                             .font(.system(size: 24))
                             .foregroundColor(.white)
-                        Text("教材")
+                        Text("テーマ")
                             .font(.system(size: 32))
                             .foregroundColor(.white)
                     }
@@ -160,7 +160,7 @@ extension ShareView{
         let material = materialText ?? ""
         let summary = monthlySummary ?? ""
         let daysText = continuationDays.map { "\($0)日" } ?? ""
-        let shareTodayRecord = "今日の教材: \(material)\n今月の学習回数: \(summary)\n継続日数: \(daysText)"
+        let shareTodayRecord = "今日のテーマ: \(material)\n今月の達成回数: \(summary)\n継続日数: \(daysText)"
         if fromAfterCheck {
             if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
                let topVC = UIApplication.topViewController() {
@@ -168,7 +168,7 @@ extension ShareView{
                 topVC.present(composeVC, animated: true)
             }
         } else if let img = screenshot {
-            let shareContinuationDays = continuationDays.map { "\($0)日継続して学習しています" } ?? "今日の学習記録をシェアします"
+            let shareContinuationDays = continuationDays.map { "\($0)日継続しています" } ?? "今日の記録をシェアします"
             let shareYearlyCheckDays: String?
             if let year = shareYear, let checkedDays = yearlyCheckedDays {
                 shareYearlyCheckDays = "\(year)年は\(checkedDays)日取り組みました\n"
@@ -189,13 +189,13 @@ extension ShareView{
     
     private func shareToGeneral() {
         let textContent: String = {
-            guard fromAfterCheck else { return "今日の学習記録をシェアします" }
+            guard fromAfterCheck else { return "今日の記録をシェアします" }
             let material = materialText ?? ""
             let summary = monthlySummary ?? ""
             let daysText = continuationDays.map { "\($0)日" } ?? ""
             return """
-            今日の教材: \(material)
-            今月の学習回数: \(summary)
+            今日のテーマ: \(material)
+            今月の回数: \(summary)
             継続日数: \(daysText)
             """
         }()

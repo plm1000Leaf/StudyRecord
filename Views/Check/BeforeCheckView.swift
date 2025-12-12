@@ -43,13 +43,13 @@ struct BeforeCheckView: View {
     var body: some View {
         
         Group {
-            // 今日の日付で、かつ学習完了済みの場合のみAfterCheckViewを表示
+            // 今日の日付で、かつ完了済みの場合のみAfterCheckViewを表示
             if isToday && isDoneStudyState {
                 AfterCheckView(
                     isDoneStudy: $isDoneStudyState,
                     selectedTabIndex: $selectedTabIndex,
                     navigateToReview: $navigateToReview,
-                    navigateToPlan: $navigateToPlan,
+                    navigateToPlan: $navigateToPlan, selectedDate: selectedDate,
                     dismiss: {}
                 )
             } else {
@@ -144,7 +144,7 @@ extension BeforeCheckView {
                                     )
                                     .foregroundColor(Color.mainColor0)
                             )
-                        Text("タップして\n教材を選択")
+                        Text("タップして\nテーマを選択")
                             .font(.system(size: 16))
                             .foregroundColor(.baseColor20)
                     }
@@ -212,9 +212,9 @@ extension BeforeCheckView {
         Button(action: {
             recordService.updateIsChecked(true, context: viewContext)
             isDoneStudyState = true
-            print("Doneボタンが押されました")
+            print("完了ボタンが押されました")
         }){
-            BasicButton(label: "Done", icon: "checkmark", width: 288, height: 80,fontSize: 48,imageSize: 32)
+            BasicButton(label: "完了", icon: "checkmark", width: 288, height: 80,fontSize: 48,imageSize: 32)
         }
         .disabled(isDoneStudyState || !isToday)
         .padding(.top, -16)

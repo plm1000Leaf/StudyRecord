@@ -223,7 +223,7 @@ final class DailyRecordService: ObservableObject {
             try context.save()
             objectWillChange.send()
         } catch {
-            print("教材の保存に失敗しました: \(error.localizedDescription)")
+            print("テーマの保存に失敗しました: \(error.localizedDescription)")
         }
     }
     
@@ -612,8 +612,8 @@ extension DailyRecordService {
         print("現在のレコード: \(currentRecord?.description ?? "nil")")
         if let record = currentRecord {
             print("日付: \(record.date?.formatted() ?? "不明")")
-            print("学習範囲: \(getStudyRange())")
-            print("教材: \(getMaterial()?.name ?? "未設定")")
+            print("範囲: \(getStudyRange())")
+            print("テーマ: \(getMaterial()?.name ?? "未設定")")
             print("予定時間: \(getFormattedTime())")
             print("イベントID: \(record.eventIdentifier ?? "nil")")
         }

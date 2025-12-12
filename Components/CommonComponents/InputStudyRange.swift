@@ -85,7 +85,7 @@ extension InputStudyRange {
                 Button(action: {
                     isInputting = true
                 }){
-                    BasicButton(label:"学習範囲を入力", colorOpacity: 0.5, width: baseWidth, height: baseHeight)
+                    BasicButton(label:"範囲を入力", colorOpacity: 0.5, width: baseWidth, height: baseHeight)
                 }
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
