@@ -65,7 +65,7 @@ extension ShareView{
                             .font(.system(size: 32))
                             .foregroundColor(.white)
                     }
-
+                    
                     
                     Text(materialText ?? "")
                         .font(.system(size: 48))
@@ -82,14 +82,14 @@ extension ShareView{
                             Text("継続日数")
                                 .font(.system(size: 32))
                                 .foregroundColor(.white)
-                            }
-
+                        }
+                        
                         
                         Text("\(days)日")
                             .font(.system(size: 48))
                             .foregroundColor(.white)
                             .padding(.leading, 8)
-
+                        
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -144,11 +144,11 @@ extension ShareView{
         let controller = UIHostingController(rootView: self)
         // レンダリング用の View
         let view = controller.view!
-
+        
         // サイズを指定
         view.bounds = CGRect(origin: .zero, size: size)
         view.backgroundColor = .clear
-
+        
         // レンダリング
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { _ in
@@ -160,24 +160,41 @@ extension ShareView{
         let material = materialText ?? ""
         let summary = monthlySummary ?? ""
         let daysText = continuationDays.map { "\($0)日" } ?? ""
-        let shareTodayRecord = "今日のテーマ: \(material)\n今月の達成回数: \(summary)\n継続日数: \(daysText)"
+        let hashtag = " #リトプス〜忙しい人のための取り組み記録アプリ〜"
+        
+        let shareTodayRecord = [
+            "今日のテーマ: \(material)",
+            daysText.isEmpty ? nil : "\(daysText)間継続して取り組んでいます",
+            hashtag
+        ]
+            .compactMap { $0 }
+            .joined(separator: "\n")
+        
         if fromAfterCheck {
             if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
                let topVC = UIApplication.topViewController() {
-                composeVC.setInitialText(shareTodayRecord)
-                topVC.present(composeVC, animated: true)
+                let monthlyLines = [
+                    summary.isEmpty ? nil : summary,
+                    material.isEmpty ? nil : "よく取り組んだ教材: \(material)",
+                    daysText.isEmpty ? nil : "\(daysText)継続中",
+                    hashtag
+                ]
+                    .compactMap { $0 }
+                    .joined(separator: "\n")
+                
+                composeVC.setInitialText(monthlyLines)
             }
         } else if let img = screenshot {
-            let shareContinuationDays = continuationDays.map { "\($0)日継続しています" } ?? "今日の記録をシェアします"
+            let shareContinuationDays = continuationDays.map { "\($0)日継続しています!\n今月は主に\(material)を取り組みました\n#リトプス〜忙しい人のための取り組み記録アプリ〜" } ?? "今日の記録をシェアします"
             let shareYearlyCheckDays: String?
             if let year = shareYear, let checkedDays = yearlyCheckedDays {
-                shareYearlyCheckDays = "\(year)年は\(checkedDays)日取り組みました\n"
+                shareYearlyCheckDays = "\(year)年は\(checkedDays)日取り組みました\n#リトプス〜忙しい人のための取り組み記録アプリ〜"
             } else {
                 shareYearlyCheckDays = nil
             }
-
+            
             let shareText = shareYearlyCheckDays ?? shareContinuationDays
-
+            
             if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
                let topVC = UIApplication.topViewController() {
                 composeVC.setInitialText(shareText)
@@ -188,43 +205,36 @@ extension ShareView{
     }
     
     private func shareToGeneral() {
-        let textContent: String = {
-            guard fromAfterCheck else { return "今日の記録をシェアします" }
-            let material = materialText ?? ""
-            let summary = monthlySummary ?? ""
-            let daysText = continuationDays.map { "\($0)日" } ?? ""
-            return """
-            今日のテーマ: \(material)
-            今月の回数: \(summary)
-            継続日数: \(daysText)
-            """
-        }()
+        let material = materialText ?? ""
+        let summary = monthlySummary ?? ""
+        let daysText = continuationDays.map { "\($0)日" } ?? ""
+        let hashtag = " #リトプス〜忙しい人のための取り組み記録アプリ〜"
+        let todayShareText = [
+            "今日のテーマ: \(material)",
+            daysText.isEmpty ? nil : "\(daysText)間継続して取り組んでいます¥",
+            hashtag
+        ]
+            .compactMap { $0 }
+            .joined(separator: "\n")
+        
+        let monthlyShareText = [
+            summary.isEmpty ? nil : summary,
+            material.isEmpty ? nil : "よく取り組んだ教材: \(material)",
+            daysText.isEmpty ? nil : "\(daysText)継続中",
+            hashtag
+        ]
+            .compactMap { $0 }
+            .joined(separator: "\n")
+        
+        
         if fromAfterCheck {
-                if let url = URL(string: "line://msg/text/\(textContent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"),
-                   UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                } else if let topVC = UIApplication.topViewController() {
-                    let activityVC = UIActivityViewController(activityItems: [textContent], applicationActivities: nil)
-                    activityVC.excludedActivityTypes = [.postToTwitter, .postToFacebook, .mail, .message]
-                    
-                    if let pop = activityVC.popoverPresentationController {
-                        pop.sourceView = topVC.view
-                        pop.sourceRect = CGRect(
-                            x: topVC.view.bounds.midX,
-                            y: topVC.view.bounds.midY,
-                            width: 0,
-                            height: 0
-                        )
-                        pop.permittedArrowDirections = []
-                    }
-                    
-                    DispatchQueue.main.async {
-                        topVC.present(activityVC, animated: true, completion: nil)
-                    }
-                }
-            } else if let img = screenshot, let topVC = UIApplication.topViewController() {
-                let activityVC = UIActivityViewController(activityItems: [img], applicationActivities: nil)
-                activityVC.excludedActivityTypes = [.postToTwitter, .postToFacebook, .postToWeibo]
+            if let url = URL(string: "line://msg/text/\(todayShareText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"),
+               UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else if let topVC = UIApplication.topViewController() {
+                let activityVC = UIActivityViewController(activityItems: [todayShareText], applicationActivities: nil)
+                activityVC.excludedActivityTypes = [.postToTwitter, .postToFacebook, .mail, .message]
+                
                 
                 if let pop = activityVC.popoverPresentationController {
                     pop.sourceView = topVC.view
@@ -241,31 +251,51 @@ extension ShareView{
                     topVC.present(activityVC, animated: true, completion: nil)
                 }
             }
+            
+        } else if let img = screenshot, let topVC = UIApplication.topViewController() {
+            let activityVC = UIActivityViewController(activityItems: [monthlyShareText, img], applicationActivities: nil)
+            activityVC.excludedActivityTypes = [.postToTwitter, .postToFacebook, .postToWeibo]
+
+            if let pop = activityVC.popoverPresentationController {
+                pop.sourceView = topVC.view
+                pop.sourceRect = CGRect(
+                    x: topVC.view.bounds.midX,
+                    y: topVC.view.bounds.midY,
+                    width: 0,
+                    height: 0
+                )
+                pop.permittedArrowDirections = []
+            }
+
+            DispatchQueue.main.async {
+                topVC.present(activityVC, animated: true, completion: nil)
+            }
+        }
+        }
+        
     }
     
-}
-
-extension UIApplication {
-    static func topViewController(
-        _ base: UIViewController? = UIApplication.shared
-            .connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-            .first?
-            .windows.first(where: { $0.isKeyWindow })?
-            .rootViewController
-    ) -> UIViewController? {
-        if let nav = base as? UINavigationController {
-            return topViewController(nav.visibleViewController)
+    extension UIApplication {
+        static func topViewController(
+            _ base: UIViewController? = UIApplication.shared
+                .connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .first?
+                .windows.first(where: { $0.isKeyWindow })?
+                .rootViewController
+        ) -> UIViewController? {
+            if let nav = base as? UINavigationController {
+                return topViewController(nav.visibleViewController)
+            }
+            if let tab = base as? UITabBarController {
+                return topViewController(tab.selectedViewController)
+            }
+            if let presented = base?.presentedViewController {
+                return topViewController(presented)
+            }
+            return base
         }
-        if let tab = base as? UITabBarController {
-            return topViewController(tab.selectedViewController)
-        }
-        if let presented = base?.presentedViewController {
-            return topViewController(presented)
-        }
-        return base
     }
-}
 
 //#Preview {
 //    ShareView(isTapShareButton: $isTapShareButton)
