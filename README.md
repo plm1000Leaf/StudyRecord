@@ -50,7 +50,7 @@ StudyRecordは日ごとの学習内容を記録・振り返りできる iOS ア�
 
 ![StudyRecord_Readme2](https://github.com/user-attachments/assets/60ca93dd-e834-4664-81ce-2b9d1635847d)
 
-iPhoneに標準搭載されているカレンダーアプリと連携しています．カレンダーアプリの繰り返し機能にも対応しています．
+iPhoneに標準搭載されているカレンダーアプリと連携しています．
 
 ## 技術スタック
 - **開発言語**: Swift 5.9
