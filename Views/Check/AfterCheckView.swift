@@ -86,7 +86,7 @@ extension AfterCheckView {
             }
             
         } message: {
-            Text("Doneボタンを押し間違えた場合\n取り消すことができます")
+            Text("完了ボタンを押し間違えた場合\n取り消すことができます")
         }
     }
     

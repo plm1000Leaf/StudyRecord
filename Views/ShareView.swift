@@ -1,4 +1,4 @@
-
+//
 //  ShereView.swift
 //  StudyRecord
 //
@@ -161,47 +161,40 @@ extension ShareView{
         let summary = monthlySummary ?? ""
         let daysText = continuationDays.map { "\($0)日" } ?? ""
         let hashtag = " #リトプス〜忙しい人のための取り組み記録アプリ〜"
-        
-        let shareTodayRecord = [
-            "今日のテーマ: \(material)",
-            daysText.isEmpty ? nil : "\(daysText)間継続して取り組んでいます",
-            hashtag
-        ]
-            .compactMap { $0 }
-            .joined(separator: "\n")
-        
-        if fromAfterCheck {
-            if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
-               let topVC = UIApplication.topViewController() {
-                let monthlyLines = [
-                    summary.isEmpty ? nil : summary,
-                    material.isEmpty ? nil : "よく取り組んだ教材: \(material)",
-                    daysText.isEmpty ? nil : "\(daysText)継続中",
-                    hashtag
-                ]
-                    .compactMap { $0 }
-                    .joined(separator: "\n")
-                
-                composeVC.setInitialText(monthlyLines)
-            }
-        } else if let img = screenshot {
-            let shareContinuationDays = continuationDays.map { "\($0)日継続しています!\n今月は主に\(material)を取り組みました\n#リトプス〜忙しい人のための取り組み記録アプリ〜" } ?? "今日の記録をシェアします"
-            let shareYearlyCheckDays: String?
-            if let year = shareYear, let checkedDays = yearlyCheckedDays {
-                shareYearlyCheckDays = "\(year)年は\(checkedDays)日取り組みました\n#リトプス〜忙しい人のための取り組み記録アプリ〜"
-            } else {
-                shareYearlyCheckDays = nil
-            }
-            
-            let shareText = shareYearlyCheckDays ?? shareContinuationDays
-            
-            if let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
-               let topVC = UIApplication.topViewController() {
-                composeVC.setInitialText(shareText)
-                composeVC.add(img)
-                topVC.present(composeVC, animated: true)
-            }
+        guard let composeVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter),
+              let topVC = UIApplication.topViewController() else {
+            return
         }
+
+        if fromAfterCheck {
+            let monthlyLines = [
+                "今日のテーマ: \(material)",
+                daysText.isEmpty ? nil : "\(daysText)継続中",
+                hashtag
+            ]
+                .compactMap { $0 }
+                .joined(separator: "\n")
+
+            composeVC.setInitialText(monthlyLines)
+            topVC.present(composeVC, animated: true)
+            return
+        }
+
+        let shareContinuationDays = continuationDays.map { "\($0)日継続しています!\n今月は主に\(material)を取り組みました\n#リトプス〜忙しい人のための取り組み記録アプリ〜" } ?? "今日の記録をシェアします"
+        let shareYearlyCheckDays: String?
+        if let year = shareYear, let checkedDays = yearlyCheckedDays {
+            shareYearlyCheckDays = "\(year)年は\(checkedDays)日取り組みました\n#リトプス〜忙しい人のための取り組み記録アプリ〜"
+        } else {
+            shareYearlyCheckDays = nil
+        }
+
+        let shareText = shareYearlyCheckDays ?? shareContinuationDays
+
+        composeVC.setInitialText(shareText)
+        if let img = screenshot {
+            composeVC.add(img)
+        }
+        topVC.present(composeVC, animated: true)
     }
     
     private func shareToGeneral() {
@@ -300,3 +293,4 @@ extension ShareView{
 //#Preview {
 //    ShareView(isTapShareButton: $isTapShareButton)
 //}
+

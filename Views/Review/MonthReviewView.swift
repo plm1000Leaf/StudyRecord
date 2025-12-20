@@ -135,7 +135,7 @@ extension MonthReviewView {
         let mostUsedMaterial = recordService.getMostUsedMaterialName(for: currentMonth, context: viewContext) ?? "未設定"
 
         shareMaterialText = mostUsedMaterial
-        shareMonthlySummary = "\(year)年\(month)月は\(checkCount)日チェックしました。最も取り組んだ教材: \(mostUsedMaterial)"
+        shareMonthlySummary = "\(year)年\(month)月は\(checkCount)日チェックしました。最も取り組んだテーマ: \(mostUsedMaterial)"
         shareContinuationDays = continuationDays
     }
 }

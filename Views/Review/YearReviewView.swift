@@ -175,7 +175,7 @@ extension YearReviewView {
         .foregroundColor(.gray10)
     }
     
-    private var                 moveSelectMonthButton: some View {
+    private var moveSelectMonthButton: some View {
         ForEach(0..<4, id: \.self) { rowIndex in
             HStack(spacing: 16){
                 ForEach(0..<3, id: \.self) { columnIndex in
