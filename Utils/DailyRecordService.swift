@@ -53,6 +53,12 @@ final class DailyRecordService: ObservableObject {
         return counts
     }
     
+    func calculateYearlyCheckedDays(for year: Int, context: NSManagedObjectContext) -> Int {
+        let monthlyCounts = loadMonthlyCheckCounts(for: year, context: context)
+        return monthlyCounts.values.reduce(0, +)
+    }
+    
+    
     func loadMonthlyCheckRatesFromMonthlyRecord(for year: Int, context: NSManagedObjectContext) -> [Int: Double] {
         let request: NSFetchRequest<MonthlyRecord> = MonthlyRecord.fetchRequest()
         request.predicate = NSPredicate(format: "year == %d", year)
