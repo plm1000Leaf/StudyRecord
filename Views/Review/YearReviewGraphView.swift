@@ -53,8 +53,7 @@ struct YearReviewGraphView: View {
 
 extension YearReviewGraphView {
     private func loadYearlyCheckedDays(for year: Int) {
-        let statistics = recordService.getYearlyStatistics(for: year, context: viewContext)
-        yearlyCheckedDays = statistics.totalCheckedDays
+        yearlyCheckedDays = recordService.calculateYearlyCheckedDays(for: year, context: viewContext)
     }
 
     private var yearGraphView: some View {
@@ -99,8 +98,8 @@ extension YearReviewGraphView {
             Button(action: {
                 shareImage = ScreenshotHelper.captureScreen(in: captureRect)
                 continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
-                isTapShareButton = true
                 loadYearlyCheckedDays(for: selectedYear)
+                isTapShareButton = true
             }){
                 Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 32))

@@ -131,8 +131,8 @@ struct YearReviewView: View {
     }
     
     private func updateMonthlyCheckData(for year: Int) {
-        monthlyCheckCounts = recordService.loadMonthlyCheckCountsFromMonthlyRecord(for: year, context: viewContext)
-        yearlyCheckedDays = monthlyCheckCounts.values.reduce(0, +)
+        monthlyCheckCounts = recordService.loadMonthlyCheckCounts(for: year, context: viewContext)
+        yearlyCheckedDays = recordService.calculateYearlyCheckedDays(for: year, context: viewContext)
     }
 }
 
