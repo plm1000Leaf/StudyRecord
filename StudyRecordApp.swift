@@ -13,10 +13,16 @@ struct StudyRecordApp: App {
     @StateObject private var snapshotManager = SnapshotManager()
     
     init() {
-        if ProcessInfo.processInfo.arguments.contains("UI_TEST_MODE") {
-            persistenceController = PersistenceController(inMemory: true)
+        let arguments = ProcessInfo.processInfo.arguments
+        let shouldSeed2025 = arguments.contains("SEED_2025_CHECKS")
+
+        if arguments.contains("UI_TEST_MODE") {
+            persistenceController = PersistenceController(inMemory: true,
+                                                          seedYearForChecks: shouldSeed2025 ? 2025 : nil)
         } else {
-            persistenceController = PersistenceController.shared
+            persistenceController = shouldSeed2025
+                ? PersistenceController(seedYearForChecks: 2025)
+                : PersistenceController.shared
         }
     }
 

@@ -5,6 +5,7 @@
 //  Created by 千葉陽乃 on 2025/05/15.
 //
 
+import Foundation
 import CoreData
 
 struct PersistenceController {
@@ -12,8 +13,11 @@ struct PersistenceController {
 
     let container: NSPersistentContainer
 
-    init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "StudyRecordModel") // ここは .xcdatamodeld の名前
+    init(inMemory: Bool = false,
+         seedYearForChecks: Int? = nil,
+         seedCountRange: ClosedRange<Int> = 1...31,
+         calendar: Calendar = .current) {
+        container = NSPersistentContainer(name: "StudyRecordModel")
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
         }
@@ -21,6 +25,13 @@ struct PersistenceController {
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error)")
             }
+        }
+
+        if let year = seedYearForChecks {
+            DailyRecordService.shared.markRandomCheckedDays(forYear: year,
+                                                            countRange: seedCountRange,
+                                                            context: container.viewContext,
+                                                            calendar: calendar)
         }
     }
 }
@@ -59,3 +70,4 @@ extension PersistenceController {
     }
 }
 #endif
+

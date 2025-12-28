@@ -526,6 +526,33 @@ final class DailyRecordService: ObservableObject {
                                      calendar: calendar)
     }
 
+    /// 指定した年の各月をランダムに学習済みに設定
+    /// - Parameters:
+    ///   - year: 対象年
+    ///   - countRange: 各月で学習済みにする日数の範囲（例: 15...31）
+    ///   - context: CoreDataのコンテキスト
+    ///   - calendar: 使用するカレンダー（デフォルトは `.current`）
+    /// - Returns: 学習済みに変更された日付一覧（昇順）
+    @discardableResult
+    func markRandomCheckedDays(forYear year: Int,
+                               countRange: ClosedRange<Int>,
+                               context: NSManagedObjectContext,
+                               calendar: Calendar = .current) -> [Date] {
+        var updatedDates: [Date] = []
+
+        for month in 1...12 {
+            guard let monthDate = calendar.date(from: DateComponents(year: year, month: month)) else { continue }
+
+            let dates = markRandomCheckedDays(for: monthDate,
+                                              countRange: countRange,
+                                              context: context,
+                                              calendar: calendar)
+            updatedDates.append(contentsOf: dates)
+        }
+
+        return updatedDates.sorted()
+    }
+
     /// 現在の月から過去に遡った複数月でランダムに学習済み日を設定
     /// - Parameters:
     ///   - monthsBack: 対象とする月数（現在の月を含む）
