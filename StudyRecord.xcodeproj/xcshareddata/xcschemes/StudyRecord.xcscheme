@@ -73,6 +73,12 @@
             ReferencedContainer = "container:StudyRecord.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "SEED_2025_CHECKS"
+            isEnabled = "NO">
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
