@@ -57,5 +57,24 @@ extension PersistenceController {
                                                                context: workingContext,
                                                                calendar: calendar)
     }
+    
+    /// 指定した年の全月にランダムなチェックデータを投入
+    /// - Parameters:
+    ///   - year: 対象年（例: 2025）
+    ///   - countRange: 1ヶ月あたりチェックする日の範囲
+    ///   - context: 使用するコンテキスト（省略時は `viewContext`）
+    ///   - calendar: 使用するカレンダー（省略時は `.current`）
+    /// - Returns: 学習済みに設定された日付一覧
+    @discardableResult
+    func seedRandomCheckedDaysForYear(_ year: Int = 2025,
+                                      countRange: ClosedRange<Int> = 15...31,
+                                      context: NSManagedObjectContext? = nil,
+                                      calendar: Calendar = .current) -> [Date] {
+        let workingContext = context ?? container.viewContext
+        return DailyRecordService.shared.markRandomCheckedDays(forYear: year,
+                                                               countRange: countRange,
+                                                               context: workingContext,
+                                                               calendar: calendar)
+    }
 }
 #endif

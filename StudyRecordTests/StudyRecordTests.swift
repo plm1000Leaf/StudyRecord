@@ -52,5 +52,32 @@ final class DailyRecordServiceTests: XCTestCase {
         let days = service.calculateContinuationDays(from: today, context: core.context)
         XCTAssertEqual(days, 2)
     }
+    
+    func test_MarkRandomCheckedDaysForYear_AddsDataWithinRange() throws {
+        let cal = Calendar(identifier: .gregorian)
+        let updatedDates = service.markRandomCheckedDays(monthsBack: 2025,
+                                                         countRange: 15...31,
+                                                         context: core.context,
+                                                         calendar: cal)
+
+        XCTAssertFalse(updatedDates.isEmpty)
+        XCTAssertEqual(Set(updatedDates.map { cal.component(.year, from: $0) }), [2025])
+
+        let monthlyCounts = MonthlyRecordManager.shared.getMonthlyCheckCounts(for: 2025, context: core.context)
+
+        for month in 1...12 {
+            guard let monthDate = cal.date(from: DateComponents(year: 2025, month: month)),
+                  let daysInMonth = cal.range(of: .day, in: .month, for: monthDate)?.count else {
+                XCTFail("Month date could not be built for month \(month)")
+                continue
+            }
+
+            let checkedCount = service.getCheckedCountForMonth(monthDate, context: core.context)
+
+            XCTAssertGreaterThanOrEqual(checkedCount, 15, "Month \(month) should meet lower bound")
+            XCTAssertLessThanOrEqual(checkedCount, min(daysInMonth, 31), "Month \(month) should not exceed days in month")
+            XCTAssertEqual(monthlyCounts[month], checkedCount, "MonthlyRecord should mirror daily checked count for month \(month)")
+        }
+    }
 }
 
