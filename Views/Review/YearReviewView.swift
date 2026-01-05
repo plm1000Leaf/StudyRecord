@@ -7,15 +7,17 @@
 
 import SwiftUI
 import UIKit
+import Combine
 
 struct YearReviewView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject private var snapshotManager: SnapshotManager
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject private var recordService = DailyRecordService.shared
     
     @State private var showPopup = false
     @State private var selectedSegment: Int = 0
-    @State private var selectedYear = 2025
+    @State private var selectedYear = Calendar.current.component(.year, from: Date())
     @State private var selectedMonth: Int? = nil
     @State private var currentMonth: Date = Date()
     @State private var showMonthReviewView = false
@@ -97,7 +99,7 @@ struct YearReviewView: View {
             }
             continuationDays = recordService.calculateContinuationDays(from: Date(), context: viewContext)
             updateMonthlyCheckData(for: selectedYear)
-            
+            updateYearIfNeeded()
         }
         .onChange(of: showDateReviewView) { newValue in
             // DateReviewViewに遷移する時は今日の月に設定
@@ -109,7 +111,17 @@ struct YearReviewView: View {
         .onChange(of: selectedYear) { newValue in
             updateMonthlyCheckData(for: newValue)
         }
-        
+        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
+            updateYearIfNeeded()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)) { _ in
+            updateYearIfNeeded()
+        }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                updateYearIfNeeded()
+            }
+        }
     }
     
 
@@ -133,6 +145,13 @@ struct YearReviewView: View {
     private func updateMonthlyCheckData(for year: Int) {
         monthlyCheckCounts = recordService.loadMonthlyCheckCounts(for: year, context: viewContext)
         yearlyCheckedDays = recordService.calculateYearlyCheckedDays(for: year, context: viewContext)
+    }
+    
+    /// 年が切り替わった場合に表示年を更新
+    private func updateYearIfNeeded() {
+        let currentYear = Calendar.current.component(.year, from: Date())
+        guard selectedYear != currentYear else { return }
+        setCurrentMonthToToday()
     }
 }
 
